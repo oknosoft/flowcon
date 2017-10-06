@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Диаграмма эффективности</title>
+</head>
+
+<body>
+
+<p><b>Логин:</b><br>
+    <input type="text" size="40" id="login">
+</p>
+<p><b>Пароль:</b><br>
+    <input type="password" size="40" autocomplete="on" id="password">
+</p>
+
+
+<button onclick="loadtasks()" id="button">Сформировать</button>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script>
+    var numberchart = 5;
+    var points = [];
+    var asyncCount = 0;
+    var countReps = 1000000;
+
+    function loadtasks() {
+
+        var reps = [];
+        reps.push("unpete/private");
+        reps.push("oknosoft/windowbuilder-parametric");
+        reps.push("unpete/ecookna");
+        reps.push("oknosoft/flowcon");
+        reps.push("unpete/dimax");
+        reps.push("unpete/okna-stolicy");
+        reps.push("oknosoft/windowbuilder");
+        reps.push("unpete/aribaz");
+        reps.push("nmivan/Ilya_learning");
+        //reps.push("nmivan/in");
+
+        countReps = reps.length;
+
+        reps.forEach(function (item, i1, arr1) {
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'https://api.github.com/repos/' + item + '/issues?state=closed', true);
+
+            if (password.value!=="") {
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.setRequestHeader('Authorization', 'Basic ' + btoa(login.value + ':' + password.value));
+            }
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState != 4) return;
+
+                if (xhr.status != 200) {
+                    // обработать ошибку
+                    console.log(xhr.status + ': ' + xhr.statusText);
+                    asyncCount++;
+                } else {
+                    try {
+                        var tasks = JSON.parse(xhr.responseText);
+                        tasks.forEach(function (task, i2, arr2) {
+                            var x = 0;
+                            if (task.assignee!==null){
+                                if (task.assignee.login==login.value){
+
+                                    task.labels.forEach(function (item2, i3, arr3) {
+                                        if (!isNaN(Number(item2.name))) {
+                                            x+=Number(item2.name);
+                                        }
+                                    })
+                                    if (x!==0 && !isNaN(x)) {
+                                        currentDate = GetWeekBegin(task.closed_at);
+                                        haveIt = false;
+
+                                        points.forEach(function(point, i4, arr4) {
+                                            if ((point[0]-currentDate)==0) {
+                                                point[1]+=x;
+                                                haveIt = true;
+                                            }
+                                        })
+
+                                        if (!haveIt) {
+                                            y = [];
+                                            y.push(currentDate);
+                                            y.push(x);
+                                            points.push(y);
+                                        }
+                                    }
+
+                                }
+                            }
+                        })
+                        asyncCount++;
+                    } catch (e) {
+                        alert("Некорректный ответ " + e.message);
+                        asyncCount++;
+                    }
+                    tryDraw();
+
+                }
+
+            }
+
+            xhr.send();
+        });
+    }
+
+    function tryDraw(){
+        if (asyncCount==countReps) {
+            google.charts.load('current', {'packages': ['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+        }
+    }
+
+    function drawChart() {
+        points.sort(function(a, b) {
+            if (a[0] > b[0]) {
+                return 1;
+            }
+            if (a[0] < b[0]) {
+                return -1;
+            }
+            return 0;
+        });
+        points.unshift(["Дата", "Эффективность"]);
+        var data = google.visualization.arrayToDataTable(points);
+
+        var options = {
+            title: login,
+            curveType: 'function',
+            legend: {position: 'bottom'},
+            pointSize: 5,
+            series: {
+                0: {
+                    lineWidth: 1,
+                    pointShape: 'circle'
+                    //lineDashStyle: [5, 1, 5]
+                }
+            }
+        };
+
+        var div = document.createElement('div');
+        div.id = "chart" + numberchart;
+        div.style = "width: 900px; height: 500px;";
+        document.body.appendChild(div);
+
+        //var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        var chart = new google.visualization.LineChart(div);
+
+        chart.draw(data, options);
+    }
+
+    function GetWeekBegin(Day){
+        var RealDay = new Date();
+        RealDay.setTime(Date.parse(Day));
+
+        RealDay.setHours(-24 * (RealDay.getDay() - 1));
+        var mon = new Date(RealDay.getFullYear(), RealDay.getMonth(), RealDay.getDate());
+
+        return mon;
+    }
+</script>
+
+</body>
+
+</html>
