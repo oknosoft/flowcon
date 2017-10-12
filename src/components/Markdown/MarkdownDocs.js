@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import kebabCase from 'lodash/kebabCase';
 import warning from 'warning';
 import Helmet from 'react-helmet';
@@ -35,7 +34,7 @@ type Props = {
   sourceLocation?: string,
 };
 
-function MarkdownDocs(props: Props, context: Object) {
+function MarkdownDocs(props: Props) {
   const {classes, demos, markdown, sourceLocation: sourceLocationProp} = props;
   const contents = getContents(markdown);
   const headers = getHeaders(markdown);

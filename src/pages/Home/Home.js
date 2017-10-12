@@ -2,13 +2,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'recompose/compose';
 import {withStyles} from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Helmet from "react-helmet"
+import Helmet from 'react-helmet';
 import AppFooter from './Footer';
-import Flask from './Flask'
+import Flask from './Flask';
 import styles from './styles';
 
 function PageHome(props) {
@@ -16,16 +15,16 @@ function PageHome(props) {
 
   return (
     <div className={classes.root}>
-      <Helmet title="Flowcon" />
+      <Helmet title="Flowcon"/>
 
       <div className={classes.hero}>
         <div className={classes.content}>
 
           <div className={classes.text}>
             <Typography type="display3" component="h1" color="inherit" noWrap>Флакон</Typography>
-            <Flask alt="Flowcon Logo" className={classes.logo} />
+            <Flask alt="Flowcon Logo" className={classes.logo}/>
             <Typography type="subheading" component="h2" color="inherit" className={classes.headline}>
-              Программно-методический комплекс<br /> для управления потоками задач
+              Программно-методический комплекс<br/> для управления потоками задач
             </Typography>
             <Button
               className={classes.button}

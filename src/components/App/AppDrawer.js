@@ -4,7 +4,6 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
-import List from 'material-ui/List';
 import Toolbar from 'material-ui/Toolbar';
 import Drawer from 'material-ui/Drawer';
 import Typography from 'material-ui/Typography';
@@ -98,6 +97,7 @@ AppDrawer.propTypes = {
   mobileOpen: PropTypes.bool.isRequired,
   isHome: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
+  handleNavigate: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(AppDrawer);
