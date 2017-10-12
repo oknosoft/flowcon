@@ -24,7 +24,7 @@ const styles = {
 };
 
 const demoRegexp = /^demo='(.*)'$/;
-const SOURCE_CODE_ROOT_URL = 'https://github.com/callemall/material-ui/tree/v1-beta';
+const SOURCE_CODE_ROOT_URL = 'https://github.com/oknosoft/flowcon/tree/master';
 
 type Props = {
   classes: Object,
@@ -55,7 +55,7 @@ function MarkdownDocs(props: Props, context: Object) {
     }
 
     if(!sourceLocation) {
-      sourceLocation = `/docs/src/pages${sourceLocation}.md`;
+      sourceLocation = `/src/pages/${sourceLocation}`;
     }
   }
 

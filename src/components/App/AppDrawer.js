@@ -41,17 +41,13 @@ const styles = theme => ({
 });
 
 function AppDrawer(props) {
-  const {classes, className, disablePermanent, mobileOpen, onRequestClose, handleNavigate} = props;
+  const {classes, className, disablePermanent, mobileOpen, onRequestClose, handleNavigate, isHome} = props;
 
   const drawer = (
     <div className={classes.nav}>
       <div className={classes.toolbarIe11}>
         <Toolbar className={classes.toolbar}>
-          <div className={classes.title}
-               onClick={() => {
-                 onRequestClose();
-                 handleNavigate('/');
-               }}>
+          <div className={classes.title} onClick={() => isHome ? onRequestClose() : handleNavigate('/')}>
             <Typography type="title" color="inherit">
               Flowcon
             </Typography>
@@ -67,9 +63,7 @@ function AppDrawer(props) {
     <div className={className}>
       <Hidden lgUp={!disablePermanent}>
         <Drawer
-          classes={{
-            paper: classNames(classes.paper, 'algolia-drawer'),
-          }}
+          classes={{paper: classNames(classes.paper, 'algolia-drawer')}}
           type="temporary"
           open={mobileOpen}
           onRequestClose={onRequestClose}
@@ -102,6 +96,7 @@ AppDrawer.propTypes = {
   className: PropTypes.string,
   disablePermanent: PropTypes.bool.isRequired,
   mobileOpen: PropTypes.bool.isRequired,
+  isHome: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
 };
 

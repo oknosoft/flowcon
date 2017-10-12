@@ -30,36 +30,32 @@ function AppFooter(props) {
   return (
     <footer className={classes.root}>
       <div className={classes.layout}>
-        <Typography type="title" gutterBottom>
-          Quick Links
-        </Typography>
+        <Typography type="title" gutterBottom>Быстрые ссылки</Typography>
         <Typography type="subheading" component="div">
           <Grid container spacing={0}>
             <Grid item xs={12} sm={6}>
               <ul className={classes.list}>
                 <li className={classes.listItem}>
-                  <a href="https://github.com/callemall/material-ui/tree/v1-beta">GitHub</a>
+                  <a href="https://github.com/oknosoft/flowcon">GitHub</a>
                 </li>
                 <li className={classes.listItem}>
-                  <a href="https://twitter.com/MaterialUI">Twitter</a>
+                  <a href="https://github.com/oknosoft/metadata.js">Metadata.js</a>
                 </li>
                 <li className={classes.listItem}>
-                  <a href="https://github.com/callemall/material-ui/tree/v1-beta/examples">
-                    Examples
-                  </a>
+                  <a href="https://github.com/oknosoft/flowcon">Примеры</a>
                 </li>
               </ul>
             </Grid>
             <Grid item xs={12} sm={6}>
               <ul className={classes.list}>
                 <li className={classes.listItem}>
-                  <a href="/discover-more/community">Community</a>
+                  <a href="https://github.com/oknosoft/flowcon">Сообщество</a>
                 </li>
                 <li className={classes.listItem}>
-                  <a href="/discover-more/roadmap">Roadmap</a>
+                  <a href="https://github.com/oknosoft/flowcon">Дорожная карта</a>
                 </li>
                 <li className={classes.listItem}>
-                  <a href="/discover-more/team">Team</a>
+                  <a href="https://github.com/oknosoft/flowcon">Команда</a>
                 </li>
               </ul>
             </Grid>

@@ -28,7 +28,9 @@ import AboutPage from '../../pages/About';
 
 import Readme from '../../pages/Readme';
 
-import Diagram from '../Diagram';
+import FakeDiagram from '../FakeDiagram';
+
+import FakeList from '../FakeList';
 
 // 404
 import NotFoundPage from '../NotFoundPage';
@@ -154,14 +156,15 @@ class AppFrame extends React.Component<any, any> {
 
   render() {
     const {props} = this;
-    const {classes, location} = props;
+    const {classes, handleNavigate} = props;
     const title = 'title';
+    const isHome = props.location.pathname === '/';
 
     let disablePermanent = false;
     let navIconClassName = '';
     let appBarClassName = classes.appBar;
 
-    if(location.pathname === '/') {
+    if(isHome) {
       // home route, don't shift app bar or dock drawer
       disablePermanent = true;
       appBarClassName += ` ${classes.appBarHome}`;
@@ -205,16 +208,22 @@ class AppFrame extends React.Component<any, any> {
           disablePermanent={disablePermanent}
           onRequestClose={this.handleDrawerToggle}
           mobileOpen={this.state.mobileOpen}
+          handleNavigate={handleNavigate}
+          isHome={isHome}
         />
 
         <Switch>
-          <Route exact path="/" render={(routeProps) => <HomeView {...props} {...routeProps} />}/>
+          <Route exact path="/" render={(routeProps) => {
+            const {root, hero, content, text, headline, button, logo} = classes;
+            return <HomeView classes={{root, hero, content, text, headline, button, logo}} handleNavigate={handleNavigate} {...routeProps} />;
+          }}/>
           <Route path="/:area(doc|cat|ireg|cch|rep).:name" component={DataRoute}/>
           <Route path="/about" render={(routeProps) => <AboutPage {...props} {...routeProps} />}/>
-          <Route path="/diagram" render={(routeProps) => <Diagram {...props} {...routeProps} />}/>
+          <Route path="/diagram" render={(routeProps) => <FakeDiagram {...props} {...routeProps} />}/>
+          <Route path="/list" render={(routeProps) => <FakeList {...props} {...routeProps} />}/>
           <Route path="/readme" render={(routeProps) => <Readme {...props} {...routeProps} />}/>
           <Route path="/login" component={FrmLogin}/>
-          <Route path="/settings" component={Settings} />
+          <Route path="/settings" component={Settings}/>
           <Route component={NotFoundPage}/>
         </Switch>
 

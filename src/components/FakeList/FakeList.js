@@ -8,12 +8,12 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import AppContent from '../App/AppContent';
 
-export default class Diagram extends React.Component {
+export default class FakeList extends React.Component {
 
   render() {
     return <AppContent >
-      <Helmet title={`Диаграмма эффективности`} />
-      <Typography type="display3" component="h1" color="primary">Это диаграмма</Typography>
+      <Helmet title="Некий список" />
+      <Typography type="display3" component="h1" color="primary">Это список</Typography>
     </AppContent>;
   }
 }
