@@ -1,0 +1,5 @@
+[{
+  "_id": "_design/auth",
+  "language": "javascript",
+  "validate_doc_update": "function(newDoc, oldDoc, userCtx, secObj) {if (userCtx.roles.indexOf('_admin') !== -1 || userCtx.roles.indexOf('ram_editor') !== -1) {return;} else {throw({forbidden: 'Только администраторы могут изменять справочники'});}}"
+}]

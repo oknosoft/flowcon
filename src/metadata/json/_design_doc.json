@@ -1,0 +1,32 @@
+[{
+  "_id": "_design/auth",
+  "language": "javascript",
+  "validate_doc_update": "function(newDoc, oldDoc, userCtx, secObj){if (!userCtx || userCtx.roles.indexOf('_admin')!==-1 || userCtx.roles.indexOf('doc_editor')!==-1){return;}else{throw({forbidden: 'Только полноправные пользователи могут изменять документы'});}}",
+  "filters": {
+    "by_partner": "function(doc, req){['_design/server','registers_correction','purchase','work_centers_performance','work_centers_task','credit_cash_order','debit_bank_order','credit_bank_order','debit_cash_order','credit_cash_order','selling'].forEach(function(name){if(doc._id.indexOf(name)!=-1){ return false; }});if(!req.userCtx){ return true; } return doc._id[0]=='_' || !doc.partner || doc.partner=='00000000-0000-0000-0000-000000000000' || req.userCtx.roles.indexOf(doc.partner)!=-1 || req.userCtx.roles.indexOf('_admin') != -1 || req.userCtx.roles.indexOf('doc_full')!=-1;}"
+  }
+},
+  {
+    "_id": "_design/doc",
+    "language": "javascript",
+    "views": {
+      "by_date": {
+        "map": "function(doc){if(doc.date){var d0=doc.date.split('T');if(d0.length>1){var d=d0[0].split('-');emit([doc._id.split('|')[0],Number(d[0]),Number(d[1]),Number(d[2]),(doc.number_doc||doc.id||'')+(doc.note ? ' ' + doc.note : '')],null);}}}"
+      },
+      "number_doc": {
+        "map": "function(doc){var c=doc._id.split('|')[0], cn=c.substr(0, 3);if(cn=='doc'||cn=='tsk'||cn=='bp.'){var d=doc.date.split('T')[0].split('-');emit([c,Number(d[0]),doc.number_doc],null);}else if(doc.id) emit([c,0,doc.id], null);}\t"
+      },
+      "cash_moving_date_cashbox": {
+        "map": "function(doc) {\nif (doc._id.substr(0, 15)=='doc.cash_moving'&&doc.posted){\n  \n  var d=doc.date.split('T')[0].split('-');\n  emit([Number(d[0]),Number(d[1]),Number(d[2]),doc.recipient],{debit: doc.doc_amount});\n  emit([Number(d[0]),Number(d[1]),Number(d[2]),doc.sender],{credit: doc.doc_amount});\n\n}\n}",
+        "reduce": "function (key, values, rereduce) {\nreturn values.reduce(function(sum, row){\n  if(row.debit){sum.debit+=row.debit;sum.total+=row.debit;}\n  if(row.credit){sum.credit+=row.credit;sum.total-=row.credit;}\n  return sum;\n},{debit:0,credit:0,total:0});\n}"
+      },
+      "cash_moving_date_article": {
+        "map": "function(doc) {\nif (doc._id.substr(0, 15)=='doc.cash_moving'&&doc.posted){\n  \n  var d=doc.date.split('T')[0].split('-');\n  emit([Number(d[0]),Number(d[1]),doc.cash_flow_article], doc.doc_amount);\n\n}\n}",
+        "reduce": "_sum"
+      }
+    }
+  },
+  {
+    "_id": "_design/server",
+    "language": "javascript"
+  }]

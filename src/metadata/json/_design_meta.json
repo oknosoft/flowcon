@@ -1,0 +1,219 @@
+[{
+  "_id": "_design/auth",
+  "language": "javascript",
+  "validate_doc_update": "function(newDoc, oldDoc, userCtx, secObj) {if(userCtx.roles.indexOf('_admin')!==-1){return;}else{throw({forbidden: 'Только администраторы могут изменять метаданные'});}}",
+  "filters": {
+    "meta": "function(doc, req) {return doc._id.substr(0,4)!='meta';}"
+  }
+},
+  {
+    "_id": "meta_patch",
+    "enm": {
+
+    },
+    "cat": {
+      "currencies": {
+        "form": {
+          "selection": {
+            "fields": ["ref",
+              "_deleted",
+              "id",
+              "name as presentation",
+              "name_full"],
+            "cols": [{
+              "id": "id",
+              "width": "120",
+              "type": "ro",
+              "align": "left",
+              "sort": "server",
+              "caption": "Код"
+            },
+              {
+                "id": "presentation",
+                "width": "*",
+                "type": "ro",
+                "align": "left",
+                "sort": "server",
+                "caption": "Обозначение"
+              },
+              {
+                "id": "name_full",
+                "width": "*",
+                "type": "ro",
+                "align": "left",
+                "sort": "server",
+                "caption": "Наименование"
+              }]
+          },
+          "obj": {
+            "head": {
+              " ": ["id",
+                "name",
+                "name_full",
+                "parameters_russian_recipe"],
+              "Дополнительно": ["main_currency",
+                "extra_charge"]
+            },
+            "tabular_sections": {
+
+            },
+            "tabular_sections_order": []
+          }
+        }
+      },
+      "users": {
+        "form": {
+          "obj": {
+            "head": {
+              " ": ["id",
+                "name"],
+              "Дополнительно": ["ancillary",
+                "invalid",
+                {
+                  "id": "user_ib_uid",
+                  "path": "o.user_ib_uid",
+                  "synonym": "Идентификатор пользователя ИБ",
+                  "type": "ro"
+                },
+                {
+                  "id": "user_fresh_uid",
+                  "path": "o.user_fresh_uid",
+                  "synonym": "Идентификатор пользователя сервиса",
+                  "type": "ro"
+                },
+                "note"]
+            },
+            "tabular_sections": {
+              "contact_information": {
+                "fields": ["kind",
+                  "presentation"],
+                "headers": "Вид,Представление",
+                "widths": "200,*",
+                "min_widths": "100,200",
+                "aligns": "",
+                "sortings": "na,na",
+                "types": "ref,txt"
+              }
+            },
+            "tabular_sections_order": ["contact_information"]
+          }
+        }
+      }
+    },
+    "doc": {
+      "cash_moving": {
+        "form": {
+          "selection": {
+            "fields": ["posted",
+              "date",
+              "number_doc",
+              "sender",
+              "sender",
+              "recipient",
+              "doc_amount",
+              "note"],
+            "cols": [{
+              "id": "date",
+              "width": "160",
+              "type": "ro",
+              "align": "left",
+              "sort": "server",
+              "caption": "Дата"
+            },
+              {
+                "id": "number_doc",
+                "width": "120",
+                "type": "ro",
+                "align": "left",
+                "sort": "na",
+                "caption": "№"
+              },
+              {
+                "id": "sender",
+                "width": "180",
+                "type": "ro",
+                "align": "left",
+                "sort": "na",
+                "caption": "Оправитель"
+              },
+              {
+                "id": "recipient",
+                "width": "180",
+                "type": "ro",
+                "align": "left",
+                "sort": "na",
+                "caption": "Получатель"
+              },
+              {
+                "id": "doc_amount",
+                "width": "120",
+                "type": "ron",
+                "align": "right",
+                "sort": "na",
+                "caption": "Сумма"
+              },
+              {
+                "id": "note",
+                "width": "*",
+                "type": "ro",
+                "align": "left",
+                "sort": "na",
+                "caption": "Комментарий"
+              }]
+          }
+        }
+      }
+    },
+    "ireg": {
+
+    },
+    "areg": {
+
+    },
+    "dp": {
+
+    },
+    "rep": {
+
+    },
+    "cch": {
+      "predefined_elmnts": {
+        "form": {
+          "obj": {
+            "head": {
+              "Реквизиты": [{
+                "id": "name",
+                "path": "o.name",
+                "synonym": "Наименование",
+                "type": "ro"
+              },
+                {
+                  "id": "synonym",
+                  "path": "o.synonym",
+                  "synonym": "Синоним",
+                  "type": "ro"
+                },
+                "list",
+                "zone",
+                "value"]
+            },
+            "tabular_sections": {
+              "elmnts": {
+                "fields": ["elm",
+                  "value"],
+                "headers": "Элемент,Значение",
+                "widths": "*,*",
+                "min_widths": "150,150",
+                "aligns": "",
+                "sortings": "na,na",
+                "types": "ref,ref"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cacc": {
+
+    }
+  }]
