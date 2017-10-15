@@ -95,6 +95,7 @@ export function item_props(path, parent = items) {
       return props;
     }
   }
+  return {};
 }
 
 export default items;
