@@ -1,7 +1,6 @@
 // подгрузим стили асинхронно
 import('metadata-react/styles/react-data-grid.css');
 
-
 // конструктор metadata.js
 import MetaEngine from 'metadata-core/index.min';
 import plugin_pouchdb from 'metadata-pouchdb/index.min';

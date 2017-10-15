@@ -52,11 +52,15 @@ const items = [
         text: 'Диаграмма эффективности',
         id: 'diagram',
         navigate: '/diagram',
+        need_meta: true,
+        need_user: true,
       },
       {
         text: 'Таблица',
         id: 'list',
         navigate: '/list',
+        need_meta: true,
+        need_user: true,
       },
     ],
 
@@ -78,5 +82,19 @@ const items = [
     icon: <IconInfo/>
   }
 ];
+
+function path_ok(path, item) {
+  const pos = item.navigate.indexOf(path);
+  return pos == 0 || pos == 1;
+}
+
+export function item_props(path, parent = items) {
+  for(const item of parent){
+    const props = item.items ? item_props(path, item.items) : path_ok(path, item) && item;
+    if(props){
+      return props;
+    }
+  }
+}
 
 export default items;

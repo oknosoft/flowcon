@@ -18,19 +18,13 @@ class DumbScreen extends Component {
 
     return <div className='splash' style={{marginTop: top}}>
       <div className="description">
-        <h1 itemProp="name">Hello world for metadata.js</h1>
-        <p>Категория: <span itemProp="applicationSubCategory">CRM, E-Commerce</span></p>
+        <h1 itemProp="name">Флакон</h1>
+        <p>Категория: <span itemProp="applicationSubCategory">Task-management</span></p>
         <p>Платформа: <i className="fa fa-chrome" aria-hidden="true"></i> браузер Chrome для <span itemProp="operatingSystem">Windows 8, 10 | Android | Mac | iOS</span>
         </p>
         <div itemProp="description">
           <p>Веб-приложение на базе <a href="http://www.oknosoft.ru/metadata/" target="_blank" rel="noopener noreferrer">Metadata.js</a>
-            для демонстрации базовых возможностей фреймворка:</p>
-          <ul>
-            <li>Ввод и редактирование докумнтов поступления - выбытия - перемещения денег</li>
-            <li>Формирование отчета о движении денег</li>
-            <li>Автономная работа при отсутствии доступа к Интернет</li>
-            <li>Фоновая синхронизация с ИБ 1С</li>
-          </ul>
+            для управления потоками задач</p>
         </div>
       </div>
 

@@ -6,6 +6,8 @@ import {Route} from 'react-router';
 // статусы "загружено и т.д." в ствойствах компонента
 import {withMeta} from 'metadata-redux/with.min';
 
+import {item_props} from '../../pages/menu_items';
+
 // заставка "загрузка занных"
 import DumbScreen from '../DumbScreen';
 
@@ -24,19 +26,28 @@ class RootView extends Component {
 
   constructor(props) {
     super(props);
+    const iprops = item_props(location.pathname);
     this.state = {
-      path_log_in: this.isPathLogIn(),
+      need_meta: !!iprops.need_meta,
+      need_user: !!iprops.need_user,
       browser_compatible: browser_compatible() || true,
     };
   }
 
   shouldComponentUpdate(props, state) {
     const {user, data_empty, couch_direct, offline, history} = props;
-    const {path_log_in} = state;
+    const {need_user, need_meta} = state;
+    const iprops = item_props(location.pathname);
+
     let res = true;
 
-    if(path_log_in != this.isPathLogIn()) {
-      this.setState({path_log_in: this.isPathLogIn()});
+    if(need_user != iprops.need_user) {
+      this.setState({need_user: iprops.need_user});
+      res = false;
+    }
+
+    if(need_meta != iprops.need_meta) {
+      this.setState({need_meta: iprops.need_meta});
       res = false;
     }
 
@@ -47,7 +58,7 @@ class RootView extends Component {
     }
 
     // если это первый запуск или couch_direct и offline, переходим на страницу login
-    if(!path_log_in && ((data_empty === true && !user.try_log_in) || (couch_direct && offline))) {
+    if(!need_user && ((data_empty === true && !user.try_log_in) || (couch_direct && offline))) {
       history.push('/login');
       res = false;
     }
@@ -55,17 +66,15 @@ class RootView extends Component {
     return res;
   }
 
-  isPathLogIn() {
-    return !!location.pathname.match(/\/(login|about|settings)$/);
-  }
-
   render() {
 
     const {props, state} = this;
     const {meta_loaded, data_empty, data_loaded, history} = props;
-    const show_dumb = !meta_loaded ||
+    const show_dumb = state.need_meta && (
+      !meta_loaded ||
       (data_empty === undefined) ||
-      (data_empty === false && !data_loaded);
+      (data_empty === false && !data_loaded)
+    );
 
     return <MuiThemeProvider theme={theme}>
       {
