@@ -6,8 +6,7 @@ import Typography from 'material-ui/Typography';
 import CnnSettings from 'metadata-react/FrmLogin/CnnSettings';
 
 import withStyles from 'metadata-react/styles/paper600';
-import withIface from 'metadata-redux/src/withIface';
-import withPrm from 'metadata-redux/src/withPrm';
+import {withIface, withPrm} from 'metadata-redux/with.min';
 
 import compose from 'recompose/compose';
 

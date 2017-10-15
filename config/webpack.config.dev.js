@@ -92,7 +92,6 @@ module.exports = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
-      //'metadata-ui': path.resolve(paths.appNodeModules, './metadata-react'),
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -169,7 +168,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: [paths.appSrc, path.resolve(paths.appNodeModules, './metadata-react')],
-        exclude: [/\\metadata\\/],
+        //exclude: [/\\metadata\\/],
         loader: require.resolve('babel-loader'),
         options: {
 

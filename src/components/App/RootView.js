@@ -4,7 +4,7 @@ import {ConnectedRouter as Router} from 'react-router-redux';
 import {Route} from 'react-router';
 
 // статусы "загружено и т.д." в ствойствах компонента
-import withMeta from 'metadata-redux/src/withMeta';
+import {withMeta} from 'metadata-redux/with.min';
 
 // заставка "загрузка занных"
 import DumbScreen from '../DumbScreen';

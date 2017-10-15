@@ -113,7 +113,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "lint": "eslint .",
     "meta:prebuild": "node scripts/prebuild.meta.js",
-    "meta:link": "npm link metadata-core metadata-redux metadata-pouchdb metadata-abstract-ui metadata-react"
+    "meta:link": "npm link metadata-core metadata-redux metadata-pouchdb metadata-abstract-ui metadata-react metadata-external"
   },
   "jest": {
     "collectCoverageFrom": [

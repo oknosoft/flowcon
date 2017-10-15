@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {push} from 'react-router-redux';
 
-import withMeta from 'metadata-redux/src/withMeta';
+import {withMeta} from 'metadata-redux/with.min';
 
 // Redux action creator
 const mapDispatchToProps = (dispatch) => ({

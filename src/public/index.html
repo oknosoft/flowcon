@@ -72,6 +72,19 @@
 </head>
 <body>
 
+<script>
+  // Полифилл Object.assign, Symbol и т.д. для старых браузеров
+  !Object.assign && (function () {
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.src = 'https://cdn.jsdelivr.net/npm/babel-polyfill@6.26.0/browser.js';
+    document.head.appendChild(s);
+    s.addEventListener('load', function (data) {
+      data = null;
+    }, false);
+  })();
+</script>
+
 <script src="https://cdn.jsdelivr.net/combine/gh/agershun/alasql@0.4.3/dist/alasql.min.js,gh/pouchdb/pouchdb@6.3.4/dist/pouchdb.min.js,gh/pouchdb/pouchdb@6.3.4/dist/pouchdb.find.min.js,gh/nolanlawson/pouchdb-authentication@v0.5.5/dist/pouchdb.authentication.min.js"></script>
 
 <noscript>

@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {routerReducer as router} from 'react-router-redux';
 
-import {metaReducer as meta, getIfaceReducer} from 'metadata-redux';
+import {metaReducer as meta, getIfaceReducer} from 'metadata-redux/index.min';
 import ifaceInitialState from './iface';
 
 const reducer = combineReducers({

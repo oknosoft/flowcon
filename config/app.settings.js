@@ -4,7 +4,11 @@
  *
  * @param prm {Object} - в свойствах этого объекта определяем параметры работы программы
  */
-module.exports = function settings(prm = {}) {
+module.exports = function settings(prm) {
+
+  if(!prm){
+    prm = {};
+  };
 
   return Object.assign(prm, {
 

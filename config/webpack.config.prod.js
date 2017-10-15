@@ -163,8 +163,12 @@ module.exports = {
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: [paths.appSrc, path.resolve(paths.appNodeModules, './metadata-react')],
-        exclude: [/\\metadata\\/],
+        include: [
+          paths.appSrc,
+          path.resolve(paths.appNodeModules, './metadata-react'),
+          path.resolve(paths.appNodeModules, '../config'),
+        ],
+        //exclude: [/\\metadata\\/],
         loader: require.resolve('babel-loader'),
         options: {
 
