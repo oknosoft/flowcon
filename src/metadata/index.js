@@ -7,6 +7,9 @@ import plugin_pouchdb from 'metadata-pouchdb/index.min';
 import plugin_ui from 'metadata-abstract-ui/index.min';
 import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars.min';
 import plugin_react from 'metadata-react/plugin';
+import plugin_superlogin from 'metadata-superlogin';
+
+import superlogin_config from '../../config/superlogin.config.client';
 
 // функция установки параметров сеанса
 import settings from '../../config/app.settings';
@@ -24,7 +27,8 @@ MetaEngine
   .plugin(plugin_pouchdb)     // подключаем pouchdb-адаптер к прототипу metadata.js
   .plugin(plugin_ui)          // подключаем общие методы интерфейса пользователя
   .plugin(plugin_ui_tabulars) // подключаем методы экспорта табличной части
-  .plugin(plugin_react);      // подключаем react-специфичные модификаторы к scheme_settings
+  .plugin(plugin_react)       // подключаем react-специфичные модификаторы к scheme_settings
+  .plugin(plugin_superlogin(superlogin_config));  // подключаем авторизацию через социальные сети
 
 // создаём экземпляр MetaEngine
 const $p = new MetaEngine();

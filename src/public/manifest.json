@@ -1,7 +1,7 @@
 {
   "lang": "ru",
-  "name": "Hello world",
-  "short_name": "helloworld",
+  "name": "Flowcon: tasks flow",
+  "short_name": "flowcon",
   "icons": [
     {
       "src": "./imgs/fav-md32.png",

@@ -39,12 +39,11 @@ import NotFoundPage from '../NotFoundPage';
 import MetaTreePage from '../MetaTreePage';
 
 // логин и свойства подключения
-import FrmLogin from 'metadata-react/FrmLogin';
+import FrmLogin from 'metadata-react/FrmSuperLogin';
 
 import Settings from '../Settings';
 
 import {withNavigateAndMeta} from 'metadata-redux/with.min';
-
 
 const styles = theme => ({
   '@global': {
@@ -222,7 +221,7 @@ class AppFrame extends React.Component<any, any> {
           <Route path="/diagram" render={(routeProps) => <FakeDiagram {...props} {...routeProps} />}/>
           <Route path="/list" render={(routeProps) => <FakeList {...props} {...routeProps} />}/>
           <Route path="/readme" render={(routeProps) => <Readme {...props} {...routeProps} />}/>
-          <Route path="/login" component={FrmLogin}/>
+          <Route path="/login" render={(routeProps) => <FrmLogin {...props} {...routeProps} />}/>
           <Route path="/settings" component={Settings}/>
           <Route component={NotFoundPage}/>
         </Switch>

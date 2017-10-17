@@ -1,11 +1,12 @@
 # Exclude compiled files
 build
 /lib
-/.next
 /.eslintcache
-/docs/export
 /tmp
 coverage
+
+# Private config files
+config/superlogin.config.server.js
 
 # TODO
 .github

@@ -4,7 +4,7 @@
  */
 export default {
   'common': {
-    title: 'Metadata hello world',
+    title: 'Флакон: потоки задач',
   },
   OrderList: {
     state_filter: '',
