@@ -13,7 +13,7 @@ module.exports = function settings(prm) {
   return Object.assign(prm, {
 
     // разделитель для localStorage
-    local_storage_prefix: 'hw_',
+    local_storage_prefix: 'fl_',
 
     // гостевые пользователи для демо-режима
     guests: [{
@@ -28,10 +28,10 @@ module.exports = function settings(prm) {
     rest_path: '',
 
     // расположение couchdb для сайта
-    couch_path: "/couchdb/hw_",
+    couch_path: "http://fl211:5984/fl_",
 
     // расположение couchdb для nodejs
-    couch_local: "http://cou200:5984/hw_",
+    couch_local: "http://fl211:5984/fl_",
 
     // фильтр для репликации с CouchDB не используем
     pouch_filter: {
@@ -39,22 +39,26 @@ module.exports = function settings(prm) {
     },
 
     // по умолчанию, обращаемся к зоне 1
-    zone: 1,
+    zone: 0,
 
     // объявляем номер демо-зоны
-    zone_demo: 1,
+    zone_demo: -1,
 
-    // размер вложений
+    // если use_meta === false, не используем базу meta в рантайме
+    // см.: https://github.com/oknosoft/metadata.js/issues/255
+    use_meta: false,
+
+    // размер вложений 2Mb
     attachment_max_size: 2000000,
 
     // разрешаем сохранение пароля
     enable_save_pwd: true,
 
     // используем геокодер
-    use_ip_geo: true,
+    use_ip_geo: false,
 
     // используем карты google
-    use_google_geo: 'AIzaSyAO-Jca5NTE5bQ7IY7BxFCl0jgW9OsJvuM',
+    use_google_geo: false,
 
   });
 

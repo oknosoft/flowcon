@@ -45,22 +45,23 @@ $p.wsql.init((prm) => {
   // по умолчанию, обращаемся к зоне 0
   prm.zone = config.zone;
 
-  // расположение 1C
-  if (config.rest_path)
-    prm.rest_path = config.rest_path;
-
   // расположение couchdb
   prm.couch_path = config.couch_local;
 
 }, ($p) => {
 
-  const db = new MetaEngine.classes.PouchDB(config.couch_local + 'meta', {
+  const opts = {
     skip_setup: true,
-  });
+    auth: {
+      username: process.env.DBUSER || 'admin',
+      password: process.env.DBPWD || 'admin',
+    },
+  };
+  const db = new MetaEngine.classes.PouchDB(config.couch_local + 'meta', opts);
 
   let _m;
 
-  debug('Читаем описание метаданных из CouchDB');
+  debug(`Читаем описание метаданных из CouchDB ${config.couch_local}, user:${opts.auth.username}, password:${opts.auth.password}`);
   return db.info()
     .then(() => db.get('meta'))
     .catch((err) => {

@@ -4,12 +4,12 @@
   "short_name": "flowcon",
   "icons": [
     {
-      "src": "./imgs/fav-md32.png",
+      "src": "./imgs/flask_32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "./imgs/fav-md144.png",
+      "src": "./imgs/flask_144.png",
       "sizes": "144x144",
       "type": "image/png"
     }],

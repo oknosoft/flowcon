@@ -7,19 +7,19 @@ import common from './common';
 //import catalogs from "./catalogs";
 
 // модификаторы документов
-import documents from "./documents";
+//import documents from "./documents";
 
 // модификаторы планов видов характеристик
 import chartscharacteristics from "./chartscharacteristics";
 
 // модификаторы отчетов
-import reports from "./reports";
+//import reports from "./reports";
 
 
 export default function ($p) {
-  //catalogs($p);
-  documents($p);
-  chartscharacteristics($p);
-  reports($p);
   common($p);
+  //catalogs($p);
+  chartscharacteristics($p);
+  //documents($p);
+  //reports($p);
 }

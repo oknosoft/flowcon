@@ -1,4 +1,8 @@
-import React, {Component} from "react";
+// шрифты и стили подгрузим асинхронно
+import('metadata-react/styles/react-data-grid.css');
+import('font-awesome/css/font-awesome.min.css');
+
+import React, {Component} from 'react';
 import {render} from 'react-dom';
 
 // скрипт инициализации структуры метаданных и модификаторы
@@ -13,21 +17,19 @@ const store = configureStore();
 class RootProvider extends Component {
 
   componentWillMount() {
-    init(store)
-      .catch(() => {
-        //console.log(err)
-    });
+    init(store.dispatch)
+      .catch($p.record_log);
   }
 
   render() {
     return <Provider store={store}>
-      <RootView history={history} />
+      <RootView history={history}/>
     </Provider>;
   }
 }
 
 // TODO: перенести загрузку библиотек из jsdelivr сюда
 render(
-  <RootProvider />,
+  <RootProvider/>,
   document.getElementById('root'),
 );

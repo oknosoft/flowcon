@@ -14,60 +14,8 @@
   -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-  <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/dist/imgs/fav-md144.png" type="image/png">
+  <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/dist/imgs/flask_144.png" type="image/png">
 
-
-  <style>
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-    html, body, input, textarea, select, button {
-      color: rgb(48, 57, 66);
-      font-family: Roboto, Arial, sans-serif;
-      font-size: 100%;
-      line-height: 21px;
-      text-rendering: optimizeLegibility;
-    }
-    .splash {
-      width: 512px;
-      height: 132px;
-      position: absolute;
-      left: 48%;
-      margin-left: -255px;
-      margin-top: 140px;
-      background-image: url(%PUBLIC_URL%/imgs/splash.gif);
-    }
-    .description {
-      position: absolute;
-      left: 150px;
-      font-size: 67%;
-    }
-    .description p, .description ul, .description h1 {
-      margin: 0;
-    }
-    .description ul {
-      padding-left: 16px;
-    }
-    .description h1 {
-      margin-top: 0;
-      margin-bottom: 0.6em;
-    }
-    @media (max-width: 640px) {
-      .splash {
-        width: 256px;
-        height: 66px;
-        left: 48%;
-        margin-left: -128px;
-        margin-top: 100px;
-        background-size: cover;
-      }
-    }
-  </style>
 </head>
 <body>
 
@@ -78,11 +26,60 @@
     s.type = 'text/javascript';
     s.src = 'https://cdn.jsdelivr.net/npm/babel-polyfill@6.26.0/browser.js';
     document.head.appendChild(s);
-    s.addEventListener('load', function (data) {
-      data = null;
-    }, false);
   })();
 </script>
+
+<style>
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  html, body, input, textarea, select, button {
+    color: rgb(48, 57, 66);
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 100%;
+    line-height: 21px;
+    text-rendering: optimizeLegibility;
+  }
+  .splash {
+    width: 512px;
+    height: 132px;
+    position: absolute;
+    left: 48%;
+    margin-left: -255px;
+    margin-top: 140px;
+    background-image: url(%PUBLIC_URL%/imgs/splash.gif);
+  }
+  .description {
+    position: absolute;
+    left: 150px;
+    font-size: 67%;
+  }
+  .description p, .description ul, .description h1 {
+    margin: 0;
+  }
+  .description ul {
+    padding-left: 16px;
+  }
+  .description h1 {
+    margin-top: 0;
+    margin-bottom: 0.6em;
+  }
+  @media (max-width: 640px) {
+    .splash {
+      width: 256px;
+      height: 66px;
+      left: 48%;
+      margin-left: -128px;
+      margin-top: 100px;
+      background-size: cover;
+    }
+  }
+</style>
 
 <noscript>
   You need to enable JavaScript to run this app.
@@ -101,6 +98,8 @@
     </div>
   </div>
 </div>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 </body>
 </html>

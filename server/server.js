@@ -8,7 +8,7 @@ express middlware имеет сигнатуру (req, res, next), у koa middlwa
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-var cors = require('cors');
+const cors = require('cors');
 const SuperLogin = require('superlogin');
 const superloginConfig = require('../config/superlogin.config.server.js');
 
