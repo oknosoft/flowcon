@@ -21,12 +21,6 @@ module.exports = function settings(prm) {
       password: "hQI7OhIGlVeOWi8="
     }],
 
-    // если понадобится обратиться к 1С, будем использовать irest
-    irest_enabled: true,
-
-    // расположение rest-сервиса 1c по умолчанию
-    rest_path: '',
-
     // расположение couchdb для сайта
     couch_path: "http://fl211:5984/fl_",
 
@@ -59,6 +53,12 @@ module.exports = function settings(prm) {
 
     // используем карты google
     use_google_geo: false,
+
+    // если понадобится обратиться к 1С, будем использовать irest
+    //irest_enabled: true,
+
+    // расположение rest-сервиса 1c по умолчанию
+    //rest_path: '',
 
   });
 

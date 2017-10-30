@@ -17,8 +17,7 @@ const store = configureStore();
 class RootProvider extends Component {
 
   componentWillMount() {
-    init(store.dispatch)
-      .catch($p.record_log);
+    init(store.dispatch).catch($p && $p.record_log);
   }
 
   render() {
