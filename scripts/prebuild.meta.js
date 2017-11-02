@@ -63,12 +63,15 @@ $p.wsql.init((prm) => {
 
   debug(`Читаем описание метаданных из CouchDB ${config.couch_local}, user:${opts.auth.username}, password:${opts.auth.password}`);
   return db.info()
-    .then(() => db.get('meta'))
+    .then((info) => {
+    debug(`Подключение к ${info.host}`);
+    return db.get('meta')
+  })
     .catch((err) => {
-      debug('Не удалось получить объект meta из CouchDB\nПроверьте логин, пароль и строку подключения');
-      debug(err);
-      process.exit(1);
-    })
+    debug('Не удалось получить объект meta из CouchDB\nПроверьте логин, пароль и строку подключения');
+    debug(err);
+    process.exit(1);
+  })
     .then((doc) => {
       _m = doc;
       doc = null;
@@ -145,9 +148,8 @@ $p.wsql.init((prm) => {
 
 function create_modules(_m) {
 
-  let name,
-    sys_nsmes = ['log', 'meta_objs', 'meta_fields', 'scheme_settings'],
-    categoties = {
+  const sys_nsmes = ['log', 'meta_objs', 'meta_fields', 'scheme_settings'];
+  const categoties = {
       cch: {mgr: 'ChartOfCharacteristicManager', obj: 'CatObj'},
       cacc: {mgr: 'ChartOfAccountManager', obj: 'CatObj'},
       cat: {mgr: 'CatManager', obj: 'CatObj'},
@@ -158,28 +160,25 @@ function create_modules(_m) {
       areg: {mgr: 'AccumRegManager', obj: 'RegisterRow'},
       dp: {mgr: 'DataProcessorsManager', obj: 'DataProcessorObj'},
       rep: {mgr: 'DataProcessorsManager', obj: 'DataProcessorObj'},
-    },
-    text = `(function(){
+    };
+  let text = `(function(){
   const {EnumManager,CatManager,DocManager,DataProcessorsManager,ChartOfCharacteristicManager,ChartOfAccountManager,
     InfoRegManager,AccumRegManager,BusinessProcessManager,TaskManager,CatObj, DocObj, TabularSectionRow, DataProcessorObj,
     RegisterRow, BusinessProcessObj, TaskObj} = $p.constructor.classes;
     
   const _define = Object.defineProperties;
-    
-  function conf(target, key, descriptor) {
-    descriptor.configurable = true;
-    return descriptor;
-  }\n\n`;
+
+`;
 
 
   // менеджеры перечислений
-  for (name in _m.enm){
+  for (const name in _m.enm){
     text += `$p.enm.create('${name}');\n`;
   }
 
   // менеджеры объектов данных, отчетов и обработок
-  for (var category in categoties) {
-    for (name in _m[category]) {
+  for (const category in categoties) {
+    for (const name in _m[category]) {
       if (sys_nsmes.indexOf(name) == -1) {
         text += obj_constructor_text(_m, category, name, categoties[category].obj);
         text += `$p.${category}.create('${name}');\n`;
@@ -224,7 +223,7 @@ function obj_constructor_text(_m, category, name, proto) {
   }
 
   // табличные части по метаданным - устанавливаем геттер и сеттер для табличной части
-  for (let ts in meta.tabular_sections) {
+  for (const ts in meta.tabular_sections) {
     text += `get ${ts}(){return this._getter_ts('${ts}')}\nset ${ts}(v){this._setter_ts('${ts}',v)}\n`;
   }
 
@@ -233,15 +232,15 @@ function obj_constructor_text(_m, category, name, proto) {
 
 
   // табличные части по метаданным
-  for (let ts in meta.tabular_sections) {
+  for (const ts in meta.tabular_sections) {
 
     // создаём конструктор строки табчасти
-    let row_fn_name = DataManager.prototype.obj_constructor.call({class_name: category + '.' + name, constructor_names: {}}, ts);
+    const row_fn_name = DataManager.prototype.obj_constructor.call({class_name: category + '.' + name, constructor_names: {}}, ts);
 
     text += `class ${row_fn_name} extends TabularSectionRow{\n`;
 
     // в прототипе строки табчасти создаём свойства в соответствии с полями табчасти
-    for (var rf in meta.tabular_sections[ts].fields) {
+    for (const rf in meta.tabular_sections[ts].fields) {
       text += `get ${rf}(){return this._getter('${rf}')}\nset ${rf}(v){this._setter('${rf}',v)}\n`;
     }
 
