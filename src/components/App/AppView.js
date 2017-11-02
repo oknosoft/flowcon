@@ -57,7 +57,7 @@ class AppRoot extends Component {
   }
 
   shouldComponentUpdate(props) {
-    const {user, data_empty, couch_direct, offline, history, path_log_in} = props;
+    const {user, data_empty, couch_direct, offline, path_log_in} = props;
     let res = true;
 
     // если есть сохранённый пароль и online, пытаемся авторизоваться
@@ -67,8 +67,8 @@ class AppRoot extends Component {
     }
 
     // если это первый запуск или couch_direct и offline, переходим на страницу login
-    if(!path_log_in && ((data_empty === true && !user.try_log_in) || (couch_direct && !user.logged_in))) {
-      history.push('/login');
+    if(!path_log_in && ((data_empty === true && !user.try_log_in && !user.logged_in) || (couch_direct && offline))) {
+      props.handleNavigate('/login');
       res = false;
     }
 
@@ -150,9 +150,6 @@ class AppRoot extends Component {
 }
 
 AppRoot.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
   handleOffline: PropTypes.func.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,

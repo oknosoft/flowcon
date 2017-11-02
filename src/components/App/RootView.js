@@ -58,7 +58,7 @@ class RootView extends Component {
     }
 
     // если это первый запуск или couch_direct и offline, переходим на страницу login
-    if(!need_user && ((data_empty === true && !user.try_log_in) || (couch_direct && offline))) {
+    if(!need_user && ((data_empty === true && !user.try_log_in && !user.logged_in) || (couch_direct && offline))) {
       history.push('/login');
       res = false;
     }
