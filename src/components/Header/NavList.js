@@ -7,7 +7,7 @@ import Collapse from 'material-ui/transitions/Collapse';
 
 import classnames from 'classnames';
 import withStyles from './menu';
-import {withIface} from 'metadata-redux/with.min';
+import {withIiface} from 'metadata-redux';
 
 import IconExpandMore from 'material-ui-icons/ExpandMore';
 
@@ -59,7 +59,7 @@ class NavList extends Component {
       key: this.key,
       onClick: this.handleNavigate(item.navigate, item.id),
     };
-    if(inset){
+    if(inset) {
       props.className = this.props.classes.nested;
     }
     //inset={inset}
@@ -132,5 +132,5 @@ NavList.propTypes = {
 };
 
 
-export default withStyles(withIface(NavList));
+export default withStyles(withIiface(NavList));
 

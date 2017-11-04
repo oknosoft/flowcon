@@ -9,7 +9,7 @@ import {routerMiddleware} from 'react-router-redux';
 import thunk from 'redux-thunk';
 
 // события pouchdb
-import {metaMiddleware} from 'metadata-redux/index.min';
+import {metaMiddleware} from 'metadata-redux';
 
 // Create a history of your choosing (we're using a browser history in this case)
 export const history = createHistory();

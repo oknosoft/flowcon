@@ -10,7 +10,7 @@ import {init} from './metadata';
 
 import {Provider} from 'react-redux';
 import configureStore, {history} from './redux';
-import RootView from './components/App/RootView';
+import RootView from './components/App';
 
 const store = configureStore();
 

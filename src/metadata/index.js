@@ -21,7 +21,7 @@ import superlogin_config from '../../config/superlogin.config.client';
 import settings from '../../config/app.settings';
 
 // генератор события META_LOADED для redux
-import {metaActions} from 'metadata-redux/index.min';
+import {metaActions} from 'metadata-redux';
 
 MetaEngine
   .plugin(plugin_pouchdb)     // подключаем pouchdb-адаптер к прототипу metadata.js

@@ -4,7 +4,7 @@ import {ConnectedRouter as Router} from 'react-router-redux';
 import {Route} from 'react-router';
 
 // статусы "загружено и т.д." в ствойствах компонента
-import {withMeta} from 'metadata-redux/with.min';
+import {withMeta} from 'metadata-redux';
 
 import {item_props} from '../../pages/menu_items';
 
@@ -12,8 +12,7 @@ import {item_props} from '../../pages/menu_items';
 import DumbScreen from '../DumbScreen';
 
 // корневые контейнеры
-//import AppView from './AppView';
-import AppView from './AppFrame';
+import AppFrame from './AppFrame';
 
 import browser_compatible from 'metadata-react/BrowserCompatibility/browser_compatible';
 import BrowserCompatibility from 'metadata-react/BrowserCompatibility';
@@ -84,7 +83,7 @@ class RootView extends Component {
             <DumbScreen {...props} />
             :
             <Router history={history}>
-              <Route component={AppView}/>
+              <Route component={AppFrame}/>
             </Router>)
           :
           (<BrowserCompatibility/>)
