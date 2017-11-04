@@ -4,7 +4,7 @@ import {ConnectedRouter as Router} from 'react-router-redux';
 import {Route} from 'react-router';
 
 // статусы "загружено и т.д." в ствойствах компонента
-import {withMeta} from 'metadata-redux/src/with';
+import {withMeta} from 'metadata-redux/with.min';
 
 import {item_props} from '../../pages/menu_items';
 
@@ -41,13 +41,13 @@ class RootView extends Component {
 
     let res = true;
 
-    if(need_user != iprops.need_user) {
-      this.setState({need_user: iprops.need_user});
+    if(need_user != !!iprops.need_user) {
+      this.setState({need_user: !!iprops.need_user});
       res = false;
     }
 
-    if(need_meta != iprops.need_meta) {
-      this.setState({need_meta: iprops.need_meta});
+    if(need_meta != !!iprops.need_meta) {
+      this.setState({need_meta: !!iprops.need_meta});
       res = false;
     }
 
@@ -58,8 +58,9 @@ class RootView extends Component {
     }
 
     // если это первый запуск или couch_direct и offline, переходим на страницу login
-    if(!need_user && ((data_empty === true && !user.try_log_in && !user.logged_in) || (couch_direct && offline))) {
+    if(res && need_user && ((data_empty === true && !user.try_log_in && !user.logged_in) || (couch_direct && offline))) {
       history.push('/login');
+      this.setState({pathname: '/login'});
       res = false;
     }
 

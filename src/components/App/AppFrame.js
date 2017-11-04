@@ -43,7 +43,7 @@ import FrmLogin from 'metadata-react/FrmSuperLogin';
 
 import Settings from '../Settings';
 
-import {withNavigateAndMeta} from 'metadata-redux/src/with';
+import {withNavigateAndMeta} from 'metadata-redux/with.min';
 
 const styles = theme => ({
   '@global': {

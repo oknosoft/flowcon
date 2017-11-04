@@ -168,7 +168,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: [paths.appSrc, path.resolve(paths.appNodeModules, './metadata-react')],
-        exclude: [/\\metadata\\/],
+        //exclude: [/\\metadata\\/],
         loader: require.resolve('babel-loader'),
         options: {
 

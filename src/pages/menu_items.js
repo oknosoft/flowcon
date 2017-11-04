@@ -89,13 +89,18 @@ function path_ok(path, item) {
 }
 
 export function item_props(path, parent = items) {
-  for(const item of parent){
-    const props = item.items ? item_props(path, item.items) : path_ok(path, item) && item;
-    if(props){
-      return props;
+  if(path && path != '/'){
+    for(const item of parent){
+      const props = item.items ? item_props(path, item.items) : path_ok(path, item) && item;
+      if(props){
+        return props;
+      }
     }
   }
-  return {};
+  // здесь можно переопределить нужность meta и авторизованности для корневой страницы
+  else{
+    return {};
+  }
 }
 
 export default items;

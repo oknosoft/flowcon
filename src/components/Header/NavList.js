@@ -7,7 +7,7 @@ import Collapse from 'material-ui/transitions/Collapse';
 
 import classnames from 'classnames';
 import withStyles from './menu';
-import {withIface} from 'metadata-redux/src/with';
+import {withIface} from 'metadata-redux/with.min';
 
 import IconExpandMore from 'material-ui-icons/ExpandMore';
 
