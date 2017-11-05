@@ -48,7 +48,7 @@ module.exports = function settings(prm) {
     // разрешаем сохранение пароля
     enable_save_pwd: true,
 
-    // используем геокодер
+    // геокодер не используем
     use_ip_geo: false,
 
     // используем карты google

@@ -98,7 +98,7 @@ module.exports = {
       // разрешаем обрабатывать файлы не только из src
       // new ModuleScopePlugin(paths.appSrc),
     ],
-    // эта строка под вопросом, скорее всего - не нужна
+    // для отладки через npm link, symlinks должна быть false
     symlinks: false,
   },
   module: {

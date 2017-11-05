@@ -68,10 +68,10 @@ $p.wsql.init((prm) => {
     return db.get('meta')
   })
     .catch((err) => {
-    debug('Не удалось получить объект meta из CouchDB\nПроверьте логин, пароль и строку подключения');
-    debug(err);
-    process.exit(1);
-  })
+      debug('Не удалось получить объект meta из CouchDB\nПроверьте логин, пароль и строку подключения');
+      debug(err);
+      process.exit(1);
+    })
     .then((doc) => {
       _m = doc;
       doc = null;
