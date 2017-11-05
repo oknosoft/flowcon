@@ -60,7 +60,7 @@ function MarkdownDocs(props: Props) {
 
   return (
     <AppContent className={classes.root}>
-      <Helmet title={`${getTitle(markdown)} - Material-UI`} />
+      <Helmet title={`${getTitle(markdown)} - Flowcon`} />
 
       {/*
         <div className={classes.header}>

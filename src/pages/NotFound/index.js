@@ -1,8 +1,9 @@
+// @flow
+
 import React from 'react';
+import MarkdownDocs from '../../components/Markdown/MarkdownDocs';
+import markdown from './markdown.md';
 
-const NotFoundPage = () =>
-  <div>
-    <h2>404</h2>
-  </div>;
-
-export default NotFoundPage;
+export default function Page() {
+  return <MarkdownDocs markdown={markdown} />;
+}
