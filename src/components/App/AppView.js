@@ -12,7 +12,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import {Switch, Route} from 'react-router';
 
 import Github from '../../styles/icons/GitHub';
-import AppDrawer from './AppDrawer';
+import AppDrawer from 'metadata-react/App/AppDrawer';
 
 // заставка "загрузка занных"
 import DumbScreen from '../DumbScreen';
@@ -20,20 +20,16 @@ import DumbScreen from '../DumbScreen';
 // вложенный маршрутизатор страниц с данными
 import DataRoute from '../DataRoute';
 
-// домашняя страница, в данном проекте - просто редирект на список заказов
-import HomeView from '../../pages/Home';
+import HomeView from '../../pages/Home';      // домашняя страница
+import AboutPage from '../../pages/About';    // информация о программе
+import Readme from '../../pages/Readme';      // вводный текст
+import NotFound from '../../pages/NotFound';  // 404
 
-// информация о программе
-import AboutPage from '../../pages/About';
-
-import Readme from '../../pages/Readme';
+import items from '../../pages';  // 404
 
 import FakeDiagram from '../FakeDiagram';
 
 import FakeList from '../FakeList';
-
-// 404
-import NotFoundPage from '../NotFoundPage';
 
 // дерево метаданных
 import MetaTreePage from '../MetaTreePage';
@@ -143,7 +139,7 @@ const styles = theme => ({
   },
 });
 
-class AppFrame extends React.Component<any, any> {
+class AppView extends React.Component<any, any> {
 
   state = {
     mobileOpen: false,
@@ -155,9 +151,9 @@ class AppFrame extends React.Component<any, any> {
 
   render() {
     const {props} = this;
-    const {classes, handleNavigate} = props;
+    const {classes, handleNavigate, location} = props;
     const title = 'title';
-    const isHome = props.location.pathname === '/';
+    const isHome = location.pathname === '/';
 
     let disablePermanent = false;
     let navIconClassName = '';
@@ -208,6 +204,7 @@ class AppFrame extends React.Component<any, any> {
           onRequestClose={this.handleDrawerToggle}
           mobileOpen={this.state.mobileOpen}
           handleNavigate={handleNavigate}
+          items={items}
           isHome={isHome}
         />
 
@@ -223,7 +220,7 @@ class AppFrame extends React.Component<any, any> {
           <Route path="/readme" render={(routeProps) => <Readme {...props} {...routeProps} />}/>
           <Route path="/login" render={(routeProps) => <FrmLogin {...props} {...routeProps} />}/>
           <Route path="/settings" component={Settings}/>
-          <Route component={NotFoundPage}/>
+          <Route component={NotFound}/>
         </Switch>
 
       </div>
@@ -231,9 +228,9 @@ class AppFrame extends React.Component<any, any> {
   }
 }
 
-AppFrame.propTypes = {
+AppView.propTypes = {
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, {name: 'AppFrame'})(withNavigateAndMeta(AppFrame));
+export default withStyles(styles, {name: 'AppView'})(withNavigateAndMeta(AppView));

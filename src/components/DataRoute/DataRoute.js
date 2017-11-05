@@ -9,7 +9,7 @@ import DataObj from 'metadata-react/FrmObj';
 import FrmReport from 'metadata-react/FrmReport';
 
 //import MetaObjPage from '../../components/MetaObjPage';
-import NotFoundPage from '../NotFoundPage';
+import NotFoundPage from '../../pages/NotFound';
 
 class DataRoute extends Component {
 

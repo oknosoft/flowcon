@@ -6,13 +6,13 @@ import {Route} from 'react-router';
 // статусы "загружено и т.д." в ствойствах компонента
 import {withMeta} from 'metadata-redux';
 
-import {item_props} from '../../pages/menu_items';
+import {item_props} from '../../pages';
 
 // заставка "загрузка занных"
 import DumbScreen from '../DumbScreen';
 
 // корневые контейнеры
-import AppFrame from './AppFrame';
+import AppView from './AppView';
 
 import browser_compatible from 'metadata-react/BrowserCompatibility/browser_compatible';
 import BrowserCompatibility from 'metadata-react/BrowserCompatibility';
@@ -83,7 +83,7 @@ class RootView extends Component {
             <DumbScreen {...props} />
             :
             <Router history={history}>
-              <Route component={AppFrame}/>
+              <Route component={AppView}/>
             </Router>)
           :
           (<BrowserCompatibility/>)

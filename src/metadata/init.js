@@ -11,11 +11,6 @@ $p.md.init({"enm":{"accumulation_record_type":[{"order":0,"name":"debit","synony
     RegisterRow, BusinessProcessObj, TaskObj} = $p.constructor.classes;
     
   const _define = Object.defineProperties;
-    
-  function conf(target, key, descriptor) {
-    descriptor.configurable = true;
-    return descriptor;
-  }
 
 $p.enm.create('accumulation_record_type');
 $p.enm.create('sort_directions');

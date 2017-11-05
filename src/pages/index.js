@@ -77,7 +77,7 @@ const items = [
   },
   {
     text: 'О программе',
-    title: 'О программе',
+    title: 'Flowcon - о программе',
     navigate: '/about',
     icon: <IconInfo/>
   }
@@ -88,19 +88,20 @@ function path_ok(path, item) {
   return pos == 0 || pos == 1;
 }
 
-export function item_props(path, parent = items) {
+function with_recursion(path, parent) {
   if(path && path != '/'){
     for(const item of parent){
-      const props = item.items ? item_props(path, item.items) : path_ok(path, item) && item;
+      const props = item.items ? with_recursion(path, item.items) : path_ok(path, item) && item;
       if(props){
         return props;
       }
     }
   }
+}
+
+export function item_props(path) {
   // здесь можно переопределить нужность meta и авторизованности для корневой страницы
-  else{
-    return {};
-  }
+  return with_recursion(path, items) || {};
 }
 
 export default items;

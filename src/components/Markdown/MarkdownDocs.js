@@ -6,7 +6,7 @@ import warning from 'warning';
 import Helmet from 'react-helmet';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import AppContent from '../App/AppContent';
+import AppContent from 'metadata-react/App/AppContent';
 import MarkdownElement from './MarkdownElement';
 //import Demo from 'docs/src/modules/components/Demo';
 import {getHeaders, getContents, getTitle} from './parseMarkdown';
@@ -62,11 +62,13 @@ function MarkdownDocs(props: Props) {
     <AppContent className={classes.root}>
       <Helmet title={`${getTitle(markdown)} - Material-UI`} />
 
-      <div className={classes.header}>
-        <Button component="a" href={`${SOURCE_CODE_ROOT_URL}${sourceLocation}`}>
-          {'Edit this page'}
-        </Button>
-      </div>
+      {/*
+        <div className={classes.header}>
+          <Button component="a" href={`${SOURCE_CODE_ROOT_URL}${sourceLocation}`}>
+            {'Edit this page'}
+          </Button>
+        </div>
+      */}
 
       {contents.map(content => {
         const match = content.match(demoRegexp);
