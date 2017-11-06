@@ -2,6 +2,7 @@ import React from 'react';
 import IconChart from 'material-ui-icons/InsertChart';
 import IconDoc from 'material-ui-icons/EventNote';
 import IconInfo from 'material-ui-icons/Info';
+import IconHelp from 'material-ui-icons/Help';
 import IconPerson from 'material-ui-icons/Person';
 import IconSettings from 'material-ui-icons/Settings';
 // import IconDrafts from 'material-ui-icons/Drafts';
@@ -66,13 +67,18 @@ const items = [
 
   },
   {
+    divider: true,
+  },
+  {
     text: 'Профиль',
     navigate: '/login',
+    need_meta: true,
     icon: <IconPerson/>
   },
   {
     text: 'Настройки',
     navigate: '/settings',
+    need_meta: true,
     icon: <IconSettings/>,
   },
   {
@@ -84,8 +90,8 @@ const items = [
 ];
 
 function path_ok(path, item) {
-  const pos = item.navigate.indexOf(path);
-  return pos == 0 || pos == 1;
+  const pos = item.navigate && item.navigate.indexOf(path);
+  return pos === 0 || pos === 1;
 }
 
 function with_recursion(path, parent) {
@@ -100,8 +106,15 @@ function with_recursion(path, parent) {
 }
 
 export function item_props(path) {
+  if(!path){
+    path = location.pathname;
+  }
   // здесь можно переопределить нужность meta и авторизованности для корневой страницы
-  return with_recursion(path, items) || {};
+  let res = with_recursion(path, items);
+  if(!res && path.match(/\/(doc|cat|ireg|cch|rep)\./)){
+    res = {need_meta: true, need_user: true};
+  }
+  return res || {};
 }
 
 export default items;

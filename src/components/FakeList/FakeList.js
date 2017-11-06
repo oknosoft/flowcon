@@ -13,7 +13,9 @@ export default class FakeList extends React.Component {
   render() {
     return <AppContent >
       <Helmet title="Некий список" />
-      <Typography type="display3" component="h1" color="primary">Это список</Typography>
+      <div style={{marginTop: 16}}>
+        <Typography type="display2" component="h1" color="primary">Это список</Typography>
+      </div>
     </AppContent>;
   }
 }

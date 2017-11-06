@@ -5,7 +5,7 @@ import kebabCase from 'lodash/kebabCase';
 import warning from 'warning';
 import Helmet from 'react-helmet';
 import {withStyles} from 'material-ui/styles';
-import Button from 'material-ui/Button';
+//import Button from 'material-ui/Button';
 import AppContent from 'metadata-react/App/AppContent';
 import MarkdownElement from './MarkdownElement';
 //import Demo from 'docs/src/modules/components/Demo';
@@ -23,7 +23,6 @@ const styles = {
 };
 
 const demoRegexp = /^demo='(.*)'$/;
-const SOURCE_CODE_ROOT_URL = 'https://github.com/oknosoft/flowcon/tree/master';
 
 type Props = {
   classes: Object,
@@ -32,6 +31,8 @@ type Props = {
   // You can define the direction location of the markdown file.
   // Otherwise, we try to determine it with an heuristic.
   sourceLocation?: string,
+  // корень расположения исходных текстов, например, 'https://github.com/oknosoft/flowcon/tree/master'
+  sourceCodeRootUrl?: string,
 };
 
 function MarkdownDocs(props: Props) {
@@ -64,7 +65,7 @@ function MarkdownDocs(props: Props) {
 
       {/*
         <div className={classes.header}>
-          <Button component="a" href={`${SOURCE_CODE_ROOT_URL}${sourceLocation}`}>
+          <Button component="a" href={`${sourceCodeRootUrl}${sourceLocation}`}>
             {'Edit this page'}
           </Button>
         </div>
