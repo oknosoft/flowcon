@@ -1,8 +1,8 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from 'material-ui/styles';
+
 import Typography from 'material-ui/Typography';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -10,149 +10,124 @@ import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
 import MenuIcon from 'material-ui-icons/Menu';
 import {Switch, Route} from 'react-router';
+import {withIfaceAndMeta} from 'metadata-redux';
+import Button from 'material-ui/Button';
+import Snackbar from 'material-ui/Snackbar';    // сообщения в верхней части страницы (например, обновить после первого запуска)
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from 'material-ui/Dialog';       // диалог сообщения пользователю
 
 import Github from '../../styles/icons/GitHub';
 import AppDrawer from 'metadata-react/App/AppDrawer';
 
-// заставка "загрузка занных"
-import DumbScreen from '../DumbScreen';
-
-// вложенный маршрутизатор страниц с данными
-import DataRoute from '../DataRoute';
-
-import HomeView from '../../pages/Home';      // домашняя страница
-import AboutPage from '../../pages/About';    // информация о программе
-import Readme from '../../pages/Readme';      // вводный текст
-import NotFound from '../../pages/NotFound';  // 404
-
-import items from '../../pages';  // 404
+import items from '../../pages';                    // массив элементов меню
+import DumbScreen from '../DumbScreen';             // заставка "загрузка занных"
+import DataRoute from '../DataRoute';               // вложенный маршрутизатор страниц с данными
+import MarkdownRoute from '../MarkdownRoute';       // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
+import HomeView from '../../pages/Home';            // домашняя страница
+import MetaTreePage from '../MetaTreePage';         // дерево метаданных
+import FrmLogin from 'metadata-react/FrmSuperLogin';// логин и свойства подключения
+import Settings from '../Settings';                 // страница настроек приложения
+import {item_props} from '../../pages';             // метод для вычисления need_meta, need_user для location.pathname
 
 import FakeDiagram from '../FakeDiagram';
-
 import FakeList from '../FakeList';
 
-// дерево метаданных
-import MetaTreePage from '../MetaTreePage';
+import withStyles from './styles';
 
-// логин и свойства подключения
-import FrmLogin from 'metadata-react/FrmSuperLogin';
+// основной layout
+class AppView extends Component {
 
-import Settings from '../Settings';
+  constructor(props, context) {
+    super(props, context);
+    this.handleAlertClose = this.handleDialogClose.bind(this, 'alert');
+    const iprops = item_props();
+    this.state = {
+      need_meta: !!iprops.need_meta,
+      need_user: !!iprops.need_user,
+      mobileOpen: false,
+    };
+  }
 
-import {withNavigateAndMeta} from 'metadata-redux';
+  componentDidMount() {
+    const {handleOffline} = this.props;
+    this._online = handleOffline.bind(this, false);
+    this._offline = handleOffline.bind(this, true);
+    window.addEventListener('online', this._online, false);
+    window.addEventListener('offline', this._offline, false);
+  }
 
-const styles = theme => ({
-  '@global': {
-    html: {
-      background: theme.palette.background.default,
-      WebkitFontSmoothing: 'antialiased', // Antialiasing.
-      MozOsxFontSmoothing: 'grayscale', // Antialiasing.
-      boxSizing: 'border-box',
-    },
-    '*, *:before, *:after': {
-      boxSizing: 'inherit',
-    },
-    body: {
-      margin: 0,
-    },
-    '#nprogress': {
-      pointerEvents: 'none',
-      '& .bar': {
-        position: 'fixed',
-        background:
-          theme.palette.type === 'light' ? theme.palette.common.black : theme.palette.common.white,
-        borderRadius: 1,
-        zIndex: theme.zIndex.tooltip,
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: 2,
-      },
-      '& dd, & dt': {
-        position: 'absolute',
-        top: 0,
-        height: 2,
-        boxShadow: `${theme.palette.type === 'light'
-          ? theme.palette.common.black
-          : theme.palette.common.white} 1px 0 6px 1px`,
-        borderRadius: '100%',
-        animation: 'nprogress-pulse 2s ease-out 0s infinite',
-      },
-      '& dd': {
-        opacity: 0.6,
-        width: 20,
-        right: 0,
-        clip: 'rect(-6px,22px,14px,10px)',
-      },
-      '& dt': {
-        opacity: 0.6,
-        width: 180,
-        right: -80,
-        clip: 'rect(-6px,90px,14px,-6px)',
-      },
-    },
-    '@keyframes nprogress-pulse': {
-      '30%': {
-        opacity: 0.6,
-      },
-      '60%': {
-        opacity: 0,
-      },
-      to: {
-        opacity: 0.6,
-      },
-    },
-  },
-  root: {
-    //display: 'flex',
-    alignItems: 'stretch',
-    minHeight: '100vh',
-    width: '100%',
-  },
-  grow: {
-    flex: '1 1 auto',
-  },
-  title: {
-    marginLeft: 24,
-    flex: '0 1 auto',
-  },
-  appBar: {
-    transition: theme.transitions.create('width'),
-  },
-  appBarHome: {
-    boxShadow: 'none',
-  },
-  appBarShift: {
-    [theme.breakpoints.up('lg')]: {
-      width: 'calc(100% - 280px)',
-    },
-  },
-  drawer: {
-    [theme.breakpoints.up('lg')]: {
-      width: 280,
-    },
-  },
-  navIconHide: {
-    [theme.breakpoints.up('lg')]: {
-      display: 'none',
-    },
-  },
-});
+  componentWillUnmount() {
+    window.removeEventListener('online', this._online);
+    window.removeEventListener('offline', this._offline);
+  }
 
-class AppView extends React.Component<any, any> {
+  shouldComponentUpdate(props, {need_user, need_meta}) {
+    const {meta_loaded, user, data_empty, couch_direct, offline} = props;
+    const iprops = item_props();
+    let res = true;
 
-  state = {
-    mobileOpen: false,
-  };
+    if(need_user != !!iprops.need_user) {
+      this.setState({need_user: !!iprops.need_user});
+      res = false;
+    }
+
+    if(need_meta != !!iprops.need_meta) {
+      this.setState({need_meta: !!iprops.need_meta});
+      res = false;
+    }
+
+    // если есть сохранённый пароль и online, пытаемся авторизоваться
+    if(meta_loaded && !user.logged_in && user.has_login && !user.try_log_in && !offline) {
+      props.handleLogin();
+      res = false;
+    }
+
+    // если это первый запуск или couch_direct и offline, переходим на страницу login
+    if(meta_loaded && res && need_user && ((data_empty === true && !user.try_log_in && !user.logged_in) || (couch_direct && offline))) {
+      props.handleNavigate('/login');
+      res = false;
+    }
+
+    return res;
+  }
 
   handleDrawerToggle = () => {
     this.setState({mobileOpen: !this.state.mobileOpen});
   };
 
+  renderHome = (routeProps) => {
+    const {classes, handleNavigate} = this.props;
+    const {root, hero, content, text, headline, button, logo} = classes;
+    return <HomeView
+      classes={{root, hero, content, text, headline, button, logo}}
+      handleNavigate={handleNavigate}
+      {...routeProps}
+    />;
+  };
+
+
+  handleReset = () => {
+    const {handleNavigate, first_run} = this.props;
+    if(first_run) {
+      $p.eve && ($p.eve.redirect = true);
+      location.replace('/');
+    }
+    else {
+      handleNavigate('/');
+    }
+  };
+
+  handleDialogClose(name) {
+    this.props.handleIfaceState({component: '', name, value: {open: false}});
+  }
+
   render() {
     const {props} = this;
-    const {classes, handleNavigate, location} = props;
-    const title = 'title';
+    const {classes, handleNavigate, location, snack, alert, doc_ram_loaded, title} = props;
     const isHome = location.pathname === '/';
 
     let disablePermanent = false;
@@ -169,8 +144,9 @@ class AppView extends React.Component<any, any> {
       appBarClassName += ` ${classes.appBarShift}`;
     }
 
-    return (
-      <div className={classes.root}>
+    return [
+      // основной layout
+      <div key="content" className={classes.root}>
         <AppBar className={appBarClassName}>
           <Toolbar>
             <IconButton
@@ -183,7 +159,7 @@ class AppView extends React.Component<any, any> {
             </IconButton>
             {title !== null && (
               <Typography className={classes.title} type="title" color="inherit" noWrap>
-                {title}
+                {title || 'Flowcon'}
               </Typography>
             )}
             <div className={classes.grow}/>
@@ -207,30 +183,56 @@ class AppView extends React.Component<any, any> {
           items={items}
           isHome={isHome}
         />
-
         <Switch>
-          <Route exact path="/" render={(routeProps) => {
-            const {root, hero, content, text, headline, button, logo} = classes;
-            return <HomeView classes={{root, hero, content, text, headline, button, logo}} handleNavigate={handleNavigate} {...routeProps} />;
-          }}/>
+          <Route exact path="/" render={this.renderHome}/>
           <Route path="/:area(doc|cat|ireg|cch|rep).:name" component={DataRoute}/>
-          <Route path="/about" render={(routeProps) => <AboutPage {...props} {...routeProps} />}/>
           <Route path="/diagram" render={(routeProps) => <FakeDiagram {...props} {...routeProps} />}/>
           <Route path="/list" render={(routeProps) => <FakeList {...props} {...routeProps} />}/>
-          <Route path="/readme" render={(routeProps) => <Readme {...props} {...routeProps} />}/>
           <Route path="/login" render={(routeProps) => <FrmLogin {...props} {...routeProps} />}/>
           <Route path="/settings" component={Settings}/>
-          <Route component={NotFound}/>
+          <Route component={MarkdownRoute}/>
         </Switch>
+      </div>,
 
-      </div>
-    );
+      // всплывающтй snackbar оповещений пользователя
+      ((snack && snack.open) || (props.first_run && doc_ram_loaded)) && <Snackbar
+        key="snack"
+        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+        open
+        message={snack && snack.open ? snack.message : 'Требуется перезагрузить страницу после первой синхронизации данных'}
+        action={<Button
+          color="accent"
+          onClick={snack && snack.open ? this.handleDialogClose.bind(this, 'snack') : this.handleReset}
+        >Выполнить</Button>}
+      />,
+
+      // диалог сообщений пользователю
+      alert && alert.open && <Dialog key="alert" open onRequestClose={this.handleAlertClose}>
+        <DialogTitle>
+          {alert.title}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {alert.text}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleAlertClose} color="primary">
+            Ок
+          </Button>
+        </DialogActions>
+      </Dialog>
+    ];
   }
 }
 
 AppView.propTypes = {
+  handleOffline: PropTypes.func.isRequired,
+  handleNavigate: PropTypes.func.isRequired,
+  handleIfaceState: PropTypes.func.isRequired,
+  first_run: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, {name: 'AppView'})(withNavigateAndMeta(AppView));
+export default withStyles(withIfaceAndMeta(AppView));
