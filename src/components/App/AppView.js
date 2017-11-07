@@ -12,16 +12,13 @@ import MenuIcon from 'material-ui-icons/Menu';
 import {Switch, Route} from 'react-router';
 import {withIfaceAndMeta} from 'metadata-redux';
 import Button from 'material-ui/Button';
-import Snackbar from 'material-ui/Snackbar';    // сообщения в верхней части страницы (например, обновить после первого запуска)
+import Snackbar from 'material-ui/Snackbar';        // сообщения в верхней части страницы (например, обновить после первого запуска)
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle
-} from 'material-ui/Dialog';       // диалог сообщения пользователю
-
-import Github from '../../styles/icons/GitHub';
-import AppDrawer from 'metadata-react/App/AppDrawer';
+} from 'material-ui/Dialog';                        // диалог сообщения пользователю
 
 import items from '../../pages';                    // массив элементов меню
 import DumbScreen from '../DumbScreen';             // заставка "загрузка занных"
@@ -35,6 +32,9 @@ import {item_props} from '../../pages';             // метод для выч�
 
 import FakeDiagram from '../FakeDiagram';
 import FakeList from '../FakeList';
+
+import Github from '../../styles/icons/GitHub';
+import AppDrawer from 'metadata-react/App/AppDrawer';
 
 import withStyles from './styles';
 
@@ -182,6 +182,7 @@ class AppView extends Component {
           handleNavigate={handleNavigate}
           items={items}
           isHome={isHome}
+          title="Flowcon"
         />
         <Switch>
           <Route exact path="/" render={this.renderHome}/>

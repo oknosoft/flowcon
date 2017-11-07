@@ -65,7 +65,7 @@ const styles = theme => ({
   root: {
     //display: 'flex',
     alignItems: 'stretch',
-    minHeight: '100vh',
+    minHeight: 'calc(100vh - 80px)',
     width: '100%',
   },
   grow: {
