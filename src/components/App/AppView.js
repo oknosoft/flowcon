@@ -35,6 +35,7 @@ import FakeList from '../FakeList';
 
 import Github from '../../styles/icons/GitHub';
 import AppDrawer from 'metadata-react/App/AppDrawer';
+import Notifications from 'metadata-react/Notifications';
 
 import withStyles from './styles';
 
@@ -172,6 +173,9 @@ class AppView extends Component {
             >
               <Github/>
             </IconButton>
+
+            <Notifications />
+
           </Toolbar>
         </AppBar>
         <AppDrawer
