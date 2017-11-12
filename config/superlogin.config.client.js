@@ -1,6 +1,6 @@
 module.exports = {
   // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth/')
-  baseUrl: 'http://loc.flowcon.js.org:3100/auth/',
+  baseUrl: process.env.NODE_ENV !== 'development' ? 'https://flowcon.oknosoft.ru/auth/' : 'http://loc.flowcon.js.org:3100/auth/',
   //baseUrl: '/auth/',
   // A list of API endpoints to automatically add the Authorization header to
   // By default the host the browser is pointed to will be added automatically

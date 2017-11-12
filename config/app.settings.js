@@ -22,7 +22,7 @@ module.exports = function settings(prm) {
     }],
 
     // расположение couchdb для сайта
-    couch_path: 'http://fl211:5984/fl_',
+    couch_path: 'https://flowcon.oknosoft.ru/couchdb/fl_',
 
     // расположение couchdb для nodejs
     couch_local: 'http://fl211:5984/fl_',

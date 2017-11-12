@@ -45,6 +45,7 @@ class RootProvider extends Component {
         theme={theme}
         DumbScreen={DumbScreen}
         AppView={AppView}
+        ie11
       />
     </Provider>;
   }

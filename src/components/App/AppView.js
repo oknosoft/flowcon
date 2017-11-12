@@ -7,18 +7,17 @@ import Typography from 'material-ui/Typography';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
 import MenuIcon from 'material-ui-icons/Menu';
 import {Switch, Route} from 'react-router';
 import {withIfaceAndMeta} from 'metadata-redux';
-import Button from 'material-ui/Button';
-import Snackbar from 'material-ui/Snackbar';        // сообщения в верхней части страницы (например, обновить после первого запуска)
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle
-} from 'material-ui/Dialog';                        // диалог сообщения пользователю
+//import Tooltip from 'material-ui/Tooltip';
+import Snack from 'metadata-react/App/Snack';       // сообщения в верхней части страницы (например, обновить после первого запуска)
+import Alert from 'metadata-react/App/Alert';       // диалог сообщения пользователю
+import Confirm from 'metadata-react/App/Confirm';   // диалог вопросов пользователю (да, нет)
+import FrmLogin from 'metadata-react/FrmSuperLogin';// логин и свойства подключения
+import NeedAuth from 'metadata-react/App/NeedAuth'; // страница "необхлдима авторизация"
+import AppDrawer from 'metadata-react/App/AppDrawer';
+import HeaderButtons from 'metadata-react/Header/HeaderButtons';
 
 import items from '../../pages';                    // массив элементов меню
 import DumbScreen from '../DumbScreen';             // заставка "загрузка занных"
@@ -26,16 +25,11 @@ import DataRoute from '../DataRoute';               // вложенный мар
 import MarkdownRoute from '../MarkdownRoute';       // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
 import HomeView from '../../pages/Home';            // домашняя страница
 import MetaTreePage from '../MetaTreePage';         // дерево метаданных
-import FrmLogin from 'metadata-react/FrmSuperLogin';// логин и свойства подключения
 import Settings from '../Settings';                 // страница настроек приложения
 import {item_props} from '../../pages';             // метод для вычисления need_meta, need_user для location.pathname
 
 import FakeDiagram from '../FakeDiagram';
 import FakeList from '../FakeList';
-
-import Github from '../../styles/icons/GitHub';
-import AppDrawer from 'metadata-react/App/AppDrawer';
-import Notifications from 'metadata-react/Notifications';
 
 import withStyles from './styles';
 
@@ -53,21 +47,8 @@ class AppView extends Component {
     };
   }
 
-  componentDidMount() {
-    const {handleOffline} = this.props;
-    this._online = handleOffline.bind(this, false);
-    this._offline = handleOffline.bind(this, true);
-    window.addEventListener('online', this._online, false);
-    window.addEventListener('offline', this._offline, false);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('online', this._online);
-    window.removeEventListener('offline', this._offline);
-  }
-
   shouldComponentUpdate(props, {need_user, need_meta}) {
-    const {meta_loaded, user, data_empty, couch_direct, offline} = props;
+    const {meta_loaded, user, offline} = props;
     const iprops = item_props();
     let res = true;
 
@@ -87,48 +68,41 @@ class AppView extends Component {
       res = false;
     }
 
-    // если это первый запуск или couch_direct и offline, переходим на страницу login
-    if(meta_loaded && res && need_user && ((data_empty === true && !user.try_log_in && !user.logged_in) || (couch_direct && offline))) {
-      props.handleNavigate('/login');
-      res = false;
-    }
-
     return res;
+  }
+
+  handleDialogClose(name) {
+    this.props.handleIfaceState({component: '', name, value: {open: false}});
+  }
+
+  handleReset(reset) {
+    const {handleNavigate, first_run} = this.props;
+    (first_run || reset) ? location.replace('/') : handleNavigate('/');
   }
 
   handleDrawerToggle = () => {
     this.setState({mobileOpen: !this.state.mobileOpen});
   };
 
+  handleDrawerClose = () => {
+    this.setState({mobileOpen: false});
+  };
+
   renderHome = (routeProps) => {
-    const {classes, handleNavigate} = this.props;
+    const {classes, title, handleNavigate, handleIfaceState} = this.props;
     const {root, hero, content, text, headline, button, logo} = classes;
     return <HomeView
       classes={{root, hero, content, text, headline, button, logo}}
+      title={title}
       handleNavigate={handleNavigate}
+      handleIfaceState={handleIfaceState}
       {...routeProps}
     />;
   };
 
-
-  handleReset = () => {
-    const {handleNavigate, first_run} = this.props;
-    if(first_run) {
-      $p.eve && ($p.eve.redirect = true);
-      location.replace('/');
-    }
-    else {
-      handleNavigate('/');
-    }
-  };
-
-  handleDialogClose(name) {
-    this.props.handleIfaceState({component: '', name, value: {open: false}});
-  }
-
   render() {
-    const {props} = this;
-    const {classes, handleNavigate, location, snack, alert, doc_ram_loaded, title} = props;
+    const {props, state} = this;
+    const {classes, handleNavigate, location, snack, alert, confirm, doc_ram_loaded, title, sync_started, fetch, user, couch_direct, offline, meta_loaded} = props;
     const isHome = location.pathname === '/';
 
     let disablePermanent = false;
@@ -149,7 +123,7 @@ class AppView extends Component {
       // основной layout
       <div key="content" className={classes.root}>
         <AppBar className={appBarClassName}>
-          <Toolbar>
+          <Toolbar disableGutters>
             <IconButton
               color="contrast"
               aria-label="open drawer"
@@ -158,86 +132,88 @@ class AppView extends Component {
             >
               <MenuIcon/>
             </IconButton>
-            {title !== null && (
-              <Typography className={classes.title} type="title" color="inherit" noWrap>
-                {title || 'Flowcon'}
-              </Typography>
-            )}
-            <div className={classes.grow}/>
 
-            <IconButton
-              component="a"
-              title="GitHub"
-              color="contrast"
-              href="https://github.com/oknosoft/flowcon"
-            >
-              <Github/>
-            </IconButton>
+            <Typography className={classes.title} type="title" color="inherit" noWrap>{title || 'Flowcon'}</Typography>
 
-            <Notifications />
+            <HeaderButtons
+              sync_started={sync_started}
+              fetch={fetch}
+              offline={offline}
+              user={user}
+              handleNavigate={handleNavigate}
+            />
 
           </Toolbar>
         </AppBar>
         <AppDrawer
           className={classes.drawer}
           disablePermanent={disablePermanent}
-          onRequestClose={this.handleDrawerToggle}
+          onRequestClose={this.handleDrawerClose}
           mobileOpen={this.state.mobileOpen}
           handleNavigate={handleNavigate}
           items={items}
           isHome={isHome}
           title="Flowcon"
         />
-        <Switch>
-          <Route exact path="/" render={this.renderHome}/>
-          <Route path="/:area(doc|cat|ireg|cch|rep).:name" component={DataRoute}/>
-          <Route path="/diagram" render={(routeProps) => <FakeDiagram {...props} {...routeProps} />}/>
-          <Route path="/list" render={(routeProps) => <FakeList {...props} {...routeProps} />}/>
-          <Route path="/login" render={(routeProps) => <FrmLogin {...props} {...routeProps} />}/>
-          <Route path="/settings" component={Settings}/>
-          <Route component={MarkdownRoute}/>
-        </Switch>
+
+        {
+          // основной контент или заставка загрузки или приглашение к авторизации
+          meta_loaded && state.need_user && ((!user.try_log_in && !user.logged_in) || (couch_direct && offline)) ?
+            <NeedAuth
+              key="auth"
+              handleNavigate={handleNavigate}
+              handleIfaceState={props.handleIfaceState}
+              title={title}
+              offline={couch_direct && offline}
+            />
+            :
+            (
+              (!location.pathname.match(/\/login$/) && ((state.need_meta && !meta_loaded) || (state.need_user && !props.complete_loaded))) ?
+                <DumbScreen
+                  key="dumb"
+                  title={doc_ram_loaded ? 'Подготовка данных в памяти...' :
+                    (user.try_log_in ? 'Авторизация на сервере CouchDB...' : 'Загрузка из IndexedDB...')}
+                  page={{text: doc_ram_loaded ? 'Индексы в памяти...' : (user.logged_in ? 'Почти готово...' : 'Получение данных...')}}
+                />
+                :
+                <Switch key="switch">
+                  <Route exact path="/" render={this.renderHome}/>
+                  <Route path="/:area(doc|cat|ireg|cch|rep).:name" component={DataRoute}/>
+                  <Route path="/meta" component={MetaTreePage}/>
+                  <Route path="/diagram" render={(routeProps) => <FakeDiagram {...props} {...routeProps} />}/>
+                  <Route path="/list" render={(routeProps) => <FakeList {...props} {...routeProps} />}/>
+                  <Route path="/login" render={(routeProps) => <FrmLogin {...props} {...routeProps} />}/>
+                  <Route path="/settings" component={Settings}/>
+                  <Route component={MarkdownRoute}/>
+                </Switch>
+            )
+        }
       </div>,
 
       // всплывающтй snackbar оповещений пользователя
-      ((snack && snack.open) || (props.first_run && doc_ram_loaded)) && <Snackbar
+      ((snack && snack.open) || (props.first_run && doc_ram_loaded)) &&
+      <Snack
         key="snack"
-        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-        open
-        message={snack && snack.open ? snack.message : 'Требуется перезагрузить страницу после первой синхронизации данных'}
-        action={<Button
-          color="accent"
-          onClick={snack && snack.open ? this.handleDialogClose.bind(this, 'snack') : this.handleReset}
-        >Выполнить</Button>}
+        snack={snack}
+        handleClose={snack && snack.open && !snack.reset ? this.handleDialogClose.bind(this, 'snack') : () => this.handleReset(snack && snack.reset)}
       />,
 
       // диалог сообщений пользователю
-      alert && alert.open && <Dialog key="alert" open onRequestClose={this.handleAlertClose}>
-        <DialogTitle>
-          {alert.title}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {alert.text}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleAlertClose} color="primary">
-            Ок
-          </Button>
-        </DialogActions>
-      </Dialog>
+      alert && alert.open && <Alert key="alert" open text={alert.text} title={alert.title} handleOk={this.handleAlertClose}/>,
+
+      // диалог вопросов пользователю (да, нет)
+      confirm && confirm.open && <Confirm key="confirm" open text={confirm.text} title={confirm.title} handleOk={confirm.handleOk} handleCancel={confirm.handleCancel}/>,
     ];
   }
 }
 
 AppView.propTypes = {
-  handleOffline: PropTypes.func.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
   first_run: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default withStyles(withIfaceAndMeta(AppView));
