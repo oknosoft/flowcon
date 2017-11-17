@@ -2,14 +2,12 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
+import {Switch, Route} from 'react-router';
 import Typography from 'material-ui/Typography';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
-import {Switch, Route} from 'react-router';
-import {withIfaceAndMeta} from 'metadata-redux';
 //import Tooltip from 'material-ui/Tooltip';
 import Snack from 'metadata-react/App/Snack';       // сообщения в верхней части страницы (например, обновить после первого запуска)
 import Alert from 'metadata-react/App/Alert';       // диалог сообщения пользователю
@@ -19,14 +17,15 @@ import NeedAuth from 'metadata-react/App/NeedAuth'; // страница "нео�
 import AppDrawer from 'metadata-react/App/AppDrawer';
 import HeaderButtons from 'metadata-react/Header/HeaderButtons';
 
-import items from '../../pages';                    // массив элементов меню
 import DumbScreen from '../DumbScreen';             // заставка "загрузка занных"
 import DataRoute from '../DataRoute';               // вложенный маршрутизатор страниц с данными
 import MarkdownRoute from '../MarkdownRoute';       // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
 import HomeView from '../../pages/Home';            // домашняя страница
 import MetaTreePage from '../MetaTreePage';         // дерево метаданных
 import Settings from '../Settings';                 // страница настроек приложения
-import {item_props} from '../../pages';             // метод для вычисления need_meta, need_user для location.pathname
+
+import {withIfaceAndMeta} from 'metadata-redux';
+import items, {item_props} from '../../pages';      // массив элементов меню и метод для вычисления need_meta, need_user по location.pathname
 
 import FakeDiagram from '../FakeDiagram';
 import FakeList from '../FakeList';

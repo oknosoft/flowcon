@@ -4,6 +4,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const md5File = require('md5-file');
 const localNodeModules = path.resolve(__dirname, '../node_modules');
 const remoteNodeModules = 'D:\\WORK\\0KNOSOFT\\UniServer\\www\\builder2\\git-osde\\packages';
 const {dependencies} = require(path.resolve(__dirname, '../package.json'));
@@ -30,14 +31,24 @@ function fromDir(startPath, filter, callback) {
   };
 };
 
+let copied;
 for (const lib of libs) {
   const lpath = path.resolve(localNodeModules, lib);
   const rpath = path.resolve(remoteNodeModules, lib);
   let i = 0;
-  fromDir(rpath, /\.(css|js|mjs|md|map)$/, (filename) => {
-    i++;
-    const name = filename.replace(rpath, '');
-    fs.createReadStream(filename).pipe(fs.createWriteStream(path.join(lpath, name)));
+  fromDir(rpath, /\.(css|js|mjs|md|map)$/, (rname) => {
+    const name = rname.replace(rpath, '');
+    const lame = path.join(lpath, name);
+    if(!fs.existsSync(lame) || (md5File.sync(rname) != md5File.sync(lame))){
+      i++;
+      fs.createReadStream(rname).pipe(fs.createWriteStream(lame));
+    }
   });
-  console.log(`from ${rpath} written ${i} files`);
+  if(i){
+    copied = true;
+    console.log(`from ${rpath} written ${i} files`);
+  }
+}
+if(!copied){
+  console.log(`all files match`);
 }
