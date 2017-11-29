@@ -132,7 +132,7 @@ module.exports = {
           // smaller than specified limit in bytes as data URLs to avoid requests.
           // A missing `test` is equivalent to a match.
           {
-            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
@@ -148,7 +148,7 @@ module.exports = {
               path.resolve(paths.appNodeModules, './metadata-react'),
               //path.resolve(paths.appNodeModules, './metadata-redux'),
             ],
-            //exclude: [/\\metadata\\/],
+            //exclude: [/\\metadata\\/,/\/metadata\//],
             loader: require.resolve('babel-loader'),
             options: {
               // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -208,7 +208,7 @@ module.exports = {
             // it's runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.js$/, /\.html$/, /\.json$/, /\.md$/],
+            exclude: [/\.js$/, /\.mjs$/, /\.jsx$/, /\.html$/, /\.json$/, /\.md$/],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',

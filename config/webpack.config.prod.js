@@ -137,7 +137,7 @@ module.exports = {
           // "url" loader works just like "file" loader but it also embeds
           // assets smaller than specified size as data URLs to avoid requests.
           {
-            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
@@ -153,7 +153,7 @@ module.exports = {
               path.resolve(paths.appNodeModules, './metadata-react'),
               //path.resolve(paths.appNodeModules, './metadata-redux'),
             ],
-            //exclude: [/\\metadata\\/],
+            //exclude: [/\\metadata\\/,/\/metadata\//],
             loader: require.resolve('babel-loader'),
             options: {
 
@@ -233,7 +233,7 @@ module.exports = {
             // it's runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.js$/, /\.html$/, /\.json$/, /\.md$/],
+            exclude: [/\.js$/, /\.mjs$/, /\.jsx$/, /\.html$/, /\.json$/, /\.md$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
