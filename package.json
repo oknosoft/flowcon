@@ -1,6 +1,6 @@
 {
   "name": "flowcon",
-  "version": "2.0.16-beta.41",
+  "version": "2.0.16-beta.42",
   "description": "Flowcon: task flow",
   "repository": {
     "type": "git",
@@ -24,17 +24,17 @@
   },
   "homepage": "https://flowcon.js.org/",
   "dependencies": {
-    "metadata-abstract-ui": "^2.0.16-beta.41",
-    "metadata-core": "^2.0.16-beta.41",
-    "metadata-external": "^2.0.16-beta.41",
-    "metadata-pouchdb": "^2.0.16-beta.41",
-    "metadata-react": "^2.0.16-beta.41",
-    "metadata-redux": "^2.0.16-beta.41",
-    "metadata-superlogin": "^2.0.16-beta.41"
+    "metadata-abstract-ui": "^2.0.16-beta.42",
+    "metadata-core": "^2.0.16-beta.42",
+    "metadata-external": "^2.0.16-beta.42",
+    "metadata-pouchdb": "^2.0.16-beta.42",
+    "metadata-react": "^2.0.16-beta.42",
+    "metadata-redux": "^2.0.16-beta.42",
+    "metadata-superlogin": "^2.0.16-beta.42"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.2",
+    "babel-eslint": "^8.0.3",
     "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.2",
     "babel-preset-react-app": "^3.1.0",
@@ -43,7 +43,7 @@
     "chalk": "^2.3.0",
     "css-loader": "^0.28.7",
     "dotenv": "4.0.0",
-    "eslint": "^4.12.0",
+    "eslint": "^4.12.1",
     "eslint-config-react-app": "^2.0.1",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-babel": "^4.1.2",
@@ -70,7 +70,7 @@
     "style-loader": "^0.19.0",
     "sw-precache-webpack-plugin": "^0.11.4",
     "url-loader": "^0.6.2",
-    "webpack": "^3.8.1",
+    "webpack": "^3.9.1",
     "webpack-dev-server": "^2.9.5",
     "webpack-manifest-plugin": "^1.3.2",
     "whatwg-fetch": "2.0.3"
