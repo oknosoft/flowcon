@@ -1,163 +1,218 @@
+/* eslint-disable flowtype/require-valid-file-annotation */
+
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router';
+import Typography from 'material-ui/Typography';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from 'material-ui-icons/Menu';
+//import Tooltip from 'material-ui/Tooltip';
+import Snack from 'metadata-react/App/Snack';       // сообщения в верхней части страницы (например, обновить после первого запуска)
+import Alert from 'metadata-react/App/Alert';       // диалог сообщения пользователю
+import Confirm from 'metadata-react/App/Confirm';   // диалог вопросов пользователю (да, нет)
+import FrmLogin from 'metadata-react/FrmSuperLogin';// логин и свойства подключения
+import NeedAuth from 'metadata-react/App/NeedAuth'; // страница "необхлдима авторизация"
+import AppDrawer from 'metadata-react/App/AppDrawer';
+import HeaderButtons from 'metadata-react/Header/HeaderButtons';
 
-// сообщения в верхней части страницы (например, обновить после первого запуска)
-import Snackbar from 'material-ui/Snackbar';
-import Button from 'material-ui/Button';
+import DumbScreen from '../DumbScreen';             // заставка "загрузка занных"
+import DataRoute from '../DataRoute';               // вложенный маршрутизатор страниц с данными
+import MarkdownRoute from '../MarkdownRoute';       // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
+import HomeView from '../../pages/Home';            // домашняя страница
+import MetaTreePage from '../MetaTreePage';         // дерево метаданных
+import Settings from '../Settings';                 // страница настроек приложения
 
-// диалог сообщения пользователю
-import Dialog, {DialogActions, DialogContent, DialogContentText, DialogTitle} from 'material-ui/Dialog';
+import {withIfaceAndMeta} from 'metadata-redux';
+import items, {item_props} from '../../pages';      // массив элементов меню и метод для вычисления need_meta, need_user по location.pathname
 
+import FakeDiagram from '../FakeDiagram';
+import FakeList from '../FakeList';
 
+import withStyles from './styles';
 
-// заставка "загрузка занных"
-import DumbScreen from '../DumbScreen';
-
-// вложенный маршрутизатор страниц с данными
-import DataRoute from '../DataRoute';
-
-// домашняя страница, в данном проекте - просто редирект на список заказов
-import HomeView from '../../pages/Home';
-
-// информация о программе
-import AboutPage from '../../pages/About';
-
-// 404
-import NotFoundPage from '../NotFoundPage';
-
-// дерево метаданных
-import MetaTreePage from '../MetaTreePage';
-
-// логин и свойства подключения
-import FrmLogin from 'metadata-react/FrmLogin';
-
-import Settings from '../Settings';
-
-import {withNavigateAndMeta} from 'metadata-redux/src/with';
-
-class AppRoot extends Component {
+// основной layout
+class AppView extends Component {
 
   constructor(props, context) {
     super(props, context);
     this.handleAlertClose = this.handleDialogClose.bind(this, 'alert');
+    const iprops = item_props();
+    this.state = {
+      need_meta: !!iprops.need_meta,
+      need_user: !!iprops.need_user,
+      mobileOpen: false,
+    };
   }
 
-  componentDidMount() {
-    const {handleOffline} = this.props;
-    this._online = handleOffline.bind(this, false);
-    this._offline = handleOffline.bind(this, true);
-    window.addEventListener('online', this._online, false);
-    window.addEventListener('offline', this._offline, false);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('online', this._online);
-    window.removeEventListener('offline', this._offline);
-  }
-
-  shouldComponentUpdate(props) {
-    const {user, data_empty, couch_direct, offline, history, path_log_in} = props;
+  shouldComponentUpdate(props, {need_user, need_meta}) {
+    const {meta_loaded, user, offline} = props;
+    const iprops = item_props();
     let res = true;
 
-    // если есть сохранённый пароль и online, пытаемся авторизоваться
-    if(!user.logged_in && user.has_login && !user.try_log_in && !offline) {
-      props.handleLogin();
+    if(need_user != !!iprops.need_user) {
+      this.setState({need_user: !!iprops.need_user});
       res = false;
     }
 
-    // если это первый запуск или couch_direct и offline, переходим на страницу login
-    if(!path_log_in && ((data_empty === true && !user.try_log_in) || (couch_direct && !user.logged_in))) {
-      history.push('/login');
+    if(need_meta != !!iprops.need_meta) {
+      this.setState({need_meta: !!iprops.need_meta});
+      res = false;
+    }
+
+    // если есть сохранённый пароль и online, пытаемся авторизоваться
+    if(meta_loaded && !user.logged_in && user.has_login && !user.try_log_in && !offline) {
+      props.handleLogin();
       res = false;
     }
 
     return res;
   }
 
-  handleReset = () => {
-    const {handleNavigate, first_run} = this.props;
-    if(first_run) {
-      $p.eve && ($p.eve.redirect = true);
-      location.replace('/');
-    }
-    else {
-      handleNavigate('/');
-    }
-  }
-
   handleDialogClose(name) {
     this.props.handleIfaceState({component: '', name, value: {open: false}});
   }
 
+  handleReset(reset) {
+    const {handleNavigate, first_run} = this.props;
+    (first_run || reset) ? location.replace('/') : handleNavigate('/');
+  }
+
+  handleDrawerToggle = () => {
+    this.setState({mobileOpen: !this.state.mobileOpen});
+  };
+
+  handleDrawerClose = () => {
+    this.setState({mobileOpen: false});
+  };
+
+  renderHome = (routeProps) => {
+    const {classes, title, handleNavigate, handleIfaceState} = this.props;
+    const {root, hero, content, text, headline, button, logo} = classes;
+    return <HomeView
+      classes={{root, hero, content, text, headline, button, logo}}
+      title={title}
+      handleNavigate={handleNavigate}
+      handleIfaceState={handleIfaceState}
+      {...routeProps}
+    />;
+  };
 
   render() {
-    const {props} = this;
-    const {snack, alert, doc_ram_loaded} = props;
+    const {props, state} = this;
+    const {classes, handleNavigate, location, snack, alert, confirm, doc_ram_loaded, title, sync_started, fetch, user, couch_direct, offline, meta_loaded} = props;
+    const isHome = location.pathname === '/';
 
-    return (
-      <div>
+    let disablePermanent = false;
+    let navIconClassName = '';
+    let appBarClassName = classes.appBar;
+
+    if(isHome) {
+      // home route, don't shift app bar or dock drawer
+      disablePermanent = true;
+      appBarClassName += ` ${classes.appBarHome}`;
+    }
+    else {
+      navIconClassName = classes.navIconHide;
+      appBarClassName += ` ${classes.appBarShift}`;
+    }
+
+    return [
+      // основной layout
+      <div key="content" className={classes.root}>
+        <AppBar className={appBarClassName}>
+          <Toolbar disableGutters>
+            <IconButton
+              color="contrast"
+              aria-label="open drawer"
+              onClick={this.handleDrawerToggle}
+              className={navIconClassName}
+            >
+              <MenuIcon/>
+            </IconButton>
+
+            <Typography className={classes.title} type="title" color="inherit" noWrap>{title || 'Flowcon'}</Typography>
+
+            <HeaderButtons
+              sync_started={sync_started}
+              fetch={fetch}
+              offline={offline}
+              user={user}
+              handleNavigate={handleNavigate}
+            />
+
+          </Toolbar>
+        </AppBar>
+        <AppDrawer
+          className={classes.drawer}
+          disablePermanent={disablePermanent}
+          onRequestClose={this.handleDrawerClose}
+          mobileOpen={this.state.mobileOpen}
+          handleNavigate={handleNavigate}
+          items={items}
+          isHome={isHome}
+          title="Flowcon"
+        />
 
         {
-          (!props.path_log_in && !props.complete_loaded) ?
-            <DumbScreen
-              title={doc_ram_loaded ? 'Подготовка данных в памяти...' : 'Загрузка из IndexedDB...'}
-              page={{text: doc_ram_loaded ? 'Цены и характеристики...' : 'Почти готово...'}}
-              top={92}/>
+          // основной контент или заставка загрузки или приглашение к авторизации
+          meta_loaded && state.need_user && ((!user.try_log_in && !user.logged_in) || (couch_direct && offline)) ?
+            <NeedAuth
+              key="auth"
+              handleNavigate={handleNavigate}
+              handleIfaceState={props.handleIfaceState}
+              title={title}
+              offline={couch_direct && offline}
+            />
             :
-            <Switch>
-              <Route exact path="/" render={(routeProps) => <HomeView handleNavigate={props.handleNavigate} {...routeProps} />}/>
-              <Route path="/:area(doc|cat|ireg|cch|rep).:name" component={DataRoute}/>
-              <Route path="/about" render={(routeProps) => <AboutPage {...props} {...routeProps} />}/>
-              <Route path="/meta" component={MetaTreePage}/>
-              <Route path="/login" component={FrmLogin}/>
-              <Route path="/settings" component={Settings} />
-              <Route component={NotFoundPage}/>
-            </Switch>
+            (
+              (!location.pathname.match(/\/login$/) && ((state.need_meta && !meta_loaded) || (state.need_user && !props.complete_loaded))) ?
+                <DumbScreen
+                  key="dumb"
+                  title={doc_ram_loaded ? 'Подготовка данных в памяти...' :
+                    (user.try_log_in ? 'Авторизация на сервере CouchDB...' : 'Загрузка из IndexedDB...')}
+                  page={{text: doc_ram_loaded ? 'Индексы в памяти...' : (user.logged_in ? 'Почти готово...' : 'Получение данных...')}}
+                />
+                :
+                <Switch key="switch">
+                  <Route exact path="/" render={this.renderHome}/>
+                  <Route path="/:area(doc|cat|ireg|cch|rep).:name" component={DataRoute}/>
+                  <Route path="/meta" component={MetaTreePage}/>
+                  <Route path="/diagram" render={(routeProps) => <FakeDiagram {...props} {...routeProps} />}/>
+                  <Route path="/list" render={(routeProps) => <FakeList {...props} {...routeProps} />}/>
+                  <Route path="/login" render={(routeProps) => <FrmLogin {...props} {...routeProps} />}/>
+                  <Route path="/settings" component={Settings}/>
+                  <Route component={MarkdownRoute}/>
+                </Switch>
+            )
         }
+      </div>,
 
-        {((snack && snack.open) || (props.first_run && doc_ram_loaded)) && <Snackbar
-          anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-          open
-          message={snack && snack.open ? snack.message : 'Требуется перезагрузить страницу после первой синхронизации данных'}
-          action={<Button
-            color="accent"
-            onClick={snack && snack.open ? this.handleDialogClose.bind(this, 'snack') : this.handleReset}
-          >Выполнить</Button>}
-        />}
+      // всплывающтй snackbar оповещений пользователя
+      ((snack && snack.open) || (props.first_run && doc_ram_loaded)) &&
+      <Snack
+        key="snack"
+        snack={snack}
+        handleClose={snack && snack.open && !snack.reset ? this.handleDialogClose.bind(this, 'snack') : () => this.handleReset(snack && snack.reset)}
+      />,
 
-        {
-          alert && alert.open && <Dialog open onRequestClose={this.handleAlertClose}>
-            <DialogTitle>
-              {alert.title}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                {alert.text}
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleAlertClose} color="primary">
-                Ок
-              </Button>
-            </DialogActions>
-          </Dialog>
-        }
+      // диалог сообщений пользователю
+      alert && alert.open && <Alert key="alert" open text={alert.text} title={alert.title} handleOk={this.handleAlertClose}/>,
 
-      </div>
-    );
+      // диалог вопросов пользователю (да, нет)
+      confirm && confirm.open && <Confirm key="confirm" open text={confirm.text} title={confirm.title} handleOk={confirm.handleOk} handleCancel={confirm.handleCancel}/>,
+    ];
   }
 }
 
-AppRoot.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  handleOffline: PropTypes.func.isRequired,
+AppView.propTypes = {
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
   first_run: PropTypes.bool.isRequired,
+  classes: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
-export default withNavigateAndMeta(AppRoot);
-
+export default withStyles(withIfaceAndMeta(AppView));

@@ -1,2 +1,2 @@
-import AppRoot from './AppView';
-export default AppRoot;
+import AppView from './AppView';
+export default AppView;

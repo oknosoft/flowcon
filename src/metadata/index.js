@@ -1,16 +1,16 @@
 
 // конструктор metadata.js
-// import MetaEngine from 'metadata-core/index.min';
-// import plugin_pouchdb from 'metadata-pouchdb/index.min';
-// import plugin_ui from 'metadata-abstract-ui/index.min';
-// import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars.min';
-// import plugin_superlogin from 'metadata-superlogin/index.min';
+import MetaEngine from 'metadata-core/index.min';
+import plugin_pouchdb from 'metadata-pouchdb/index.min';
+import plugin_ui from 'metadata-abstract-ui/index.min';
+import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars.min';
+import plugin_superlogin from 'metadata-superlogin/index.min';
 
-import MetaEngine from 'metadata-core';
-import plugin_pouchdb from 'metadata-pouchdb';
-import plugin_ui from 'metadata-abstract-ui';
-import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars';
-import plugin_superlogin from 'metadata-superlogin';
+// import MetaEngine from 'metadata-core';
+// import plugin_pouchdb from 'metadata-pouchdb';
+// import plugin_ui from 'metadata-abstract-ui';
+// import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars';
+// import plugin_superlogin from 'metadata-superlogin';
 
 import plugin_react from 'metadata-react/plugin';
 
@@ -21,7 +21,7 @@ import superlogin_config from '../../config/superlogin.config.client';
 import settings from '../../config/app.settings';
 
 // генератор события META_LOADED для redux
-import {metaActions} from 'metadata-redux/index.min';
+import {metaActions} from 'metadata-redux';
 
 MetaEngine
   .plugin(plugin_pouchdb)     // подключаем pouchdb-адаптер к прототипу metadata.js

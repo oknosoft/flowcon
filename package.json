@@ -1,20 +1,21 @@
 {
   "name": "flowcon",
-  "version": "2.0.1",
+  "version": "2.0.16-beta.42",
   "description": "Flowcon: task flow",
   "repository": {
     "type": "git",
     "url": "https://github.com/oknosoft/flowcon"
   },
   "engines": {
-    "node": "^7.10",
-    "npm": "^5.0"
+    "node": "^8.8",
+    "npm": "^5.5"
   },
   "keywords": [
     "metadata",
     "flowcon",
     "task flow",
-    "task management"
+    "task management",
+    "time management"
   ],
   "author": "Ivan Belokamentsev <nmivan@oknosoft.ru> & Evgeniy Malyarov <info@oknosoft.ru>",
   "license": "MIT",
@@ -23,106 +24,56 @@
   },
   "homepage": "https://flowcon.js.org/",
   "dependencies": {
-    "alasql": "^0.4.3",
-    "clipboard": "^1.7",
-    "cors": "^2.8.4",
-    "font-awesome": "^4.7.0",
-    "history": "^4.7.2",
-    "marked": "^0.3.6",
-    "material-ui": "^1.0.0-beta.18",
-    "material-ui-icons": "^1.0.0-beta.17",
-    "metadata-abstract-ui": "^2.0.4-beta.33",
-    "metadata-core": "^2.0.4-beta.33",
-    "metadata-external": "^2.0.4-beta.33",
-    "metadata-pouchdb": "^2.0.4-beta.33",
-    "metadata-react": "^2.0.4-beta.33",
-    "metadata-redux": "^2.0.4-beta.33",
-    "metadata-superlogin": "^2.0.4-beta.33",
-    "moment": "^2.19.1",
-    "passport-facebook": "^2.1",
-    "passport-github": "^1.1",
-    "passport-google-oauth": "^1.0",
-    "passport-vkontakte": "^0.3",
-    "passport-yandex": "0.0.3",
-    "pouchdb": "^6.3.4",
-    "pouchdb-adapter-http": "^6.3.4",
-    "pouchdb-adapter-idb": "^6.3.4",
-    "pouchdb-adapter-memory": "^6.3.4",
-    "pouchdb-adapter-websql": "^6.3.4",
-    "pouchdb-authentication": "^0.5",
-    "pouchdb-core": "^6.3.4",
-    "pouchdb-find": "^6.3.4",
-    "pouchdb-mapreduce": "^6.3.4",
-    "pouchdb-replication": "^6.3.4",
-    "rc-calendar": "^9.1.10",
-    "rc-cascader": "^0.11.6",
-    "rc-time-picker": "^3.0.0",
-    "react": "^15.6.2",
-    "react-contextmenu": "^2.8.0",
-    "react-dom": "^15.6.2",
-    "react-flex-layout": "^0.9",
-    "react-helmet": "^5.2.0",
-    "react-onclickoutside": "^6.6.2",
-    "react-portal": "^3.2.0",
-    "react-redux": "^5.0.6",
-    "react-router-dom": "^4.2.2",
-    "react-router-redux": "^5.0.0-alpha.8",
-    "react-select": "^1.0.0-rc.10",
-    "react-static-container": "^1.0.2",
-    "react-virtualized": "^9.12.0",
-    "recompose": "^0.26.0",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
-    "superlogin": "^0.6.1",
-    "superlogin-client": "^0.8.0",
-    "yamljs": "^0.3.0"
+    "metadata-abstract-ui": "^2.0.16-beta.42",
+    "metadata-core": "^2.0.16-beta.42",
+    "metadata-external": "^2.0.16-beta.42",
+    "metadata-pouchdb": "^2.0.16-beta.42",
+    "metadata-react": "^2.0.16-beta.42",
+    "metadata-redux": "^2.0.16-beta.42",
+    "metadata-superlogin": "^2.0.16-beta.42"
   },
   "devDependencies": {
-    "autoprefixer": "^7.1.6",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.1",
+    "babel-eslint": "^8.0.3",
     "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.2",
-    "babel-preset-es2016": "^6.24",
-    "babel-preset-react": "^6.24",
-    "babel-preset-react-app": "^3.0.3",
-    "babel-preset-stage-0": "^6.24",
+    "babel-preset-react-app": "^3.1.0",
     "babel-runtime": "^6.26.0",
-    "body-parser": "^1.18.2",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chai": "^4.1.2",
     "chalk": "^2.3.0",
     "css-loader": "^0.28.7",
-    "debug": "^3.1.0",
     "dotenv": "4.0.0",
-    "enzyme": "^3.1.0",
-    "eslint": "^4.10.0",
+    "eslint": "^4.12.1",
     "eslint-config-react-app": "^2.0.1",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-flowtype": "^2.39.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0",
-    "extract-text-webpack-plugin": "2.1.2",
+    "eslint-plugin-react": "^7.5.1",
+    "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "^1.1.5",
     "fs-extra": "^4.0.2",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^21.2.1",
+    "md5-file": "^3.2.3",
+    "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "^3.2.0",
-    "postcss-loader": "^2.0.8",
+    "postcss-loader": "^2.0.9",
+    "promise": "8.0.1",
+    "raf": "3.4.0",
     "raw-loader": "^0.5.1",
-    "react-addons-test-utils": "^15.6.2",
-    "react-dev-utils": "^3.1.1",
-    "react-error-overlay": "^1.0.10",
-    "react-test-renderer": "^15.6.2",
+    "react": "^16.2.0",
+    "react-dev-utils": "^4.2.1",
+    "react-dom": "^16.2.0",
     "rimraf": "^2.6",
     "style-loader": "^0.19.0",
     "sw-precache-webpack-plugin": "^0.11.4",
-    "url-loader": "^0.5.9",
-    "webpack": "^2.7.0",
-    "webpack-dev-server": "2.5.0",
-    "webpack-manifest-plugin": "^1.3.2"
+    "url-loader": "^0.6.2",
+    "webpack": "^3.9.1",
+    "webpack-dev-server": "^2.9.5",
+    "webpack-manifest-plugin": "^1.3.2",
+    "whatwg-fetch": "2.0.3"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -130,39 +81,41 @@
     "superlogin": "node server",
     "test": "node scripts/test.js --env=jsdom",
     "lint": "eslint .",
-    "meta:prebuild": "node scripts/prebuild.meta.js",
-    "meta:link": "npm link metadata-core metadata-redux metadata-pouchdb metadata-abstract-ui metadata-react metadata-external metadata-superlogin"
+    "meta:prebuild": "node scripts/meta.prebuild.js",
+    "meta:link": "node scripts/meta.link.js"
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
+      "src/**/*.{js,jsx,mjs}"
     ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
-      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
     "moduleFileExtensions": [
       "web.js",
+      "mjs",
       "js",
       "json",
       "web.jsx",
-      "jsx"
+      "jsx",
+      "node"
     ]
   },
   "babel": {

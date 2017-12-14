@@ -1,4 +1,4 @@
-# Flowcon.js
+# О программе
 Flowcon.js - это один из интерфейсов программно-методического комплекса управления потоками задач
 
 ### Назначение и возможности
@@ -36,4 +36,4 @@ Flowcon.js - это один из интерфейсов программно-м
 [MIT](https://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F_MIT)
 
 ### Вопросы
-Если обнаружили ошибку, пожалуйста, зарегистрируйте <a href="https://github.com/oknosoft/windowbuilder/issues/new" target="_blank" rel="noopener noreferrer">вопрос в GitHub</a> или <a href="mailto:info@oknosoft.ru?subject=flowcon">свяжитесь с разработчиком</a> напрямую
+Если обнаружили ошибку, пожалуйста, зарегистрируйте <a href="https://github.com/oknosoft/flowcon/issues?utf8=%E2%9C%93&q=is%3Aissue" target="_blank" rel="noopener noreferrer">вопрос в GitHub</a> или <a href="mailto:info@oknosoft.ru?subject=flowcon">свяжитесь с разработчиком</a> напрямую

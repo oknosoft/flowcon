@@ -10,12 +10,22 @@ import AppFooter from './Footer';
 import Flask from './Flask';
 import styles from './styles';
 
+const ltitle = 'Flowcon: потоки задач';
+
 function PageHome(props) {
-  const {classes, handleNavigate} = props;
+  const {classes, handleNavigate, title} = props;
+
+  if(title != ltitle) {
+    props.handleIfaceState({
+      component: '',
+      name: 'title',
+      value: ltitle,
+    });
+  }
 
   return (
     <div className={classes.root}>
-      <Helmet title="Flowcon"/>
+      <Helmet title={ltitle}/>
 
       <div className={classes.hero}>
         <div className={classes.content}>
@@ -26,13 +36,7 @@ function PageHome(props) {
             <Typography type="subheading" component="h2" color="inherit" className={classes.headline}>
               Программно-методический комплекс<br/> для управления потоками задач
             </Typography>
-            <Button
-              className={classes.button}
-              raised
-              onClick={() => handleNavigate('/readme')}
-            >
-              {'Начать'}
-            </Button>
+            <Button className={classes.button} raised onClick={() => handleNavigate('/readme')}>Начать</Button>
           </div>
         </div>
       </div>
@@ -43,7 +47,9 @@ function PageHome(props) {
 
 PageHome.propTypes = {
   classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
   handleNavigate: PropTypes.func.isRequired,
+  handleIfaceState: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(PageHome);

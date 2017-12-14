@@ -6,9 +6,9 @@
  */
 module.exports = function settings(prm) {
 
-  if(!prm){
+  if(!prm) {
     prm = {};
-  };
+  }
 
   return Object.assign(prm, {
 
@@ -17,15 +17,15 @@ module.exports = function settings(prm) {
 
     // гостевые пользователи для демо-режима
     guests: [{
-      username: "Гость",
-      password: "hQI7OhIGlVeOWi8="
+      username: 'Гость',
+      password: 'hQI7OhIGlVeOWi8='
     }],
 
     // расположение couchdb для сайта
-    couch_path: "http://fl211:5984/fl_",
+    couch_path: 'https://flowcon.oknosoft.ru/couchdb/fl_',
 
     // расположение couchdb для nodejs
-    couch_local: "http://fl211:5984/fl_",
+    couch_local: 'http://fl211:5984/fl_',
 
     // фильтр для репликации с CouchDB не используем
     pouch_filter: {
@@ -48,17 +48,11 @@ module.exports = function settings(prm) {
     // разрешаем сохранение пароля
     enable_save_pwd: true,
 
-    // используем геокодер
+    // геокодер не используем
     use_ip_geo: false,
 
     // используем карты google
     use_google_geo: false,
-
-    // если понадобится обратиться к 1С, будем использовать irest
-    //irest_enabled: true,
-
-    // расположение rest-сервиса 1c по умолчанию
-    //rest_path: '',
 
   });
 
