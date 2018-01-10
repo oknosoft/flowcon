@@ -25,7 +25,7 @@ module.exports = function settings(prm) {
     couch_path: 'https://flowcon.oknosoft.ru/couchdb/fl_',
 
     // расположение couchdb для nodejs
-    couch_local: 'http://fl211:5984/fl_',
+    couch_local: 'https://flowcon.oknosoft.ru/couchdb/fl_',
 
     // фильтр для репликации с CouchDB не используем
     pouch_filter: {

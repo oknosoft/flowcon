@@ -68,10 +68,10 @@ $p.wsql.init((prm) => {
     return db.get('meta')
   })
     .catch((err) => {
-      debug('Не удалось получить объект meta из CouchDB\nПроверьте логин, пароль и строку подключения');
-      debug(err);
-      process.exit(1);
-    })
+    debug('Не удалось получить объект meta из CouchDB\nПроверьте логин, пароль и строку подключения');
+    debug(err);
+    process.exit(1);
+  })
     .then((doc) => {
       _m = doc;
       doc = null;
@@ -150,16 +150,16 @@ function create_modules(_m) {
 
   const sys_nsmes = ['log', 'meta_objs', 'meta_fields', 'scheme_settings'];
   const categoties = {
-      cch: {mgr: 'ChartOfCharacteristicManager', obj: 'CatObj'},
-      cacc: {mgr: 'ChartOfAccountManager', obj: 'CatObj'},
-      cat: {mgr: 'CatManager', obj: 'CatObj'},
-      bp: {mgr: 'BusinessProcessManager', obj: 'BusinessProcessObj'},
-      tsk: {mgr: 'TaskManager', obj: 'TaskObj'},
-      doc: {mgr: 'DocManager', obj: 'DocObj'},
-      ireg: {mgr: 'InfoRegManager', obj: 'RegisterRow'},
-      areg: {mgr: 'AccumRegManager', obj: 'RegisterRow'},
-      dp: {mgr: 'DataProcessorsManager', obj: 'DataProcessorObj'},
-      rep: {mgr: 'DataProcessorsManager', obj: 'DataProcessorObj'},
+      cch: {mgr: 'ChartOfCharacteristicManager', proto: 'CatObj'},
+      cacc: {mgr: 'ChartOfAccountManager', proto: 'CatObj'},
+      cat: {mgr: 'CatManager', proto: 'CatObj', dir: 'catalogs'},
+      bp: {mgr: 'BusinessProcessManager', proto: 'BusinessProcessObj'},
+      tsk: {mgr: 'TaskManager', proto: 'TaskObj'},
+      doc: {mgr: 'DocManager', proto: 'DocObj'},
+      ireg: {mgr: 'InfoRegManager', proto: 'RegisterRow'},
+      areg: {mgr: 'AccumRegManager', proto: 'RegisterRow'},
+      dp: {mgr: 'DataProcessorsManager', proto: 'DataProcessorObj'},
+      rep: {mgr: 'DataProcessorsManager', proto: 'DataProcessorObj'},
     };
   let text = `(function(){
   const {EnumManager,CatManager,DocManager,DataProcessorsManager,ChartOfCharacteristicManager,ChartOfAccountManager,
@@ -180,8 +180,7 @@ function create_modules(_m) {
   for (const category in categoties) {
     for (const name in _m[category]) {
       if (sys_nsmes.indexOf(name) == -1) {
-        text += obj_constructor_text(_m, category, name, categoties[category].obj);
-        text += `$p.${category}.create('${name}');\n`;
+        text += obj_constructor_text(_m, category, name, categoties);
       }
     }
   }
@@ -190,13 +189,28 @@ function create_modules(_m) {
 
 }
 
-function obj_constructor_text(_m, category, name, proto) {
+function obj_constructor_text(_m, category, name, categoties) {
+
+  const {mgr, proto, dir} = categoties[category];
 
   const {DataManager} = MetaEngine.classes;
   let meta = _m[category][name],
     fn_name = DataManager.prototype.obj_constructor.call({class_name: category + '.' + name, constructor_names: {}}),
     text = '\n/**\n* ### ' + $p.msg.meta[category] + ' ' + meta.name,
     f, props = '';
+
+  const filename = dir && path.resolve(__dirname, `../src/metadata/${dir}/${category}_${name}.js`);
+  const extModule = dir && fs.existsSync(filename) && require(filename);
+
+  const extender = extModule && extModule[fn_name] && extModule[fn_name].toString();
+  const extText = extender && extender.substring(extender.indexOf('{') + 1, extender.lastIndexOf('}') - 1);
+
+  const substitute = extModule && extModule.substitute && extModule.substitute.toString();
+  const substituteText = substitute && substitute.substring(substitute.indexOf('{') + 3, substitute.lastIndexOf('}'));
+
+  const managerName = `${fn_name}Manager`;
+  const managerText = extModule && extModule[managerName] && extModule[managerName].toString();
+
 
   text += '\n* ' + (meta.illustration || meta.synonym);
   text += '\n* @class ' + fn_name;
@@ -227,6 +241,11 @@ function obj_constructor_text(_m, category, name, proto) {
     text += `get ${ts}(){return this._getter_ts('${ts}')}\nset ${ts}(v){this._setter_ts('${ts}',v)}\n`;
   }
 
+  // если описан расширитель объекта, дополняем
+  if(extText){
+    text += extText;
+  }
+
   text += `}\n`;
   text += `$p.${fn_name} = ${fn_name};\n`;
 
@@ -247,6 +266,15 @@ function obj_constructor_text(_m, category, name, proto) {
     text += `}\n`;
     text += `$p.${row_fn_name} = ${row_fn_name};\n`;
 
+  }
+
+  // если описан расширитель менеджера, дополняем
+  if(managerText){
+    text += managerText.replace('extends Object', 'extends CatManager');
+    text += `\n$p.${category}.create('${name}', ${managerName}, ${extModule[managerName]._freeze ? 'true' : 'false'});\n`;
+  }
+  else{
+    text += `$p.${category}.create('${name}');\n`;
   }
 
   return text;

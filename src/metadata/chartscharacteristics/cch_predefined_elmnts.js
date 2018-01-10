@@ -8,55 +8,63 @@
 
 export default function ($p) {
 
-  const {job_prm, adapters, cch, utils, md} = $p;
+  const {job_prm, adapters, cch: {predefined_elmnts: _mgr}, utils, md} = $p;
 
   // Подписываемся на событие окончания загрузки локальных данных
   adapters.pouch.once('pouch_doc_ram_loaded', () => {
     // читаем элементы из pouchdb и создаём свойства
-    cch.predefined_elmnts.pouch_find_rows({_raw: true, _top: 500, _skip: 0})
-      .then(function (rows) {
+    _mgr.adapter.find_rows(_mgr, {_raw: true, _top: 500, _skip: 0})
+      .then((rows) => {
 
-        var parents = {};
+        const parents = {};
 
-        rows.forEach(function (row) {
+        rows.forEach((row) => {
           if(row.is_folder && row.synonym) {
-            var ref = row._id.split('|')[1];
+            const ref = row._id.split('|')[1];
             parents[ref] = row.synonym;
-            job_prm.__define(row.synonym, {value: {}});
+            !job_prm[row.synonym] && job_prm.__define(row.synonym, {value: {}});
           }
         });
 
         rows.forEach((row) => {
           if(!row.is_folder && row.synonym && parents[row.parent] && !job_prm[parents[row.parent]][row.synonym]) {
 
-            var _mgr, tnames;
+            let _mgr;
 
             if(row.type.is_ref) {
-              tnames = row.type.types[0].split('.');
+              const tnames = row.type.types[0].split('.');
               _mgr = $p[tnames[0]][tnames[1]];
             }
 
             if(row.list == -1) {
 
               job_prm[parents[row.parent]].__define(row.synonym, {
-                value: function () {
-                  var res = {};
-                  row.elmnts.forEach(function (row) {
-                    res[row.elm] = _mgr ? _mgr.get(row.value, false) : row.value;
+                value: (() => {
+                  const res = {};
+                  row.elmnts.forEach((row) => {
+                    res[row.elm] = _mgr ? _mgr.get(row.value, false, false) : row.value;
                   });
                   return res;
-                }()
+                })()
               });
 
             }
             else if(row.list) {
 
               job_prm[parents[row.parent]].__define(row.synonym, {
-                value: row.elmnts.map(function (row) {
-                  return _mgr ? _mgr.get(row.value, false) : row.value;
+                value: row.elmnts.map((row) => {
+                  if(_mgr) {
+                    const value = _mgr.get(row.value, false, false);
+                    if(!$p.utils.is_empty_guid(row.elm)) {
+                      value._formula = row.elm;
+                    }
+                    return value;
+                  }
+                  else {
+                    return row.value;
+                  }
                 })
               });
-
             }
             else {
 
@@ -65,7 +73,7 @@ export default function ($p) {
               }
 
               job_prm[parents[row.parent]].__define(row.synonym, {
-                value: _mgr ? _mgr.get(row.value, false) : row.value,
+                value: _mgr ? _mgr.get(row.value, false, false) : row.value,
                 configurable: true
               });
             }
@@ -82,8 +90,6 @@ export default function ($p) {
         }, 100);
       });
   });
-
-  const _mgr = cch.predefined_elmnts;
 
 
   /**

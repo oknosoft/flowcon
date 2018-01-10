@@ -147,7 +147,7 @@ class AppView extends Component {
         <AppDrawer
           className={classes.drawer}
           disablePermanent={disablePermanent}
-          onRequestClose={this.handleDrawerClose}
+          onClose={this.handleDrawerClose}
           mobileOpen={this.state.mobileOpen}
           handleNavigate={handleNavigate}
           items={items}
