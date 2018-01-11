@@ -10,8 +10,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const SuperLogin = require('superlogin');
-const superloginConfig = require('../config/superlogin.config.server.js');
-
+const PouchDB = require('pouchdb');
 
 const FacebookStrategy  = require('passport-facebook').Strategy;
 const GitHubStrategy    = require('passport-github').Strategy;
@@ -21,17 +20,13 @@ const VKontakteStrategy = require('passport-vkontakte').Strategy;
 //var WindowsliveStrategy = require('passport-windowslive').Strategy;
 //var LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 
-//var zd_proxy = require('./metadata/zd_proxy');
+const superloginConfig = require('../config/superlogin.config.server.js');
 
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// Redirect to https except on localhost
-app.use(httpsRedirect);
-
 
 // load SuperLogin routes
 const superlogin = new SuperLogin(superloginConfig);
@@ -113,14 +108,22 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// Force HTTPS redirect unless we are using localhost
-function httpsRedirect(req, res, next) {
-	return next();
-
-  // if(req.protocol === 'https' || req.header('X-Forwarded-Proto') === 'https' || req.hostname === 'localhost') {
-  //   return next();
-  // }
-  // res.status(301).redirect("https://" + req.headers['host'] + req.url);
-}
+// дополним роли и design-документы
+superlogin.on('signup', function(userDoc, provider){
+  const {couchAuthDB} = superlogin;
+  for(const name in userDoc.personalDBs) {
+    if(userDoc.personalDBs[name].type !== 'private') {
+      continue;
+    }
+    const db = new PouchDB(couchAuthDB._db_name.replace(/_users$/, name), {skip_setup: true});
+    db.info()
+      .then((info) => {
+        info = null;
+      })
+      .catch((err) => {
+        err = null;
+      });
+  }
+});
 
 module.exports = app;

@@ -8,7 +8,9 @@ module.exports = function settings(prm) {
 
   if(!prm) {
     prm = {};
-  }
+  };
+
+  const couch_path = 'https://flowcon.oknosoft.ru/couchdb/fl_';
 
   return Object.assign(prm, {
 
@@ -22,10 +24,10 @@ module.exports = function settings(prm) {
     }],
 
     // расположение couchdb для сайта
-    couch_path: 'https://flowcon.oknosoft.ru/couchdb/fl_',
+    couch_path,
 
     // расположение couchdb для nodejs
-    couch_local: 'https://flowcon.oknosoft.ru/couchdb/fl_',
+    couch_local: couch_path,
 
     // фильтр для репликации с CouchDB не используем
     pouch_filter: {
@@ -51,8 +53,8 @@ module.exports = function settings(prm) {
     // геокодер не используем
     use_ip_geo: false,
 
-    // используем карты google
-    use_google_geo: false,
+    // карты google не используем
+    use_google_geo: '',
 
   });
 

@@ -1,5 +1,5 @@
 module.exports = {
-  doc: {
+  search: {
     language: "query",
     views: {
       search: {
@@ -24,3 +24,4 @@ module.exports = {
     }
   }
 };
+
