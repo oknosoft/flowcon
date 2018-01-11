@@ -1,10 +1,15 @@
+const serverUrl = process.env.NODE_ENV !== 'development' ? 'https://flowcon.oknosoft.ru' : 'http://loc.flowcon.js.org:3100';
+
 module.exports = {
-  // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth/')
-  baseUrl: process.env.NODE_ENV !== 'development' ? 'https://flowcon.oknosoft.ru/auth/' : 'http://loc.flowcon.js.org:3100/auth/',
-  //baseUrl: '/auth/',
+  // An optional URL to API server, by default a current window location is used.
+  serverUrl,
+  // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth')
+  baseUrl: '/auth',
+  // Specific endpoint for social authentication and social link popups (defaults to `${location.origin}${baseUrl}`)
+  socialUrl: serverUrl + '/auth',
   // A list of API endpoints to automatically add the Authorization header to
   // By default the host the browser is pointed to will be added automatically
-  endpoints: ['api.example.com'],
+  endpoints: ['flowcon.js.org', 'flowcon.oknosoft.ru'],
   // Set this to true if you do not want the URL bar host automatically added to the list
   noDefaultEndpoint: false,
   // Where to save your session token: localStorage ('local') or sessionStorage ('session'), default: 'local'
