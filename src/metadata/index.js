@@ -4,7 +4,7 @@ import MetaEngine from 'metadata-core/index.min';
 import plugin_pouchdb from 'metadata-pouchdb/index.min';
 import plugin_ui from 'metadata-abstract-ui/index.min';
 import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars.min';
-import plugin_superlogin from 'metadata-superlogin/index.min';
+import plugin_superlogin from 'metadata-superlogin';
 
 // import MetaEngine from 'metadata-core';
 // import plugin_pouchdb from 'metadata-pouchdb';

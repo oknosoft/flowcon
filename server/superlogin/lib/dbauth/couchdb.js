@@ -70,7 +70,7 @@ module.exports = function(couchAuthDB) {
           secDoc.members = {names: ['supermember'], roles: []};
         }
         if (!secDoc.members.roles) {
-          secDoc.admins.roles = [];
+          secDoc.members.roles = [];
         }
         if (!secDoc.members.names || !secDoc.members.names.length) {
           secDoc.members.names = ['supermember'];

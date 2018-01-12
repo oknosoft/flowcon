@@ -1,4 +1,4 @@
-const serverUrl = process.env.NODE_ENV !== 'development' ? 'https://flowcon.oknosoft.ru' : 'http://loc.flowcon.js.org:3100';
+const serverUrl = process.env.NODE_ENV !== 'development' ? 'https://flowcon.oknosoft.ru' : 'http://loc.flowcon.js.org:3001';
 
 module.exports = {
   // An optional URL to API server, by default a current window location is used.
@@ -23,5 +23,12 @@ module.exports = {
   // token. For example if a token was issued at 1pm and expires at 2pm, and the threshold is 0.5, the token will
   // automatically refresh after 1:30pm. When authenticated, the token expiration is automatically checked on every
   // request. You can do this manually by calling superlogin.checkRefresh(). Default: 0.5
-  refreshThreshold: 0.5
+  refreshThreshold: 0.5,
+  // правила работы с почтой
+  email: {
+    sendConfirmEmail: true,
+    requireEmailConfirm: true,
+    loginOnRegistration: false,
+    confirmEmailRedirectURL: '/confirm-email'
+  }
 }

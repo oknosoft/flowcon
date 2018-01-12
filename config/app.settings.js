@@ -27,7 +27,7 @@ module.exports = function settings(prm) {
     couch_path,
 
     // расположение couchdb для nodejs
-    couch_local: couch_path,
+    couch_local: process.env.COUCH_LOCAL || couch_path,
 
     // фильтр для репликации с CouchDB не используем
     pouch_filter: {
