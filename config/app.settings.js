@@ -29,6 +29,9 @@ module.exports = function settings(prm) {
     // расположение couchdb для nodejs
     couch_local: process.env.COUCH_LOCAL || couch_path,
 
+    // по умолчанию, используем базы браузера, а не прямое обращение к couchdb
+    couch_direct: false,
+
     // фильтр для репликации с CouchDB не используем
     pouch_filter: {
       meta: 'auth/meta',
