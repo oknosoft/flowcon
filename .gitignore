@@ -1,0 +1,26 @@
+# Exclude compiled files
+build
+/lib
+/.eslintcache
+/tmp
+coverage
+*.map
+
+# Private config files
+
+# TODO
+.github
+
+# OS files
+.DS_STORE
+
+# npm files
+node_modules
+package-lock.json
+*.log
+
+# Editor files
+.idea
+.vscode
+
+.nyc_output
