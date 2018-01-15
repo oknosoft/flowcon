@@ -1,4 +1,5 @@
 const serverUrl = process.env.NODE_ENV !== 'development' ? 'https://flowcon.oknosoft.ru' : 'http://loc.flowcon.js.org:3001';
+// const serverUrl = 'https://flowcon.oknosoft.ru';
 
 module.exports = {
   // An optional URL to API server, by default a current window location is used.
