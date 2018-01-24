@@ -124,7 +124,7 @@ class AppView extends Component {
         <AppBar className={appBarClassName}>
           <Toolbar disableGutters>
             <IconButton
-              color="contrast"
+              color="inherit"
               aria-label="open drawer"
               onClick={this.handleDrawerToggle}
               className={navIconClassName}
@@ -147,7 +147,7 @@ class AppView extends Component {
         <AppDrawer
           className={classes.drawer}
           disablePermanent={disablePermanent}
-          onRequestClose={this.handleDrawerClose}
+          onClose={this.handleDrawerClose}
           mobileOpen={this.state.mobileOpen}
           handleNavigate={handleNavigate}
           items={items}

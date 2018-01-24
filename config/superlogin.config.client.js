@@ -1,10 +1,16 @@
+const serverUrl = process.env.NODE_ENV !== 'development' ? 'https://flowcon.oknosoft.ru' : 'http://loc.flowcon.js.org:3001';
+// const serverUrl = 'https://flowcon.oknosoft.ru';
+
 module.exports = {
-  // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth/')
-  baseUrl: process.env.NODE_ENV !== 'development' ? 'https://flowcon.oknosoft.ru/auth/' : 'http://loc.flowcon.js.org:3100/auth/',
-  //baseUrl: '/auth/',
+  // An optional URL to API server, by default a current window location is used.
+  serverUrl,
+  // The base URL for the SuperLogin routes with leading and trailing slashes (defaults to '/auth')
+  baseUrl: '/auth',
+  // Specific endpoint for social authentication and social link popups (defaults to `${location.origin}${baseUrl}`)
+  socialUrl: serverUrl + '/auth',
   // A list of API endpoints to automatically add the Authorization header to
   // By default the host the browser is pointed to will be added automatically
-  endpoints: ['api.example.com'],
+  endpoints: ['flowcon.js.org', 'flowcon.oknosoft.ru'],
   // Set this to true if you do not want the URL bar host automatically added to the list
   noDefaultEndpoint: false,
   // Where to save your session token: localStorage ('local') or sessionStorage ('session'), default: 'local'
@@ -18,5 +24,12 @@ module.exports = {
   // token. For example if a token was issued at 1pm and expires at 2pm, and the threshold is 0.5, the token will
   // automatically refresh after 1:30pm. When authenticated, the token expiration is automatically checked on every
   // request. You can do this manually by calling superlogin.checkRefresh(). Default: 0.5
-  refreshThreshold: 0.5
+  refreshThreshold: 0.5,
+  // правила работы с почтой
+  email: {
+    sendConfirmEmail: true,
+    requireEmailConfirm: true,
+    loginOnRegistration: false,
+    confirmEmailRedirectURL: '/confirm-email'
+  }
 }
