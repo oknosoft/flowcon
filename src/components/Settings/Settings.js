@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
@@ -11,6 +12,11 @@ import {withIface, withPrm} from 'metadata-redux';
 import compose from 'recompose/compose';
 
 class Settings extends Component {
+
+  static propTypes = {
+    handleIfaceState: PropTypes.func.isRequired,
+    title: PropTypes.string,
+  };
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
