@@ -208,6 +208,7 @@ class AppView extends Component {
 
 AppView.propTypes = {
   handleNavigate: PropTypes.func.isRequired,
+  handleLogin: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
   first_run: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,

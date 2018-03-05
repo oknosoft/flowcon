@@ -36,7 +36,7 @@ function PageHome(props) {
             <Typography type="subheading" component="h2" color="inherit" className={classes.headline}>
               Программно-методический комплекс<br/> для управления потоками задач
             </Typography>
-            <Button className={classes.button} raised onClick={() => handleNavigate('/readme')}>Начать</Button>
+            <Button className={classes.button} variant="raised" onClick={() => handleNavigate('/readme')}>Начать</Button>
           </div>
         </div>
       </div>
