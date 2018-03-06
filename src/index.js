@@ -30,7 +30,6 @@ import RootView from 'metadata-react/App/RootView';
 // создаём redux-store
 const store = configureStore();
 
-
 class RootProvider extends Component {
 
   componentWillMount() {
@@ -51,7 +50,4 @@ class RootProvider extends Component {
   }
 }
 
-render(
-  <RootProvider/>,
-  document.getElementById('root'),
-);
+render(<RootProvider/>, document.getElementById('root'));
