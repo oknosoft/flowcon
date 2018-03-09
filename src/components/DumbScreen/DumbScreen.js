@@ -20,7 +20,8 @@ class DumbScreen extends Component {
       <div className="description">
         <h1 itemProp="name">Флакон</h1>
         <p>Категория: <span itemProp="applicationSubCategory">Task-management</span></p>
-        <p>Платформа: <i className="fa fa-chrome" aria-hidden="true"></i> браузер Chrome для <span itemProp="operatingSystem">Windows 8, 10 | Android | Mac | iOS</span>
+        <p>Платформа: <i className="fa fa-chrome" aria-hidden="true">
+          </i> браузер Chrome для <span itemProp="operatingSystem">Windows 8, 10 | Android | Mac | iOS</span>
         </p>
         <div itemProp="description">
           <p>Веб-приложение на базе <a href="http://www.oknosoft.ru/metadata/" target="_blank" rel="noopener noreferrer">Metadata.js</a>
