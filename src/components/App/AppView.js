@@ -147,7 +147,7 @@ class AppView extends Component {
 
       const wraper = (Component, routeProps) => {
         const {classes, ...mainProps} = props;
-        return <Component {...routeProps} {...mainProps} disablePermanent={disablePermanent}/>;
+        return <Component {...mainProps} {...routeProps} disablePermanent={disablePermanent}/>;
       };
 
       return (
