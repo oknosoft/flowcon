@@ -1,5 +1,3 @@
-/* eslint-disable flowtype/require-valid-file-annotation */
-
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router';
@@ -25,12 +23,14 @@ import MetaTreePage from '../MetaTreePage';         // дерево метада
 import Settings from '../Settings';                 // страница настроек приложения
 
 import {withIfaceAndMeta} from 'metadata-redux';
+import withStyles from './styles';
+import withWindowSize from 'metadata-react/WindowSize';
+import compose from 'recompose/compose';
+
 import items, {item_props} from '../../pages';      // массив элементов меню и метод для вычисления need_meta, need_user по location.pathname
 
 import FakeDiagram from '../FakeDiagram';
 import FakeList from '../FakeList';
-
-import withStyles from './styles';
 
 // основной layout
 class AppView extends Component {
@@ -43,6 +43,7 @@ class AppView extends Component {
       need_meta: !!iprops.need_meta,
       need_user: !!iprops.need_user,
       mobileOpen: false,
+      permanentClose: false,
     };
   }
 
@@ -80,11 +81,19 @@ class AppView extends Component {
   }
 
   handleDrawerToggle = () => {
-    this.setState({mobileOpen: !this.state.mobileOpen});
+    const state = {mobileOpen: !this.state.mobileOpen};
+    if(state.mobileOpen && this.state.permanentClose) {
+      state.permanentClose = false;
+    }
+    this.setState(state);
   };
 
   handleDrawerClose = () => {
     this.setState({mobileOpen: false});
+  };
+
+  handlepPermanentClose = () => {
+    this.setState({permanentClose: true, mobileOpen: false});
   };
 
   renderHome = (routeProps) => {
@@ -101,17 +110,69 @@ class AppView extends Component {
 
   render() {
     const {props, state} = this;
-    const {classes, handleNavigate, location, snack, alert, confirm, doc_ram_loaded, title, sync_started, fetch, user, couch_direct, offline, meta_loaded} = props;
+    const {classes, handleNavigate, location, snack, alert, confirm, doc_ram_loaded, title, sync_started, fetch, user, couch_direct, offline,
+            meta_loaded} = props;
     const isHome = location.pathname === '/';
 
     let disablePermanent = false;
     let navIconClassName = '';
     let appBarClassName = classes.appBar;
 
+    const mainContent = () => {
+
+      const dx = props.windowWidth > 1280 ? 280 : 0;
+      const dstyle = {marginTop: 48};
+      if(dx && !disablePermanent) {
+        dstyle.marginLeft = dx;
+      }
+
+      if(meta_loaded && state.need_user && ((!user.try_log_in && !user.logged_in) || (couch_direct && offline))) {
+        return <NeedAuth
+          key="auth"
+          handleNavigate={handleNavigate}
+          handleIfaceState={props.handleIfaceState}
+          title={title}
+          offline={couch_direct && offline}
+        />;
+      }
+
+      if(!location.pathname.match(/\/login$/) && ((state.need_meta && !meta_loaded) || (state.need_user && !props.complete_loaded))) {
+        return <DumbScreen
+          key="dumb"
+          title={doc_ram_loaded ? 'Подготовка данных в памяти...' :
+            (user.try_log_in ? 'Авторизация на сервере CouchDB...' : 'Загрузка из IndexedDB...')}
+          page={{text: doc_ram_loaded ? 'Индексы в памяти...' : (user.logged_in ? 'Почти готово...' : 'Получение данных...')}}
+        />;
+      }
+
+      const wraper = (Component, routeProps) => {
+        const {classes, ...mainProps} = props;
+        return <Component {...routeProps} {...mainProps} disablePermanent={disablePermanent}/>;
+      };
+
+      return (
+        <div style={dstyle}>
+          <Switch key="switch">
+            <Route exact path="/" render={this.renderHome}/>
+            <Route path="/:area(doc|cat|ireg|cch|rep).:name" render={(props) => wraper(DataRoute, props)}/>
+            <Route path="/meta" render={(props) => wraper(MetaTreePage, props)}/>
+            <Route path="/diagram" render={(props) => wraper(FakeDiagram, props)}/>
+            <Route path="/list" render={(props) => wraper(FakeList, props)}/>
+            <Route path="/login" render={(props) => wraper(FrmLogin, props)}/>
+            <Route path="/settings" render={(props) => wraper(Settings, props)}/>
+            <Route render={(props) => wraper(MarkdownRoute, props)}/>
+          </Switch>
+        </div>
+      );
+    };
+
     if(isHome) {
       // home route, don't shift app bar or dock drawer
       disablePermanent = true;
       appBarClassName += ` ${classes.appBarHome}`;
+    }
+    else if (state.permanentClose) {
+      disablePermanent = true;
     }
     else {
       navIconClassName = classes.navIconHide;
@@ -148,7 +209,8 @@ class AppView extends Component {
           className={classes.drawer}
           disablePermanent={disablePermanent}
           onClose={this.handleDrawerClose}
-          mobileOpen={this.state.mobileOpen}
+          onPermanentClose={this.handlepPermanentClose}
+          mobileOpen={state.mobileOpen}
           handleNavigate={handleNavigate}
           items={items}
           isHome={isHome}
@@ -157,35 +219,7 @@ class AppView extends Component {
 
         {
           // основной контент или заставка загрузки или приглашение к авторизации
-          meta_loaded && state.need_user && ((!user.try_log_in && !user.logged_in) || (couch_direct && offline)) ?
-            <NeedAuth
-              key="auth"
-              handleNavigate={handleNavigate}
-              handleIfaceState={props.handleIfaceState}
-              title={title}
-              offline={couch_direct && offline}
-            />
-            :
-            (
-              (!location.pathname.match(/\/login$/) && ((state.need_meta && !meta_loaded) || (state.need_user && !props.complete_loaded))) ?
-                <DumbScreen
-                  key="dumb"
-                  title={doc_ram_loaded ? 'Подготовка данных в памяти...' :
-                    (user.try_log_in ? 'Авторизация на сервере CouchDB...' : 'Загрузка из IndexedDB...')}
-                  page={{text: doc_ram_loaded ? 'Индексы в памяти...' : (user.logged_in ? 'Почти готово...' : 'Получение данных...')}}
-                />
-                :
-                <Switch key="switch">
-                  <Route exact path="/" render={this.renderHome}/>
-                  <Route path="/:area(doc|cat|ireg|cch|rep).:name" component={DataRoute}/>
-                  <Route path="/meta" component={MetaTreePage}/>
-                  <Route path="/diagram" render={(routeProps) => <FakeDiagram {...props} {...routeProps} />}/>
-                  <Route path="/list" render={(routeProps) => <FakeList {...props} {...routeProps} />}/>
-                  <Route path="/login" render={(routeProps) => <FrmLogin {...props} {...routeProps} />}/>
-                  <Route path="/settings" component={Settings}/>
-                  <Route component={MarkdownRoute}/>
-                </Switch>
-            )
+          mainContent()
         }
       </div>,
 
@@ -198,10 +232,12 @@ class AppView extends Component {
       />,
 
       // диалог сообщений пользователю
-      alert && alert.open && <Alert key="alert" open text={alert.text} title={alert.title} handleOk={this.handleAlertClose}/>,
+      alert && alert.open &&
+        <Alert key="alert" open text={alert.text} title={alert.title} handleOk={this.handleAlertClose}/>,
 
       // диалог вопросов пользователю (да, нет)
-      confirm && confirm.open && <Confirm key="confirm" open text={confirm.text} title={confirm.title} handleOk={confirm.handleOk} handleCancel={confirm.handleCancel}/>,
+      confirm && confirm.open &&
+        <Confirm key="confirm" open text={confirm.text} title={confirm.title} handleOk={confirm.handleOk} handleCancel={confirm.handleCancel}/>,
     ];
   }
 }
@@ -216,4 +252,4 @@ AppView.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default withStyles(withIfaceAndMeta(AppView));
+export default compose(withStyles, withWindowSize, withIfaceAndMeta)(AppView);

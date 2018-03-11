@@ -3,32 +3,40 @@
   "parserOptions": {
     "ecmaVersion": 7,
     "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
       "jsx": true
-    }
+    },
+    "sourceType": "module"
   },
   "env": {
     "browser": true,
-    "node": true,
-    "mocha": true,
     "es6": true
   },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "plugins": [
+    "babel",
     "react"
   ],
   "globals": {
     "$p": true,
-    "expect": true,
-    "sinon": true,
-    "__DEV__": true
+    "global": true,
+    "process": true,
+    "__DEV__"      : false,
+    "__PROD__"     : false,
+    "__DEBUG__"    : false,
+    "__COVERAGE__" : false,
+    "__BASENAME__" : false
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {
     "strict": [2, "global"],
+    "max-len": [1, 160, 2],
+    "no-empty": 1,
     "no-undef": 1,
     "no-unused-vars": 1,
     "semi": [1, "always"],
     "semi-spacing": [1, {"before": false, "after": true}],
     "no-case-declarations": 1,
+    "no-console": 1,
     "no-extra-semi": 1,
     "no-unexpected-multiline": 1,
     "no-useless-escape": 1,
@@ -36,6 +44,8 @@
     "quotes": [0, "single", "avoid-escape"],
     "indent": [0, 2, { "SwitchCase": 1 }],
     "react/prop-types": 1,
-    "react/display-name": 1
+    "react/display-name": 1,
+    "generator-star-spacing": 0,
+    "jsx-a11y/href-no-hash": 0
   }
 }

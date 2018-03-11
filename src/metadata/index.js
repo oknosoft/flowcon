@@ -50,6 +50,9 @@ export function init(dispatch) {
       const {wsql, job_prm, adapters} = $p;
       adapters.pouch.init(wsql, job_prm);
 
+      // шрифт Roboto грузим асинхронно
+      $p.utils.load_script('https://fonts.googleapis.com/css?family=Roboto', 'link');
+
       // читаем скрипты модификаторов DataObj`s и DataManager`s
       return import('./modifiers');
     })

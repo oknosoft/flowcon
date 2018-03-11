@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router';
 
 import {withObj} from 'metadata-redux';
-import WindowSizer from 'metadata-react/WindowSize';
 import DataList from 'metadata-react/DataList';
 import DataObj from 'metadata-react/FrmObj';
 import FrmReport from 'metadata-react/FrmReport';
@@ -17,6 +16,7 @@ class DataRoute extends Component {
     match: PropTypes.object.isRequired,
     windowHeight: PropTypes.number.isRequired,
     windowWidth: PropTypes.number.isRequired,
+    disablePermanent: PropTypes.bool,
     handlers: PropTypes.object.isRequired,
   };
 
@@ -25,7 +25,7 @@ class DataRoute extends Component {
   };
 
   render() {
-    const {match, handlers, windowHeight, windowWidth} = this.props;
+    const {match, handlers, windowHeight, windowWidth, disablePermanent} = this.props;
     const {area, name} = match.params;
     const _mgr = $p[area][name];
 
@@ -41,11 +41,7 @@ class DataRoute extends Component {
 
     const _acl = $p.current_user.get_acl(_mgr.class_name);
 
-    const dx = windowWidth > 1280 ? 280 : 0;
-    const dstyle = {marginTop: 48};
-    if(dx){
-      dstyle.marginLeft = dx;
-    }
+    const dx = (windowWidth > 1280 && !disablePermanent) ? 280 : 0;
 
     const sizes = {
       height: windowHeight > 480 ? windowHeight - 52 : 428,
@@ -59,12 +55,12 @@ class DataRoute extends Component {
       else if(type === 'list' && _mgr.FrmList) {
         Component = _mgr.FrmList;
       }
-      return <div style={dstyle}><Component _mgr={_mgr} _acl={_acl} handlers={handlers} {...props} {...sizes} /></div>;
+      return <Component _mgr={_mgr} _acl={_acl} handlers={handlers} {...props} {...sizes} />;
     };
 
     if(match.params.area === 'rep') {
       const Component = _mgr.FrmObj || FrmReport;
-      return <div style={dstyle}><Component _mgr={_mgr} _acl={_acl} match={match} {...sizes} /></div>;
+      return <Component _mgr={_mgr} _acl={_acl} match={match} {...sizes} />;
     }
 
     return <Switch>
@@ -80,7 +76,7 @@ class DataRoute extends Component {
   }
 }
 
-export default WindowSizer(withObj(DataRoute));
+export default withObj(DataRoute);
 
 
 
