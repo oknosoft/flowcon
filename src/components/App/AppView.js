@@ -32,6 +32,8 @@ import items, {item_props} from '../../pages';      // массив элемен
 import FakeDiagram from '../FakeDiagram';
 import FakeList from '../FakeList';
 
+const mainTitle = 'Flowcon';
+
 // основной layout
 class AppView extends Component {
 
@@ -193,7 +195,7 @@ class AppView extends Component {
               <MenuIcon/>
             </IconButton>
 
-            <Typography className={classes.title} type="title" color="inherit" noWrap>{title || 'Flowcon'}</Typography>
+            <Typography className={classes.title} type="title" color="inherit" noWrap>{title || mainTitle}</Typography>
 
             <HeaderButtons
               sync_started={sync_started}
@@ -214,7 +216,7 @@ class AppView extends Component {
           handleNavigate={handleNavigate}
           items={items}
           isHome={isHome}
-          title="Flowcon"
+          title={mainTitle}
         />
 
         {
