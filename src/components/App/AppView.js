@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
 //import Tooltip from 'material-ui/Tooltip';
 import Snack from 'metadata-react/App/Snack';       // сообщения в верхней части страницы (например, обновить после первого запуска)
 import Alert from 'metadata-react/App/Alert';       // диалог сообщения пользователю
@@ -79,7 +79,7 @@ class AppView extends Component {
 
   handleReset(reset) {
     const {handleNavigate, first_run} = this.props;
-    (first_run || reset) ? location.replace('/') : handleNavigate('/');
+    (first_run || reset) ? window.location.replace('/') : handleNavigate('/');
   }
 
   handleDrawerToggle = () => {
@@ -148,6 +148,7 @@ class AppView extends Component {
       }
 
       const wraper = (Component, routeProps) => {
+        /* eslint-disable-next-line */
         const {classes, ...mainProps} = props;
         return <Component {...mainProps} {...routeProps} disablePermanent={disablePermanent}/>;
       };

@@ -1,12 +1,12 @@
 import React from 'react';
-import IconChart from 'material-ui-icons/InsertChart';
-import IconDoc from 'material-ui-icons/EventNote';
-import IconInfo from 'material-ui-icons/Info';
-import IconPerson from 'material-ui-icons/Person';
-import IconSettings from 'material-ui-icons/Settings';
-// import IconHelp from 'material-ui-icons/Help';
-// import IconDrafts from 'material-ui-icons/Drafts';
-// import IconList from 'material-ui-icons/List';
+import IconChart from '@material-ui/icons/InsertChart';
+import IconDoc from '@material-ui/icons/EventNote';
+import IconInfo from '@material-ui/icons/Info';
+import IconPerson from '@material-ui/icons/Person';
+import IconSettings from '@material-ui/icons/Settings';
+// import IconHelp from '@material-ui/icons/Help';
+// import IconDrafts from '@material-ui/icons/Drafts';
+// import IconList from '@material-ui/icons/List';
 
 const items = [
   {
