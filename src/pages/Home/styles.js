@@ -14,11 +14,11 @@ export default function (theme) {
       color: theme.palette.getContrastText(theme.palette.primary[500]),
     },
     content: {
-      paddingTop: theme.spacing.unit * 8,
-      paddingBottom: theme.spacing.unit * 8,
+      paddingTop: theme.spacing.unit * 6,
+      paddingBottom: theme.spacing.unit * 6,
       [theme.breakpoints.up('sm')]: {
-        paddingTop: theme.spacing.unit * 16,
-        paddingBottom: theme.spacing.unit * 16,
+        paddingTop: theme.spacing.unit * 8,
+        paddingBottom: theme.spacing.unit * 8,
       },
     },
     text: {
@@ -28,6 +28,7 @@ export default function (theme) {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
+      cursor: 'pointer',
     },
     headline: {
       maxWidth: 500,
@@ -39,8 +40,8 @@ export default function (theme) {
     logo: {
       margin: '20px 0',
       width: '100%',
-      height: '40vw',
-      maxHeight: 230,
+      height: '20vw',
+      maxHeight: 120,
     },
   };
 }

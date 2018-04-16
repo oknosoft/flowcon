@@ -18,10 +18,7 @@ module.exports = function settings(prm) {
     local_storage_prefix: 'fl_',
 
     // гостевые пользователи для демо-режима
-    guests: [{
-      username: 'Гость',
-      password: 'hQI7OhIGlVeOWi8='
-    }],
+    guests: [],
 
     // расположение couchdb для сайта
     couch_path,
@@ -31,6 +28,9 @@ module.exports = function settings(prm) {
 
     // по умолчанию, используем базы браузера, а не прямое обращение к couchdb
     couch_direct: false,
+
+    // эти базы доступны анонимусу
+    autologin: ['ram', 'remote'],
 
     // фильтр для репликации с CouchDB не используем
     pouch_filter: {
