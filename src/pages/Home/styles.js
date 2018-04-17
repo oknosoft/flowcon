@@ -14,16 +14,16 @@ export default function (theme) {
       color: theme.palette.getContrastText(theme.palette.primary[500]),
     },
     content: {
-      paddingTop: theme.spacing.unit * 6,
-      paddingBottom: theme.spacing.unit * 6,
+      paddingTop: theme.spacing.unit * 4,
+      paddingBottom: theme.spacing.unit * 4,
       [theme.breakpoints.up('sm')]: {
-        paddingTop: theme.spacing.unit * 8,
-        paddingBottom: theme.spacing.unit * 8,
+        paddingTop: theme.spacing.unit * 6,
+        paddingBottom: theme.spacing.unit * 6,
       },
     },
     text: {
-      paddingLeft: theme.spacing.unit * 4,
-      paddingRight: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing.unit * 6,
+      paddingRight: theme.spacing.unit * 6,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',

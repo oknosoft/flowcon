@@ -60,7 +60,7 @@ function PageHome(props) {
           <div className={classes.content}>
             <div className={classes.text} onClick={() => handleNavigate('/check')}>
               <Typography variant="display1" component="h2" color="inherit" noWrap>Проверка данных</Typography>
-              <Check alt="Статьи" className={classes.logo}/>
+              <Check alt="Проверка данных" className={classes.logo}/>
               <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
                 Библиотека алгоритмов
               </Typography>
@@ -69,9 +69,9 @@ function PageHome(props) {
         </Grid>
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
-            <div className={classes.text} onClick={() => handleNavigate('/check')}>
+            <div className={classes.text} onClick={() => handleNavigate('/planing')}>
               <Typography variant="display1" component="h2" color="inherit" noWrap>Планирование ресурсов</Typography>
-              <Timer alt="Статьи" className={classes.logo}/>
+              <Timer alt="Планирование" className={classes.logo}/>
               <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
                 Простое решение
               </Typography>

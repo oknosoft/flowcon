@@ -14,20 +14,36 @@ function (newDoc, oldDoc, userCtx, secObj) {
   }
 }
 
-"date": "2017-01-26T02:00:01.000Z",
+
 
 {
   "selector": {
-  "class_name": {
-    "$eq": "doc.cash_moving"
+  "sorting_field": {
+    "$gt": 0
   },
-  "$and": [
-    {"date": {"$gte": "2016-01-01"}},
-    {"date": {"$lte": "2017-12-31"}}
-  ],
-    "search": {
-    "$regex": ""
+  "tags": {
+    "$elemMatch": {
+      "$in": [
+        "da3c6aab-4241-11e8-8505-d85d4c80ec2a",
+        "507e3e9d-418d-11e8-8505-d85d4c80ec2a"
+      ]
+    }
   }
 },
-  "fields": ["_id", "posted", "name", "note", "date", "number_doc", "doc_amount","search"]
+  "fields": [
+  "_id",
+  "id",
+  "name",
+  "h1",
+  "introduction",
+  "date",
+  "author",
+  "tags"
+],
+  "use_index": "sorting_field_tags",
+  "sort": [
+  {
+    "sorting_field": "asc"
+  }
+]
 }

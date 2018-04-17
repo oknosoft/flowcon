@@ -18,6 +18,7 @@ import HeaderButtons from 'metadata-react/Header/HeaderButtons';
 import DumbScreen from '../DumbScreen';             // заставка "загрузка занных"
 import DataRoute from '../DataRoute';               // вложенный маршрутизатор страниц с данными
 import MarkdownRoute from '../MarkdownRoute';       // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
+import ArticlesRoute from '../Articles';            // маршрутизатор статей
 import HomeView from '../../pages/Home';            // домашняя страница
 import MetaTreePage from '../MetaTreePage';         // дерево метаданных
 import Settings from '../Settings';                 // страница настроек приложения
@@ -158,9 +159,10 @@ class AppView extends Component {
           <Switch key="switch">
             <Route exact path="/" render={this.renderHome}/>
             <Route path="/:area(doc|cat|ireg|cch|rep).:name" render={(props) => wraper(DataRoute, props)}/>
+            <Route path="/articles" render={(props) => wraper(ArticlesRoute, props)}/>
             <Route path="/meta" render={(props) => wraper(MetaTreePage, props)}/>
-            <Route path="/diagram" render={(props) => wraper(FakeDiagram, props)}/>
-            <Route path="/list" render={(props) => wraper(FakeList, props)}/>
+            <Route path="/flowcon/diagram" render={(props) => wraper(FakeDiagram, props)}/>
+            <Route path="/flowcon/list" render={(props) => wraper(FakeList, props)}/>
             <Route path="/login" render={(props) => wraper(FrmLogin, props)}/>
             <Route path="/settings" render={(props) => wraper(Settings, props)}/>
             <Route render={(props) => wraper(MarkdownRoute, props)}/>
@@ -196,7 +198,7 @@ class AppView extends Component {
               <MenuIcon/>
             </IconButton>
 
-            <Typography className={classes.title} type="title" color="inherit" noWrap>{title || mainTitle}</Typography>
+            <Typography className={classes.title} variant="title" color="inherit" noWrap>{title || mainTitle}</Typography>
 
             <HeaderButtons
               sync_started={sync_started}

@@ -30,8 +30,8 @@ function AppFooter(props) {
   return (
     <footer className={classes.root}>
       <div className={classes.layout}>
-        <Typography type="title" gutterBottom>Быстрые ссылки</Typography>
-        <Typography type="subheading" component="div">
+        <Typography variant="title" gutterBottom>Быстрые ссылки</Typography>
+        <Typography variant="subheading" component="div">
           <Grid container spacing={0}>
             <Grid item xs={12} sm={6}>
               <ul className={classes.list}>

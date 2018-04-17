@@ -4,67 +4,85 @@ import IconDoc from '@material-ui/icons/EventNote';
 import IconInfo from '@material-ui/icons/Info';
 import IconPerson from '@material-ui/icons/Person';
 import IconSettings from '@material-ui/icons/Settings';
+import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import Flask from './Home/Flask';
 // import IconHelp from '@material-ui/icons/Help';
 // import IconDrafts from '@material-ui/icons/Drafts';
 // import IconList from '@material-ui/icons/List';
 
 const items = [
   {
-    text: 'Теория',
-    icon: <IconDoc/>,
-    open: true,
-    id: 'theory',
-    items: [
-      {
-        text: 'Flowcon - что это',
-        id: 'readme',
-        navigate: '/readme',
-        //icon: <IconDrafts/>
-      },
-      {
-        text: 'Концепция',
-        id: 'concept',
-        navigate: '/readme',
-      },
-      {
-        text: 'История',
-        id: 'history',
-        navigate: '/readme',
-      },
-    ]
+    text: 'Статьи',
+    icon: <LibraryBooks/>,
+    id: 'articles',
+    //bold: true,
+    navigate: '/articles',
+    need_meta: true,
   },
   {
-    text: 'Практика',
-    icon: <IconChart/>,
-    open: true,
-    id: 'practice',
+    text: 'Флакон',
+    icon: <Flask/>,
+    open: false,
+    id: 'flowcon',
     items: [
       {
-        text: 'С чего начать',
-        id: 'begin',
-        navigate: '/readme',
+        text: 'Теория',
+        icon: <IconDoc/>,
+        open: true,
+        id: 'theory',
+        items: [
+          {
+            text: 'Flowcon - что это',
+            id: 'readme',
+            navigate: '/articles/flowcon-readme',
+            //icon: <IconDrafts/>
+          },
+          {
+            text: 'Концепция',
+            id: 'concept',
+            navigate: '/articles/flowcon-concept',
+          },
+          {
+            text: 'История',
+            id: 'history',
+            navigate: '/articles/flowcon-history',
+          },
+        ]
       },
       {
-        text: 'Как настроить',
-        id: 'tune',
-        navigate: '/readme',
-      },
-      {
-        text: 'Диаграмма эффективности',
-        id: 'diagram',
-        navigate: '/diagram',
-        need_meta: true,
-        need_user: true,
-      },
-      {
-        text: 'Таблица',
-        id: 'list',
-        navigate: '/list',
-        need_meta: true,
-        need_user: true,
-      },
-    ],
+        text: 'Практика',
+        icon: <IconChart/>,
+        open: true,
+        id: 'practice',
+        items: [
+          {
+            text: 'С чего начать',
+            id: 'begin',
+            navigate: '/readme',
+          },
+          {
+            text: 'Как настроить',
+            id: 'tune',
+            navigate: '/readme',
+          },
+          {
+            text: 'Диаграмма эффективности',
+            id: 'diagram',
+            navigate: '/flowcon/diagram',
+            need_meta: true,
+            need_user: true,
+          },
+          {
+            text: 'Таблица',
+            id: 'list',
+            navigate: '/flowcon/list',
+            need_meta: true,
+            need_user: true,
+          },
+        ],
 
+      },
+    ]
   },
   {
     divider: true,
@@ -82,8 +100,7 @@ const items = [
     icon: <IconSettings/>,
   },
   {
-    text: 'О программе',
-    title: 'Flowcon - о программе',
+    text: 'О сайте',
     navigate: '/about',
     icon: <IconInfo/>
   }

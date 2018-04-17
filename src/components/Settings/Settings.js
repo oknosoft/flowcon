@@ -39,7 +39,7 @@ class Settings extends Component {
     const {props} = this;
     return (
       <Paper className={props.classes.root} elevation={4}>
-        <Typography type="title" style={{paddingTop: 16}}>Подключение к базе данных</Typography>
+        <Typography variant="title" style={{paddingTop: 16}}>Подключение к базе данных</Typography>
         <CnnSettings {...props} />
       </Paper>
     );
