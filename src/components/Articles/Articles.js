@@ -32,7 +32,7 @@ class Articles extends Component {
       <div style={{marginTop: 16}}>
         <Typography variant="display1" component="h1" color="primary">{title}</Typography>
         <SelectTags tags={this.state.tags} handleChange={this.handleChange}/>
-        <InfiniteArticles tags={this.state.tags}/>
+        <InfiniteArticles tags={this.state.tags} match={this.props.match} handleNavigate={this.props.handleNavigate}/>
       </div>
     </AppContent>;
   }
@@ -40,6 +40,7 @@ class Articles extends Component {
 
 Articles.propTypes = {
   match: PropTypes.object.isRequired,
+  handleNavigate: PropTypes.func.isRequired,
 };
 
 export default Articles;

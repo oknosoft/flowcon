@@ -6,7 +6,7 @@ import IconPerson from '@material-ui/icons/Person';
 import IconSettings from '@material-ui/icons/Settings';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import Flask from './Home/Flask';
-// import IconHelp from '@material-ui/icons/Help';
+import IconHelp from '@material-ui/icons/Help';
 // import IconDrafts from '@material-ui/icons/Drafts';
 // import IconList from '@material-ui/icons/List';
 
@@ -26,45 +26,25 @@ const items = [
     id: 'flowcon',
     items: [
       {
-        text: 'Теория',
-        icon: <IconDoc/>,
-        open: true,
-        id: 'theory',
-        items: [
-          {
-            text: 'Flowcon - что это',
-            id: 'readme',
-            navigate: '/articles/flowcon-readme',
-            //icon: <IconDrafts/>
-          },
-          {
-            text: 'Концепция',
-            id: 'concept',
-            navigate: '/articles/flowcon-concept',
-          },
-          {
-            text: 'История',
-            id: 'history',
-            navigate: '/articles/flowcon-history',
-          },
-        ]
+        text: 'Flowcon - что это',
+        id: 'readme',
+        navigate: '/articles/flowcon-readme',
+        icon: <IconHelp/>
       },
       {
-        text: 'Практика',
+        text: 'Задачи',
+        id: 'issues',
+        navigate: '/doc.issue/list',
+        icon: <IconDoc/>,
+        need_meta: true,
+        need_user: true,
+      },
+      {
+        text: 'Отчеты',
         icon: <IconChart/>,
-        open: true,
+        open: false,
         id: 'practice',
         items: [
-          {
-            text: 'С чего начать',
-            id: 'begin',
-            navigate: '/readme',
-          },
-          {
-            text: 'Как настроить',
-            id: 'tune',
-            navigate: '/readme',
-          },
           {
             text: 'Диаграмма эффективности',
             id: 'diagram',
@@ -126,8 +106,14 @@ export function item_props(path) {
   if(!path){
     path = location.pathname;
   }
+  if(path.endsWith('/')) {
+    path = path.substr(0, path.length - 1);
+  }
   // здесь можно переопределить нужность meta и авторизованности для корневой страницы
   let res = with_recursion(path, items);
+  if(!res && path.indexOf('/') !== -1) {
+    res = with_recursion(path.substr(0, path.lastIndexOf('/')), items);
+  }
   if(!res && path.match(/\/(doc|cat|ireg|cch|rep)\./)){
     res = {need_meta: true, need_user: true};
   }
