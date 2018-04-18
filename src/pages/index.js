@@ -29,6 +29,7 @@ const items = [
         text: 'Flowcon - что это',
         id: 'readme',
         navigate: '/articles/flowcon-readme',
+        need_meta: true,
         icon: <IconHelp/>
       },
       {

@@ -42,7 +42,7 @@ class Article extends Component {
   render() {
     const {doc} = this.state;
     if(!doc) {
-      return <div><CircularProgress /> Загрузка</div>;
+      return <AppContent><CircularProgress size={24} /> Загрузка...</AppContent>;
     }
     else if(doc === 404) {
       return <NotFound />;
