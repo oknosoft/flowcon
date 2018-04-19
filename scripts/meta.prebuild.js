@@ -108,6 +108,9 @@ $p.wsql.init((prm) => {
     })
     .then((_m) => {
 
+      // смещаем настройки компоновки в ram
+      _m.cat.scheme_settings.cachable = 'ram';
+
       debug('Создаём текст модуля конструкторов данных');
       let text = create_modules(_m);
 
