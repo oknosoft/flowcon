@@ -4,7 +4,7 @@
  */
 export default {
   'common': {
-    title: 'Флакон: потоки задач',
+    title: 'Flowcon: потоки задач',
   },
   OrderList: {
     state_filter: '',

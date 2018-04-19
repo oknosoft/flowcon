@@ -48,7 +48,7 @@ function PageHome(props) {
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
             <div className={classes.text} onClick={() => handleNavigate('/readme')}>
-              <Typography variant="display1" component="h2" color="inherit" noWrap>Флакон</Typography>
+              <Typography variant="display1" component="h2" color="inherit" noWrap>Flowcon</Typography>
               <Flask alt="Flowcon Logo" className={classes.logo}/>
               <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
                 Программно-методический комплекс<br/> для управления потоками задач

@@ -5,7 +5,7 @@
 export default function ($p) {
 
   Object.assign($p.msg, {
-    main_title: "Флакон ",
+    main_title: "Flowcon ",
   });
 }
 

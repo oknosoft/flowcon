@@ -20,7 +20,7 @@ const items = [
     need_meta: true,
   },
   {
-    text: 'Флакон',
+    text: 'Flowcon',
     icon: <Flask/>,
     open: false,
     id: 'flowcon',
