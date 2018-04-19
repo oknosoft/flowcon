@@ -38,6 +38,14 @@ class Article extends Component {
       });
   }
 
+  componentDidUpdate(prevProps) {
+    // If props/state signals that the underlying collection has changed,
+    // Reload the most recently requested batch of rows:
+    if(this.props.match.params.ref !== prevProps.match.params.ref ) {
+      this.componentDidMount();
+    }
+  }
+
   render() {
     const {doc} = this.state;
     if(!doc) {
