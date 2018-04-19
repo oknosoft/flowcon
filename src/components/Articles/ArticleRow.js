@@ -6,12 +6,13 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import {FormGroup} from 'material-ui/Form';
 
 
 export default function ArticleRow(props) {
-  const {row: {_id, id, name, h1, introduction, date, author, tags}, match, handleNavigate, classes} = props;
+  const {row: {id, name, h1, introduction, date, author, tags}, match, handleNavigate, classes} = props;
   const intro = introduction || h1;
   return (
     <FormGroup classes={{root: classes.nowrap}}>
@@ -34,4 +35,11 @@ export default function ArticleRow(props) {
       }
     </FormGroup>
   );
+}
+
+ArticleRow.propTypes = {
+  match: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  handleNavigate: PropTypes.func.isRequired,
+  row: PropTypes.object.isRequired,
 };

@@ -8,13 +8,11 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import AppContent from 'metadata-react/App/AppContent';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import NotFound from '../NotFound';  // 404
-
+import Social from './Social';
 
 class Article extends Component {
 
@@ -32,7 +30,7 @@ class Article extends Component {
           this.setState({doc: res.rows[0].doc});
         }
         else {
-          this.setState({doc: 404})
+          this.setState({doc: 404});
         }
       })
       .catch((err) => {
@@ -51,16 +49,16 @@ class Article extends Component {
     else if(doc instanceof Error) {
       return <NotFound />;
     }
-    return [
+    return (
       <MarkdownDocs
         key="doc"
         htitle={doc.name}
         h1={doc.h1}
         descr={doc.descr}
         markdown={doc.content}
-        social
+        footer={<Social title={doc.name}/>}
       />
-    ];
+    );
   }
 }
 

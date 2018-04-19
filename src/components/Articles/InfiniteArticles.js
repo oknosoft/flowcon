@@ -55,7 +55,7 @@ class InfiniteArticles extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     // If props/state signals that the underlying collection has changed,
     // Reload the most recently requested batch of rows:
     if(this.props.tags.length !== prevProps.tags.length) {
@@ -68,7 +68,6 @@ class InfiniteArticles extends Component {
 
   render() {
 
-    const {loadedRowCount, loadingRowCount} = this.state;
     const {classes} = this.props;
 
     //height={300}autoHeight
@@ -178,7 +177,6 @@ class InfiniteArticles extends Component {
   }
 
   _rowRenderer = ({index, key, style}) => {
-    const {loadedRowsMap} = this.state;
     const {classes, match, handleNavigate} = this.props;
 
     let content;
