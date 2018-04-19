@@ -19,7 +19,7 @@ import DumbScreen from '../DumbScreen';             // заставка "заг�
 import DataRoute from '../DataRoute';               // вложенный маршрутизатор страниц с данными
 import MarkdownRoute from '../MarkdownRoute';       // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
 import ArticlesRoute from '../Articles';            // маршрутизатор статей
-import HomeView from '../../pages/Home';            // домашняя страница
+import HomeView from '../Home';            // домашняя страница
 import MetaTreePage from '../MetaTreePage';         // дерево метаданных
 import Settings from '../Settings';                 // страница настроек приложения
 
@@ -28,7 +28,7 @@ import withStyles from './styles';
 import withWindowSize from 'metadata-react/WindowSize';
 import compose from 'recompose/compose';
 
-import items, {item_props} from '../../pages';      // массив элементов меню и метод для вычисления need_meta, need_user по location.pathname
+import items, {item_props} from './menu';      // массив элементов меню и метод для вычисления need_meta, need_user по location.pathname
 
 import FakeDiagram from '../FakeDiagram';
 import FakeList from '../FakeList';

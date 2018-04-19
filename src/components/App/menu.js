@@ -5,7 +5,7 @@ import IconInfo from '@material-ui/icons/Info';
 import IconPerson from '@material-ui/icons/Person';
 import IconSettings from '@material-ui/icons/Settings';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
-import Flask from './Home/Flask';
+import Flask from '../Home/Flask';
 import IconHelp from '@material-ui/icons/Help';
 // import IconDrafts from '@material-ui/icons/Drafts';
 // import IconList from '@material-ui/icons/List';

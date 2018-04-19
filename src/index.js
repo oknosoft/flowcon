@@ -13,7 +13,7 @@ import {init} from './metadata';
 import configureStore, {history} from './redux';
 
 // метод для вычисления need_meta, need_user для location.pathname
-import {item_props} from './pages';
+import {item_props} from './components/App/menu';
 
 // заставка "загрузка занных"
 import DumbScreen from './components/DumbScreen';

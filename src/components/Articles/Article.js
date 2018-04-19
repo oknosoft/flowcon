@@ -13,7 +13,8 @@ import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import AppContent from 'metadata-react/App/AppContent';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
-import NotFound from '../../pages/NotFound';  // 404
+import NotFound from '../NotFound';  // 404
+
 
 class Article extends Component {
 
@@ -50,12 +51,16 @@ class Article extends Component {
     else if(doc instanceof Error) {
       return <NotFound />;
     }
-    return <MarkdownDocs
-      title={doc.title}
-      h1={doc.h1}
-      descr={doc.descr}
-      markdown={doc.content}
-    />;
+    return [
+      <MarkdownDocs
+        key="doc"
+        htitle={doc.name}
+        h1={doc.h1}
+        descr={doc.descr}
+        markdown={doc.content}
+        social
+      />
+    ];
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "flowcon",
   "version": "2.0.16-beta.56",
-  "description": "Flowcon: task flow",
+  "description": "business programming",
   "repository": {
     "type": "git",
     "url": "https://github.com/oknosoft/flowcon"
@@ -31,7 +31,8 @@
     "metadata-pouchdb": "2.0.16-beta.56",
     "metadata-react": "2.0.16-beta.56",
     "metadata-redux": "2.0.16-beta.56",
-    "metadata-superlogin": "2.0.16-beta.56"
+    "metadata-superlogin": "2.0.16-beta.56",
+    "react-share": "^2.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
