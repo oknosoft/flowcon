@@ -130,18 +130,20 @@ class AppView extends Component {
       }
 
       if(meta_loaded && state.need_user && ((!user.try_log_in && !user.logged_in) || (couch_direct && offline))) {
-        return <NeedAuth
-          key="auth"
-          handleNavigate={handleNavigate}
-          handleIfaceState={props.handleIfaceState}
-          title={title}
-          offline={couch_direct && offline}
-        />;
+        return (
+          <div style={dstyle}>
+            <NeedAuth
+              handleNavigate={handleNavigate}
+              handleIfaceState={props.handleIfaceState}
+              title={title}
+              offline={couch_direct && offline}
+            />
+          </div>
+        );
       }
 
       if(!location.pathname.match(/\/login$/) && ((state.need_meta && !meta_loaded) || (state.need_user && !props.complete_loaded))) {
         return <DumbScreen
-          key="dumb"
           title={doc_ram_loaded ? 'Подготовка данных в памяти...' :
             (user.try_log_in ? 'Авторизация на сервере CouchDB...' : 'Загрузка из IndexedDB...')}
           page={{text: doc_ram_loaded ? 'Индексы в памяти...' : (user.logged_in ? 'Почти готово...' : 'Получение данных...')}}

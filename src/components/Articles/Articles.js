@@ -10,6 +10,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 import AppContent from 'metadata-react/App/AppContent';
 import SelectTags from './SelectTags';
 import InfiniteArticles from './InfiniteArticles';
@@ -27,12 +28,19 @@ class Articles extends Component {
   };
 
   render() {
+    const session = $p.superlogin.getSession();
+    const {handleNavigate} = this.props;
     return <AppContent >
       <Helmet title={title} />
       <div style={{marginTop: 16}}>
         <Typography variant="display1" component="h1" color="primary">{title}</Typography>
         <SelectTags tags={this.state.tags} handleChange={this.handleChange}/>
-        <InfiniteArticles tags={this.state.tags} match={this.props.match} handleNavigate={this.props.handleNavigate}/>
+        {
+          session && session.roles.indexOf('doc_full') !== -1 &&
+          <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти в список редактора статей</Button>
+        }
+
+        <InfiniteArticles tags={this.state.tags} match={this.props.match} handleNavigate={handleNavigate}/>
       </div>
     </AppContent>;
   }

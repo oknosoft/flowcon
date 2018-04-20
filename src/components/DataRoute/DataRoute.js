@@ -6,6 +6,7 @@ import {withObj} from 'metadata-redux';
 import DataList from 'metadata-react/DataList';
 import DataObj from 'metadata-react/FrmObj';
 import FrmReport from 'metadata-react/FrmReport';
+import NeedAuth, {ltitle} from 'metadata-react/App/NeedAuth'; // страница "необхлдима авторизация"
 
 //import MetaObjPage from '../../components/MetaObjPage';
 import NotFound from '../NotFound';
@@ -33,10 +34,16 @@ class DataRoute extends Component {
       return <NotFound/>;
     }
 
-    // если нет текущего пользователя, переходим на страницу login
+    // если нет текущего пользователя, считаем, что нет прав на просмотр
     if(!$p.current_user) {
-      handlers.handleNavigate('/login');
-      return false;
+      return (
+        <NeedAuth
+          handleNavigate={handlers.handleNavigate}
+          handleIfaceState={handlers.handleIfaceState}
+          title={ltitle}
+          offline={couch_direct && offline}
+        />
+      );
     }
 
     const _acl = $p.current_user.get_acl(_mgr.class_name);
