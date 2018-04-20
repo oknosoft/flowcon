@@ -12,7 +12,8 @@ import {FormGroup} from 'material-ui/Form';
 
 
 export default function ArticleRow(props) {
-  const {row: {id, name, h1, introduction, date, author, tags}, match, handleNavigate, classes} = props;
+  // , author, tags
+  const {row: {id, name, h1, introduction, date}, match, handleNavigate, classes} = props;
   const intro = introduction || h1;
   return (
     <FormGroup classes={{root: classes.nowrap}}>

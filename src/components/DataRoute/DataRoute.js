@@ -9,16 +9,18 @@ import FrmReport from 'metadata-react/FrmReport';
 import NeedAuth, {ltitle} from 'metadata-react/App/NeedAuth'; // страница "необхлдима авторизация"
 
 //import MetaObjPage from '../../components/MetaObjPage';
-import NotFound from '../NotFound';
+import NotFound from '../Pages/NotFound';
 
 class DataRoute extends Component {
 
   static propTypes = {
     match: PropTypes.object.isRequired,
+    handlers: PropTypes.object.isRequired,
     windowHeight: PropTypes.number.isRequired,
     windowWidth: PropTypes.number.isRequired,
     disablePermanent: PropTypes.bool,
-    handlers: PropTypes.object.isRequired,
+    couch_direct: PropTypes.bool,
+    offline: PropTypes.bool,
   };
 
   static childContextTypes = {
@@ -26,7 +28,7 @@ class DataRoute extends Component {
   };
 
   render() {
-    const {match, handlers, windowHeight, windowWidth, disablePermanent} = this.props;
+    const {match, handlers, windowHeight, windowWidth, disablePermanent, couch_direct, offline} = this.props;
     const {area, name} = match.params;
     const _mgr = $p[area][name];
 
@@ -65,7 +67,7 @@ class DataRoute extends Component {
       return <Component _mgr={_mgr} _acl={_acl} handlers={handlers} {...props} {...sizes} />;
     };
 
-    if(match.params.area === 'rep') {
+    if(area === 'rep') {
       const Component = _mgr.FrmObj || FrmReport;
       return <Component _mgr={_mgr} _acl={_acl} match={match} {...sizes} />;
     }

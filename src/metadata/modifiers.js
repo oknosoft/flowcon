@@ -4,7 +4,7 @@
 import common from './common';
 
 // модификаторы справочников
-//import catalogs from "./catalogs";
+import catalogs from "./catalogs";
 
 // модификаторы документов
 //import documents from "./documents";
@@ -18,7 +18,7 @@ import chartscharacteristics from "./chartscharacteristics";
 
 export default function ($p) {
   common($p);
-  //catalogs($p);
+  catalogs($p);
   chartscharacteristics($p);
   //documents($p);
   //reports($p);

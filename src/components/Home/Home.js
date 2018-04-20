@@ -16,7 +16,7 @@ import Timer from '@material-ui/icons/Timer';
 
 import styles from './styles';
 
-const ltitle = 'Flowcon: потоки задач';
+const ltitle = 'business-programming';
 
 function PageHome(props) {
   const {classes, handleNavigate, title} = props;
@@ -37,7 +37,7 @@ function PageHome(props) {
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
             <div className={classes.text} onClick={() => handleNavigate('/articles')}>
-              <Typography variant="display1" component="h2" color="inherit" noWrap>Статьи</Typography>
+              <Typography variant="headline" component="h2" color="inherit">Статьи</Typography>
               <LibraryBooks alt="Статьи" className={classes.logo}/>
               <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
                 Программирование бизнеса
@@ -47,8 +47,8 @@ function PageHome(props) {
         </Grid>
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
-            <div className={classes.text} onClick={() => handleNavigate('/readme')}>
-              <Typography variant="display1" component="h2" color="inherit" noWrap>Flowcon</Typography>
+            <div className={classes.text} onClick={() => handleNavigate('/articles/flowcon-readme')}>
+              <Typography variant="headline" component="h2" color="inherit">Flowcon</Typography>
               <Flask alt="Flowcon Logo" className={classes.logo}/>
               <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
                 Программно-методический комплекс<br/> для управления потоками задач
@@ -59,7 +59,7 @@ function PageHome(props) {
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
             <div className={classes.text} onClick={() => handleNavigate('/check')}>
-              <Typography variant="display1" component="h2" color="inherit" noWrap>Проверка данных</Typography>
+              <Typography variant="headline" component="h2" color="inherit">Проверка данных</Typography>
               <Check alt="Проверка данных" className={classes.logo}/>
               <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
                 Библиотека алгоритмов
@@ -70,7 +70,7 @@ function PageHome(props) {
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
             <div className={classes.text} onClick={() => handleNavigate('/planing')}>
-              <Typography variant="display1" component="h2" color="inherit" noWrap>Планирование ресурсов</Typography>
+              <Typography variant="headline" component="h2" color="inherit">Планирование ресурсов</Typography>
               <Timer alt="Планирование" className={classes.logo}/>
               <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
                 Простое решение

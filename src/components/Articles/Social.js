@@ -20,20 +20,20 @@ import {
   TwitterShareButton,
   GooglePlusShareButton,
   VKShareButton,
-  //OKShareButton,
+  OKShareButton,
   TelegramShareButton,
   WhatsappShareButton,
+  MailruShareButton,
   EmailShareButton,
- // MailruShareButton,
 
   FacebookIcon,
   TwitterIcon,
   GooglePlusIcon,
   VKIcon,
-  //OKIcon,
+  OKIcon,
   TelegramIcon,
   WhatsappIcon,
-  //MailruIcon,
+  MailruIcon,
   EmailIcon,
 } from 'react-share';
 
@@ -92,6 +92,19 @@ function Social(props) {
         className={classes.share}>
         <VKIcon size={32} round />
       </VKShareButton>
+      <OKShareButton
+        url={href}
+        windowWidth={660}
+        windowHeight={460}
+        className={classes.share}>
+        <OKIcon size={32} round />
+      </OKShareButton>
+      <MailruShareButton
+        url={href}
+        title={title}
+        className={classes.share}>
+        <MailruIcon size={32} round />
+      </MailruShareButton>
       <EmailShareButton
         url={href}
         subject={title}

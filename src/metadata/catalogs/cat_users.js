@@ -3,7 +3,7 @@
  *
  * &copy; Evgeniy Malyarov http://www.oknosoft.ru 2014-2018
  *
- * @module cat_users_acl
+ * @module cat_users
  */
 
 

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { CircularProgress } from 'material-ui/Progress';
 import AppContent from 'metadata-react/App/AppContent';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
-import NotFound from '../NotFound';  // 404
+import NotFound from '../Pages/NotFound';  // 404
 import Social from './Social';
 
 class Article extends Component {

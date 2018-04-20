@@ -18,9 +18,7 @@ const STATUS_LOADING = 1;
 const STATUS_LOADED = 2;
 
 const list = new Map();
-list.set(0, {name: 'name0'});
-list.set(1, {name: 'name'});
-list.set(2, {name: 'name2'});
+list.set(0, {name: 'Загрузка списка статей...'});
 
 const styles = theme => ({
   list: {
@@ -70,13 +68,12 @@ class InfiniteArticles extends Component {
 
     const {classes} = this.props;
 
-    //height={300}autoHeight
     return (
 
       <WindowScroller
         ref={this._setRef}
         scrollElement={window}>
-        {({height, isScrolling, registerChild, onChildScroll, scrollTop}) => (
+        {({height /*, isScrolling, registerChild, onChildScroll, scrollTop */}) => (
           <InfiniteLoader
             className={classes.scroller}
             isRowLoaded={this._isRowLoaded}

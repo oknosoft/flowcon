@@ -15,7 +15,8 @@ import AppContent from 'metadata-react/App/AppContent';
 import SelectTags from './SelectTags';
 import InfiniteArticles from './InfiniteArticles';
 
-const title = 'Статьи о программировании бизнеса';
+const ltitle = 'Статьи';
+const title = ltitle + ' о программировании бизнеса';
 
 class Articles extends Component {
 
@@ -27,6 +28,22 @@ class Articles extends Component {
     this.setState({ tags: event.target.value });
   };
 
+  componentDidMount() {
+    this.shouldComponentUpdate(this.props);
+  }
+
+  shouldComponentUpdate({handleIfaceState, title}) {
+    if(title != ltitle) {
+      handleIfaceState({
+        component: '',
+        name: 'title',
+        value: ltitle,
+      });
+      return false;
+    }
+    return true;
+  }
+
   render() {
     const session = $p.superlogin.getSession();
     const {handleNavigate} = this.props;
@@ -37,7 +54,7 @@ class Articles extends Component {
         <SelectTags tags={this.state.tags} handleChange={this.handleChange}/>
         {
           session && session.roles.indexOf('doc_full') !== -1 &&
-          <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти в список редактора статей</Button>
+          <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти к редактору статей</Button>
         }
 
         <InfiniteArticles tags={this.state.tags} match={this.props.match} handleNavigate={handleNavigate}/>
@@ -48,7 +65,9 @@ class Articles extends Component {
 
 Articles.propTypes = {
   match: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
   handleNavigate: PropTypes.func.isRequired,
+  handleIfaceState: PropTypes.func.isRequired,
 };
 
 export default Articles;

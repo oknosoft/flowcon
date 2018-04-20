@@ -17,9 +17,9 @@ import HeaderButtons from 'metadata-react/Header/HeaderButtons';
 
 import DumbScreen from '../DumbScreen';             // заставка "загрузка занных"
 import DataRoute from '../DataRoute';               // вложенный маршрутизатор страниц с данными
-import MarkdownRoute from '../MarkdownRoute';       // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
+import MarkdownRoute from '../Pages';               // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
 import ArticlesRoute from '../Articles';            // маршрутизатор статей
-import HomeView from '../Home';            // домашняя страница
+import HomeView from '../Home';                     // домашняя страница
 import MetaTreePage from '../MetaTreePage';         // дерево метаданных
 import Settings from '../Settings';                 // страница настроек приложения
 
@@ -208,6 +208,7 @@ class AppView extends Component {
               offline={offline}
               user={user}
               handleNavigate={handleNavigate}
+              compact
             />
 
           </Toolbar>
