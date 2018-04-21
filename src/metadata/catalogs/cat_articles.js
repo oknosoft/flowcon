@@ -13,6 +13,11 @@ export default function ({cat, CatArticles}) {
   // подключаем особую форму объекта
   cat.articles.FrmObj = EditorArticle;
 
+  // реквизит поиска по строке
+  cat.articles.build_search = function (tmp, tObj) {
+    tmp.search = (tObj.name + ' ' + tObj.id).toLowerCase();
+  };
+
   // модифицируем работу с табчастью тегов
   const {prototype} = CatArticles;
   delete prototype.tags;

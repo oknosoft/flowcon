@@ -158,7 +158,7 @@ function create_modules(_m) {
       cat: {mgr: 'CatManager', proto: 'CatObj', dir: 'catalogs'},
       bp: {mgr: 'BusinessProcessManager', proto: 'BusinessProcessObj'},
       tsk: {mgr: 'TaskManager', proto: 'TaskObj'},
-      doc: {mgr: 'DocManager', proto: 'DocObj'},
+      doc: {mgr: 'DocManager', proto: 'DocObj', dir: 'documents'},
       ireg: {mgr: 'InfoRegManager', proto: 'RegisterRow'},
       areg: {mgr: 'AccumRegManager', proto: 'RegisterRow'},
       dp: {mgr: 'DataProcessorsManager', proto: 'DataProcessorObj'},
@@ -203,7 +203,13 @@ function obj_constructor_text(_m, category, name, categoties) {
     f, props = '';
 
   const filename = dir && path.resolve(__dirname, `../src/metadata/${dir}/${category}_${name}.js`);
-  const extModule = dir && fs.existsSync(filename) && require(filename);
+  let extModule;
+  if(dir && fs.existsSync(filename)) {
+    try {
+      extModule = require(filename);
+    }
+    catch(err) {}
+  };
 
   const extender = extModule && extModule[fn_name] && extModule[fn_name].toString();
   const extText = extender && extender.substring(extender.indexOf('{') + 1, extender.lastIndexOf('}') - 1);
@@ -224,7 +230,13 @@ function obj_constructor_text(_m, category, name, categoties) {
   // реквизиты по метаданным
   if (meta.fields) {
     for (f in meta.fields) {
-      text += `get ${f}(){return this._getter('${f}')}\nset ${f}(v){this._setter('${f}',v)}\n`;
+      if(category === 'cch' && f === 'type') {
+        text += `get type(){const {type} = this._obj; return typeof type === 'object' ? type : {types: []}}
+        set type(v){this._obj.type = typeof v === 'object' ? v : {types: []}}\n`;
+      }
+      else {
+        text += `get ${f}(){return this._getter('${f}')}\nset ${f}(v){this._setter('${f}',v)}\n`;
+      }
     }
   }
   else {

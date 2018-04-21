@@ -8,19 +8,23 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Tabs, {Tab} from 'material-ui/Tabs';
 import Helmet from 'react-helmet';
-import Typography from 'material-ui/Typography';
-import { FormGroup, FormControl } from 'material-ui/Form';
+import {FormGroup} from 'material-ui/Form';
 
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
 import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
 import DataField from 'metadata-react/DataField';
+import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
+import Social from './Social';
+import SelectTags from './SelectTags';
 
+import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
+
+const htitle = 'Редактор статьи';
 
 class EditorArticle extends MDNRComponent {
 
@@ -42,6 +46,8 @@ class EditorArticle extends MDNRComponent {
       handleSave: this.handleSave.bind(this),
       handleAttachment: this.handleAttachment.bind(this),
       handleClose: this.handleClose.bind(this),
+      handlePrint: this.handlePrint.bind(this),
+      handleMarkDeleted: this.handleMarkDeleted.bind(this),
     };
     this.state = {
       _meta: _meta || _mgr.metadata(),
@@ -49,7 +55,6 @@ class EditorArticle extends MDNRComponent {
       MarkdownInput: null,
       index: 0,
     };
-
   }
 
   componentDidMount() {
@@ -61,15 +66,44 @@ class EditorArticle extends MDNRComponent {
       .then((module) => {
         this.setState({MarkdownInput: module.default});
       });
+
+    _mgr.on('update', this.onDataChange);
+  }
+
+  componentWillUnmount() {
+    this.props._mgr.off('update', this.onDataChange);
+  }
+
+  /* eslint-disable-next-line*/
+  onDataChange = (obj, fields) => {
+    if(obj === this.state._obj) {
+      this.shouldComponentUpdate(this.props);
+    }
   }
 
   handleSave() {
     //this.props.handleSave(this.state._obj);
     const {_obj} = this.state;
-    _obj && _obj.save();
+    _obj && _obj.save()
+      .catch((err) => {
+        // показываем диалог
+        this.props.handleIfaceState({
+          component: '',
+          name: 'alert',
+          value: {open: true, title: _obj.presentation, text: err.reason || err.message}
+        });
+      });
   }
 
   handleAttachment() {
+
+  }
+
+  handlePrint() {
+
+  }
+
+  handleMarkDeleted() {
 
   }
 
@@ -90,7 +124,53 @@ class EditorArticle extends MDNRComponent {
 
   get ltitle() {
     const {_meta, _obj} = this.state;
-    return (_obj && _obj.presentation) || _meta.obj_presentation || _meta.synonym;
+    let ltitle = (_obj && _obj.presentation) || _meta.obj_presentation || _meta.synonym;
+    if(_obj && _obj._modified) {
+      ltitle += ' *';
+    }
+    return ltitle;
+  }
+
+  editorStyles(el) {
+    const toolbar = el && el.querySelector('.react-markdown--toolbar');
+    if(toolbar) {
+      toolbar.style.display = 'none';
+    }
+    const content = el && el.querySelector('.react-markdown--slate-content');
+    if(content) {
+      content.style.minHeight = '140px';
+    }
+  }
+
+  tagsChange = ({target}) => {
+    const {state: {_obj}} = this;
+    _obj.tags = target.value;
+    _obj._modified = true;
+    this.forceUpdate();
+  };
+
+  renderFields(_obj, classes) {
+    const id = _obj._metadata('id');
+    id.tooltip = 'Короткий человекочитаемый url статьи';
+    id.synonym = 'Url';
+    return (
+      <FormGroup key="props" className={classes.spaceLeft}>
+        <FormGroup row>
+          <DataField _obj={_obj} _fld="date"/>
+          <DataField _obj={_obj} _fld="author"/>
+          <DataField _obj={_obj} _fld="published"/>
+        </FormGroup>
+        <FormGroup row>
+          <DataField _obj={_obj} _fld="id" _meta={id}/>
+          <DataField _obj={_obj} _fld="sorting_field"/>
+        </FormGroup>
+        <DataField _obj={_obj} _fld="name" fullWidth/>
+        <DataField _obj={_obj} _fld="h1" fullWidth/>
+        <SelectTags tags={_obj.tags} handleChange={this.tagsChange}/>
+        <DataField _obj={_obj} _fld="descr" fullWidth multiline rowsMax="3"/>
+        <DataField _obj={_obj} _fld="introduction" fullWidth multiline rowsMax="4"/>
+      </FormGroup>
+    );
   }
 
   render() {
@@ -101,10 +181,10 @@ class EditorArticle extends MDNRComponent {
       deleted: _obj && _obj.deleted,
       postable: !!(_meta.posted || _mgr.metadata('posted')),
       deletable: false,
-    }, _handlers)
+    }, _handlers);
 
     return _obj ? [
-      <Helmet key="helmet" title={'Редактор статьи'}/>,
+      <Helmet key="helmet" title={htitle}/>,
 
       <Tabs key="tabs" value={index} onChange={(event, index) => this.setState({index})}>
         <Tab label="Реквизиты"/>
@@ -114,46 +194,36 @@ class EditorArticle extends MDNRComponent {
 
       index === 0 && <DataObjToolbar key="toolbar" {...toolbar_props} />,
 
-      index === 0 &&
-      <FormGroup key="props">
-        0
-      </FormGroup>,
+      index === 0 && this.renderFields(_obj, classes),
 
       index === 1 && (
         MarkdownInput ?
-        <MarkdownInput
-          key="content"
-          onChange={(val) => {
-            _obj._obj.content = val;
-            _obj._modified = true;
-          }}
-          value={_obj.content}
-          autoFocus={false}
-          readOnly={false}
-          showFullScreenButton={false}
-          locale='ru'
-          ref={(el) => {
-            const node = ReactDOM.findDOMNode(el);
-            if(node) {
-              const toolbar = node && node.querySelector('.react-markdown--toolbar');
-              if(toolbar) {
-                toolbar.style.display = 'none';
-              }
-              const content = node && node.querySelector('.react-markdown--slate-content');
-              if(content) {
-                content.style.minHeight = '200px';
-              }
-            }
-          }}
-        />
+          <div key="content" ref={this.editorStyles}>
+            <MarkdownInput
+              onChange={(val) => {
+                _obj._obj.content = val;
+                _obj._modified = true;
+              }}
+              value={_obj.content}
+              autoFocus={false}
+              readOnly={false}
+              showFullScreenButton={false}
+              locale='ru'
+            />
+          </div>
           :
-          <LoadingMessage />
+          <LoadingMessage key="loading" />
       ),
 
       index === 2 &&
-      <FormGroup key="preview">
-        2
-      </FormGroup>,
+      <MarkdownDocs
+        key="preview"
+        htitle={this.ltitle}
+        h1={_obj.h1}
+        descr={_obj.descr}
+        markdown={_obj.content}
+        footer={<Social title={_obj.name}/>}
+      />,
 
     ]
       :
@@ -161,4 +231,4 @@ class EditorArticle extends MDNRComponent {
   }
 }
 
-export default withIface(EditorArticle);
+export default withStyles(withIface(EditorArticle));

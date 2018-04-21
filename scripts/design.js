@@ -13,6 +13,23 @@ function (newDoc, oldDoc, userCtx, secObj) {
     throw({forbidden: 'Только администраторы могут изменять справочники в базе ram'});
   }
 }
+function (newDoc, oldDoc, userCtx, secObj) {
+  throw JSON.stringify(userCtx);
+  if(!userCtx || userCtx.roles.indexOf('_admin') !== -1 || userCtx.roles.indexOf('doc_full') !== -1) {
+    return;
+  }
+  var msg = {forbidden: 'Недостаточно прав для изменения документа: ' + newDoc._id};
+  if(userCtx.roles.indexOf('remote_editor') !== -1) {
+    if(['articles'].some(function (name) {
+      if(newDoc._id.indexOf(name) != -1) return true;
+    })) {
+      throw(msg);
+    }
+  }
+  else {
+    throw(msg);
+  }
+}
 
 
 

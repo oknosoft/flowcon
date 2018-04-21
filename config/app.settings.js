@@ -10,8 +10,9 @@ module.exports = function settings(prm) {
     prm = {};
   };
 
-  //const couch_path = 'https://flowcon.oknosoft.ru/couchdb/fl_';
-  const couch_path = 'http://fl211:5984/fl_';
+  const couch_path = 'https://flowcon.oknosoft.ru/couchdb/fl_';
+  //const couch_path = 'http://fl211:5984/fl_';
+  //const couch_path = '/couchdb/fl_';
 
   return Object.assign(prm, {
 
@@ -54,8 +55,8 @@ module.exports = function settings(prm) {
     // разрешаем сохранение пароля
     enable_save_pwd: true,
 
-    // геокодер не используем
-    use_ip_geo: false,
+    // геокодер может пригодиться
+    use_ip_geo: true,
 
     // карты google не используем
     use_google_geo: '',
