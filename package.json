@@ -1,6 +1,6 @@
 {
   "name": "flowcon",
-  "version": "2.0.16-beta.56",
+  "version": "2.0.16-beta.57",
   "description": "business programming",
   "repository": {
     "type": "git",
@@ -25,14 +25,14 @@
   },
   "homepage": "https://business-programming.ru/",
   "dependencies": {
-    "@opuscapita/react-markdown": "2.1.0",
-    "metadata-abstract-ui": "2.0.16-beta.56",
-    "metadata-core": "2.0.16-beta.56",
-    "metadata-external": "2.0.16-beta.56",
-    "metadata-pouchdb": "2.0.16-beta.56",
-    "metadata-react": "2.0.16-beta.56",
-    "metadata-redux": "2.0.16-beta.56",
-    "metadata-superlogin": "2.0.16-beta.56",
+    "@opuscapita/react-markdown": "2.2.0-dev",
+    "metadata-abstract-ui": "2.0.16-beta.57",
+    "metadata-core": "2.0.16-beta.57",
+    "metadata-external": "2.0.16-beta.57",
+    "metadata-pouchdb": "2.0.16-beta.57",
+    "metadata-react": "2.0.16-beta.57",
+    "metadata-redux": "2.0.16-beta.57",
+    "metadata-superlogin": "2.0.16-beta.57",
     "react-share": "^2.1.1"
   },
   "devDependencies": {
@@ -58,7 +58,7 @@
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "^1.1.11",
     "fs-extra": "^5.0.0",
-    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-plugin": "^3.2.0",
     "jest": "^22.4.3",
     "md5-file": "^4.0.0",
     "object-assign": "4.1.1",

@@ -1,16 +1,16 @@
 
 // конструктор metadata.js
-// import MetaEngine from 'metadata-core/index.min';
-// import plugin_pouchdb from 'metadata-pouchdb/index.min';
-// import plugin_ui from 'metadata-abstract-ui/index.min';
-// import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars.min';
-// import plugin_superlogin from 'metadata-superlogin/index.min';
+import MetaEngine from 'metadata-core/index.min';
+import plugin_pouchdb from 'metadata-pouchdb/index.min';
+import plugin_ui from 'metadata-abstract-ui/index.min';
+import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars.min';
+import plugin_superlogin from 'metadata-superlogin/index.min';
 
-import MetaEngine from 'metadata-core';
-import plugin_pouchdb from 'metadata-pouchdb';
-import plugin_ui from 'metadata-abstract-ui';
-import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars';
-import plugin_superlogin from 'metadata-superlogin';
+// import MetaEngine from 'metadata-core';
+// import plugin_pouchdb from 'metadata-pouchdb';
+// import plugin_ui from 'metadata-abstract-ui';
+// import plugin_ui_tabulars from 'metadata-abstract-ui/tabulars';
+// import plugin_superlogin from 'metadata-superlogin';
 
 import plugin_react from 'metadata-react/plugin';
 
@@ -51,7 +51,7 @@ export function init(dispatch) {
       adapters.pouch.init(wsql, job_prm);
 
       // шрифт Roboto грузим асинхронно
-      $p.utils.load_script('https://fonts.googleapis.com/css?family=Roboto', 'link');
+      $p.utils.load_script('https://fonts.googleapis.com/css?family=Roboto:300,400,500', 'link');
 
       // читаем скрипты модификаторов DataObj`s и DataManager`s
       return import('./modifiers');

@@ -16,7 +16,7 @@ import AppDrawer from 'metadata-react/App/AppDrawer';
 import HeaderButtons from 'metadata-react/Header/HeaderButtons';
 
 import DumbScreen from '../DumbScreen';             // заставка "загрузка занных"
-import DataRoute from '../DataRoute';               // вложенный маршрутизатор страниц с данными
+import DataRoute from './DataRoute';                // вложенный маршрутизатор страниц с данными
 import MarkdownRoute from '../Pages';               // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
 import ArticlesRoute from '../Articles';            // маршрутизатор статей
 import HomeView from '../Home';                     // домашняя страница

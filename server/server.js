@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const SuperLogin = require('superlogin');
 const PouchDB = require('pouchdb');
+const uuidv1 = require('uuid/v1');
 
 const FacebookStrategy  = require('passport-facebook').Strategy;
 const GitHubStrategy    = require('passport-github').Strategy;
@@ -111,19 +112,38 @@ app.use(function(err, req, res, next) {
 // дополним роли и design-документы
 superlogin.on('signup', function(userDoc, provider){
   const {couchAuthDB} = superlogin;
+  const res = []
   for(const name in userDoc.personalDBs) {
     if(userDoc.personalDBs[name].type !== 'private') {
       continue;
     }
     const db = new PouchDB(couchAuthDB._db_name.replace(/_users$/, name), {skip_setup: true});
-    db.info()
+    res.push(db.info()
       .then((info) => {
         info = null;
       })
       .catch((err) => {
         err = null;
-      });
+      }));
   }
+  return Promise.all(res);
+});
+
+// создаём недостающие поля в профиле
+superlogin.onCreate(function (userDoc, provider) {
+  if(!userDoc.profile) {
+    userDoc.profile = {};
+  }
+  if(provider !== 'local' && !userDoc.profile.name) {
+    const displayName = userDoc[provider].profile.displayName;
+    if(displayName) {
+      userDoc.profile.name = displayName;
+    }
+  }
+  if(!userDoc.profile.ref) {
+    userDoc.profile.ref = uuidv1();
+  }
+  return Promise.resolve(userDoc);
 });
 
 module.exports = app;

@@ -17,16 +17,14 @@ import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
 import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
 import DataField from 'metadata-react/DataField';
-import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
-import Social from './Social';
-import SelectTags from './SelectTags';
+import SelectTags from '../Articles/SelectTags';
 
 import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
 
-const htitle = 'Редактор статьи';
+const htitle = 'Задача';
 
-class EditorArticle extends MDNRComponent {
+class FrmObjIssue extends MDNRComponent {
 
   static propTypes = {
     _mgr: PropTypes.object,             // DataManager, с которым будет связан компонент
@@ -147,25 +145,15 @@ class EditorArticle extends MDNRComponent {
   };
 
   renderFields(_obj, classes) {
-    const id = _obj._metadata('id');
-    id.tooltip = 'Короткий человекочитаемый url статьи';
-    id.synonym = 'Url';
     return (
       <FormGroup key="props" className={classes.spaceLeft}>
         <FormGroup row>
+          <DataField _obj={_obj} _fld="number_doc"/>
           <DataField _obj={_obj} _fld="date"/>
-          <DataField _obj={_obj} _fld="author"/>
-          <DataField _obj={_obj} _fld="published"/>
+          <DataField _obj={_obj} _fld="responsible"/>
         </FormGroup>
-        <FormGroup row>
-          <DataField _obj={_obj} _fld="id" _meta={id}/>
-          <DataField _obj={_obj} _fld="sorting_field"/>
-        </FormGroup>
-        <DataField _obj={_obj} _fld="name" fullWidth/>
-        <DataField _obj={_obj} _fld="h1" fullWidth/>
+        <DataField _obj={_obj} _fld="caption" fullWidth/>
         <SelectTags tags={_obj.tags} handleChange={this.tagsChange}/>
-        <DataField _obj={_obj} _fld="descr" fullWidth multiline rowsMax="3"/>
-        <DataField _obj={_obj} _fld="introduction" fullWidth multiline rowsMax="4"/>
       </FormGroup>
     );
   }
@@ -186,7 +174,6 @@ class EditorArticle extends MDNRComponent {
       <Tabs key="tabs" value={index} onChange={(event, index) => this.setState({index})}>
         <Tab label="Реквизиты"/>
         <Tab label="Текст"/>
-        <Tab label="Просмотр"/>
       </Tabs>,
 
       index === 0 && <DataObjToolbar key="toolbar" {...toolbar_props} />,
@@ -195,13 +182,13 @@ class EditorArticle extends MDNRComponent {
 
       index === 1 && (
         MarkdownInput ?
-          <div key="content" ref={this.editorStyles}>
+          <div key="definition" ref={this.editorStyles}>
             <MarkdownInput
               onChange={(val) => {
-                _obj._obj.content = val;
+                _obj._obj.definition = val;
                 _obj._modified = true;
               }}
-              value={_obj.content}
+              value={_obj.definition}
               autoFocus={false}
               readOnly={false}
               showFullScreenButton={false}
@@ -213,20 +200,10 @@ class EditorArticle extends MDNRComponent {
           <LoadingMessage key="loading" />
       ),
 
-      index === 2 &&
-      <MarkdownDocs
-        key="preview"
-        htitle={this.ltitle}
-        h1={_obj.h1}
-        descr={_obj.descr}
-        markdown={_obj.content}
-        footer={<Social title={_obj.name}/>}
-      />,
-
     ]
       :
       <LoadingMessage />;
   }
 }
 
-export default withStyles(withIface(EditorArticle));
+export default withStyles(withIface(FrmObjIssue));
