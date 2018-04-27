@@ -1,5 +1,5 @@
 //const serverUrl = process.env.NODE_ENV !== 'development' ? 'https://flowcon.oknosoft.ru' : 'http://loc.flowcon.js.org:3001';
-const serverUrl = 'https://flowcon.oknosoft.ru';
+const serverUrl = 'https://business-programming.ru';
 
 module.exports = {
   // An optional URL to API server, by default a current window location is used.
@@ -10,7 +10,7 @@ module.exports = {
   socialUrl: serverUrl + '/auth',
   // A list of API endpoints to automatically add the Authorization header to
   // By default the host the browser is pointed to will be added automatically
-  endpoints: ['flowcon.js.org', 'flowcon.oknosoft.ru'],
+  endpoints: ['business-programming.ru', 'flowcon.js.org', 'flowcon.oknosoft.ru'],
   // Set this to true if you do not want the URL bar host automatically added to the list
   noDefaultEndpoint: false,
   // Where to save your session token: localStorage ('local') or sessionStorage ('session'), default: 'local'
@@ -30,6 +30,7 @@ module.exports = {
     sendConfirmEmail: true,
     requireEmailConfirm: true,
     loginOnRegistration: false,
-    confirmEmailRedirectURL: '/confirm-email'
+    //confirmEmailRedirectURL: '/confirm-email',
+    confirmEmailRedirectURL: '/login',
   }
 }

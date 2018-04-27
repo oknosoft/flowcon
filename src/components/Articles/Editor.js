@@ -161,9 +161,12 @@ class EditorArticle extends MDNRComponent {
           <DataField _obj={_obj} _fld="id" _meta={id}/>
           <DataField _obj={_obj} _fld="sorting_field"/>
         </FormGroup>
+        <FormGroup row>
+          <DataField _obj={_obj} _fld="contents"/>
+          <SelectTags tags={_obj.tags} handleChange={this.tagsChange}/>
+        </FormGroup>
         <DataField _obj={_obj} _fld="name" fullWidth/>
         <DataField _obj={_obj} _fld="h1" fullWidth/>
-        <SelectTags tags={_obj.tags} handleChange={this.tagsChange}/>
         <DataField _obj={_obj} _fld="descr" fullWidth multiline rowsMax="3"/>
         <DataField _obj={_obj} _fld="introduction" fullWidth multiline rowsMax="4"/>
       </FormGroup>

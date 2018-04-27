@@ -14,16 +14,16 @@ import { FormControl } from 'material-ui/Form';
 import { ListItemText } from 'material-ui/List';
 import Select from 'material-ui/Select';
 import Checkbox from 'material-ui/Checkbox';
-import withStyles from 'metadata-react/styles/paper600';
+import withStyles from 'metadata-react/DataField/styles';
 
 class SelectTags extends React.Component {
 
   render() {
-    const {classes, tags, handleChange} = this.props;
+    const {classes, tags, handleChange, ...other} = this.props;
     const {alatable} = $p.cat.tags;
 
     return (
-      <FormControl fullWidth className={classes.paddingRight}>
+      <FormControl className={classes.formControl} margin="dense" {...other}>
         <InputLabel>Разделы</InputLabel>
         <Select
           multiple

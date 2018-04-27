@@ -36,6 +36,10 @@ const $p = new MetaEngine();
 // параметры сеанса инициализируем сразу
 $p.wsql.init(settings);
 
+if($p.wsql.get_user_param('couch_path') !== $p.job_prm.couch_local && process.env.NODE_ENV !== 'development') {
+  $p.wsql.set_user_param('couch_path', $p.job_prm.couch_local);
+}
+
 // скрипт инициализации в привязке к store приложения
 export function init(dispatch) {
 

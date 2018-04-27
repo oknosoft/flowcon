@@ -51,7 +51,7 @@ class Articles extends Component {
       <Helmet title={title} />
       <div style={{marginTop: 16}}>
         <Typography variant="display1" component="h1" color="primary">{title}</Typography>
-        <SelectTags tags={this.state.tags} handleChange={this.handleChange}/>
+        <SelectTags tags={this.state.tags} fullWidth handleChange={this.handleChange}/>
         {
           session && session.roles.indexOf('doc_full') !== -1 &&
           <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти к редактору статей</Button>

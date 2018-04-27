@@ -136,7 +136,7 @@ class InfiniteArticles extends Component {
         sorting_field: {$gt: 0},
         tags: {$ne: null}
       },
-      fields: ['_id', 'id', 'name', 'h1', 'introduction', 'date', 'author', 'tags'],
+      fields: ['_id', 'id', 'name', 'h1', 'introduction', 'date', 'author', 'tags', 'acl'],
       use_index: 'sorting_field_tags',
       sort: [{'sorting_field': 'asc'}]
     };

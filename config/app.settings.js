@@ -10,7 +10,7 @@ module.exports = function settings(prm) {
     prm = {};
   };
 
-  const couch_path = 'https://flowcon.oknosoft.ru/couchdb/fl_';
+  const couch_path = 'https://business-programming.ru/couchdb/fl_';
   //const couch_path = 'http://fl211:5984/fl_';
   //const couch_path = '/couchdb/fl_';
 
