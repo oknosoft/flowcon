@@ -45,7 +45,7 @@ export function init(dispatch) {
 
   // читаем скрипт инициализации метаданных, полученный в результате выполнения meta:prebuild
   return import('./init')
-    .then((meta_init) => {
+    .then(({meta_init}) => {
 
       // выполняем скрипт инициализации метаданных
       meta_init($p);

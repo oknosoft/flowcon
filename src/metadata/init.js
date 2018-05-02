@@ -1,5 +1,5 @@
 /* eslint-disable */
-module.exports = function meta($p) {
+export function meta_init($p) {
 
 $p.wsql.alasql('USE md; CREATE TABLE IF NOT EXISTS `ireg_log_view` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, `key` CHAR, `user` CHAR); CREATE TABLE IF NOT EXISTS `ireg_log` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, `date` INT, `sequence` INT, `class` CHAR, `note` CHAR, `obj` CHAR, `user` CHAR); CREATE TABLE IF NOT EXISTS `doc_issue` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, posted boolean, date Date, number_doc CHAR, `complexity` INT, `identifier` CHAR, `caption` CHAR, `definition` CHAR, `responsible` CHAR, `ts_tags` JSON, `ts_projects` JSON, `ts_executors` JSON, `ts_events` JSON); CREATE TABLE IF NOT EXISTS `doc_work_record` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, posted boolean, date Date, number_doc CHAR, `partner` CHAR, `executor` CHAR, `issue` CHAR, `internal` BOOLEAN, `start` Date, `finish` Date, `note` CHAR); CREATE TABLE IF NOT EXISTS `cat_formulas` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `formula` CHAR, `leading_formula` CHAR, `condition_formula` BOOLEAN, `definition` CHAR, `template` CHAR, `sorting_field` INT, `async` BOOLEAN, `disabled` BOOLEAN, `zone` INT, `predefined_name` CHAR, `parent` CHAR, `ts_params` JSON); CREATE TABLE IF NOT EXISTS `cat_tags` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `is_category` BOOLEAN, `category` CHAR, `predefined_name` CHAR); CREATE TABLE IF NOT EXISTS `cat_articles` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `h1` CHAR, `descr` CHAR, `introduction` CHAR, `content` CHAR, `date` Date, `author` CHAR, `sorting_field` INT, `published` BOOLEAN, `contents` CHAR, `predefined_name` CHAR, `ts_tags` JSON); CREATE TABLE IF NOT EXISTS `cat_projects` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `predefined_name` CHAR, `parent` CHAR, `ts_extra_fields` JSON); CREATE TABLE IF NOT EXISTS `cat_users` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `invalid` BOOLEAN, `note` CHAR, `ancillary` BOOLEAN, `user_ib_uid` CHAR, `user_fresh_uid` CHAR, `id` CHAR, `prefix` CHAR, `branch` CHAR, `push_only` BOOLEAN, `suffix` CHAR, `direct` BOOLEAN, `sex` CHAR, `email_addr` CHAR, `predefined_name` CHAR, `ts_extra_fields` JSON, `ts_acl_objs` JSON); CREATE TABLE IF NOT EXISTS `cat_contents` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `sorting_field` INT, `predefined_name` CHAR, `parent` CHAR); CREATE TABLE IF NOT EXISTS `cat_flow_tunes` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `start_date` Date, `predefined_name` CHAR, `ts_flows` JSON); CREATE TABLE IF NOT EXISTS `cat_destinations` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `used` BOOLEAN, `predefined_name` CHAR, `parent` CHAR, `ts_extra_fields` JSON, `ts_extra_properties` JSON); CREATE TABLE IF NOT EXISTS `cat_partners` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `name_full` CHAR, `note` CHAR, `inn` CHAR, `predefined_name` CHAR, `parent` CHAR, `ts_extra_fields` JSON); CREATE TABLE IF NOT EXISTS `cat_parameters_keys` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `priority` INT, `note` CHAR, `sorting_field` INT, `applying` CHAR, `predefined_name` CHAR, `parent` CHAR, `ts_params` JSON); CREATE TABLE IF NOT EXISTS `cat_tags_category` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `predefined_name` CHAR); CREATE TABLE IF NOT EXISTS `cat_meta_ids` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `full_moniker` CHAR, `predefined_name` CHAR, `parent` CHAR); CREATE TABLE IF NOT EXISTS `cat_property_values` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `heft` FLOAT, `full_name` CHAR, `predefined_name` CHAR, `owner` CHAR, `parent` CHAR); CREATE TABLE IF NOT EXISTS `cat_scheme_settings` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `obj` CHAR, `user` CHAR, `order` INT, `query` CHAR, `date_from` Date, `date_till` Date, `standard_period` CHAR, `formula` CHAR, `output` CHAR, `tag` CHAR, `ts_fields` JSON, `ts_sorting` JSON, `ts_dimensions` JSON, `ts_resources` JSON, `ts_selection` JSON, `ts_params` JSON, `ts_composition` JSON, `ts_conditional_appearance` JSON); CREATE TABLE IF NOT EXISTS `cat_meta_fields` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN); CREATE TABLE IF NOT EXISTS `cat_meta_objs` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN); CREATE TABLE IF NOT EXISTS `cch_predefined_elmnts` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `value` CHAR, `definition` CHAR, `synonym` CHAR, `list` INT, `zone` INT, `predefined_name` CHAR, `parent` CHAR, `type` CHAR, `ts_elmnts` JSON); CREATE TABLE IF NOT EXISTS `cch_properties` (ref CHAR PRIMARY KEY NOT NULL, `_deleted` BOOLEAN, id CHAR, name CHAR, is_folder BOOLEAN, `shown` BOOLEAN, `sorting_field` INT, `extra_values_owner` CHAR, `available` BOOLEAN, `mandatory` BOOLEAN, `include_to_name` BOOLEAN, `list` INT, `note` CHAR, `destination` CHAR, `tooltip` CHAR, `caption` CHAR, `is_extra_property` BOOLEAN, `include_to_description` BOOLEAN, `predefined_name` CHAR, `type` JSON); CREATE TABLE IF NOT EXISTS `enm_task_events` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_gender` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_couchdb_roles` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_report_output` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_quick_access` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_standard_period` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_data_field_kinds` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_label_positions` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_comparison_types` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_sort_directions` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); CREATE TABLE IF NOT EXISTS `enm_accumulation_record_type` (ref CHAR PRIMARY KEY NOT NULL, sequence INT, synonym CHAR); ', []);
 
@@ -9,7 +9,7 @@ $p.md.init({"enm":{"accumulation_record_type":[{"order":0,"name":"debit","synony
   const {EnumManager,CatManager,DocManager,DataProcessorsManager,ChartOfCharacteristicManager,ChartOfAccountManager,
     InfoRegManager,AccumRegManager,BusinessProcessManager,TaskManager,CatObj, DocObj, TabularSectionRow, DataProcessorObj,
     RegisterRow, BusinessProcessObj, TaskObj} = $p.constructor.classes;
-    
+
   const _define = Object.defineProperties;
 
 $p.enm.create('accumulation_record_type');
@@ -29,7 +29,7 @@ $p.enm.create('task_events');
 * Дополнительные реквизиты и сведения
 * @class CchProperties
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CchProperties extends CatObj{
 get shown(){return this._getter('shown')}
@@ -71,7 +71,7 @@ $p.cch.create('properties');
 * Хранит значения настроек и параметров подсистем
 * @class CchPredefined_elmnts
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CchPredefined_elmnts extends CatObj{
 
@@ -270,7 +270,7 @@ $p.cch.create('predefined_elmnts', CchPredefined_elmntsManager, false);
 * Дополнительные значения
 * @class CatProperty_values
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatProperty_values extends CatObj{
 get heft(){return this._getter('heft')}
@@ -292,7 +292,7 @@ $p.cat.create('property_values');
 * Идентификаторы объектов метаданных для использования в базе данных.
 * @class CatMeta_ids
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatMeta_ids extends CatObj{
 get full_moniker(){return this._getter('full_moniker')}
@@ -310,7 +310,7 @@ $p.cat.create('meta_ids');
 * Категории тегов
 * @class CatTags_category
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatTags_category extends CatObj{
 get predefined_name(){return this._getter('predefined_name')}
@@ -325,7 +325,7 @@ $p.cat.create('tags_category');
 
 * @class CatParameters_keys
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatParameters_keys extends CatObj{
 get priority(){return this._getter('priority')}
@@ -362,7 +362,7 @@ $p.cat.create('parameters_keys');
 * Список юридических или физических лиц клиентов (поставщиков, покупателей).
 * @class CatPartners
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatPartners extends CatObj{
 get name_full(){return this._getter('name_full')}
@@ -395,7 +395,7 @@ $p.cat.create('partners');
 * Наборы дополнительных реквизитов и сведений
 * @class CatDestinations
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatDestinations extends CatObj{
 get used(){return this._getter('used')}
@@ -431,7 +431,7 @@ $p.cat.create('destinations');
 * Настройки потоков
 * @class CatFlow_tunes
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatFlow_tunes extends CatObj{
 get start_date(){return this._getter('start_date')}
@@ -460,7 +460,7 @@ $p.cat.create('flow_tunes');
 * Оглавление
 * @class CatContents
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatContents extends CatObj{
 get sorting_field(){return this._getter('sorting_field')}
@@ -478,7 +478,7 @@ $p.cat.create('contents');
 * Пользователи
 * @class CatUsers
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatUsers extends CatObj{
 get invalid(){return this._getter('invalid')}
@@ -579,7 +579,7 @@ $p.cat.create('users', CatUsersManager, true);
 * Проекты
 * @class CatProjects
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatProjects extends CatObj{
 get predefined_name(){return this._getter('predefined_name')}
@@ -606,7 +606,7 @@ $p.cat.create('projects');
 * Основной объект CMS. Новости и файлы - это тоже статьи
 * @class CatArticles
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatArticles extends CatObj{
 get h1(){return this._getter('h1')}
@@ -645,7 +645,7 @@ $p.cat.create('articles');
 * Теги
 * @class CatTags
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatTags extends CatObj{
 get is_category(){return this._getter('is_category')}
@@ -663,7 +663,7 @@ $p.cat.create('tags');
 * Формулы пользователя, для выполнения при расчете спецификаций в справочниках Вставки, Соединения, Фурнитура и регистре Корректировки спецификации
 * @class CatFormulas
 * @extends CatObj
-* @constructor 
+* @constructor
 */
 class CatFormulas extends CatObj{
 get formula(){return this._getter('formula')}
@@ -809,7 +809,7 @@ $p.cat.create('formulas', CatFormulasManager, false);
 * Запись ЛУРВ
 * @class DocWork_record
 * @extends DocObj
-* @constructor 
+* @constructor
 */
 class DocWork_record extends DocObj{
 get partner(){return this._getter('partner')}
@@ -835,7 +835,7 @@ $p.doc.create('work_record');
 * Задача
 * @class DocIssue
 * @extends DocObj
-* @constructor 
+* @constructor
 */
 class DocIssue extends DocObj{
 get complexity(){return this._getter('complexity')}
@@ -895,7 +895,7 @@ $p.doc.create('issue');
 * Просмотр журнала событий
 * @class IregLog_view
 * @extends RegisterRow
-* @constructor 
+* @constructor
 */
 class IregLog_view extends RegisterRow{
 get key(){return this._getter('key')}
@@ -911,7 +911,7 @@ $p.ireg.create('log_view');
 * Текущие задачи
 * @class RepCurrent_tasks
 * @extends DataProcessorObj
-* @constructor 
+* @constructor
 */
 class RepCurrent_tasks extends DataProcessorObj{
 }
@@ -923,7 +923,7 @@ $p.rep.create('current_tasks');
 * Эффективность
 * @class RepEfficiency
 * @extends DataProcessorObj
-* @constructor 
+* @constructor
 */
 class RepEfficiency extends DataProcessorObj{
 }

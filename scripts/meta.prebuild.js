@@ -113,7 +113,7 @@ $p.wsql.init((prm) => {
       debug('Получаем скрипт таблиц alasql');
       $p.md.create_tables((sql) => {
 
-        text = '/* eslint-disable */\nmodule.exports = function meta($p) {\n\n'
+        text = '/* eslint-disable */\nexport function meta_init($p) {\n\n'
           + '$p.wsql.alasql(\'' + sql + '\', []);\n\n'
           + '$p.md.init(' + JSON.stringify(_m) + ');\n\n'
           + text + '};';

@@ -7,7 +7,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import qs from 'query-string';
+import qs from 'qs';
 import cn from 'classnames';
 
 import List from 'material-ui/List';
@@ -64,7 +64,7 @@ class MUiArticles extends Component {
   componentDidUpdate(prevProps) {
     // If props/state signals that the underlying collection has changed,
     // Reload the most recently requested batch of rows:
-    if(this.props.tags.length !== prevProps.tags.length) {
+    if(this.props.tags.length !== prevProps.tags.length || this.props.location.search !== prevProps.location.search) {
       this.loadRows();
     }
   }
@@ -78,7 +78,7 @@ class MUiArticles extends Component {
   }
 
   get page() {
-    const query = qs.parse(this.props.location.search);
+    const query = qs.parse(this.props.location.search.replace('?',''));
     return query.page ? query.page - 1 : 0;
   }
 
@@ -134,7 +134,7 @@ class MUiArticles extends Component {
   }
 
   render() {
-    const {props: {classes, match}, page} = this;
+    const {props: {classes, match, handleNavigate}, page} = this;
     const {prev, next} = this.state;
 
     return [
