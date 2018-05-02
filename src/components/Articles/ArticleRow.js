@@ -20,11 +20,11 @@ export default function ArticleRow(props) {
       <Typography
         variant="title"
         component="a"
-        href={`${match.url}/${id}`}
+        href={id ? `${match.url}/${id}` : '#'}
         onClick={(event) => {
           event.preventDefault();
           event.stopPropagation();
-          handleNavigate(`${match.url}${match.url.endsWith('/') ? '' : '/'}${id}`);
+          handleNavigate(id ? `${match.url}${match.url.endsWith('/') ? '' : '/'}${id}` : '#');
         }}
         color="primary"
       >

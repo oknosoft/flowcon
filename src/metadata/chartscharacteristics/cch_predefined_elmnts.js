@@ -6,173 +6,187 @@
  * @module cch_predefined_elmnts
  */
 
-export default function ($p) {
+exports.CchPredefined_elmntsManager = class CchPredefined_elmntsManager extends Object {
 
-  const {job_prm, adapters, cch: {predefined_elmnts: _mgr}, utils, md} = $p;
+  constructor(owner, class_name) {
+    super(owner, class_name);
+    Object.defineProperty(this, 'parents', {
+      value: {}
+    });
 
-  // Подписываемся на событие окончания загрузки локальных данных
-  adapters.pouch.once('pouch_doc_ram_loaded', () => {
-    // читаем элементы из pouchdb и создаём свойства
-    _mgr.adapter.find_rows(_mgr, {_raw: true, _top: 500, _skip: 0})
-      .then((rows) => {
+    const {md, doc, adapters} = this._owner.$p;
 
-        const parents = {};
+    adapters.pouch.once('pouch_doc_ram_loaded', () => {
+      // загружаем предопределенные элементы
+      this.job_prms();
+      // даём возможность завершиться другим обработчикам, подписанным на _pouch_load_data_loaded_
+      setTimeout(() => md.emit('predefined_elmnts_inited'), 100);
+    });
+  }
 
-        rows.forEach((row) => {
-          if(row.is_folder && row.synonym) {
-            const ref = row._id.split('|')[1];
-            parents[ref] = row.synonym;
-            !job_prm[row.synonym] && job_prm.__define(row.synonym, {value: {}});
-          }
-        });
+  // этот метод адаптер вызывает перед загрузкой doc_ram
+  job_prms() {
 
-        rows.forEach((row) => {
-          if(!row.is_folder && row.synonym && parents[row.parent] && !job_prm[parents[row.parent]][row.synonym]) {
+    // создаём константы из alatable
+    this.forEach((row) => this.job_prm(row));
 
-            let _mgr;
+    // дополним автовычисляемыми свойствами
+    // const {job_prm: {properties}} = this._owner.$p;
+  }
 
-            if(row.type.is_ref) {
-              const tnames = row.type.types[0].split('.');
-              _mgr = $p[tnames[0]][tnames[1]];
-            }
+  // создаёт константу
+  job_prm(row) {
+    const {job_prm, md, utils} = this._owner.$p;
+    const {parents} = this;
+    const parent = job_prm[parents[row.parent.valueOf()]];
+    const _mgr = row.type.is_ref && md.mgr_by_class_name(row.type.types[0]);
 
-            if(row.list == -1) {
+    if(row.list == -1) {
 
-              job_prm[parents[row.parent]].__define(row.synonym, {
-                value: (() => {
-                  const res = {};
-                  row.elmnts.forEach((row) => {
-                    res[row.elm] = _mgr ? _mgr.get(row.value, false, false) : row.value;
-                  });
-                  return res;
-                })()
-              });
-
-            }
-            else if(row.list) {
-
-              job_prm[parents[row.parent]].__define(row.synonym, {
-                value: row.elmnts.map((row) => {
-                  if(_mgr) {
-                    const value = _mgr.get(row.value, false, false);
-                    if(!$p.utils.is_empty_guid(row.elm)) {
-                      value._formula = row.elm;
-                    }
-                    return value;
-                  }
-                  else {
-                    return row.value;
-                  }
-                })
-              });
-            }
-            else {
-
-              if(job_prm[parents[row.parent]].hasOwnProperty(row.synonym)) {
-                delete job_prm[parents[row.parent]][row.synonym];
-              }
-
-              job_prm[parents[row.parent]].__define(row.synonym, {
-                value: _mgr ? _mgr.get(row.value, false, false) : row.value,
-                configurable: true
-              });
-            }
-
-          }
-        });
-      })
-      .then(() => {
-        // даём возможность завершиться другим обработчикам, подписанным на _pouch_load_data_loaded_
-        setTimeout(() => {
-          md.emit('predefined_elmnts_inited');
-          // излучаем событие "можно открывать формы"
-          adapters.pouch.emit('pouch_complete_loaded');
-        }, 100);
-      });
-  });
-
-
-  /**
-   * Переопределяем геттер значения
-   *
-   * @property value
-   * @override
-   * @type {*}
-   */
-  delete $p.CchPredefined_elmnts.prototype.value;
-  $p.CchPredefined_elmnts.prototype.__define({
-
-    value: {
-      get: function () {
-
-        const mf = this.type;
-        const res = this._obj ? this._obj.value : '';
-
-        if(this._obj.is_folder) {
-          return '';
-        }
-        if(typeof res == 'object') {
+      parent.__define(row.synonym, {
+        value: (() => {
+          const res = {};
+          row.elmnts.forEach((row) => {
+            res[row.elm] = _mgr ? _mgr.get(row.value, false, false) : row.value;
+          });
           return res;
-        }
-        else if(mf.is_ref) {
-          if(mf.digits && typeof res === 'number') {
-            return res;
-          }
-          if(mf.hasOwnProperty('str_len') && !utils.is_guid(res)) {
-            return res;
-          }
-          const mgr = md.value_mgr(this._obj, 'value', mf);
-          if(mgr) {
-            if(utils.is_data_mgr(mgr)) {
-              return mgr.get(res, false);
+        })(),
+        enumerable: true
+      });
+
+    }
+    else if(row.list) {
+
+      parent.__define(row.synonym, {
+        value: (row.elmnts._obj || row.elmnts).map((row) => {
+          if(_mgr) {
+            const value = _mgr.get(row.value, false, false);
+            if(!utils.is_empty_guid(row.elm)) {
+              value._formula = row.elm;
             }
-            else {
-              return utils.fetch_type(res, mgr);
-            }
+            return value;
           }
-          if(res) {
-            $p.record_log(['value', mf, this._obj]);
-            return null;
+          else {
+            return row.value;
           }
+        }),
+        enumerable: true
+      });
+    }
+    else {
+
+      if(parent.hasOwnProperty(row.synonym)) {
+        delete parent[row.synonym];
+      }
+
+      parent.__define(row.synonym, {
+        value: _mgr ? _mgr.get(row.value, false, false) : row.value,
+        configurable: true,
+        enumerable: true
+      });
+    }
+  }
+
+  // переопределяем load_array
+  load_array(aattr, forse) {
+    const {job_prm} = this._owner.$p;
+    const {parents} = this;
+    const elmnts = [];
+    for (const row of aattr) {
+      // если элемент является папкой, создаём раздел в job_prm
+      if(row.is_folder && row.synonym) {
+        parents[row.ref] = row.synonym;
+        !job_prm[row.synonym] && job_prm.__define(row.synonym, {value: {}});
+      }
+      // если не задан синоним - пропускаем
+      else if(row.synonym) {
+        // если есть подходящая папка, стразу делаем константу
+        if(parents[row.parent]) {
+          !job_prm[parents[row.parent]][row.synonym] && this.job_prm(row);
         }
-        else if(mf.date_part) {
-          return utils.fix_date(this._obj.value, true);
-        }
-        else if(mf.digits) {
-          return utils.fix_number(this._obj.value, !mf.hasOwnProperty('str_len'));
-        }
-        else if(mf.types[0] == 'boolean') {
-          return utils.fix_boolean(this._obj.value);
-        }
+        // если папки нет - сохраним элемент в alatable
         else {
-          return this._obj.value || '';
+          elmnts.push(row);
         }
-
-        return this.characteristic.clr;
-      },
-
-      set: function (v) {
-
-        if(this._obj.value === v) {
-          return;
-        }
-
-        _mgr.emit_async('update', this, {value: this._obj.value});
-        this._obj.value = v.valueOf();
-        this._data._modified = true;
       }
     }
-  });
+    // метод по умолчанию
+    elmnts.length && super.load_array(elmnts, forse);
+  }
 
-  /**
-   * ### Форма элемента
-   *
-   * @method form_obj
-   * @override
-   * @param pwnd
-   * @param attr
-   * @returns {*}
-   */
-  _mgr.form_obj = () => {};
+};
 
-}
+exports.CchPredefined_elmnts = class CchPredefined_elmnts extends Object {
+  get value() {
+    const {_obj, type, _manager} = this;
+    const {utils} = _manager._owner.$p;
+    const res = _obj ? _obj.value : '';
+
+    if(_obj.is_folder) {
+      return '';
+    }
+    if(typeof res == 'object') {
+      return res;
+    }
+    else if(type.is_ref) {
+      if(type.digits && typeof res === 'number') {
+        return res;
+      }
+      if(type.hasOwnProperty('str_len') && !utils.is_guid(res)) {
+        return res;
+      }
+      const mgr = _manager.value_mgr(_obj, 'value', type);
+      if(mgr) {
+        if(utils.is_data_mgr(mgr)) {
+          return mgr.get(res, false);
+        }
+        else {
+          return utils.fetch_type(res, mgr);
+        }
+      }
+      if(res) {
+        _manager._owner.$p.record_log(['value', type, _obj]);
+        return null;
+      }
+    }
+    else if(type.date_part) {
+      return utils.fix_date(_obj.value, true);
+    }
+    else if(type.digits) {
+      return utils.fix_number(_obj.value, !type.hasOwnProperty('str_len'));
+    }
+    else if(type.types[0] == 'boolean') {
+      return utils.fix_boolean(_obj.value);
+    }
+    else {
+      return _obj.value || '';
+    }
+
+    return this.characteristic.clr;
+  }
+  set value(v) {
+    const {_obj, _data, _manager} = this;
+    if(_obj.value !== v) {
+      _manager.emit_async('update', this, {value: _obj.value});
+      _obj.value = v.valueOf();
+      _data._modified = true;
+    }
+  }
+  get definition(){return this._getter('definition')}
+  set definition(v){this._setter('definition',v)}
+  get synonym(){return this._getter('synonym')}
+  set synonym(v){this._setter('synonym',v)}
+  get list(){return this._getter('list')}
+  set list(v){this._setter('list',v)}
+  get zone(){return this._getter('zone')}
+  set zone(v){this._setter('zone',v)}
+  get predefined_name(){return this._getter('predefined_name')}
+  set predefined_name(v){this._setter('predefined_name',v)}
+  get parent(){return this._getter('parent')}
+  set parent(v){this._setter('parent',v)}
+  get type(){const {type} = this._obj; return typeof type === 'object' ? type : {types: []}}
+  set type(v){this._obj.type = typeof v === 'object' ? v : {types: []}}
+  get elmnts(){return this._getter_ts('elmnts')}
+  set elmnts(v){this._setter_ts('elmnts',v)}
+};
+exports.CchPredefined_elmnts._replace = true;

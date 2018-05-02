@@ -13,7 +13,8 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import AppContent from 'metadata-react/App/AppContent';
 import SelectTags from './SelectTags';
-import InfiniteArticles from './InfiniteArticles';
+//import InfiniteArticles from './InfiniteArticles';
+import InfiniteArticles from './MUiArticles';
 
 const ltitle = 'Статьи';
 const title = ltitle + ' о программировании бизнеса';
@@ -46,7 +47,7 @@ class Articles extends Component {
 
   render() {
     const session = $p.superlogin.getSession();
-    const {handleNavigate} = this.props;
+    const {handleNavigate, match, location} = this.props;
     return <AppContent >
       <Helmet title={title} />
       <div style={{marginTop: 16}}>
@@ -57,7 +58,7 @@ class Articles extends Component {
           <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти к редактору статей</Button>
         }
 
-        <InfiniteArticles tags={this.state.tags} match={this.props.match} handleNavigate={handleNavigate}/>
+        <InfiniteArticles tags={this.state.tags} match={match} location={location} handleNavigate={handleNavigate}/>
       </div>
     </AppContent>;
   }
@@ -65,6 +66,7 @@ class Articles extends Component {
 
 Articles.propTypes = {
   match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
