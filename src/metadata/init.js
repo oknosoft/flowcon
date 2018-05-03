@@ -9,7 +9,7 @@ $p.md.init({"enm":{"accumulation_record_type":[{"order":0,"name":"debit","synony
   const {EnumManager,CatManager,DocManager,DataProcessorsManager,ChartOfCharacteristicManager,ChartOfAccountManager,
     InfoRegManager,AccumRegManager,BusinessProcessManager,TaskManager,CatObj, DocObj, TabularSectionRow, DataProcessorObj,
     RegisterRow, BusinessProcessObj, TaskObj} = $p.constructor.classes;
-
+    
   const _define = Object.defineProperties;
 
 $p.enm.create('accumulation_record_type');
@@ -29,7 +29,7 @@ $p.enm.create('task_events');
 * Дополнительные реквизиты и сведения
 * @class CchProperties
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CchProperties extends CatObj{
 get shown(){return this._getter('shown')}
@@ -71,7 +71,7 @@ $p.cch.create('properties');
 * Хранит значения настроек и параметров подсистем
 * @class CchPredefined_elmnts
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CchPredefined_elmnts extends CatObj{
 
@@ -167,8 +167,10 @@ class CchPredefined_elmntsManager extends ChartOfCharacteristicManager {
     adapters.pouch.once('pouch_doc_ram_loaded', () => {
       // загружаем предопределенные элементы
       this.job_prms();
-      // даём возможность завершиться другим обработчикам, подписанным на _pouch_load_data_loaded_
-      setTimeout(() => md.emit('predefined_elmnts_inited'), 100);
+      // информируем мир о готовности констант
+      md.emit('predefined_elmnts_inited');
+      // излучаем событие "можно открывать формы"
+      adapters.pouch.emit('pouch_complete_loaded');
     });
   }
 
@@ -270,7 +272,7 @@ $p.cch.create('predefined_elmnts', CchPredefined_elmntsManager, false);
 * Дополнительные значения
 * @class CatProperty_values
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatProperty_values extends CatObj{
 get heft(){return this._getter('heft')}
@@ -292,7 +294,7 @@ $p.cat.create('property_values');
 * Идентификаторы объектов метаданных для использования в базе данных.
 * @class CatMeta_ids
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatMeta_ids extends CatObj{
 get full_moniker(){return this._getter('full_moniker')}
@@ -310,7 +312,7 @@ $p.cat.create('meta_ids');
 * Категории тегов
 * @class CatTags_category
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatTags_category extends CatObj{
 get predefined_name(){return this._getter('predefined_name')}
@@ -325,7 +327,7 @@ $p.cat.create('tags_category');
 
 * @class CatParameters_keys
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatParameters_keys extends CatObj{
 get priority(){return this._getter('priority')}
@@ -362,7 +364,7 @@ $p.cat.create('parameters_keys');
 * Список юридических или физических лиц клиентов (поставщиков, покупателей).
 * @class CatPartners
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatPartners extends CatObj{
 get name_full(){return this._getter('name_full')}
@@ -395,7 +397,7 @@ $p.cat.create('partners');
 * Наборы дополнительных реквизитов и сведений
 * @class CatDestinations
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatDestinations extends CatObj{
 get used(){return this._getter('used')}
@@ -431,7 +433,7 @@ $p.cat.create('destinations');
 * Настройки потоков
 * @class CatFlow_tunes
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatFlow_tunes extends CatObj{
 get start_date(){return this._getter('start_date')}
@@ -460,7 +462,7 @@ $p.cat.create('flow_tunes');
 * Оглавление
 * @class CatContents
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatContents extends CatObj{
 get sorting_field(){return this._getter('sorting_field')}
@@ -478,7 +480,7 @@ $p.cat.create('contents');
 * Пользователи
 * @class CatUsers
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatUsers extends CatObj{
 get invalid(){return this._getter('invalid')}
@@ -579,7 +581,7 @@ $p.cat.create('users', CatUsersManager, true);
 * Проекты
 * @class CatProjects
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatProjects extends CatObj{
 get predefined_name(){return this._getter('predefined_name')}
@@ -606,7 +608,7 @@ $p.cat.create('projects');
 * Основной объект CMS. Новости и файлы - это тоже статьи
 * @class CatArticles
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatArticles extends CatObj{
 get h1(){return this._getter('h1')}
@@ -645,7 +647,7 @@ $p.cat.create('articles');
 * Теги
 * @class CatTags
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatTags extends CatObj{
 get is_category(){return this._getter('is_category')}
@@ -663,7 +665,7 @@ $p.cat.create('tags');
 * Формулы пользователя, для выполнения при расчете спецификаций в справочниках Вставки, Соединения, Фурнитура и регистре Корректировки спецификации
 * @class CatFormulas
 * @extends CatObj
-* @constructor
+* @constructor 
 */
 class CatFormulas extends CatObj{
 get formula(){return this._getter('formula')}
@@ -809,7 +811,7 @@ $p.cat.create('formulas', CatFormulasManager, false);
 * Запись ЛУРВ
 * @class DocWork_record
 * @extends DocObj
-* @constructor
+* @constructor 
 */
 class DocWork_record extends DocObj{
 get partner(){return this._getter('partner')}
@@ -835,7 +837,7 @@ $p.doc.create('work_record');
 * Задача
 * @class DocIssue
 * @extends DocObj
-* @constructor
+* @constructor 
 */
 class DocIssue extends DocObj{
 get complexity(){return this._getter('complexity')}
@@ -895,7 +897,7 @@ $p.doc.create('issue');
 * Просмотр журнала событий
 * @class IregLog_view
 * @extends RegisterRow
-* @constructor
+* @constructor 
 */
 class IregLog_view extends RegisterRow{
 get key(){return this._getter('key')}
@@ -911,7 +913,7 @@ $p.ireg.create('log_view');
 * Текущие задачи
 * @class RepCurrent_tasks
 * @extends DataProcessorObj
-* @constructor
+* @constructor 
 */
 class RepCurrent_tasks extends DataProcessorObj{
 }
@@ -923,7 +925,7 @@ $p.rep.create('current_tasks');
 * Эффективность
 * @class RepEfficiency
 * @extends DataProcessorObj
-* @constructor
+* @constructor 
 */
 class RepEfficiency extends DataProcessorObj{
 }

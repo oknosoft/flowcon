@@ -19,8 +19,10 @@ exports.CchPredefined_elmntsManager = class CchPredefined_elmntsManager extends 
     adapters.pouch.once('pouch_doc_ram_loaded', () => {
       // загружаем предопределенные элементы
       this.job_prms();
-      // даём возможность завершиться другим обработчикам, подписанным на _pouch_load_data_loaded_
-      setTimeout(() => md.emit('predefined_elmnts_inited'), 100);
+      // информируем мир о готовности констант
+      md.emit('predefined_elmnts_inited');
+      // излучаем событие "можно открывать формы"
+      adapters.pouch.emit('pouch_complete_loaded');
     });
   }
 

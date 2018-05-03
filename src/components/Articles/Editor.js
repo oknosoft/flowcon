@@ -16,6 +16,7 @@ import {FormGroup} from 'material-ui/Form';
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
 import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
+import FrmAttachments from 'metadata-react/FrmAttachments';
 import DataField from 'metadata-react/DataField';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import Social from './Social';
@@ -44,9 +45,7 @@ class EditorArticle extends MDNRComponent {
     const {_mgr, _meta} = props;
     this._handlers = {
       handleSave: this.handleSave.bind(this),
-      handleAttachment: this.handleAttachment.bind(this),
       handleClose: this.handleClose.bind(this),
-      handlePrint: this.handlePrint.bind(this),
       handleMarkDeleted: this.handleMarkDeleted.bind(this),
     };
     this.state = {
@@ -94,14 +93,6 @@ class EditorArticle extends MDNRComponent {
           value: {open: true, title: _obj.presentation, text: err.reason || err.message}
         });
       });
-  }
-
-  handleAttachment() {
-
-  }
-
-  handlePrint() {
-
   }
 
   handleMarkDeleted() {
@@ -190,6 +181,7 @@ class EditorArticle extends MDNRComponent {
         <Tab label="Реквизиты"/>
         <Tab label="Текст"/>
         <Tab label="Просмотр"/>
+        <Tab label="Вложения"/>
       </Tabs>,
 
       index === 0 && <DataObjToolbar key="toolbar" {...toolbar_props} />,
@@ -217,7 +209,7 @@ class EditorArticle extends MDNRComponent {
       ),
 
       index === 2 &&
-      <MarkdownDocs
+        <MarkdownDocs
         key="preview"
         htitle={this.ltitle}
         h1={_obj.h1}
@@ -225,6 +217,8 @@ class EditorArticle extends MDNRComponent {
         markdown={_obj.content}
         footer={<Social title={_obj.name}/>}
       />,
+
+      index === 3 && <FrmAttachments key="attachments" _obj={_obj}/>,
 
     ]
       :

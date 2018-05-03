@@ -16,6 +16,7 @@ import {FormGroup} from 'material-ui/Form';
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
 import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
+import FrmAttachments from 'metadata-react/FrmAttachments';
 import DataField from 'metadata-react/DataField';
 import SelectTags from '../Articles/SelectTags';
 
@@ -42,9 +43,7 @@ class FrmObjIssue extends MDNRComponent {
     const {_mgr, _meta} = props;
     this._handlers = {
       handleSave: this.handleSave.bind(this),
-      handleAttachment: this.handleAttachment.bind(this),
       handleClose: this.handleClose.bind(this),
-      handlePrint: this.handlePrint.bind(this),
       handleMarkDeleted: this.handleMarkDeleted.bind(this),
     };
     this.state = {
@@ -94,13 +93,6 @@ class FrmObjIssue extends MDNRComponent {
       });
   }
 
-  handleAttachment() {
-
-  }
-
-  handlePrint() {
-
-  }
 
   handleMarkDeleted() {
 
@@ -174,6 +166,7 @@ class FrmObjIssue extends MDNRComponent {
       <Tabs key="tabs" value={index} onChange={(event, index) => this.setState({index})}>
         <Tab label="Реквизиты"/>
         <Tab label="Текст"/>
+        <Tab label="Вложения"/>
       </Tabs>,
 
       index === 0 && <DataObjToolbar key="toolbar" {...toolbar_props} />,
@@ -199,6 +192,8 @@ class FrmObjIssue extends MDNRComponent {
           :
           <LoadingMessage key="loading" />
       ),
+
+      index === 2 && <FrmAttachments key="attachments" _obj={_obj}/>,
 
     ]
       :
