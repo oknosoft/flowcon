@@ -16,10 +16,30 @@ import Select from 'material-ui/Select';
 import Checkbox from 'material-ui/Checkbox';
 import withStyles from 'metadata-react/DataField/styles';
 
+function sort(a, b) {
+  if(a.category.name > b.category.name) {
+    return 1;
+  }
+  else if(a.category.name < b.category.name) {
+    return -1;
+  }
+  else {
+    if(a.name > b.name) {
+      return 1;
+    }
+    else if(a.name < b.name) {
+      return -1;
+    }
+    else{
+      return 0;
+    }
+  }
+}
+
 class SelectTags extends React.Component {
 
   render() {
-    const {classes, tags, handleChange, tagList, ...other} = this.props;
+    const {classes, tags, handleChange, tagList, categories, ...other} = this.props;
 
     return (
       <FormControl className={classes.formControl} margin="dense" {...other}>
@@ -31,10 +51,10 @@ class SelectTags extends React.Component {
           input={<Input />}
           renderValue={selected => selected.map(v => $p.cat.tags.get(v).name).join(', ')}
         >
-          {tagList.map((tag) => (
+          {(categories ? tagList.sort(sort) : tagList).map((tag) => (
             <MenuItem key={tag.ref} value={tag.ref}>
               <Checkbox checked={tags.indexOf(tag.ref) > -1} />
-              <ListItemText primary={tag.name} />
+              <ListItemText primary={tag.name} secondary={categories && tag.category.name} />
             </MenuItem>
           ))}
         </Select>
@@ -48,6 +68,7 @@ SelectTags.propTypes = {
   tags: PropTypes.array.isRequired,
   tagList: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,
+  categories: PropTypes.bool,
 };
 
 export default withStyles(SelectTags);

@@ -151,7 +151,10 @@ class FrmObjIssue extends MDNRComponent {
   }
 
   render() {
-    const {props: {_mgr, classes}, state: {_obj, _meta, index, MarkdownInput}, context, _handlers} = this;
+    const {
+      props: {_mgr, classes, handleIfaceState},
+      state: {_obj, _meta, index, MarkdownInput},
+      context, _handlers} = this;
     const toolbar_props = Object.assign({
       closeButton: !context.dnr,
       posted: _obj && _obj.posted,
@@ -193,7 +196,7 @@ class FrmObjIssue extends MDNRComponent {
           <LoadingMessage key="loading" />
       ),
 
-      index === 2 && <FrmAttachments key="attachments" _obj={_obj}/>,
+      index === 2 && <FrmAttachments key="attachments" _obj={_obj} handleIfaceState={handleIfaceState}/>,
 
     ]
       :

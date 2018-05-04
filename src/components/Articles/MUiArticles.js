@@ -65,7 +65,9 @@ class MUiArticles extends Component {
   componentDidUpdate(prevProps) {
     // If props/state signals that the underlying collection has changed,
     // Reload the most recently requested batch of rows:
-    if(this.props.tags.length !== prevProps.tags.length || this.props.location.search !== prevProps.location.search) {
+    if(this.props.tags.length !== prevProps.tags.length
+      || this.props.match.path !== prevProps.match.path
+      || this.props.location.search !== prevProps.location.search) {
       this.loadRows();
     }
   }
@@ -85,7 +87,7 @@ class MUiArticles extends Component {
 
   loadRows() {
 
-    const {props: {tags}, page} = this;
+    const {props: {tags, tagList, tagFilter}, page} = this;
 
     this.clearData();
 
@@ -107,6 +109,15 @@ class MUiArticles extends Component {
         }
       };
     }
+    // если в tagFilter нет пустой категории, режем по списку доступных тегов
+    else if(tagFilter.indexOf($p.cat.tags_category.get()) === -1) {
+      selector.selector.tags = {
+        $elemMatch: {
+          $in: tagList.map(({ref}) => ref)
+        }
+      };
+    }
+
     return $p.cat.articles.pouch_db.find(selector)
       .then((res) => {
         for(let i=0; i < res.docs.length; i++) {
@@ -177,6 +188,8 @@ MUiArticles.propTypes = {
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  tagList: PropTypes.array.isRequired,
+  tagFilter: PropTypes.array.isRequired,
   handleNavigate: PropTypes.func.isRequired,
 };
 

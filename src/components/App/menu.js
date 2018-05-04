@@ -5,6 +5,7 @@ import IconInfo from '@material-ui/icons/Info';
 import IconPerson from '@material-ui/icons/Person';
 import IconSettings from '@material-ui/icons/Settings';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import IconDownload from '@material-ui/icons/CloudDownload';
 import Flask from '../Home/Flask';
 import IconHelp from '@material-ui/icons/Help';
 // import IconDrafts from '@material-ui/icons/Drafts';
@@ -17,6 +18,14 @@ const items = [
     id: 'articles',
     //bold: true,
     navigate: '/articles',
+    need_meta: true,
+  },
+  {
+    text: 'Файлы',
+    icon: <IconDownload/>,
+    id: 'files',
+    //bold: true,
+    navigate: '/files',
     need_meta: true,
   },
   {

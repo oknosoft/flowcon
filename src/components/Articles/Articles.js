@@ -16,22 +16,28 @@ import SelectTags from './SelectTags';
 //import InfiniteArticles from './InfiniteArticles';
 import InfiniteArticles from './MUiArticles';
 
-const ltitle = 'Статьи';
-const title = ltitle + ' о программировании бизнеса';
-
 class Articles extends Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      tags: [],
-    };
-    this.tagList = [];
-    $p.cat.tags.find_rows({
-      category: {in: [$p.cat.tags_category.get(), $p.cat.tags_category.predefined('article')]}
-      }, (tag) => this.tagList.push(tag));
+    this.state = {tags: [], tagList: []};
+    this.setLtitle(props);
   }
 
+  setLtitle({match, tagFilter}) {
+    if(match.path === '/articles') {
+      this.ltitle = 'Статьи';
+      this.title = this.ltitle + ' о программировании бизнеса';
+    }
+    else {
+      this.ltitle = 'Файлы';
+      this.title = this.ltitle + ' и дополнительные материалы';
+    }
+
+    const tagList = [];
+    $p.cat.tags.find_rows({category: {in: tagFilter}}, (tag) => tagList.push(tag));
+    this.setState({tagList, tags: []});
+  }
 
   handleChange = event => {
     this.setState({ tags: event.target.value });
@@ -41,12 +47,13 @@ class Articles extends Component {
     this.shouldComponentUpdate(this.props);
   }
 
-  shouldComponentUpdate({handleIfaceState, title}) {
-    if(title != ltitle) {
+  shouldComponentUpdate({handleIfaceState, title, match, tagFilter}) {
+    if(title != this.ltitle || match.path !== this.props.match.path) {
+      this.setLtitle({match, tagFilter});
       handleIfaceState({
         component: '',
         name: 'title',
-        value: ltitle,
+        value: this.ltitle,
       });
       return false;
     }
@@ -55,23 +62,24 @@ class Articles extends Component {
 
   render() {
     const session = $p.superlogin.getSession();
-    const {handleNavigate, match, location} = this.props;
+    const {handleNavigate, match, location, tagFilter} = this.props;
+    const {tagList, tags} = this.state;
     return <AppContent >
-      <Helmet title={title} />
+      <Helmet title={this.title} />
       <div style={{marginTop: 16}}>
-        <Typography variant="display1" component="h1" color="primary">{title}</Typography>
+        <Typography variant="display1" component="h1" color="primary">{this.title}</Typography>
         <SelectTags
-          tags={this.state.tags}
+          tags={tags}
           fullWidth
           handleChange={this.handleChange}
-          tagList={this.tagList}
+          tagList={tagList}
         />
         {
           session && session.roles.indexOf('doc_full') !== -1 &&
           <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти к редактору статей</Button>
         }
 
-        <InfiniteArticles tags={this.state.tags} match={match} location={location} handleNavigate={handleNavigate}/>
+        <InfiniteArticles tags={tags} tagFilter={tagFilter} tagList={tagList} match={match} location={location} handleNavigate={handleNavigate}/>
       </div>
     </AppContent>;
   }
@@ -81,6 +89,7 @@ Articles.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
+  tagFilter: PropTypes.array.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
 };

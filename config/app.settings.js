@@ -49,8 +49,8 @@ module.exports = function settings(prm) {
     // см.: https://github.com/oknosoft/metadata.js/issues/255
     use_meta: false,
 
-    // размер вложений 2Mb
-    attachment_max_size: 2000000,
+    // размер вложений 5Mb
+    attachment_max_size: 5000000,
 
     // разрешаем сохранение пароля
     enable_save_pwd: true,

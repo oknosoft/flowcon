@@ -54,10 +54,11 @@ class EditorArticle extends MDNRComponent {
       MarkdownInput: null,
       index: 0,
     };
+    // в редакторе доступны все категории
     this.tagList = [];
-    $p.cat.tags.find_rows({
-      category: {in: [$p.cat.tags_category.get(), $p.cat.tags_category.predefined('article')]}
-    }, (tag) => this.tagList.push(tag));
+    $p.cat.tags.forEach((tag) => {
+      this.tagList.push(tag);
+    });
   }
 
   componentDidMount() {
@@ -158,7 +159,7 @@ class EditorArticle extends MDNRComponent {
         </FormGroup>
         <FormGroup row>
           <DataField _obj={_obj} _fld="contents"/>
-          <SelectTags tags={_obj.tags} tagList={this.tagList} handleChange={this.tagsChange}/>
+          <SelectTags tags={_obj.tags} categories tagList={this.tagList} handleChange={this.tagsChange}/>
         </FormGroup>
         <DataField _obj={_obj} _fld="name" fullWidth/>
         <DataField _obj={_obj} _fld="h1" fullWidth/>
@@ -169,7 +170,10 @@ class EditorArticle extends MDNRComponent {
   }
 
   render() {
-    const {props: {_mgr, classes}, state: {_obj, _meta, index, MarkdownInput}, context, _handlers} = this;
+    const {
+      props: {_mgr, classes, handleIfaceState},
+      state: {_obj, _meta, index, MarkdownInput},
+      context, _handlers} = this;
     const toolbar_props = Object.assign({
       closeButton: !context.dnr,
       posted: _obj && _obj.posted,
@@ -222,7 +226,7 @@ class EditorArticle extends MDNRComponent {
         footer={<Social title={_obj.name}/>}
       />,
 
-      index === 3 && <FrmAttachments key="attachments" _obj={_obj}/>,
+      index === 3 && <FrmAttachments key="attachments" _obj={_obj} handleIfaceState={handleIfaceState}/>,
 
     ]
       :

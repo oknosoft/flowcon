@@ -7,6 +7,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Typography from 'material-ui/Typography';
 import {withStyles} from 'material-ui/styles';
 
 // https://github.com/nygardk/react-share/blob/master/demo/Demo.jsx
@@ -37,16 +39,20 @@ import {
   EmailIcon,
 } from 'react-share';
 
-const styles = {
+const styles = theme => ({
   share: {
     cursor: 'pointer',
     '&:hover:not(:active)': {
       opacity: 0.75
     },
     display: 'inline-block',
-    marginRight: 16
+    marginTop: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  },
+  root: {
+    marginTop: theme.spacing.unit * 2,
   }
-};
+});
 
 function Social(props) {
 
@@ -54,7 +60,8 @@ function Social(props) {
   const {href} = location;
 
   return (
-    <div key="share">
+    <div key="share" className={classes.root}>
+      <Typography variant="title" component="h3" color="primary">Поделиться ссылкой:</Typography>
       <FacebookShareButton
         url={href}
         quote={title}

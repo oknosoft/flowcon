@@ -142,6 +142,7 @@ superlogin.onCreate(function (userDoc, provider) {
   }
   if(!userDoc.profile.ref) {
     userDoc.profile.ref = uuidv1();
+    userDoc.profile.subscription = true;
   }
   return Promise.resolve(userDoc);
 });

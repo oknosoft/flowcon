@@ -13,10 +13,11 @@ import AppContent from 'metadata-react/App/AppContent';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import NotFound from '../Pages/NotFound';  // 404
 import Social from './Social';
+import Attachments from './Attachments';
 
 class Article extends Component {
 
-  state = {doc: null};
+  state = {doc: null, name: ''};
 
   componentDidMount() {
     const {ref} = this.props.match.params;
@@ -64,7 +65,10 @@ class Article extends Component {
         h1={doc.h1}
         descr={doc.descr}
         markdown={doc.content}
-        footer={<Social title={doc.name}/>}
+        footer={[
+          <Attachments key="attachments" _obj={doc} handleIfaceState={this.props.handleIfaceState} />,
+          <Social key="social" title={doc.name}/>
+        ]}
       />
     );
   }
@@ -72,6 +76,7 @@ class Article extends Component {
 
 Article.propTypes = {
   match: PropTypes.object.isRequired,
+  handleIfaceState: PropTypes.func.isRequired,
 };
 
 export default Article;

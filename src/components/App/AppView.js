@@ -153,6 +153,12 @@ class AppView extends Component {
       const wraper = (Component, routeProps) => {
         /* eslint-disable-next-line */
         const {classes, ...mainProps} = props;
+        if(routeProps.match.path === '/articles') {
+          mainProps.tagFilter = [$p.cat.tags_category.get(), $p.cat.tags_category.predefined('article')];
+        }
+        else if(routeProps.match.path === '/files') {
+          mainProps.tagFilter = [$p.cat.tags_category.predefined('file')];
+        }
         return <Component {...mainProps} {...routeProps} disablePermanent={disablePermanent}/>;
       };
 
@@ -162,6 +168,7 @@ class AppView extends Component {
             <Route exact path="/" render={this.renderHome}/>
             <Route path="/:area(doc|cat|ireg|cch|rep).:name" render={(props) => wraper(DataRoute, props)}/>
             <Route path="/articles" render={(props) => wraper(ArticlesRoute, props)}/>
+            <Route path="/files" render={(props) => wraper(ArticlesRoute, props)}/>
             <Route path="/meta" render={(props) => wraper(MetaTreePage, props)}/>
             <Route path="/flowcon/diagram" render={(props) => wraper(FakeDiagram, props)}/>
             <Route path="/flowcon/list" render={(props) => wraper(FakeList, props)}/>
