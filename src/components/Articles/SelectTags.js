@@ -19,8 +19,7 @@ import withStyles from 'metadata-react/DataField/styles';
 class SelectTags extends React.Component {
 
   render() {
-    const {classes, tags, handleChange, ...other} = this.props;
-    const {alatable} = $p.cat.tags;
+    const {classes, tags, handleChange, tagList, ...other} = this.props;
 
     return (
       <FormControl className={classes.formControl} margin="dense" {...other}>
@@ -32,7 +31,7 @@ class SelectTags extends React.Component {
           input={<Input />}
           renderValue={selected => selected.map(v => $p.cat.tags.get(v).name).join(', ')}
         >
-          {alatable.map(tag => (
+          {tagList.map((tag) => (
             <MenuItem key={tag.ref} value={tag.ref}>
               <Checkbox checked={tags.indexOf(tag.ref) > -1} />
               <ListItemText primary={tag.name} />
@@ -47,6 +46,7 @@ class SelectTags extends React.Component {
 SelectTags.propTypes = {
   classes: PropTypes.object.isRequired,
   tags: PropTypes.array.isRequired,
+  tagList: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 

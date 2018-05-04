@@ -23,6 +23,7 @@ const styles = theme => ({
   list: {
     width: '100%',
     marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
   },
   row: {
     display: 'flex',
@@ -41,7 +42,7 @@ const styles = theme => ({
     flex: '1 1 auto',
   },
   disabled: {
-    pointerEvents: 'none',
+    display: 'none',
   }
 });
 

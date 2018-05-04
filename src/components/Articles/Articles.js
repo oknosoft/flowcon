@@ -21,9 +21,17 @@ const title = ltitle + ' о программировании бизнеса';
 
 class Articles extends Component {
 
-  state = {
-    tags: [],
-  };
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      tags: [],
+    };
+    this.tagList = [];
+    $p.cat.tags.find_rows({
+      category: {in: [$p.cat.tags_category.get(), $p.cat.tags_category.predefined('article')]}
+      }, (tag) => this.tagList.push(tag));
+  }
+
 
   handleChange = event => {
     this.setState({ tags: event.target.value });
@@ -52,7 +60,12 @@ class Articles extends Component {
       <Helmet title={title} />
       <div style={{marginTop: 16}}>
         <Typography variant="display1" component="h1" color="primary">{title}</Typography>
-        <SelectTags tags={this.state.tags} fullWidth handleChange={this.handleChange}/>
+        <SelectTags
+          tags={this.state.tags}
+          fullWidth
+          handleChange={this.handleChange}
+          tagList={this.tagList}
+        />
         {
           session && session.roles.indexOf('doc_full') !== -1 &&
           <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти к редактору статей</Button>

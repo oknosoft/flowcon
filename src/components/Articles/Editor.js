@@ -54,6 +54,10 @@ class EditorArticle extends MDNRComponent {
       MarkdownInput: null,
       index: 0,
     };
+    this.tagList = [];
+    $p.cat.tags.find_rows({
+      category: {in: [$p.cat.tags_category.get(), $p.cat.tags_category.predefined('article')]}
+    }, (tag) => this.tagList.push(tag));
   }
 
   componentDidMount() {
@@ -154,7 +158,7 @@ class EditorArticle extends MDNRComponent {
         </FormGroup>
         <FormGroup row>
           <DataField _obj={_obj} _fld="contents"/>
-          <SelectTags tags={_obj.tags} handleChange={this.tagsChange}/>
+          <SelectTags tags={_obj.tags} tagList={this.tagList} handleChange={this.tagsChange}/>
         </FormGroup>
         <DataField _obj={_obj} _fld="name" fullWidth/>
         <DataField _obj={_obj} _fld="h1" fullWidth/>
