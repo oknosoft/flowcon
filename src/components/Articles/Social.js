@@ -24,7 +24,7 @@ import {
   VKShareButton,
   OKShareButton,
   TelegramShareButton,
-  WhatsappShareButton,
+  //WhatsappShareButton,
   MailruShareButton,
   EmailShareButton,
 
@@ -34,7 +34,7 @@ import {
   VKIcon,
   OKIcon,
   TelegramIcon,
-  WhatsappIcon,
+  //WhatsappIcon,
   MailruIcon,
   EmailIcon,
 } from 'react-share';
@@ -59,6 +59,16 @@ function Social(props) {
   const {title, classes} = props;
   const {href} = location;
 
+  /*
+  <WhatsappShareButton
+    url={href}
+    title={title}
+    separator=":: "
+    className={classes.share}>
+    <WhatsappIcon size={32} round />
+  </WhatsappShareButton>
+  */
+
   return (
     <div key="share" className={classes.root}>
       <Typography variant="title" component="h3" color="primary">Поделиться ссылкой:</Typography>
@@ -80,13 +90,6 @@ function Social(props) {
         className={classes.share}>
         <TelegramIcon size={32} round />
       </TelegramShareButton>
-      <WhatsappShareButton
-        url={href}
-        title={title}
-        separator=":: "
-        className={classes.share}>
-        <WhatsappIcon size={32} round />
-      </WhatsappShareButton>
       <GooglePlusShareButton
         url={href}
         className={classes.share}>

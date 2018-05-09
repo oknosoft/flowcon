@@ -51,7 +51,6 @@ class AppView extends Component {
   }
 
   shouldComponentUpdate(props, {need_user, need_meta}) {
-    const {meta_loaded, user, offline} = props;
     const iprops = item_props();
     let res = true;
 
@@ -62,12 +61,6 @@ class AppView extends Component {
 
     if(need_meta != !!iprops.need_meta) {
       this.setState({need_meta: !!iprops.need_meta});
-      res = false;
-    }
-
-    // если есть сохранённый пароль и online, пытаемся авторизоваться
-    if(meta_loaded && !user.logged_in && user.has_login && !user.try_log_in && !offline) {
-      props.handleLogin();
       res = false;
     }
 

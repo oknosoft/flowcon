@@ -17,11 +17,17 @@ import plugin_react from 'metadata-react/plugin';
 // настройки суперлогина
 import superlogin_config from '../../config/superlogin.config.client';
 
+// генератор события META_LOADED для redux
+import {metaActions} from 'metadata-redux';
+
 // функция установки параметров сеанса
 import settings from '../../config/app.settings';
 
-// генератор события META_LOADED для redux
-import {metaActions} from 'metadata-redux';
+// читаем скрипт инициализации метаданных, полученный в результате выполнения meta:prebuild
+import {meta_init} from './init';
+import modifiers from './modifiers';
+import docs from './ram';
+
 
 MetaEngine
   .plugin(plugin_pouchdb)     // подключаем pouchdb-адаптер к прототипу metadata.js
@@ -43,35 +49,45 @@ if($p.wsql.get_user_param('couch_path') !== $p.job_prm.couch_local && process.en
 // скрипт инициализации в привязке к store приложения
 export function init(dispatch) {
 
-  // читаем скрипт инициализации метаданных, полученный в результате выполнения meta:prebuild
-  return import('./init')
-    .then(({meta_init}) => {
 
-      // выполняем скрипт инициализации метаданных
-      meta_init($p);
+  // шрифт Roboto грузим асинхронно
+  $p.utils.load_script('https://fonts.googleapis.com/css?family=Roboto:300,400,500', 'link');
 
-      // сообщяем адаптерам пути, суффиксы и префиксы
-      const {wsql, job_prm, adapters} = $p;
-      adapters.pouch.init(wsql, job_prm);
+  try {
+    // выполняем скрипт инициализации метаданных
+    meta_init($p);
 
-      // шрифт Roboto грузим асинхронно
-      $p.utils.load_script('https://fonts.googleapis.com/css?family=Roboto:300,400,500', 'link');
+    // сообщяем адаптерам пути, суффиксы и префиксы
+    const {wsql, job_prm, adapters: {pouch}} = $p;
+    pouch.init(wsql, job_prm);
 
-      // читаем скрипты модификаторов DataObj`s и DataManager`s
-      return import('./modifiers');
-    })
-    .then((modifiers) => {
+    // выполняем модификаторы
+    modifiers($p);
 
-      // выполняем модификаторы
-      modifiers.default($p);
+    // информируем хранилище о готовности MetaEngine
+    dispatch(metaActions.META_LOADED($p));
 
-      // информируем хранилище о готовности MetaEngine
-      dispatch(metaActions.META_LOADED($p));
+    // читаем локальные данные в ОЗУ
+    pouch.load_changes({docs});
+    pouch.call_data_loaded({
+      total_rows: docs.length,
+      docs_written: docs.length,
+      page: 1,
+      limit: 300,
+      start: Date.now(),
+    });
 
-      // читаем локальные данные в ОЗУ
-      return $p.adapters.pouch.load_data();
-    })
-    .catch($p && $p.record_log);
+    // при наличии сохраненной сессии - подключаемся
+    setTimeout(() => {
+      const session = $p.superlogin.getSession();
+      if(session && navigator.onLine) {
+        dispatch(metaActions.USER_TRY_LOG_IN(pouch, session.user_id));
+      }
+    }, 100);
+  }
+  catch (err) {
+    $p && $p.record_log(err);
+  }
 }
 
 // экспортируем $p и PouchDB глобально

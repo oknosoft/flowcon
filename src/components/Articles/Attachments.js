@@ -26,7 +26,7 @@ function handleDownload(_obj, handleIfaceState){
     handleIfaceState({
       component: '',
       name: 'alert',
-      value: {open: true, title: $p.msg.file_download, text: 'Укажите файл в списке для загрузки'}
+      value: {open: true, title: $p.msg.file_download, text: $p.msg.file_select}
     });
   }
 }

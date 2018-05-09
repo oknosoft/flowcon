@@ -83,6 +83,7 @@
     "build": "node scripts/build.js",
     "superlogin": "node server",
     "test": "node scripts/test.js --env=jsdom",
+    "meta:ram": "node scripts/meta.ram.js",
     "meta:prebuild": "node scripts/meta.prebuild.js",
     "meta:link": "node scripts/meta.link.js"
   },

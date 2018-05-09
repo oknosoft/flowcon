@@ -33,7 +33,7 @@ const store = configureStore();
 class RootProvider extends Component {
 
   componentWillMount() {
-    init(store.dispatch).catch($p && $p.record_log);
+    init(store.dispatch);
   }
 
   render() {
@@ -45,6 +45,7 @@ class RootProvider extends Component {
         DumbScreen={DumbScreen}
         AppView={AppView}
         ie11
+        disableAutoLogin
       />
     </Provider>;
   }

@@ -16,7 +16,7 @@ exports.CchPredefined_elmntsManager = class CchPredefined_elmntsManager extends 
 
     const {md, doc, adapters} = this._owner.$p;
 
-    adapters.pouch.once('pouch_doc_ram_loaded', () => {
+    adapters.pouch.once('pouch_data_loaded', () => {
       // загружаем предопределенные элементы
       this.job_prms();
       // информируем мир о готовности констант

@@ -52,6 +52,11 @@ class FrmObjIssue extends MDNRComponent {
       MarkdownInput: null,
       index: 0,
     };
+    // в редакторе доступны все категории
+    this.tagList = [];
+    $p.cat.tags.forEach((tag) => {
+      this.tagList.push(tag);
+    });
   }
 
   componentDidMount() {
@@ -145,7 +150,7 @@ class FrmObjIssue extends MDNRComponent {
           <DataField _obj={_obj} _fld="responsible"/>
         </FormGroup>
         <DataField _obj={_obj} _fld="caption" fullWidth/>
-        <SelectTags tags={_obj.tags} handleChange={this.tagsChange}/>
+        <SelectTags tags={_obj.tags} categories tagList={this.tagList} handleChange={this.tagsChange}/>
       </FormGroup>
     );
   }

@@ -29,10 +29,10 @@ module.exports = function settings(prm) {
     couch_local: process.env.COUCH_LOCAL || couch_path,
 
     // по умолчанию, используем базы браузера, а не прямое обращение к couchdb
-    couch_direct: false,
+    couch_direct: true,
 
     // эти базы доступны анонимусу
-    autologin: ['ram', 'remote'],
+    autologin: ['remote'],
 
     // фильтр для репликации с CouchDB не используем
     pouch_filter: {
@@ -48,6 +48,7 @@ module.exports = function settings(prm) {
     // если use_meta === false, не используем базу meta в рантайме
     // см.: https://github.com/oknosoft/metadata.js/issues/255
     use_meta: false,
+    use_ram: false,
 
     // размер вложений 5Mb
     attachment_max_size: 5000000,
