@@ -22,12 +22,24 @@ list.set(0, {name: 'Загрузка списка статей...'});
 const styles = theme => ({
   list: {
     width: '100%',
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit,
+  },
+  bottom: {
+    paddingBottom: theme.spacing.unit * 2,
   },
   row: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  chip: {
+    marginRight: theme.spacing.unit,
+    cursor: 'pointer',
+  },
+  author: {
+    cursor: 'pointer',
+    '&:hover': {
+      fontWeight: 500,
+    },
   },
   placeholder: {
     display: 'inline-block',
@@ -37,6 +49,10 @@ const styles = theme => ({
   nowrap: {
     flexWrap: 'nowrap',
     marginBottom: theme.spacing.unit,
+  },
+  flex: {
+    flex: 1,
+    whiteSpace: 'nowrap',
   },
   scroller: {
     flex: '1 1 auto',
@@ -150,7 +166,7 @@ class MUiArticles extends Component {
     const {prev, next} = this.state;
 
     return [
-      <List key="list" className={classes.list}>
+      <List key="list" className={cn(classes.list, classes.bottom)}>
         {this.renderRows()}
       </List>,
       <div key="footer" className={classes.row}>

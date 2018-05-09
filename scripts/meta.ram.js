@@ -29,13 +29,20 @@ const MetaEngine = require('metadata-core')
 
 const db = new MetaEngine.classes.PouchDB(config.couch_local + config.zone + '_ram', {skip_setup: true});
 
+const {DBUSER, DBPWD} = process.env;
+const slu = new MetaEngine.classes.PouchDB(config.couch_local.replace('fl_', 'sl_users'), {
+  auth: {
+    username: DBUSER,
+    password: DBPWD
+  },
+  skip_setup: true,
+});
+
 debug(`Читаем данные из CouchDB ${config.couch_local}`);
 return db.info()
   .then((info) => {
     debug(`Подключение к ${info.host}`);
-    return db.allDocs({
-      include_docs: true,
-      attachments: true});
+    return db.allDocs({include_docs: true, attachments: true});
   })
   .catch((err) => {
     debug('Не удалось получить объект meta из CouchDB\nПроверьте логин, пароль и строку подключения');
@@ -55,19 +62,34 @@ return db.info()
       }
       jstext += JSON.stringify(doc) + ',\n';
     }
-    jstext += '];';
-    debug('Записываем результат');
-    const fname = path.resolve(__dirname, '../src/metadata/ram.js');
-    fs.writeFile(fname, jstext, 'utf8', (err) => {
-      if (err) {
-        debug(err);
-        process.exit(1);
-      } else {
-        debug(`Успешно записан > ${fname}`);
-        process.exit(0);
-      }
-    });
 
+    return slu.query('doc/dbs',{include_docs: true})
+      .then(({rows}) => {
+        for(const {doc} of rows) {
+          const user = {
+            _id: `cat.users|${doc.profile.ref}`,
+            id: doc._id,
+            name: doc.profile.name,
+            email_addr: doc.email,
+            subscription: doc.profile.subscription || false,
+          }
+          jstext += JSON.stringify(user) + ',\n';
+        }
+      })
+      .then(() => {
+        jstext += '];';
+        debug('Записываем результат');
+        const fname = path.resolve(__dirname, '../src/metadata/ram.js');
+        fs.writeFile(fname, jstext, 'utf8', (err) => {
+          if (err) {
+            debug(err);
+            process.exit(1);
+          } else {
+            debug(`Успешно записан > ${fname}`);
+            process.exit(0);
+          }
+        });
+      });
   })
   .catch((err) => {
     debug(err);

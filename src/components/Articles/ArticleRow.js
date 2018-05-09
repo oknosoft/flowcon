@@ -9,28 +9,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import {FormGroup} from 'material-ui/Form';
+import Chip from 'material-ui/Chip';
+import cn from 'classnames';
 
 
 export default function ArticleRow(props) {
   // , author, tags
-  const {row: {id, name, h1, introduction, date}, match, handleNavigate, classes} = props;
+  const {row: {id, name, h1, introduction, date, author, tags}, match, handleNavigate, classes} = props;
   const intro = introduction || h1;
+  const {utils, cat} = $p;
+  const onClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    handleNavigate(id ? `${match.url}${match.url.endsWith('/') ? '' : '/'}${id}` : '#');
+  };
+
   return (
-    <FormGroup classes={{root: classes.nowrap}}>
+    <FormGroup classes={{root: cn(classes.nowrap, classes.bottom)}}>
       <Typography
         variant="title"
         component="a"
         href={id ? `${match.url}/${id}` : '#'}
-        onClick={(event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          handleNavigate(id ? `${match.url}${match.url.endsWith('/') ? '' : '/'}${id}` : '#');
-        }}
+        onClick={onClick}
         color="primary"
       >
         {name}
       </Typography>
-      <Typography variant="caption">{$p.utils.moment(date).format('ll')}</Typography>
+      <FormGroup row onClick={onClick} classes={{root: classes.nowrap}}>
+        <Typography variant="caption" className={classes.flex}>{utils.moment(date).format('ll')}</Typography>
+        <Typography variant="caption" title="Автор" className={classes.author}>{`@${cat.users.get(author).id}`}</Typography>
+      </FormGroup>
+      <FormGroup row onClick={onClick} classes={{root: classes.nowrap}}>
+        {
+          tags && tags.map((tag, index) => <Chip key={index} label={cat.tags.get(tag).name} className={classes.chip} />)
+        }
+      </FormGroup>
       {
         intro !== name && <Typography component="p" color="primary">{intro}</Typography>
       }
