@@ -17,7 +17,7 @@ const items = [
     icon: <LibraryBooks/>,
     id: 'articles',
     //bold: true,
-    navigate: '/articles',
+    navigate: '/articles/',
     need_meta: true,
   },
   {
@@ -25,7 +25,7 @@ const items = [
     icon: <IconDownload/>,
     id: 'files',
     //bold: true,
-    navigate: '/files',
+    navigate: '/files/',
     need_meta: true,
   },
   {

@@ -37,7 +37,15 @@ module.exports = function(superlogin) {
   this.changeName = function(user_id, newName) {
     return userDB.get(user_id)
       .then((userDoc) => {
-        userDoc.name = newName;
+        userDoc.profile.name = newName;
+        return userDB.put(userDoc);
+      });
+  };
+
+  this.changeSubscription = function(user_id, subscription) {
+    return userDB.get(user_id)
+      .then((userDoc) => {
+        userDoc.profile.subscription = subscription;
         return userDB.put(userDoc);
       });
   };

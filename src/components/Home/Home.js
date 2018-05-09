@@ -36,7 +36,7 @@ function PageHome(props) {
       <Grid container spacing={24} className={classes.hero}>
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
-            <div className={classes.text} onClick={() => handleNavigate('/articles')}>
+            <div className={classes.text} onClick={() => handleNavigate('/articles/')}>
               <Typography variant="headline" component="h2" color="inherit">Статьи</Typography>
               <LibraryBooks alt="Статьи" className={classes.logo}/>
               <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>

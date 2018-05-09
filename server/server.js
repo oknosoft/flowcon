@@ -52,6 +52,7 @@ app.get('/user/profile', superlogin.requireAuth, function(req, res, next) {
     });
 });
 
+// смена имени пользователя
 app.post('/user/change-name', superlogin.requireAuth, function(req, res, next) {
   if(!req.body.newName) {
     return next({
@@ -60,6 +61,22 @@ app.post('/user/change-name', superlogin.requireAuth, function(req, res, next) {
     });
   }
   profile.changeName(req.user._id, req.body.newName)
+    .then(function(userProfile) {
+      res.status(200).json(userProfile);
+    }, function(err) {
+      return next(err);
+    });
+});
+
+// смена подписки на рассылку
+app.post('/user/change-subscription', superlogin.requireAuth, function(req, res, next) {
+  if(!req.body.hasOwnProperty('subscription')) {
+    return next({
+      error: "Field 'subscription' is required",
+      status: 400
+    });
+  }
+  profile.changeSubscription(req.user._id, req.body.subscription)
     .then(function(userProfile) {
       res.status(200).json(userProfile);
     }, function(err) {

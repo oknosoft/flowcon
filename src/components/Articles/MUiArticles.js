@@ -33,6 +33,7 @@ const styles = theme => ({
   },
   chip: {
     marginRight: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
     cursor: 'pointer',
   },
   author: {

@@ -39,7 +39,7 @@ export default function ArticleRow(props) {
         <Typography variant="caption" className={classes.flex}>{utils.moment(date).format('ll')}</Typography>
         <Typography variant="caption" title="Автор" className={classes.author}>{`@${cat.users.get(author).id}`}</Typography>
       </FormGroup>
-      <FormGroup row onClick={onClick} classes={{root: classes.nowrap}}>
+      <FormGroup row onClick={onClick}>
         {
           tags && tags.map((tag, index) => <Chip key={index} label={cat.tags.get(tag).name} className={classes.chip} />)
         }
