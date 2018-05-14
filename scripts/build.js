@@ -72,6 +72,10 @@ measureFileSizesBeforeBuild(paths.appBuild)
       }
 
       console.log('File sizes after gzip:\n');
+
+      // записываем статистику
+      fs.writeFile(path.resolve(__dirname, './stats.json'), JSON.stringify(stats.toJson()), 'utf8');
+
       printFileSizesAfterBuild(
         stats,
         previousFileSizes,
