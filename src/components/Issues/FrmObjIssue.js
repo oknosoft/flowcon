@@ -169,7 +169,9 @@ class FrmObjIssue extends MDNRComponent {
     }, _handlers);
 
     return _obj ? [
-      <Helmet key="helmet" title={htitle}/>,
+      <Helmet key="helmet" title={htitle}>
+        <meta name="description" content="Редактор задачи" />
+      </Helmet>,
 
       <Tabs key="tabs" value={index} onChange={(event, index) => this.setState({index})}>
         <Tab label="Реквизиты"/>

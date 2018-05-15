@@ -16,15 +16,17 @@ import SelectTags from './SelectTags';
 //import InfiniteArticles from './InfiniteArticles';
 import InfiniteArticles from './MUiArticles';
 
+import {description} from '../App/menu';
+
 class Articles extends Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = {tags: [], tagList: []};
-    this.setLtitle(props);
+    this.state = {tags: [], tagList: null};
+    this.setLtitle(props, true);
   }
 
-  setLtitle({match, tagFilter}) {
+  setLtitle({match, tagFilter}, direct) {
     if(match.path === '/articles') {
       this.ltitle = 'Статьи';
       this.title = this.ltitle + ' о программировании бизнеса';
@@ -36,7 +38,13 @@ class Articles extends Component {
 
     const tagList = [];
     $p.cat.tags.find_rows({category: {in: tagFilter}}, (tag) => tagList.push(tag));
-    this.setState({tagList, tags: []});
+    if(direct) {
+      /* eslint-disable-next-line */
+      this.state.tagList = tagList;
+    }
+    else {
+      this.setState({tagList, tags: []});
+    }
   }
 
   handleChange = event => {
@@ -65,7 +73,9 @@ class Articles extends Component {
     const {handleNavigate, match, location, tagFilter} = this.props;
     const {tagList, tags} = this.state;
     return <AppContent >
-      <Helmet title={this.title} />
+      <Helmet title={this.title}>
+        <meta name="description" content={description} />
+      </Helmet>
       <div style={{marginTop: 16}}>
         <Typography variant="display1" component="h1" color="primary">{this.title}</Typography>
         <SelectTags

@@ -1,27 +1,31 @@
-import {compose, createStore, applyMiddleware} from 'redux';
-import rootReducer from './reducers';
+import {compose, createStore, applyMiddleware, combineReducers} from 'redux';
+
+// middleware для асинхронного добавления middlewares
+import dynamicMiddlewares from 'redux-dynamic-middlewares';
 
 // маршрутизация url
 import createHistory from 'history/createBrowserHistory';
-import {routerMiddleware} from 'react-router-redux';
+import {routerReducer as router, routerMiddleware} from 'react-router-redux';
 
 // асинхронные действия
 import thunk from 'redux-thunk';
-
-// события pouchdb
-import {metaMiddleware} from 'metadata-redux';
+import {metaReducer, ifaceReducer} from 'metadata-redux';
+import ifaceInitialState from './metadata/reducers/iface';
 
 // Create a history of your choosing (we're using a browser history in this case)
 export const history = createHistory();
 
-
 export default function configureStore(preloadedState) {
   return createStore(
-    rootReducer,
+    combineReducers({
+      router,
+      meta: metaReducer,
+      iface: ifaceReducer(ifaceInitialState),
+    }),
     preloadedState,
     compose(
       // add middleware for intercepting and dispatching async and navigation actions
-      applyMiddleware(thunk, routerMiddleware(history), metaMiddleware($p)),
+      applyMiddleware(thunk, routerMiddleware(history), dynamicMiddlewares),
 
       /**
        * Conditionally add the Redux DevTools extension enhancer

@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router';
 
 import {withObj} from 'metadata-redux';
-import DataList from 'metadata-react/DataList';
-import DataObj from 'metadata-react/FrmObj';
-import FrmReport from 'metadata-react/FrmReport';
 import NeedAuth, {ltitle} from 'metadata-react/App/NeedAuth'; // страница "необхлдима авторизация"
 
 //import MetaObjPage from '../../components/MetaObjPage';
 import NotFound from '../Pages/NotFound';
+
+const stub = () => null;
+const lazy = {
+  DataList: stub,
+  DataObj: stub,
+  FrmReport: stub,
+};
+import(/* webpackChunkName: "metadata-react" */ 'metadata-react/DataList').then(module => lazy.DataList = module.default);
+import(/* webpackChunkName: "metadata-react" */ 'metadata-react/FrmObj').then(module => lazy.DataObj = module.default);
+import(/* webpackChunkName: "metadata-react" */ 'metadata-react/FrmReport').then(module => lazy.FrmReport = module.default);
 
 class DataRoute extends Component {
 
@@ -68,20 +75,20 @@ class DataRoute extends Component {
     };
 
     if(area === 'rep') {
-      const Component = _mgr.FrmObj || FrmReport;
+      const Component = _mgr.FrmObj || lazy.FrmReport;
       return <Component _mgr={_mgr} _acl={_acl} match={match} {...sizes} />;
     }
 
     return <Switch>
-      <Route path={`${match.url}/:ref([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})`} render={(props) => wraper(DataObj, props, 'obj')}/>
-      <Route path={`${match.url}/list`} render={(props) => wraper(DataList, props, 'list')}/>
+      <Route path={`${match.url}/:ref([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})`} render={(props) => wraper(lazy.DataObj, props, 'obj')}/>
+      <Route path={`${match.url}/list`} render={(props) => wraper(lazy.DataList, props, 'list')}/>
       {/**<Route path={`${match.url}/meta`} render={(props) => wraper(MetaObjPage, props)} />**/}
       <Route component={NotFound}/>
     </Switch>;
   }
 
   getChildContext() {
-    return {components: {DataObj, DataList}};
+    return {components: lazy};
   }
 }
 

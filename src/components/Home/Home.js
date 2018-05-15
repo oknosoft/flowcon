@@ -14,6 +14,8 @@ import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import Check from '@material-ui/icons/Check';
 import Timer from '@material-ui/icons/Timer';
 
+import {description} from '../App/menu';
+
 import styles from './styles';
 
 const ltitle = 'business-programming';
@@ -31,7 +33,9 @@ function PageHome(props) {
 
   return (
     <div className={classes.root}>
-      <Helmet title={ltitle}/>
+      <Helmet title={ltitle}>
+        <meta name="description" content={description} />
+      </Helmet>
 
       <Grid container spacing={24} className={classes.hero}>
         <Grid item sm={12} lg={6}>

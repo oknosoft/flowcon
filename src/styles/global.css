@@ -1,0 +1,58 @@
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+html, body, input, textarea, select, button {
+  color: rgb(48, 57, 66);
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 100%;
+  line-height: 21px;
+  text-rendering: optimizeLegibility;
+}
+.splash {
+  width: 512px;
+  height: 132px;
+  position: absolute;
+  left: 48%;
+  margin-left: -255px;
+  margin-top: 140px;
+  background-image: url(icons/splash.gif);
+}
+.description {
+  position: absolute;
+  left: 150px;
+  font-size: 67%;
+}
+.description p, .description ul, .description h1 {
+  margin: 0;
+}
+.description ul {
+  padding-left: 16px;
+}
+.description h1 {
+  margin-top: 0;
+  margin-bottom: 0.6em;
+}
+@media (max-width: 640px) {
+  .splash {
+    width: 256px;
+    height: 66px;
+    left: 48%;
+    margin-left: -128px;
+    margin-top: 100px;
+    background-size: cover;
+  }
+  .description {
+    left: 75px;
+  }
+  .description p {
+    line-height: 11px;
+  }
+  .description h1 {
+    font-size: 1.4em;
+    -webkit-margin-after: 0.1em;
+  }
+}

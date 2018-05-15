@@ -4,10 +4,13 @@
  */
 export default {
   'common': {
-    title: 'Flowcon: потоки задач',
+    title: 'Программироване бизнеса',
   },
-  OrderList: {
-    state_filter: '',
+  Articles: {
+    tags: {
+      '/articles':  [],
+      '/files':  [],
+    },
   },
   NavDrawer: {
     open: false,

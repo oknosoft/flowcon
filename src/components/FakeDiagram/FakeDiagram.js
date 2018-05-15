@@ -9,7 +9,9 @@ export default class Diagram extends React.Component {
 
   render() {
     return <AppContent >
-      <Helmet title="Диаграмма эффективности" />
+      <Helmet title="Диаграмма эффективности">
+        <meta name="description" content="Прмер диаграммы" />
+      </Helmet>
       <div style={{marginTop: 16}}>
         <Typography variant="display1" component="h1" color="primary">Это диаграмма</Typography>
       </div>

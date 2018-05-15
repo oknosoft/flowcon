@@ -25,7 +25,7 @@ import SelectTags from './SelectTags';
 import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
 
-const htitle = 'Редактор статьи';
+const htitle = 'Редактор материала';
 
 class EditorArticle extends MDNRComponent {
 
@@ -183,7 +183,9 @@ class EditorArticle extends MDNRComponent {
     }, _handlers);
 
     return _obj ? [
-      <Helmet key="helmet" title={htitle}/>,
+      <Helmet key="helmet" title={htitle}>
+        <meta name="description" content={htitle} />
+      </Helmet>,
 
       <Tabs key="tabs" value={index} onChange={(event, index) => this.setState({index})}>
         <Tab label="Реквизиты"/>

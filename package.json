@@ -25,7 +25,7 @@
   },
   "homepage": "https://business-programming.ru/",
   "dependencies": {
-    "@opuscapita/react-markdown": "^2.2.1",
+    "@opuscapita/react-markdown": "^2.2.3",
     "metadata-abstract-ui": "2.0.16-beta.57",
     "metadata-core": "2.0.16-beta.57",
     "metadata-external": "2.0.16-beta.57",
@@ -33,7 +33,9 @@
     "metadata-react": "2.0.16-beta.57",
     "metadata-redux": "2.0.16-beta.57",
     "metadata-superlogin": "2.0.16-beta.57",
-    "react-share": "^2.1.1"
+    "react-share": "^2.1.1",
+    "redux-dynamic-middlewares": "^0.3.0",
+    "typeface-roboto": "0.0.54"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -81,6 +83,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "analyze": "webpack-bundle-analyzer scripts/stats.json",
     "superlogin": "node server",
     "test": "node scripts/test.js --env=jsdom",
     "meta:ram": "node scripts/meta.ram.js",

@@ -130,4 +130,6 @@ export function item_props(path) {
   return res || {};
 }
 
+export const description = 'Сайт для владельцев и руководителей о решении проблем управления бизнесом';
+
 export default items;

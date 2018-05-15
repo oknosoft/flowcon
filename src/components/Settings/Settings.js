@@ -39,7 +39,9 @@ class Settings extends Component {
     const {props} = this;
     return (
       <Paper className={props.classes.root} elevation={4}>
-        <Helmet title={props.title} />
+        <Helmet title={props.title}>
+          <meta name="description" content="Параметры подключения" />
+        </Helmet>
         <Typography variant="title" style={{paddingTop: 16}}>Подключение к базе данных</Typography>
         <CnnSettings {...props} disable_settings={process.env.NODE_ENV !== 'development'}/>
       </Paper>
