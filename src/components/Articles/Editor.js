@@ -19,8 +19,14 @@ import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
 import FrmAttachments from 'metadata-react/FrmAttachments';
 import DataField from 'metadata-react/DataField';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
+import Dialog from 'metadata-react/App/Dialog';
 import Social from './Social';
 import SelectTags from './SelectTags';
+
+import IconButton from 'material-ui/IconButton';
+import { InputAdornment } from 'material-ui/Input';
+import IconList from '@material-ui/icons/List';
+
 
 import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
@@ -51,8 +57,10 @@ class EditorArticle extends MDNRComponent {
     this.state = {
       _meta: _meta || _mgr.metadata(),
       _obj: null,
-      MarkdownInput: null,
+      MarkdownInput: () => null,
+      TabularSection: () => null,
       index: 0,
+      synonyms: false,
     };
     // в редакторе доступны все категории
     this.tagList = [];
@@ -66,9 +74,16 @@ class EditorArticle extends MDNRComponent {
     _mgr.get(match.params.ref, 'promise').then((_obj) => {
       this.setState({_obj}, () => this.shouldComponentUpdate(this.props));
     });
-    import('@opuscapita/react-markdown')
-      .then((module) => {
-        this.setState({MarkdownInput: module.default});
+    // отложенная загрузка тяжелых компонентов табличной части и MarkdownInput
+    Promise.all([
+      import('@opuscapita/react-markdown'),
+      import(/* webpackChunkName: "metadata-react" */ 'metadata-react/TabularSection'),
+    ])
+      .then((modules) => {
+        this.setState({
+          MarkdownInput: modules[0].default,
+          TabularSection: modules[1].default,
+        });
       });
 
     _mgr.on('update', this.onDataChange);
@@ -110,6 +125,18 @@ class EditorArticle extends MDNRComponent {
     handlers.handleNavigate(`/${_mgr.class_name}/list${_obj ? '/?ref=' + _obj.ref : ''}`);
   }
 
+  handleMouseDown(event) {
+    event.preventDefault();
+  }
+
+  handleOpenSynonyms = () => {
+    this.setState({synonyms: true});
+  }
+
+  handleCloseSynonyms = () => {
+    this.setState({synonyms: false});
+  }
+
   handleValueChange(_fld) {
     return (event, value) => {
       const {_obj, handlers} = this.props;
@@ -118,6 +145,7 @@ class EditorArticle extends MDNRComponent {
       handlers.handleValueChange(_fld, old_value);
     };
   }
+
 
   get ltitle() {
     const {_meta, _obj} = this.state;
@@ -154,7 +182,18 @@ class EditorArticle extends MDNRComponent {
           <DataField _obj={_obj} _fld="published"/>
         </FormGroup>
         <FormGroup row>
-          <DataField _obj={_obj} _fld="id" _meta={id}/>
+          <DataField _obj={_obj} _fld="id" _meta={id} InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" title="Альтернативные url">
+                <IconButton
+                  onClick={this.handleOpenSynonyms}
+                  onMouseDown={this.handleMouseDown}
+                >
+                  <IconList />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}/>
           <DataField _obj={_obj} _fld="sorting_field"/>
         </FormGroup>
         <FormGroup row>
@@ -172,7 +211,7 @@ class EditorArticle extends MDNRComponent {
   render() {
     const {
       props: {_mgr, classes, handleIfaceState},
-      state: {_obj, _meta, index, MarkdownInput},
+      state: {_obj, _meta, index, MarkdownInput, TabularSection, synonyms},
       context, _handlers} = this;
     const toolbar_props = Object.assign({
       closeButton: !context.dnr,
@@ -229,6 +268,17 @@ class EditorArticle extends MDNRComponent {
       />,
 
       index === 3 && <FrmAttachments key="attachments" _obj={_obj} handleIfaceState={handleIfaceState}/>,
+
+      synonyms && (
+        <Dialog
+          key="aliases"
+          open
+          title="Альтернативные url"
+          onClose={this.handleCloseSynonyms}
+        >
+          <TabularSection _obj={_obj} _tabular="aliases"/>
+        </Dialog>
+      )
 
     ]
       :

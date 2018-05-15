@@ -1,7 +1,4 @@
 // шрифты и стили подгрузим асинхронно
-import('metadata-react/styles/react-data-grid.css');
-import('font-awesome/css/font-awesome.min.css');
-import('typeface-roboto');
 import './styles/global.css';
 
 import React, {Component} from 'react';
@@ -35,11 +32,22 @@ const store = configureStore();
 class RootProvider extends Component {
 
   componentDidMount() {
+
+    // шрифт Roboto грузим асинхронно
+    const s = document.createElement('link');
+    s.type = 'text/css';
+    s.rel = 'stylesheet';
+    s.href = 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
+    document.head.appendChild(s);
+
+    // font-awesome грузим асинхронно
+    import('font-awesome/css/font-awesome.min.css');
+
+    import('metadata-react/styles/react-data-grid.css');
+
     // скрипт инициализации структуры метаданных и модификаторы
-    setTimeout(() => {
-      import('./metadata')
-        .then((module) => module.init(store));
-    }, 1000);
+    import('./metadata')
+      .then((module) => module.init(store));
   }
 
   render() {

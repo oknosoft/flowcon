@@ -22,7 +22,6 @@ export default function ({cat, CatArticles}) {
   const {prototype} = CatArticles;
   delete prototype.tags;
   delete prototype.acl;
-  delete prototype.aliases;
   Object.defineProperties(prototype, {
     tags: {
       get() {
@@ -50,18 +49,5 @@ export default function ({cat, CatArticles}) {
         }
       }
     },
-    aliases: {
-      get() {
-        const {aliases} = this._obj;
-        return Array.isArray(aliases) ? aliases : [];
-      },
-      set(v) {
-        const {_obj} = this;
-        if(_obj.aliases != v) {
-          this.__notify('aliases');
-          _obj.aliases = Array.isArray(v) ? v : [];
-        }
-      }
-    }
   });
 }
