@@ -273,6 +273,7 @@ class EditorArticle extends MDNRComponent {
         <Dialog
           key="aliases"
           open
+          minheight
           title="Альтернативные url"
           onClose={this.handleCloseSynonyms}
         >

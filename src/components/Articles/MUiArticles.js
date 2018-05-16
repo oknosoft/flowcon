@@ -104,14 +104,18 @@ class MUiArticles extends Component {
 
   loadRows() {
 
-    const {props: {tags, tagList, tagFilter}, page} = this;
+    const {props: {tags, tagList}, page} = this;
 
     this.clearData();
 
     const selector = {
       selector: {
         sorting_field: {$gte: 0},
-        tags: {$ne: null}
+        tags: {
+          $elemMatch: {
+            $in: tags.length ? tags : tagList.map(({ref}) => ref)
+          }
+        }
       },
       fields: ['_id', 'id', 'name', 'h1', 'introduction', 'date', 'author', 'tags', 'acl'],
       use_index: 'sorting_field_tags',
@@ -119,21 +123,15 @@ class MUiArticles extends Component {
       skip: page * 30,
       limit: 30,
     };
-    if(tags.length) {
-      selector.selector.tags = {
-        $elemMatch: {
-          $in: tags
-        }
-      };
-    }
+
     // если в tagFilter нет пустой категории, режем по списку доступных тегов
-    else if(tagFilter.indexOf($p.cat.tags_category.get()) === -1) {
-      selector.selector.tags = {
-        $elemMatch: {
-          $in: tagList.map(({ref}) => ref)
-        }
-      };
-    }
+    // else if(tagFilter.indexOf($p.cat.tags_category.get()) === -1) {
+    //   selector.selector.tags = {
+    //     $elemMatch: {
+    //       $in: tagList.map(({ref}) => ref)
+    //     }
+    //   };
+    // }
 
     return $p.cat.articles.pouch_db.find(selector)
       .then((res) => {
@@ -206,7 +204,7 @@ MUiArticles.propTypes = {
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   tagList: PropTypes.array.isRequired,
-  tagFilter: PropTypes.array.isRequired,
+  // tagFilter: PropTypes.array.isRequired,
   handleNavigate: PropTypes.func.isRequired,
 };
 

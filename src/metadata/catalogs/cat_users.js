@@ -13,15 +13,18 @@ exports.CatUsersManager = class CatUsersManager extends Object {
   load_array(aattr, forse) {
     const res = [];
     for (let aobj of aattr) {
-      if(this.by_ref[aobj.ref]) {
-        continue;
-      }
       if(!aobj.acl_objs) {
         aobj.acl_objs = [];
       }
       const {acl} = aobj;
       delete aobj.acl;
-      const obj = new $p.CatUsers(aobj, this, true);
+      let obj = this.by_ref[aobj.ref];
+      if(obj) {
+        Object.assign(obj._obj, aobj);
+      }
+      else {
+        obj = new $p.CatUsers(aobj, this, true);
+      }
       const {_obj} = obj;
       if(_obj && !_obj._acl) {
         _obj._acl = acl;
@@ -51,16 +54,8 @@ exports.CatUsersManager = class CatUsersManager extends Object {
 //exports.CatUsersManager._freeze = true;
 
 exports.CatUsers = class CatUsers extends Object {
-  get invalid(){return this._getter('invalid')}
-  set invalid(v){this._setter('invalid',v)}
   get note(){return this._getter('note')}
   set note(v){this._setter('note',v)}
-  get ancillary(){return this._getter('ancillary')}
-  set ancillary(v){this._setter('ancillary',v)}
-  get user_ib_uid(){return this._getter('user_ib_uid')}
-  set user_ib_uid(v){this._setter('user_ib_uid',v)}
-  get user_fresh_uid(){return this._getter('user_fresh_uid')}
-  set user_fresh_uid(v){this._setter('user_fresh_uid',v)}
   get id(){return this._getter('id')}
   set id(v){/* this._setter('id',v) */}
   get prefix(){return this._getter('prefix')}
