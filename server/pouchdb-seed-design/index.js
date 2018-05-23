@@ -149,6 +149,7 @@ module.exports = function (db, design, cb) {
       if(typeof cb === 'function') {
         cb(err, null);
       }
+      console.log(err);
       return Promise.reject(err);
     });
 

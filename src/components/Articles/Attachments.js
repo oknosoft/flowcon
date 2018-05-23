@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import AttachmentsToolbar from 'metadata-react/FrmAttachments/AttachmentsToolbar';
 import AttachmentsList from 'metadata-react/FrmAttachments/AttachmentsList';
 

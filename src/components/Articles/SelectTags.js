@@ -8,12 +8,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Input, { InputLabel } from 'material-ui/Input';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl } from 'material-ui/Form';
-import { ListItemText } from 'material-ui/List';
-import Select from 'material-ui/Select';
-import Checkbox from 'material-ui/Checkbox';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import ListItemText from '@material-ui/core/ListItemText';
+import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from 'metadata-react/DataField/styles';
 
 function sort(a, b) {

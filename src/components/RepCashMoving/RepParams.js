@@ -8,7 +8,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {FormGroup} from 'material-ui/Form';
+import FormGroup from '@material-ui/core/FormGroup';
 import DataListField from 'metadata-react/DataListField';
 import FieldDateRange from 'metadata-react/DataField/FieldDateRange';
 

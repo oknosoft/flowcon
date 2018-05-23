@@ -14,6 +14,7 @@ module.exports = [{"_id":"cat.contents|2f2f6f92-4f6d-11e8-8516-d85d4c80ec2a","pa
 {"_id":"cat.tags_category|ea434199-46df-11e8-8509-d85d4c80ec2a","predefined_name":"news","name":"Новость","class_name":"cat.tags_category"},
 {"_id":"cat.tags_category|ea43419a-46df-11e8-8509-d85d4c80ec2a","predefined_name":"article","name":"Статья","class_name":"cat.tags_category"},
 {"_id":"cat.tags_category|ea43419b-46df-11e8-8509-d85d4c80ec2a","predefined_name":"file","name":"Файл","class_name":"cat.tags_category"},
+{"_id":"cat.tags|11e0211f-5e5a-11e8-8520-d85d4c80ec2a","name":"Заказ дилера","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"ЗаказДилера","class_name":"cat.tags"},
 {"_id":"cat.tags|2f2f6f94-4f6d-11e8-8516-d85d4c80ec2a","name":"УПП","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"УправлениеПроизводственнымПредприятием","class_name":"cat.tags"},
 {"_id":"cat.tags|507e3e9d-418d-11e8-8505-d85d4c80ec2a","name":"Проверка данных","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"","class_name":"cat.tags"},
 {"_id":"cat.tags|86054a9d-5926-11e8-851d-d85d4c80ec2a","name":"БП","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"БухгалтерияПредприятия","class_name":"cat.tags"},

@@ -8,7 +8,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import AppContent from 'metadata-react/App/AppContent';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import NotFound from '../Pages/NotFound';  // 404

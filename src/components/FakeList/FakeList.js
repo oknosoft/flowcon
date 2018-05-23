@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import AppContent from 'metadata-react/App/AppContent';
 
 export default class FakeList extends React.Component {

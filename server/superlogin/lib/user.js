@@ -352,7 +352,7 @@ module.exports = function (config, userDB, couchAuthDB, mailer, emitter) {
             if(!user.email) {
               return BPromise.reject({
                 error: 'No email provided',
-                message: 'An email is required for registration, but ' + provider + 'didn\'t supply one.',
+                message: 'An email is required for registration, but ' + provider + ' didn\'t supply one.',
                 status: 400
               });
             }
@@ -1189,11 +1189,15 @@ module.exports = function (config, userDB, couchAuthDB, mailer, emitter) {
       });
   };
 
-  this.removeExpiredKeys = dbAuth.removeExpiredKeys;
+  this.removeExpiredKeys = dbAuth.removeExpiredKeys.bind(dbAuth);
 
-  this.confirmSession = session.confirmToken;
+  this.confirmSession = function(key, password) {
+    return session.confirmToken(key, password);
+  };
 
-  this.quitRedis = session.quit;
+  this.quitRedis = function () {
+    return session.quit();
+  };
 
   function generateSession(username, roles) {
     var getKey;

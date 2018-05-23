@@ -9,9 +9,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tabs, {Tab} from 'material-ui/Tabs';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Helmet from 'react-helmet';
-import {FormGroup} from 'material-ui/Form';
+import FormGroup from '@material-ui/core/FormGroup';
 
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
@@ -23,8 +24,8 @@ import Dialog from 'metadata-react/App/Dialog';
 import Social from './Social';
 import SelectTags from './SelectTags';
 
-import IconButton from 'material-ui/IconButton';
-import { InputAdornment } from 'material-ui/Input';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import IconList from '@material-ui/icons/List';
 
 

@@ -10,9 +10,9 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import cn from 'classnames';
 
-import List from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import {withStyles} from 'material-ui/styles';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
 import ArticleRow from './ArticleRow';
 
 

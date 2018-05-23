@@ -5,6 +5,7 @@ var iterations = 10;
 var keylen = 20;
 var size = 16;
 var encoding = 'hex';
+var digest = 'SHA1';
 
 // set iterations to `n`
 exports.iterations = function(n){
@@ -38,7 +39,7 @@ exports.hash = function(pwd, salt, cb) {
     // hash('secret', 'salt', function(err, hash) {})
     if (!pwd) return cb(new Error('password missing'));
     if (!salt) return cb(new Error('salt missing'));
-    crypto.pbkdf2(pwd, salt, iterations, keylen, 'sha512', function(err, hash) {
+    crypto.pbkdf2(pwd, salt, iterations, keylen, digest, function(err, hash) {
       if (err) return cb(err);
       cb(null, hash.toString(encoding));
     });
@@ -52,7 +53,7 @@ exports.hash = function(pwd, salt, cb) {
     crypto.randomBytes(size, function(err, salt) {
       if (err) return cb(err);
       salt = salt.toString('hex');
-      crypto.pbkdf2(pwd, salt, iterations, keylen, 'sha512', function(err, hash){
+      crypto.pbkdf2(pwd, salt, iterations, keylen, digest, function(err, hash){
         if (err) return cb(err);
         cb(null, salt, hash.toString(encoding));
       });

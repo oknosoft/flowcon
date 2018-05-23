@@ -9,9 +9,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tabs, {Tab} from 'material-ui/Tabs';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Helmet from 'react-helmet';
-import {FormGroup} from 'material-ui/Form';
+import FormGroup from '@material-ui/core/FormGroup';
 
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';

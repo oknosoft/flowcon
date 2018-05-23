@@ -11,7 +11,7 @@ import AutoSizer from 'react-virtualized/dist/es/AutoSizer';
 import InfiniteLoader from 'react-virtualized/dist/es/InfiniteLoader';
 import List from 'react-virtualized/dist/es/List';
 import WindowScroller from 'react-virtualized/dist/es/WindowScroller';
-import {withStyles} from 'material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import ArticleRow from './ArticleRow';
 
 const STATUS_LOADING = 1;
