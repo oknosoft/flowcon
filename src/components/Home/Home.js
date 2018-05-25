@@ -40,9 +40,9 @@ function PageHome(props) {
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
             <div className={classes.text} onClick={() => handleNavigate('/articles/')}>
-              <Typography variant="headline" component="h2" color="inherit">Статьи</Typography>
-              <LibraryBooks alt="Статьи" className={classes.logo}/>
-              <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
+              <Typography variant="headline" component="h2">Статьи</Typography>
+              <LibraryBooks alt="Статьи" className={classes.logo} color="disabled"/>
+              <Typography variant="subheading" component="h3" color="textSecondary" className={classes.headline}>
                 Программирование бизнеса
               </Typography>
             </div>
@@ -51,9 +51,9 @@ function PageHome(props) {
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
             <div className={classes.text} onClick={() => handleNavigate('/articles/flowcon-readme')}>
-              <Typography variant="headline" component="h2" color="inherit">Flowcon</Typography>
-              <Flask alt="Flowcon Logo" className={classes.logo}/>
-              <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
+              <Typography variant="headline" component="h2">Flowcon</Typography>
+              <Flask alt="Flowcon Logo" className={classes.logo} color="disabled"/>
+              <Typography variant="subheading" component="h3" color="textSecondary" className={classes.headline}>
                 Программно-методический комплекс<br/> для управления потоками задач
               </Typography>
             </div>
@@ -61,10 +61,10 @@ function PageHome(props) {
         </Grid>
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
-            <div className={classes.text} onClick={() => handleNavigate('/check')}>
-              <Typography variant="headline" component="h2" color="inherit">Проверка данных</Typography>
-              <Check alt="Проверка данных" className={classes.logo}/>
-              <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
+            <div className={classes.text} onClick={() => handleNavigate('/articles/check_data')}>
+              <Typography variant="headline" component="h2">Проверка данных</Typography>
+              <Check alt="Проверка данных" className={classes.logo} color="disabled"/>
+              <Typography variant="subheading" component="h3" color="textSecondary" className={classes.headline}>
                 Библиотека алгоритмов
               </Typography>
             </div>
@@ -73,9 +73,9 @@ function PageHome(props) {
         <Grid item sm={12} lg={6}>
           <div className={classes.content}>
             <div className={classes.text} onClick={() => handleNavigate('/planing')}>
-              <Typography variant="headline" component="h2" color="inherit">Планирование ресурсов</Typography>
-              <Timer alt="Планирование" className={classes.logo}/>
-              <Typography variant="subheading" component="h3" color="inherit" className={classes.headline}>
+              <Typography variant="headline" component="h2">Планирование ресурсов</Typography>
+              <Timer alt="Планирование" className={classes.logo} color="disabled"/>
+              <Typography variant="subheading" component="h3" color="textSecondary" className={classes.headline}>
                 Простое решение
               </Typography>
             </div>

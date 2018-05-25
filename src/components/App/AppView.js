@@ -188,18 +188,17 @@ class AppView extends Component {
     return [
       // основной layout
       <div key="content" className={classes.root}>
-        <AppBar className={appBarClassName}>
+        <AppBar className={appBarClassName} color="default">
           <Toolbar disableGutters>
             <IconButton
-              color="inherit"
               aria-label="open drawer"
               onClick={this.handleDrawerToggle}
               className={navIconClassName}
             >
-              <MenuIcon/>
+              <MenuIcon color="inherit"/>
             </IconButton>
 
-            <Typography className={classes.title} variant="title" color="inherit" noWrap>{title || mainTitle}</Typography>
+            <Typography className={classes.title} variant="title" color="textSecondary" noWrap>{title || mainTitle}</Typography>
 
             <HeaderButtons
               sync_started={sync_started}
@@ -208,6 +207,7 @@ class AppView extends Component {
               user={user}
               handleNavigate={handleNavigate}
               compact
+              barColor="default"
             />
 
           </Toolbar>

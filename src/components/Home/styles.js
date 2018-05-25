@@ -9,9 +9,7 @@ export default function (theme) {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor:
-        theme.palette.type === 'light' ? theme.palette.primary[500] : theme.palette.primary[800],
-      color: theme.palette.getContrastText(theme.palette.primary[500]),
+      backgroundColor: theme.palette.grey[100],
     },
     content: {
       paddingTop: theme.spacing.unit * 4,
