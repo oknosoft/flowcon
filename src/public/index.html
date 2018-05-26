@@ -16,17 +16,14 @@
   -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-  <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/dist/imgs/flask_144.png" type="image/png">
-
-</head>
-<body>
+  <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/imgs/flask_144.png" type="image/png">
 
 <script>
   // Полифилл Object.assign, Symbol и т.д. для старых браузеров
   !Object.assign && (function () {
 	var s = document.createElement('script');
 	s.type = 'text/javascript';
-	s.src = 'https://cdn.jsdelivr.net/npm/babel-polyfill@6.26.0/browser.js';
+	s.src = '%PUBLIC_URL%/polyfill.js';
 	document.head.appendChild(s);
   })();
 </script>
