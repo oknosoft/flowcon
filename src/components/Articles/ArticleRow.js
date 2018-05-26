@@ -18,10 +18,11 @@ export default function ArticleRow(props) {
   const {row: {id, name, h1, introduction, date, author, tags}, match, handleNavigate, classes} = props;
   const intro = introduction || h1;
   const {utils, cat} = $p;
+  const href = id ? `${match.url}${match.url.endsWith('/') ? '' : '/'}${id}` : '#';
   const onClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    handleNavigate(id ? `${match.url}${match.url.endsWith('/') ? '' : '/'}${id}` : '#');
+    handleNavigate(href);
   };
 
   return (
@@ -29,7 +30,7 @@ export default function ArticleRow(props) {
       <Typography
         variant="title"
         component="a"
-        href={id ? `${match.url}/${id}` : '#'}
+        href={href}
         onClick={onClick}
         color="primary"
       >

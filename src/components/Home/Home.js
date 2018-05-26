@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import Helmet from 'react-helmet';
 import AppFooter from './Footer';
 import Flask from './Flask';
@@ -17,7 +18,7 @@ import {description} from '../App/menu';
 
 import styles from './styles';
 
-const ltitle = 'business-programming';
+const ltitle = 'Программирование бизнеса';
 
 function PageHome(props) {
   const {classes, handleNavigate, title} = props;
@@ -36,50 +37,65 @@ function PageHome(props) {
         <meta name="description" content={description} />
       </Helmet>
 
-      <Grid container spacing={24} className={classes.hero}>
+      <Grid container spacing={8} className={classes.hero}>
         <Grid item sm={12} lg={6}>
-          <div className={classes.content}>
-            <div className={classes.text} onClick={() => handleNavigate('/articles/')}>
-              <Typography variant="headline" component="h2">Статьи</Typography>
+          <Grid container spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/')}>
+            <Hidden lgDown><Grid item xs={1}/></Hidden>
+            <Grid item>
               <LibraryBooks alt="Статьи" className={classes.logo} color="disabled"/>
-              <Typography variant="subheading" component="h3" color="textSecondary" className={classes.headline}>
-                Программирование бизнеса
+            </Grid>
+            <Grid item className={classes.content}>
+              <Typography variant="headline" component="h2">Статьи</Typography>
+              <Typography color="textSecondary">
+                Методические материалы, кейсы и технический блог
               </Typography>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </Grid>
+
         <Grid item sm={12} lg={6}>
-          <div className={classes.content}>
-            <div className={classes.text} onClick={() => handleNavigate('/articles/flowcon-readme')}>
-              <Typography variant="headline" component="h2">Flowcon</Typography>
+          <Grid container spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/flowcon-readme')}>
+            <Hidden lgDown><Grid item xs={1}/></Hidden>
+            <Grid item>
               <Flask alt="Flowcon Logo" className={classes.logo} color="disabled"/>
-              <Typography variant="subheading" component="h3" color="textSecondary" className={classes.headline}>
-                Программно-методический комплекс<br/> для управления потоками задач
+            </Grid>
+            <Grid item className={classes.content}>
+              <Typography variant="headline" component="h2">Flowcon</Typography>
+              <Typography color="textSecondary">
+                Программно-методический комплекс для управления потоками задач
               </Typography>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </Grid>
+
         <Grid item sm={12} lg={6}>
-          <div className={classes.content}>
-            <div className={classes.text} onClick={() => handleNavigate('/articles/check_data')}>
-              <Typography variant="headline" component="h2">Проверка данных</Typography>
+          <Grid container spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/check_data')}>
+            <Hidden lgDown><Grid item xs={1}/></Hidden>
+            <Grid item>
               <Check alt="Проверка данных" className={classes.logo} color="disabled"/>
-              <Typography variant="subheading" component="h3" color="textSecondary" className={classes.headline}>
+            </Grid>
+            <Grid item className={classes.content}>
+              <Typography variant="headline" component="h2">Проверка данных</Typography>
+              <Typography color="textSecondary">
                 Библиотека алгоритмов
               </Typography>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </Grid>
+
         <Grid item sm={12} lg={6}>
-          <div className={classes.content}>
-            <div className={classes.text} onClick={() => handleNavigate('/planing')}>
-              <Typography variant="headline" component="h2">Планирование ресурсов</Typography>
+          <Grid container spacing={16} wrap="nowrap" onClick={() => handleNavigate('/planing/')}>
+            <Hidden lgDown><Grid item xs={1}/></Hidden>
+            <Grid item>
               <Timer alt="Планирование" className={classes.logo} color="disabled"/>
-              <Typography variant="subheading" component="h3" color="textSecondary" className={classes.headline}>
-                Простое решение
+            </Grid>
+            <Grid item className={classes.content}>
+              <Typography variant="headline" component="h2">Планирование ресурсов</Typography>
+              <Typography color="textSecondary">
+                Простое решение сложной проблемы
               </Typography>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
 

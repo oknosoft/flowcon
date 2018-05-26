@@ -92,10 +92,8 @@ class AppView extends Component {
   };
 
   renderHome = (routeProps) => {
-    const {classes, title, handleNavigate, handleIfaceState} = this.props;
-    const {root, hero, content, text, headline, button, logo} = classes;
+    const {title, handleNavigate, handleIfaceState} = this.props;
     return <HomeView
-      classes={{root, hero, content, text, headline, button, logo}}
       title={title}
       handleNavigate={handleNavigate}
       handleIfaceState={handleIfaceState}
