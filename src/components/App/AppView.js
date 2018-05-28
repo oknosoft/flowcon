@@ -103,8 +103,9 @@ class AppView extends Component {
 
   render() {
     const {props, state} = this;
-    const {classes, handleNavigate, location, snack, alert, confirm, doc_ram_loaded, title, sync_started, fetch, user, couch_direct, offline,
-            meta_loaded} = props;
+    const {classes, handleNavigate, location, snack, alert, confirm, doc_ram_loaded,
+      autologin, title, sync_started, fetch, user, couch_direct, offline} = props;
+    const meta_loaded = autologin && props.meta_loaded;
     const isHome = location.pathname === '/';
 
     let disablePermanent = false;
@@ -143,11 +144,12 @@ class AppView extends Component {
       const wraper = (Component, routeProps) => {
         /* eslint-disable-next-line */
         const {classes, ...mainProps} = props;
+        const {tags_category} = $p.cat;
         if(routeProps.match.path === '/articles') {
-          mainProps.tagFilter = [$p.cat.tags_category.get(), $p.cat.tags_category.predefined('article')];
+          mainProps.tagFilter = [tags_category.get(), tags_category.predefined('article')];
         }
         else if(routeProps.match.path === '/files') {
-          mainProps.tagFilter = [$p.cat.tags_category.predefined('file')];
+          mainProps.tagFilter = [tags_category.predefined('file')];
         }
         return <Component {...mainProps} {...routeProps} disablePermanent={disablePermanent}/>;
       };
