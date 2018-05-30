@@ -144,12 +144,11 @@ class AppView extends Component {
       const wraper = (Component, routeProps) => {
         /* eslint-disable-next-line */
         const {classes, ...mainProps} = props;
-        const {tags_category} = $p.cat;
         if(routeProps.match.path === '/articles') {
-          mainProps.tagFilter = [tags_category.get(), tags_category.predefined('article')];
+          mainProps.tagFilter = [$p.cat.tags_category.get(), $p.cat.tags_category.predefined('article')];
         }
         else if(routeProps.match.path === '/files') {
-          mainProps.tagFilter = [tags_category.predefined('file')];
+          mainProps.tagFilter = [$p.cat.tags_category.predefined('file')];
         }
         return <Component {...mainProps} {...routeProps} disablePermanent={disablePermanent}/>;
       };
