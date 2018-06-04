@@ -104,7 +104,7 @@ class MUiArticles extends Component {
 
   loadRows() {
 
-    const {props: {tags, tagList}, page} = this;
+    const {props: {tags, tagList, news}, page} = this;
 
     this.clearData();
 
@@ -124,22 +124,16 @@ class MUiArticles extends Component {
       limit: 30,
     };
 
-    // если в tagFilter нет пустой категории, режем по списку доступных тегов
-    // else if(tagFilter.indexOf($p.cat.tags_category.get()) === -1) {
-    //   selector.selector.tags = {
-    //     $elemMatch: {
-    //       $in: tagList.map(({ref}) => ref)
-    //     }
-    //   };
-    // }
-
     return $p.cat.articles.pouch_db.find(selector)
       .then((res) => {
         for(let i=0; i < res.docs.length; i++) {
           list.set(i, res.docs[i]);
         }
         if(!res.docs.length) {
-          list.set(0, {name: `Нет статей на странице №${page + 1}`, introduction: 'Проверьте фильтр по категориям и параметр page в url'});
+          list.set(0, {
+            name: news ? 'Нет новостей' : `Нет статей на странице №${page + 1}`,
+            introduction: news ? '' : 'Проверьте фильтр по категориям и параметр page в url'
+          });
         }
         this.setState({
           prev: false,
@@ -150,11 +144,11 @@ class MUiArticles extends Component {
 
 
   renderRows = () => {
-    const {classes, match, handleNavigate} = this.props;
+    const {classes, match, handleNavigate, news} = this.props;
     const res = [];
 
     for(const [key, value] of list) {
-      res.push(<ArticleRow key={key} row={value} match={match} handleNavigate={handleNavigate} classes={classes}/>);
+      res.push(<ArticleRow news={news} key={key} row={value} match={match} handleNavigate={handleNavigate} classes={classes}/>);
     }
 
     return res;
@@ -200,11 +194,11 @@ class MUiArticles extends Component {
 
 MUiArticles.propTypes = {
   tags: PropTypes.array.isRequired,
+  news: PropTypes.bool,
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   tagList: PropTypes.array.isRequired,
-  // tagFilter: PropTypes.array.isRequired,
   handleNavigate: PropTypes.func.isRequired,
 };
 

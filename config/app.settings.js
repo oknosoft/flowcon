@@ -28,7 +28,7 @@ module.exports = function settings(prm) {
     // расположение couchdb для nodejs
     couch_local: process.env.COUCH_LOCAL || couch_path,
 
-    // по умолчанию, используем базы браузера, а не прямое обращение к couchdb
+    // по умолчанию, используем прямое обращение к couchdb, а не базы браузера
     couch_direct: true,
 
     // эти базы доступны анонимусу

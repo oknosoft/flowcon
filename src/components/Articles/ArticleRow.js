@@ -15,7 +15,7 @@ import cn from 'classnames';
 
 export default function ArticleRow(props) {
   // , author, tags
-  const {row: {id, name, h1, introduction, date, author, tags}, match, handleNavigate, classes} = props;
+  const {row: {id, name, h1, introduction, date, author, tags}, match, handleNavigate, classes, news} = props;
   const intro = introduction || h1;
   const {utils, cat} = $p;
   const href = id ? `${match.url}${match.url.endsWith('/') ? '' : '/'}${id}` : '#';
@@ -28,7 +28,7 @@ export default function ArticleRow(props) {
   return (
     <FormGroup classes={{root: cn(classes.nowrap, classes.bottom)}}>
       <Typography
-        variant="title"
+        variant={news ? "body2" : "title"}
         component="a"
         href={href}
         onClick={onClick}
@@ -36,15 +36,19 @@ export default function ArticleRow(props) {
       >
         {name}
       </Typography>
-      <FormGroup row onClick={onClick} classes={{root: classes.nowrap}}>
-        <Typography variant="caption" className={classes.flex}>{utils.moment(date).format('ll')}</Typography>
-        <Typography variant="caption" title="Автор" className={classes.author}>{`@${cat.users.get(author).id}`}</Typography>
-      </FormGroup>
-      <FormGroup row onClick={onClick}>
-        {
-          tags && tags.map((tag, index) => <Chip key={index} label={cat.tags.get(tag).name} className={classes.chip} />)
-        }
-      </FormGroup>
+      {
+        !news && <FormGroup row onClick={onClick} classes={{root: classes.nowrap}}>
+          <Typography variant="caption" className={classes.flex}>{utils.moment(date).format('ll')}</Typography>
+          <Typography variant="caption" title="Автор" className={classes.author}>{`@${cat.users.get(author).id}`}</Typography>
+        </FormGroup>
+      }
+      {
+        !news && <FormGroup row onClick={onClick}>
+          {
+            tags && tags.map((tag, index) => <Chip key={index} label={cat.tags.get(tag).name} className={classes.chip} />)
+          }
+        </FormGroup>
+      }
       {
         intro !== name && <Typography component="p" color="primary">{intro}</Typography>
       }
@@ -57,4 +61,5 @@ ArticleRow.propTypes = {
   classes: PropTypes.object.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   row: PropTypes.object.isRequired,
+  news: PropTypes.bool,
 };

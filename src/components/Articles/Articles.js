@@ -90,7 +90,7 @@ class Articles extends Component {
           <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти к редактору статей</Button>
         }
 
-        <InfiniteArticles tags={tags} tagFilter={tagFilter} tagList={tagList} match={match} location={location} handleNavigate={handleNavigate}/>
+        <InfiniteArticles tags={tags} tagList={tagList} match={match} location={location} handleNavigate={handleNavigate}/>
       </div>
     </AppContent>;
   }

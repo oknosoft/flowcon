@@ -205,6 +205,10 @@ class EditorArticle extends MDNRComponent {
         <DataField _obj={_obj} _fld="h1" fullWidth/>
         <DataField _obj={_obj} _fld="descr" fullWidth multiline rowsMax="3"/>
         <DataField _obj={_obj} _fld="introduction" fullWidth multiline rowsMax="4"/>
+        <FormGroup row>
+          <DataField _obj={_obj} _fld="version_from"/>
+          <DataField _obj={_obj} _fld="version_till"/>
+        </FormGroup>
       </FormGroup>
     );
   }
