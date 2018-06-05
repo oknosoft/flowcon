@@ -8,15 +8,16 @@ export default function (theme) {
       backgroundColor: theme.palette.grey[100],
     },
     content: {
-      paddingTop: '5vh',
+      paddingTop: '4vh',
       maxWidth: '75vw',
     },
     menu: {
-      paddingTop: '5vh',
+      paddingTop: '4vh',
       cursor: 'pointer',
     },
     news: {
       paddingLeft: theme.spacing.unit * 2,
+      paddingTop: '4vh',
     },
     button: {
       marginTop: theme.spacing.unit * 3,

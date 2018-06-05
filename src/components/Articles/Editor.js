@@ -23,6 +23,7 @@ import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import Dialog from 'metadata-react/App/Dialog';
 import Social from './Social';
 import SelectTags from './SelectTags';
+import AclList from './AclList';
 
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -200,6 +201,7 @@ class EditorArticle extends MDNRComponent {
         <FormGroup row>
           <DataField _obj={_obj} _fld="contents"/>
           <SelectTags tags={_obj.tags} categories tagList={this.tagList} handleChange={this.tagsChange}/>
+          <AclList _obj={_obj}/>
         </FormGroup>
         <DataField _obj={_obj} _fld="name" fullWidth/>
         <DataField _obj={_obj} _fld="h1" fullWidth/>
