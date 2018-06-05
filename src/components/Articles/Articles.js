@@ -31,6 +31,10 @@ class Articles extends Component {
       this.ltitle = 'Статьи';
       this.title = this.ltitle + ' о программировании бизнеса';
     }
+    else if(match.path === '/news') {
+      this.ltitle = 'Новости';
+      this.title = this.ltitle + ' и события';
+    }
     else {
       this.ltitle = 'Файлы';
       this.title = this.ltitle + ' и дополнительные материалы';
@@ -70,7 +74,7 @@ class Articles extends Component {
 
   render() {
     const session = $p.superlogin.getSession();
-    const {handleNavigate, match, location, tagFilter} = this.props;
+    const {handleNavigate, match, location} = this.props;
     const {tagList, tags} = this.state;
     return <AppContent >
       <Helmet title={this.title}>

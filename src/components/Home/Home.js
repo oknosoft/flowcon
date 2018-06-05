@@ -31,7 +31,7 @@ class PageHome extends React.Component {
   }
 
   shouldComponentUpdate({complete_loaded}) {
-    const {tags, tagList, tagFilter} = this;
+    const {tagList, tagFilter} = this;
     if(!tagFilter.length && complete_loaded) {
       tagFilter.push($p.cat.tags_category.predefined('news'));
       $p.cat.tags.find_rows({category: {in: tagFilter}}, (tag) => tagList.push(tag));
@@ -155,9 +155,12 @@ class PageHome extends React.Component {
 
 PageHome.propTypes = {
   classes: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
+  complete_loaded: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(PageHome);

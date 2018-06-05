@@ -151,6 +151,9 @@ class AppView extends Component {
         else if(routeProps.match.path === '/files') {
           mainProps.tagFilter = [$p.cat.tags_category.predefined('file')];
         }
+        else if(routeProps.match.path === '/news') {
+          mainProps.tagFilter = [$p.cat.tags_category.predefined('news')];
+        }
         return <Component {...mainProps} {...routeProps} disablePermanent={disablePermanent}/>;
       };
 
@@ -161,6 +164,7 @@ class AppView extends Component {
             <Route path="/:area(doc|cat|ireg|cch|rep).:name" render={(props) => wraper(DataRoute, props)}/>
             <Route path="/articles" render={(props) => wraper(ArticlesRoute, props)}/>
             <Route path="/files" render={(props) => wraper(ArticlesRoute, props)}/>
+            <Route path="/news" render={(props) => wraper(ArticlesRoute, props)}/>
             <Route path="/meta" render={(props) => wraper(MetaTreePage, props)}/>
             <Route path="/flowcon/diagram" render={(props) => wraper(FakeDiagram, props)}/>
             <Route path="/flowcon/list" render={(props) => wraper(FakeList, props)}/>
@@ -254,6 +258,8 @@ AppView.propTypes = {
   handleLogin: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
   first_run: PropTypes.bool.isRequired,
+  complete_loaded: PropTypes.bool.isRequired,
+  autologin: PropTypes.bool,
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,

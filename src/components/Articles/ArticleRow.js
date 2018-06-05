@@ -18,7 +18,7 @@ export default function ArticleRow(props) {
   const {row: {id, name, h1, introduction, date, author, tags}, match, handleNavigate, classes, news} = props;
   const intro = introduction || h1;
   const {utils, cat} = $p;
-  const href = id ? `${match.url}${match.url.endsWith('/') ? '' : '/'}${id}` : '#';
+  const href = id ? `${news ? '/news' : ''}${match.url}${match.url.endsWith('/') ? '' : '/'}${id}` : '#';
   const onClick = (event) => {
     event.preventDefault();
     event.stopPropagation();

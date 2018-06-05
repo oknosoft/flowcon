@@ -61,10 +61,10 @@ class Article extends Component {
     return (
       <MarkdownDocs
         key="doc"
-        htitle={doc.name}
+        htitle={doc.name || 'без названия'}
         h1={doc.h1}
         descr={doc.descr}
-        markdown={doc.content}
+        markdown={doc.content || 'текст отсутствует'}
         footer={[
           <Attachments key="attachments" _obj={doc} handleIfaceState={this.props.handleIfaceState} />,
           <Social key="social" title={doc.name}/>

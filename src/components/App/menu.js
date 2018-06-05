@@ -5,6 +5,7 @@ import IconInfo from '@material-ui/icons/Info';
 import IconPerson from '@material-ui/icons/Person';
 import IconSettings from '@material-ui/icons/Settings';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import FiberNew from '@material-ui/icons/FiberNew';
 import IconDownload from '@material-ui/icons/CloudDownload';
 import Flask from '../Home/Flask';
 import IconHelp from '@material-ui/icons/Help';
@@ -12,6 +13,14 @@ import IconHelp from '@material-ui/icons/Help';
 // import IconList from '@material-ui/icons/List';
 
 const items = [
+  {
+    text: 'Новости',
+    icon: <FiberNew/>,
+    id: 'news',
+    //bold: true,
+    navigate: '/news/',
+    need_meta: true,
+  },
   {
     text: 'Статьи',
     icon: <LibraryBooks/>,
