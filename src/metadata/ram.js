@@ -17,6 +17,7 @@ module.exports = [{"_id":"cat.contents|2f2f6f92-4f6d-11e8-8516-d85d4c80ec2a","pa
 {"_id":"cat.tags|11e0211f-5e5a-11e8-8520-d85d4c80ec2a","name":"Заказ дилера","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"ЗаказДилера","class_name":"cat.tags"},
 {"_id":"cat.tags|2f2f6f94-4f6d-11e8-8516-d85d4c80ec2a","name":"УПП","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"УправлениеПроизводственнымПредприятием","class_name":"cat.tags"},
 {"_id":"cat.tags|507e3e9d-418d-11e8-8505-d85d4c80ec2a","name":"Проверка данных","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"","class_name":"cat.tags"},
+{"_id":"cat.tags|6b9d6920-79d9-11e8-8534-d85d4c80ec2a","name":"КА","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"КомплекснаяАвтоматизация","class_name":"cat.tags"},
 {"_id":"cat.tags|76125dd2-68c4-11e8-852f-d85d4c80ec2a","name":"УТ","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"УправлениеТорговлей","class_name":"cat.tags"},
 {"_id":"cat.tags|76125dd3-68c4-11e8-852f-d85d4c80ec2a","name":"ERP","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"УправлениеПредприятием","class_name":"cat.tags"},
 {"_id":"cat.tags|76125dd4-68c4-11e8-852f-d85d4c80ec2a","name":"УНФ","category":"ea43419b-46df-11e8-8509-d85d4c80ec2a","synonym":"УправлениеНашейФирмой","class_name":"cat.tags"},
