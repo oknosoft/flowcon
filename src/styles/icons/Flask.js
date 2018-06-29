@@ -3,7 +3,6 @@
 import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-
 export default function Flask(props) {
   return <SvgIcon {...props} viewBox="0 0 520 520">
     <path d="M454.339,398.413c-0.168-0.281-0.346-0.555-0.532-0.824l-60.589-87.461c-0.153-0.235-0.312-0.465-0.479-0.692

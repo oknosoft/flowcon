@@ -7,7 +7,7 @@ import IconSettings from '@material-ui/icons/Settings';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import FiberNew from '@material-ui/icons/FiberNew';
 import IconDownload from '@material-ui/icons/CloudDownload';
-import Flask from '../Home/Flask';
+import Flask from '../../styles/icons/Flask';
 import IconHelp from '@material-ui/icons/Help';
 // import IconDrafts from '@material-ui/icons/Drafts';
 // import IconList from '@material-ui/icons/List';

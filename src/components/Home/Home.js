@@ -8,9 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Helmet from 'react-helmet';
 import AppFooter from './Footer';
-import Flask from './Flask';
+import Flask from '../../styles/icons/Flask';
+import MedicalBag from '../../styles/icons/MedicalBag';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
-import Check from '@material-ui/icons/Check';
 import Timer from '@material-ui/icons/Timer';
 import InfiniteArticles from '../Articles/MUiArticles';
 
@@ -97,12 +97,12 @@ class PageHome extends React.Component {
                 <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/check_data')}>
                   <Hidden smDown><Grid item xs={1}/></Hidden>
                   <Grid item>
-                    <Check alt="Проверка данных" className={classes.logo} color="disabled"/>
+                    <MedicalBag alt="Проверка данных" className={classes.logo} color="disabled"/>
                   </Grid>
                   <Grid item className={classes.content}>
-                    <Typography variant="headline" component="h2">Проверка данных</Typography>
+                    <Typography variant="headline" component="h2">Консилиум</Typography>
                     <Typography color="textSecondary">
-                      Библиотека алгоритмов
+                      Библиотека алгоритмов проверки данных в 1С
                     </Typography>
                   </Grid>
                 </Grid>
@@ -160,7 +160,7 @@ PageHome.propTypes = {
   title: PropTypes.string.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
-  complete_loaded: PropTypes.bool.isRequired,
+  complete_loaded: PropTypes.bool,
 };
 
 export default withStyles(styles)(PageHome);
