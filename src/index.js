@@ -40,9 +40,8 @@ class RootProvider extends Component {
     s.href = 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
     document.head.appendChild(s);
 
-    // font-awesome грузим асинхронно
+    // font-awesome и стили metadata подгрузим асинхронно
     import('font-awesome/css/font-awesome.min.css');
-
     import('metadata-react/styles/react-data-grid.css');
 
     // скрипт инициализации структуры метаданных и модификаторы
