@@ -45,6 +45,8 @@ $p.wsql.init(settings);
 
 // со скрипом инициализации метаданных, так же - не затягиваем
 meta_init($p);
+// смещаем настройки компоновки в ram
+$p.cat.scheme_settings.metadata().cachable = 'ram';
 
 // скрипт инициализации в привязке к store приложения
 export function init(store) {
