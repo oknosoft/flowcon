@@ -21,8 +21,8 @@ import FrmAttachments from 'metadata-react/FrmAttachments';
 import DataField from 'metadata-react/DataField';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import Dialog from 'metadata-react/App/Dialog';
+import SelectTags from 'metadata-react/DataField/SelectTags';
 import Social from './Social';
-import SelectTags from './SelectTags';
 import AclList from './AclList';
 
 import IconButton from '@material-ui/core/IconButton';

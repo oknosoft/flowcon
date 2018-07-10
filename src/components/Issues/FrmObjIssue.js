@@ -19,7 +19,7 @@ import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
 import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
 import FrmAttachments from 'metadata-react/FrmAttachments';
 import DataField from 'metadata-react/DataField';
-import SelectTags from '../Articles/SelectTags';
+import SelectTags from 'metadata-react/DataField/SelectTags';
 
 import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';

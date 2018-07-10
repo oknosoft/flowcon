@@ -32,9 +32,12 @@ const styles = theme => ({
     flexDirection: 'row',
   },
   chip: {
-    marginRight: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+    margin: theme.spacing.unit / 4,
     cursor: 'pointer',
+  },
+  chipRoot: {
+    height: 'auto',
+    marginRight: theme.spacing.unit / 2,
   },
   author: {
     cursor: 'pointer',

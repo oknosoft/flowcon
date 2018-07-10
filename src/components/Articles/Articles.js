@@ -12,7 +12,7 @@ import Helmet from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AppContent from 'metadata-react/App/AppContent';
-import SelectTags from './SelectTags';
+import SelectTags from 'metadata-react/DataField/SelectTags';
 //import InfiniteArticles from './InfiniteArticles';
 import InfiniteArticles from './MUiArticles';
 

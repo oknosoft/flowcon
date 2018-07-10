@@ -45,7 +45,7 @@ export default function ArticleRow(props) {
       {
         !news && <FormGroup row onClick={onClick}>
           {
-            tags && tags.map((tag, index) => <Chip key={index} label={cat.tags.get(tag).name} className={classes.chip} />)
+            tags && tags.map((tag, index) => <Chip key={index} label={cat.tags.get(tag).name} className={classes.chip} classes={{root: classes.chipRoot}} />)
           }
         </FormGroup>
       }
