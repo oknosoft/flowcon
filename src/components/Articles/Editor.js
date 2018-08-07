@@ -176,6 +176,12 @@ class EditorArticle extends MDNRComponent {
     const id = _obj._metadata('id');
     id.tooltip = 'Короткий человекочитаемый url статьи';
     id.synonym = 'Url';
+
+    const show_version = _obj.tags.some((ref) => {
+      const tag = $p.cat.tags.get(ref);
+      return tag.category.predefined_name === 'file';
+    });
+
     return (
       <FormGroup key="props" className={classes.spaceLeft}>
         <FormGroup row>
@@ -207,10 +213,13 @@ class EditorArticle extends MDNRComponent {
         <DataField _obj={_obj} _fld="h1" fullWidth/>
         <DataField _obj={_obj} _fld="descr" fullWidth multiline rowsMax="3"/>
         <DataField _obj={_obj} _fld="introduction" fullWidth multiline rowsMax="4"/>
-        <FormGroup row>
-          <DataField _obj={_obj} _fld="version_from"/>
-          <DataField _obj={_obj} _fld="version_till"/>
-        </FormGroup>
+        {
+          show_version && <FormGroup row>
+            <DataField _obj={_obj} _fld="version_from"/>
+            <DataField _obj={_obj} _fld="version_till"/>
+          </FormGroup>
+        }
+        <DataField _obj={_obj} _fld="formula" fullWidth/>
       </FormGroup>
     );
   }

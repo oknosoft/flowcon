@@ -121,7 +121,12 @@ class AppView extends Component {
         dstyle.marginLeft = dx;
       }
 
-      if(meta_loaded && state.need_user && ((!user.try_log_in && !user.logged_in) || (couch_direct && offline))) {
+      let need_auth = meta_loaded && state.need_user && ((!user.try_log_in && !user.logged_in) || (couch_direct && offline));
+      if(need_auth && !couch_direct && $p.current_user && $p.current_user.name == user.name) {
+        need_auth = false;
+      }
+
+      if(need_auth) {
         return (
           <div style={dstyle}>
             <NeedAuth

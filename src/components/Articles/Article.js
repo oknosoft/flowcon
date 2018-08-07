@@ -13,6 +13,7 @@ import AppContent from 'metadata-react/App/AppContent';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import NotFound from '../Pages/NotFound';  // 404
 import Social from './Social';
+import Subscribe from './Subscribe';
 import Attachments from './Attachments';
 
 class Article extends Component {
@@ -65,9 +66,11 @@ class Article extends Component {
         h1={doc.h1}
         descr={doc.descr}
         markdown={doc.content || 'текст отсутствует'}
-        footer={[
+        footer={ this.props.match.path.match(/\/(articles|files)\//) && [
           <Attachments key="attachments" _obj={doc} handleIfaceState={this.props.handleIfaceState} />,
-          <Social key="social" title={doc.name}/>
+          <Social key="social" title={doc.name}/>,
+          this.props.match.path.match(/\/(articles)\//) &&
+          <Subscribe key="subscribe" title="Художественная литература про ИТ" area="comp.paper.itfiction" />
         ]}
       />
     );

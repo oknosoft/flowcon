@@ -3,7 +3,7 @@ import IconChart from '@material-ui/icons/InsertChart';
 import IconDoc from '@material-ui/icons/EventNote';
 import IconInfo from '@material-ui/icons/Info';
 import IconPerson from '@material-ui/icons/Person';
-import IconSettings from '@material-ui/icons/Settings';
+import IconSettings from 'metadata-react/styles/Setting';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import FiberNew from '@material-ui/icons/FiberNew';
 import IconDownload from '@material-ui/icons/CloudDownload';
