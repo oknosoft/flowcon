@@ -25,7 +25,14 @@ const styleSheet = theme => ({
 });
 
 function AppFooter(props) {
-  const { classes } = props;
+  const {classes, handleNavigate} = props;
+
+  function onClick(evt) {
+    const url = new URL(evt.target.href);
+    evt.preventDefault();
+    evt.stopPropagation();
+    handleNavigate(url.pathname);
+  }
 
   return (
     <footer className={classes.root}>
@@ -41,21 +48,15 @@ function AppFooter(props) {
                 <li className={classes.listItem}>
                   <a href="https://github.com/oknosoft/metadata.js">Metadata.js</a>
                 </li>
-                <li className={classes.listItem}>
-                  <a href="https://github.com/oknosoft/flowcon">Примеры</a>
-                </li>
               </ul>
             </Grid>
             <Grid item xs={12} sm={6}>
               <ul className={classes.list}>
                 <li className={classes.listItem}>
-                  <a href="https://github.com/oknosoft/flowcon">Сообщество</a>
+                  <a href="https://business-programming.ru/news/terms_of_use" onClick={onClick}>Пользовательское соглашение</a>
                 </li>
                 <li className={classes.listItem}>
-                  <a href="https://github.com/oknosoft/flowcon">Дорожная карта</a>
-                </li>
-                <li className={classes.listItem}>
-                  <a href="https://github.com/oknosoft/flowcon">Команда</a>
+                  <a href="https://business-programming.ru/news/privacy_policy" onClick={onClick}>Обработка персональных данных</a>
                 </li>
               </ul>
             </Grid>
@@ -68,6 +69,7 @@ function AppFooter(props) {
 
 AppFooter.propTypes = {
   classes: PropTypes.object.isRequired,
+  handleNavigate: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(AppFooter);

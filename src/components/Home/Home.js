@@ -147,7 +147,7 @@ class PageHome extends React.Component {
         </Grid>
 
 
-        <AppFooter/>
+        <AppFooter handleNavigate={handleNavigate}/>
       </div>
     );
   }
