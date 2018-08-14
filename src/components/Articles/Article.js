@@ -9,6 +9,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
 import AppContent from 'metadata-react/App/AppContent';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import NotFound from '../Pages/NotFound';  // 404
@@ -70,7 +71,14 @@ class Article extends Component {
           <Attachments key="attachments" _obj={doc} handleIfaceState={this.props.handleIfaceState} />,
           <Social key="social" title={doc.name}/>,
           this.props.match.path.match(/\/(articles)\//) &&
-          <Subscribe key="subscribe" title="Художественная литература про ИТ" area="comp.paper.itfiction" />
+          <Grid key="subscribe" container spacing={16}>
+            <Grid item sm={12} md={6}>
+              <Subscribe title="Художественная литература про ИТ" area="comp.paper.itfiction" />
+            </Grid>
+            <Grid item sm={12} md={6}>
+              <Subscribe title="Бизнес-программирование" area="business.tech.bizprogramming" />
+            </Grid>
+          </Grid>
         ]}
       />
     );
