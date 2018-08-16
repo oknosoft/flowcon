@@ -71,7 +71,7 @@ class Article extends Component {
           <Attachments key="attachments" _obj={doc} handleIfaceState={this.props.handleIfaceState} />,
           <Social key="social" title={doc.name}/>,
           this.props.match.path.match(/\/(articles)\//) &&
-          <Grid key="subscribe" container spacing={16}>
+          <Grid key="subscribe" container >
             <Grid item sm={12} md={6}>
               <Subscribe title="Художественная литература про ИТ" area="comp.paper.itfiction" />
             </Grid>

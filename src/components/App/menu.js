@@ -40,15 +40,15 @@ const items = [
   {
     text: 'Flowcon',
     icon: <Flask/>,
-    open: false,
     id: 'flowcon',
+    open: true,
     items: [
       {
         text: 'Flowcon - что это',
+        icon: <IconHelp/>,
         id: 'readme',
         navigate: '/articles/flowcon-readme',
         need_meta: true,
-        icon: <IconHelp/>
       },
       {
         text: 'Задачи',
@@ -61,25 +61,10 @@ const items = [
       {
         text: 'Отчеты',
         icon: <IconChart/>,
-        open: false,
-        id: 'practice',
-        items: [
-          {
-            text: 'Диаграмма эффективности',
-            id: 'diagram',
-            navigate: '/flowcon/diagram',
-            need_meta: true,
-            need_user: true,
-          },
-          {
-            text: 'Таблица',
-            id: 'list',
-            navigate: '/flowcon/list',
-            need_meta: true,
-            need_user: true,
-          },
-        ],
-
+        id: 'diagram',
+        navigate: '/flowcon/diagram',
+        need_meta: true,
+        need_user: true,
       },
     ]
   },
