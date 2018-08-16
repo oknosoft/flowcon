@@ -1,3 +1,3 @@
-import FakeDiagram from './FakeDiagram';
+import Diagrams from './Diagrams';
 
-export default FakeDiagram;
+export default Diagrams;
