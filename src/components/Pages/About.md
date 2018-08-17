@@ -29,7 +29,7 @@ business-programming.ru - это ресурс о Бизнес-программи
 - [Fontawesome](https://fortawesome.github.io/Font-Awesome/), набор шрифтовых иконок
 
 ### Лицензия
-[MIT](https://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F_MIT)
+Коммерческая лицензия Окнософт
 
 ### Вопросы
 Если обнаружили ошибку, пожалуйста, зарегистрируйте <a href="https://github.com/oknosoft/flowcon/issues?utf8=%E2%9C%93&q=is%3Aissue" target="_blank" rel="noopener noreferrer">вопрос в GitHub</a> или <a href="mailto:nmivan@oknosoft.ru?subject=flowcon">свяжитесь с авторами</a> напрямую

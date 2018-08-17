@@ -79,7 +79,7 @@ class PageHome extends React.Component {
               </Grid>
 
               <Grid item>
-                <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/flowcon-readme')}>
+                <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/flowcon/diagram')}>
                   <Hidden smDown><Grid item xs={1}/></Hidden>
                   <Grid item>
                     <Flask alt="Flowcon Logo" className={classes.logo} color="disabled"/>

@@ -64,7 +64,7 @@ const items = [
         id: 'diagram',
         navigate: '/flowcon/diagram',
         need_meta: true,
-        need_user: true,
+        need_user: false,
       },
     ]
   },
