@@ -34,6 +34,7 @@
     "metadata-react": "2.0.17-beta.6",
     "metadata-redux": "2.0.17-beta.6",
     "metadata-superlogin": "2.0.17-beta.6",
+    "react-fullscreenable": "^2.5.0",
     "react-share": "^2.3.0",
     "recharts": "^1.1.0"
   },

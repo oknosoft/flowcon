@@ -9,21 +9,32 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
+import AutoSizer from 'react-virtualized/dist/es/AutoSizer';
 import AppContent from 'metadata-react/App/AppContent';
 import Diagram from './Diagram';
+import connect from './connect';
+import PropTypes from 'prop-types';
 
 const ltitle = 'Диаграммы';
+const data = [
+  {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
+];
 
-function DiagramsArray() {
+function DiagramsArray({width, classes}) {
   return [
-    <Diagram key="0" />
+    <Diagram key="0" width={width} data={data} classes={classes}/>
   ];
 }
 
-export default class Diagrams extends React.Component {
+class Diagrams extends React.Component {
+
+  state = {diagrams: []};
 
   componentDidMount() {
+    const {props} = this;
     this.shouldComponentUpdate(this.props);
+    props.diagrams()
+      .then(diagrams => this.setState({diagrams}));
   }
 
   shouldComponentUpdate({handleIfaceState, title}) {
@@ -39,11 +50,23 @@ export default class Diagrams extends React.Component {
   }
 
   render() {
+    const {classes} = this.props;
     return <AppContent>
       <Helmet title={ltitle}>
         <meta name="description" content="Комплект диаграмм" />
       </Helmet>
-      <DiagramsArray />
+      <AutoSizer disableHeight style={{overflow: 'hidden', width: '100%'}}>
+        {({width}) => <DiagramsArray width={width} classes={classes}/>}
+      </AutoSizer>
     </AppContent>;
   }
 }
+
+Diagrams.propTypes = {
+  classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  handleIfaceState: PropTypes.func.isRequired,
+  diagrams: PropTypes.func.isRequired,
+};
+
+export default connect(Diagrams);

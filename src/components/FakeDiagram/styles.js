@@ -8,9 +8,12 @@
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
-  paper: {
-    minWidth: 880,
-    maxHeight: 'calc(100vh - 80px)',
+  flex: {
+    flex: 1,
+    whiteSpace: 'nowrap',
+  },
+  container: {
+    display: 'flex',
   },
   secondary: {
     marginTop: -theme.spacing.unit * 1.5,
