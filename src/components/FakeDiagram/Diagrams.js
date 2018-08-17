@@ -12,6 +12,7 @@ import Helmet from 'react-helmet';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AutoSizer from 'react-virtualized/dist/es/AutoSizer';
 import AppContent from 'metadata-react/App/AppContent';
+import Snack from 'metadata-react/App/Snack';
 import Diagram from './Diagram';
 import connect from './connect';
 import PropTypes from 'prop-types';
@@ -28,7 +29,7 @@ function DiagramsArray({width, classes, diagrams}) {
 
 class Diagrams extends React.Component {
 
-  state = {diagrams: []};
+  state = {diagrams: [], snack: false, reseted: false};
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
@@ -60,24 +61,25 @@ class Diagrams extends React.Component {
         this.setDiagrams();
       }
     }
-    else if(!snack || !snack.open) {
-      handleIfaceState({component: '', name: 'snack',
-        value: {open: true, message: 'Пользователь не авторизован - демо режим', button: 'Закрыть'}});
+    else if(!this.state.reseted && !this.state.snack) {
+      this.setState({snack: true});
       return false;
     }
     return true;
   }
 
-  componentWillUnmount() {
-    this.props.handleIfaceState({component: '', name: 'snack', value: {open: false}});
-  }
-
   render() {
-    const {props: {classes}, state: {diagrams}}  = this;
+    const {props: {classes}, state: {diagrams, snack}}  = this;
     return <AppContent>
       <Helmet title={ltitle}>
         <meta name="description" content="Комплект диаграмм" />
       </Helmet>
+      {
+        snack && <Snack
+          snack={{open: true, message: 'Пользователь не авторизован - демо режим', button: 'Закрыть'}}
+          handleClose={() => this.setState({snack: false, reseted: true})}
+        />
+      }
       <AutoSizer disableHeight style={{overflow: 'hidden', width: '100%'}}>
         {({width}) => <DiagramsArray width={width} classes={classes} diagrams={diagrams}/>}
       </AutoSizer>
