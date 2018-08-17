@@ -9,6 +9,7 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import AutoSizer from 'react-virtualized/dist/es/AutoSizer';
 import AppContent from 'metadata-react/App/AppContent';
 import Diagram from './Diagram';
@@ -19,7 +20,10 @@ const ltitle = 'Диаграммы';
 
 
 function DiagramsArray({width, classes, diagrams}) {
-  return diagrams.map((data, key) => <Diagram key={key} width={width} data={data} classes={classes}/>);
+  return diagrams.length ?
+    diagrams.map((data, key) => <Diagram key={key} width={width} data={data} classes={classes}/>)
+    :
+    <div><CircularProgress size={24} /> Загрузка...</div>;
 }
 
 class Diagrams extends React.Component {
@@ -28,7 +32,7 @@ class Diagrams extends React.Component {
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
-    setTimeout(() => this.setDiagrams(), 600);
+    setTimeout(() => this.setDiagrams(), 400);
   }
 
   setDiagrams() {
@@ -80,6 +84,12 @@ class Diagrams extends React.Component {
     </AppContent>;
   }
 }
+
+DiagramsArray.propTypes = {
+  classes: PropTypes.object.isRequired,
+  width: PropTypes.number.isRequired,
+  diagrams: PropTypes.array.isRequired,
+};
 
 Diagrams.propTypes = {
   classes: PropTypes.object.isRequired,
