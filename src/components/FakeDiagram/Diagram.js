@@ -15,46 +15,18 @@ import IconButton from '@material-ui/core/IconButton';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import Fullscreenable from 'react-fullscreenable';
+import Bar from './Bar';
 
 let Recharts;
 
-function CustomTooltip({type, payload, label, active}) {
-  return active && <div>{`${label} : ${payload[0].value}`}</div>;
-}
-
-function Bar({width, data, isFullscreen}) {
-  const {BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
-  let height;
-  if(isFullscreen) {
-    width = window.innerWidth - 16;
-    height = window.innerHeight - 64;
+function TypedDiagram(props) {
+  switch (props.data.kind) {
+  case 'bar':
+  case undefined:
+    return Bar(props);
+  default:
+    return <div>{`Неизвестный тип диаграммы '${props.data.kind}'`}</div>;
   }
-  else {
-    height = width < 400 ? width * 1.2 : width / 1.8;
-  }
-  return (
-    <BarChart width={width} height={height} margin={{left: isFullscreen ? 0 : -16, top: 8}} data={data.rows.map((v) => {
-      const clone = {};
-      for(const fld in v) {
-        const val = v[fld];
-        clone[fld] = typeof val === 'object' ? val.value : val;
-      }
-      return clone;
-    })}>
-      <CartesianGrid strokeDasharray="3 3"/>
-      {data.rows.length > 1 && <XAxis dataKey="name"/>}
-      <YAxis/>
-      <Tooltip content={<CustomTooltip/>}/>
-      <Legend/>
-      {data.series.map((ser, key) => <Bar key={`ser-${key}`} dataKey={ser.name} fill={ser.color}>
-        {
-          data.rows.map((entry, key) => (
-            <Cell key={`cell-${key}`} fill={entry[ser.name].color}/>
-          ))
-        }
-      </Bar> /*fill="#8884d8"*/)}
-    </BarChart>
-  );
 }
 
 class Diagram extends React.Component {
@@ -81,16 +53,10 @@ class Diagram extends React.Component {
         </IconButton>
       </div>,
       !Recharts && <div key="loading"><CircularProgress size={24} /> Загрузка...</div>,
-      Recharts && <Bar key="bar" width={width} data={data} isFullscreen={isFullscreen}/>,
+      Recharts && <TypedDiagram key="diagram" width={width} data={data} isFullscreen={isFullscreen} Recharts={Recharts}/>,
       ];
   }
 }
-
-Bar.propTypes = {
-  width: PropTypes.number.isRequired,
-  data: PropTypes.object.isRequired,
-  isFullscreen: PropTypes.bool,
-};
 
 Diagram.propTypes = {
   width: PropTypes.number.isRequired,

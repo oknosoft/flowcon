@@ -29,21 +29,29 @@ function DiagramsArray({width, classes, diagrams}) {
 
 class Diagrams extends React.Component {
 
-  state = {diagrams: [], snack: false, reseted: false};
+  state = {diagrams: [], snack: '', reseted: false};
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
     setTimeout(() => this.setDiagrams(), 400);
   }
 
-  setDiagrams() {
+  setDiagrams(force) {
     const {props} = this;
-    if(this.logged_in === props.user.logged_in) {
+    if(!force && this.logged_in === props.user.logged_in) {
       return;
     }
     this.logged_in = props.user.logged_in;
     props.diagrams()
-      .then(diagrams => this.setState({diagrams}));
+      .then(diagrams => {
+        this.setState({diagrams});
+        props.subscribe(this.setDiagrams.bind(this, true));
+
+        if(force) {
+          this.setState({snack: 'Данные обновлены'});
+          setTimeout(() => this.setState({snack: ''}), 1500);
+        }
+      });
   }
 
   shouldComponentUpdate({handleIfaceState, title, user, snack}) {
@@ -56,16 +64,20 @@ class Diagrams extends React.Component {
       return false;
     }
     if(user.logged_in) {
-      if(snack && snack.open) {
-        this.componentWillUnmount();
+      if(this.state.snack) {
+        this.setState({snack: ''});
         this.setDiagrams();
       }
     }
     else if(!this.state.reseted && !this.state.snack) {
-      this.setState({snack: true});
+      this.setState({snack: 'Пользователь не авторизован - демо режим'});
       return false;
     }
     return true;
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe();
   }
 
   render() {
@@ -76,7 +88,7 @@ class Diagrams extends React.Component {
       </Helmet>
       {
         snack && <Snack
-          snack={{open: true, message: 'Пользователь не авторизован - демо режим', button: 'Закрыть'}}
+          snack={{open: true, message: snack, button: 'Закрыть'}}
           handleClose={() => this.setState({snack: false, reseted: true})}
         />
       }
