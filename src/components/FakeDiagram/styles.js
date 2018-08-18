@@ -11,6 +11,7 @@ const styles = theme => ({
   flex: {
     flex: 1,
     whiteSpace: 'nowrap',
+    paddingTop: theme.spacing.unit,
   },
   container: {
     display: 'flex',

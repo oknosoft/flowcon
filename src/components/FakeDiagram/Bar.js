@@ -23,6 +23,8 @@ function Bar({width, data, isFullscreen, Recharts}) {
   else {
     height = width < 400 ? width * 1.2 : width / 1.8;
   }
+  const xDataKey = data.points && data.points.length && data.points[0].name || 'name';
+
   return (
     <BarChart width={width} height={height} margin={{left: isFullscreen ? 0 : -16, top: 8}} data={data.rows.map((v) => {
       const clone = {};
@@ -33,7 +35,7 @@ function Bar({width, data, isFullscreen, Recharts}) {
       return clone;
     })}>
       <CartesianGrid strokeDasharray="3 3"/>
-      {!data.hideXAxis && <XAxis dataKey="name"/>}
+      {!data.hideXAxis && <XAxis dataKey={xDataKey}/>}
       {!data.hideYAxis && <YAxis/>}
       {data.customTooltip ?
         <Tooltip content={<CustomTooltip/>}/>
