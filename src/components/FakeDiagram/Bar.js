@@ -26,7 +26,7 @@ function Bar({width, data, isFullscreen, Recharts}) {
   const xDataKey = data.points && data.points.length && data.points[0].name || 'name';
 
   return (
-    <BarChart width={width} height={height} margin={{left: isFullscreen ? 0 : -16, top: 8}} data={data.rows.map((v) => {
+    <BarChart width={width} height={height} margin={{left: isFullscreen ? 0 : -16, top: 8, bottom: 8}} data={data.rows.map((v) => {
       const clone = {};
       for(const fld in v) {
         const val = v[fld];
@@ -62,6 +62,7 @@ Bar.propTypes = {
   width: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
   isFullscreen: PropTypes.bool,
+  Recharts: PropTypes.func.isRequired,
 };
 
 export default Bar;

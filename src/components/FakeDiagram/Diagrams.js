@@ -54,7 +54,7 @@ class Diagrams extends React.Component {
       });
   }
 
-  shouldComponentUpdate({handleIfaceState, title, user, snack}) {
+  shouldComponentUpdate({handleIfaceState, title, user}) {
     if(title != ltitle) {
       handleIfaceState({
         component: '',
@@ -92,7 +92,7 @@ class Diagrams extends React.Component {
           handleClose={() => this.setState({snack: false, reseted: true})}
         />
       }
-      <AutoSizer disableHeight style={{overflow: 'hidden', width: '100%'}}>
+      <AutoSizer disableHeight style={{overflow: 'hidden', width: '100%', paddingBottom: 48}}>
         {({width}) => <DiagramsArray width={width} classes={classes} diagrams={diagrams}/>}
       </AutoSizer>
     </AppContent>;
@@ -110,6 +110,8 @@ Diagrams.propTypes = {
   title: PropTypes.string.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
   diagrams: PropTypes.func.isRequired,
+  subscribe: PropTypes.func.isRequired,
+  unsubscribe: PropTypes.func.isRequired,
   snack: PropTypes.object,
   user: PropTypes.object,
 };

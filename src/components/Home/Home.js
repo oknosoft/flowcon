@@ -94,7 +94,7 @@ class PageHome extends React.Component {
               </Grid>
 
               <Grid item>
-                <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/check_data')}>
+                <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/team_of_concilium')}>
                   <Hidden smDown><Grid item xs={1}/></Hidden>
                   <Grid item>
                     <MedicalBag alt="Проверка данных" className={classes.logo} color="disabled"/>
