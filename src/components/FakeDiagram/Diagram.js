@@ -16,6 +16,7 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import Swipeable from 'react-swipeable';
 import Bar from './Bar';
+import Line from './Line';
 
 let Recharts;
 
@@ -26,7 +27,7 @@ function TypedDiagram(props) {
       Bar(props) :
       (
         kind === 'line' ?
-          Bar(props) :
+          Line(props) :
           (
             kind === 'pie' ?
               Bar(props) :
