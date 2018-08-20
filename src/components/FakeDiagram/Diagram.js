@@ -14,24 +14,32 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
-import Fullscreenable from 'react-fullscreenable';
+import Swipeable from 'react-swipeable';
 import Bar from './Bar';
 
 let Recharts;
 
 function TypedDiagram(props) {
-  switch (props.data.kind) {
-  case 'bar':
-  case undefined:
-    return Bar(props);
-  default:
-    return <div>{`Неизвестный тип диаграммы '${props.data.kind}'`}</div>;
-  }
+  const {kind} = props.data;
+  return <Swipeable onSwipingLeft={props.swipingLeft} onSwipingRight={props.swipingRight} delta={20}>
+    {kind === 'bar' ?
+      Bar(props) :
+      (
+        kind === 'line' ?
+          Bar(props) :
+          (
+            kind === 'pie' ?
+              Bar(props) :
+              (
+                <div>{`Неизвестный тип диаграммы '${props.data.kind}'`}</div>
+              )
+          )
+      )
+    }
+  </Swipeable>;
 }
 
 class Diagram extends React.Component {
-
-  state = {fullscreen: false};
 
   componentDidMount() {
     if(!Recharts) {
@@ -44,7 +52,7 @@ class Diagram extends React.Component {
   }
 
   render() {
-    const {width, data, classes, isFullscreen, toggleFullscreen} = this.props;
+    const {width, data, classes, isFullscreen, toggleFullscreen, prev, next} = this.props;
     return [
       <div key="title" className={classes.container}>
         <Typography variant="title" component="h3" color="primary" className={classes.flex}>{data.title}</Typography>
@@ -53,7 +61,14 @@ class Diagram extends React.Component {
         </IconButton>
       </div>,
       !Recharts && <div key="loading"><CircularProgress size={24} /> Загрузка...</div>,
-      Recharts && <TypedDiagram key="diagram" width={width} data={data} isFullscreen={isFullscreen} Recharts={Recharts}/>,
+      Recharts && <TypedDiagram
+        key="diagram"
+        Recharts={Recharts}
+        swipingLeft={prev}
+        swipingRight={next}
+        width={width}
+        data={data}
+        isFullscreen={isFullscreen}/>,
       ];
   }
 }
@@ -64,6 +79,8 @@ Diagram.propTypes = {
   classes: PropTypes.object.isRequired,
   isFullscreen: PropTypes.bool,
   toggleFullscreen: PropTypes.func,
+  prev: PropTypes.func,
+  next: PropTypes.func,
 };
 
-export default Fullscreenable()(Diagram);
+export default Diagram;
