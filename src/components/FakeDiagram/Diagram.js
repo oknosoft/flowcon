@@ -74,6 +74,12 @@ class Diagram extends React.Component {
   }
 }
 
+TypedDiagram.propTypes = {
+  data: PropTypes.object.isRequired,
+  swipingLeft: PropTypes.func.isRequired,
+  swipingRight: PropTypes.func.isRequired,
+};
+
 Diagram.propTypes = {
   width: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,

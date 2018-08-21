@@ -17,16 +17,15 @@ class DiagramsArray extends Component {
   state = {fullscreen: null};
 
   prev = () => {
-    const {isFullscreen} = this.props;
     if(this.state.fullscreen > 0) {
       this.setState({fullscreen: this.state.fullscreen - 1});
     }
   };
 
   next = () => {
-    const {diagrams} = this.props;
-    if(this.state.fullscreen < diagrams.length - 1) {
-      this.setState({fullscreen: this.state.fullscreen + 1});
+    const {props: {diagrams}, state: {fullscreen}} = this;
+    if(fullscreen !== null && fullscreen < diagrams.length - 1) {
+      this.setState({fullscreen: fullscreen + 1});
     }
   };
 

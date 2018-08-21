@@ -4,21 +4,26 @@
   "short_name": "flowcon",
   "icons": [
     {
-      "src": "./imgs/flask_32.png",
+      "src": "imgs/flask_32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "./imgs/flask_144.png",
+      "src": "imgs/flask_144.png",
       "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "imgs/flask_192.png",
+      "sizes": "192x192",
       "type": "image/png"
     }],
   "background_color": "#ffffff",
   "splash_screens": [{
-    "src": "./imgs/splash.gif",
+    "src": "imgs/splash.gif",
     "sizes": "256x64"
   }],
   "scope": "/",
-  "start_url": "./index.html",
+  "start_url": ".",
   "display": "standalone"
 }
