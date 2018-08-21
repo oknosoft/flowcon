@@ -1,7 +1,7 @@
 /**
- * ### Диаграмма Line
+ * ### Диаграмма Radar
  *
- * @module Line
+ * @module Radar
  *
  * Created by Evgeniy Malyarov on 18.08.2018.
  */
@@ -11,9 +11,8 @@ import PropTypes from 'prop-types';
 
 import {chartData} from './Bar';
 
-
-function Line({width, data, isFullscreen, Recharts}) {
-  const {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
+function Radar({width, data, isFullscreen, Recharts}) {
+  const {Radar, RadarChart, PolarGrid, Legend, Tooltip, PolarAngleAxis, PolarRadiusAxis} = Recharts;
   let height;
   if(isFullscreen) {
     width = window.innerWidth - 16;
@@ -25,33 +24,32 @@ function Line({width, data, isFullscreen, Recharts}) {
   const xDataKey = data.points && data.points.length && data.points[0].name || 'name';
 
   return (
-    <LineChart width={width} height={height} margin={{left: isFullscreen ? 0 : -8, top: 8, bottom: 8}} data={chartData(data)}>
-      <CartesianGrid strokeDasharray="3 3"/>
-      {!data.hideXAxis && <XAxis dataKey={xDataKey}/>}
-      {!data.hideYAxis && <YAxis/>}
+    <RadarChart width={width} height={height} margin={{left: isFullscreen ? 0 : -8, top: 8, bottom: 8}} data={chartData(data)}>
+      <PolarGrid />
+      {!data.hideXAxis && <PolarAngleAxis dataKey={xDataKey}/>}
+      {!data.hideYAxis && <PolarRadiusAxis/>}
       {!data.hideTooltip && <Tooltip/>}
       {!data.hideLegend && <Legend/>}
       {
         data.series.map((ser, key) =>
-          <Line
+          <Radar
             name={ser.presentation || ser.name}
             key={`ser-${key}`}
-            type="monotone"
             dataKey={ser.name}
             stroke={ser.color || '#8884d8'}
-            activeDot={{r: ser.dotRadius || 6}}
+            fill={ser.color || '#8884d8'}
+            fillOpacity={ser.opacity || 0.6}
           />)
       }
-    </LineChart>
-
+    </RadarChart>
   );
 }
 
-Line.propTypes = {
+Radar.propTypes = {
   width: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
   isFullscreen: PropTypes.bool,
   Recharts: PropTypes.func.isRequired,
 };
 
-export default Line;
+export default Radar;

@@ -9,8 +9,19 @@ import PropTypes from 'prop-types';
  * Created by Evgeniy Malyarov on 18.08.2018.
  */
 
-function CustomTooltip({type, payload, label, active}) {
+export function CustomTooltip({type, payload, label, active}) {
   return active && <div>{`${label} : ${payload[0].value}`}</div>;
+}
+
+export function chartData({rows}) {
+  return rows.map((v) => {
+    const clone = {};
+    for(const fld in v) {
+      const val = v[fld];
+      clone[fld] = typeof val === 'object' ? val.value : val;
+    }
+    return clone;
+  })
 }
 
 function Bar({width, data, isFullscreen, Recharts}) {
@@ -26,14 +37,7 @@ function Bar({width, data, isFullscreen, Recharts}) {
   const xDataKey = data.points && data.points.length && data.points[0].name || 'name';
 
   return (
-    <BarChart width={width} height={height} margin={{left: isFullscreen ? 0 : -8, top: 8, bottom: 8}} data={data.rows.map((v) => {
-      const clone = {};
-      for(const fld in v) {
-        const val = v[fld];
-        clone[fld] = typeof val === 'object' ? val.value : val;
-      }
-      return clone;
-    })}>
+    <BarChart width={width} height={height} margin={{left: isFullscreen ? 0 : -8, top: 8, bottom: 8}} data={chartData(data)}>
       <CartesianGrid strokeDasharray="3 3"/>
       {!data.hideXAxis && <XAxis dataKey={xDataKey}/>}
       {!data.hideYAxis && <YAxis/>}
@@ -44,15 +48,23 @@ function Bar({width, data, isFullscreen, Recharts}) {
       }
       {!data.hideLegend && <Legend/>}
       {data.customCell ?
-        data.series.map((ser, key) => <Bar key={`ser-${key}`} dataKey={ser.name} fill={ser.color || '#8884d8'}>
+        data.series.map((ser, key) => <Bar
+          name={ser.presentation || ser.name}
+          key={`ser-${key}`}
+          dataKey={ser.name}
+          fill={ser.color || '#8884d8'}
+        >
           {
-            data.rows.map((entry, key) => (
-              <Cell key={`cell-${key}`} fill={entry[ser.name].color}/>
-            ))
+            data.rows.map((entry, key) => <Cell key={`cell-${key}`} fill={entry[ser.name].color}/>)
           }
           </Bar>)
         :
-        data.series.map((ser, key) => <Bar key={`ser-${key}`} dataKey={ser.name} fill={ser.color || '#8884d8'} />)
+        data.series.map((ser, key) => <Bar
+          name={ser.presentation || ser.name}
+          key={`ser-${key}`}
+          dataKey={ser.name}
+          fill={ser.color || '#8884d8'}
+        />)
       }
     </BarChart>
   );

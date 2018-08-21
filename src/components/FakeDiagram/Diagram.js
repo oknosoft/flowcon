@@ -17,6 +17,7 @@ import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import Swipeable from 'react-swipeable';
 import Bar from './Bar';
 import Line from './Line';
+import Radar from './Radar';
 
 let Recharts;
 
@@ -32,7 +33,9 @@ function TypedDiagram(props) {
             kind === 'pie' ?
               Bar(props) :
               (
-                <div>{`Неизвестный тип диаграммы '${props.data.kind}'`}</div>
+                kind === 'radar' ?
+                  Radar(props) :
+                  <div>{`Неизвестный тип диаграммы '${props.data.kind}'`}</div>
               )
           )
       )
