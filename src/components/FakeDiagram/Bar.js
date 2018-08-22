@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Line from './Line';
 
 /**
  * ### Диаграмма Bar
@@ -9,8 +10,32 @@ import PropTypes from 'prop-types';
  * Created by Evgeniy Malyarov on 18.08.2018.
  */
 
-export function CustomTooltip({type, payload, label, active}) {
+export function CustomTooltip({payload, label, active}) {
   return active && <div>{`${label} : ${payload[0].value}`}</div>;
+}
+
+export function CustomLabel (props) {
+  const {x, y, value, width, offset} = props;
+  return (value &&
+    <text x={x + width / 2} y={y - offset} textAnchor="middle">
+      {`${value}`}
+    </text>
+  );
+};
+
+function getPath (x, y, width, height) {
+  return `M${x},${y + height} L${x},${y} L${x+width},${y} L${x+width},${y + height} Z`;
+}
+
+export function CustomImg(props) {
+  const { fill, x, y, width, height, img, value} = props;
+  return img &&
+    <g>
+      <text x={x + width / 2} y={y - 5} textAnchor="middle">
+        {`${value}`}
+      </text>
+      <image href={img} x={x + width / 2 - 32} y={y}/>
+    </g>;
 }
 
 export function chartData({rows}) {
@@ -18,14 +43,14 @@ export function chartData({rows}) {
     const clone = {};
     for(const fld in v) {
       const val = v[fld];
-      clone[fld] = typeof val === 'object' ? val.value : val;
+      clone[fld] = typeof val === 'object' ? (val.value || 0) : val;
     }
     return clone;
   })
 }
 
 function Bar({width, data, isFullscreen, Recharts}) {
-  const {BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
+  const {ComposedChart, Bar, Line, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
   let height;
   if(isFullscreen) {
     width = window.innerWidth - 16;
@@ -37,7 +62,7 @@ function Bar({width, data, isFullscreen, Recharts}) {
   const xDataKey = data.points && data.points.length && data.points[0].name || 'name';
 
   return (
-    <BarChart width={width} height={height} margin={{left: isFullscreen ? 0 : -8, top: 8, bottom: 8}} data={chartData(data)}>
+    <ComposedChart width={width} height={height} margin={{left: isFullscreen ? 0 : -8, top: 8, bottom: 8}} data={chartData(data)}>
       <CartesianGrid strokeDasharray="3 3"/>
       {!data.hideXAxis && <XAxis dataKey={xDataKey}/>}
       {!data.hideYAxis && <YAxis/>}
@@ -53,20 +78,50 @@ function Bar({width, data, isFullscreen, Recharts}) {
           key={`ser-${key}`}
           dataKey={ser.name}
           fill={ser.color || '#8884d8'}
+          fillOpacity={ser.opacity || 0.7}
         >
           {
-            data.rows.map((entry, key) => <Cell key={`cell-${key}`} fill={entry[ser.name].color}/>)
+            data.rows.map((entry, key) => <Cell
+              key={`cell-${key}`}
+              fill={entry[ser.name].color}
+              fillOpacity={ser.opacity || 0.7}
+            />)
           }
           </Bar>)
         :
-        data.series.map((ser, key) => <Bar
-          name={ser.presentation || ser.name}
-          key={`ser-${key}`}
-          dataKey={ser.name}
-          fill={ser.color || '#8884d8'}
-        />)
+        data.series.map((ser, ind) => {
+          const key = `ser-${ind}`;
+          switch(ser.type) {
+          case 'img':
+            return <Bar
+              name={ser.presentation || ser.name}
+              key={key}
+              dataKey={ser.name}
+              fill={ser.color || '#8884d8'}
+              fillOpacity={ser.opacity || 0.7}
+              shape={<CustomImg/>}
+            />
+          case 'line':
+            return <Line
+              name={ser.presentation || ser.name}
+              key={key}
+              type="monotone"
+              dataKey={ser.name}
+              stroke={ser.color || '#8884d8'}
+              activeDot={{r: ser.dotRadius || 6}}
+            />
+          default:
+            return <Bar
+              name={ser.presentation || ser.name}
+              key={key}
+              dataKey={ser.name}
+              fill={ser.color || '#8884d8'}
+              fillOpacity={ser.opacity || 0.7}
+            />
+          }
+        })
       }
-    </BarChart>
+    </ComposedChart>
   );
 }
 

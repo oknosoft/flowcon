@@ -26,3 +26,4 @@ package-lock.json
 .vscode
 .nyc_output
 
+/src/styles/bottls/

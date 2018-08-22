@@ -15,7 +15,7 @@ function Radar({width, data, isFullscreen, Recharts}) {
   const {Radar, RadarChart, PolarGrid, Legend, Tooltip, PolarAngleAxis, PolarRadiusAxis} = Recharts;
   let height;
   if(isFullscreen) {
-    width = window.innerWidth - 16;
+    width = window.innerWidth - 64;
     height = window.innerHeight - 64;
   }
   else {
