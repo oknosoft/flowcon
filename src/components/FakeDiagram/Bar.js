@@ -48,15 +48,14 @@ export function chartData({rows}) {
   });
 }
 
-function Bar({width, data, isFullscreen, Recharts}) {
+function Bar({width, height, data, isFullscreen, Recharts}) {
   const {ComposedChart, Bar, Line, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
-  let height;
   if(isFullscreen) {
     width = window.innerWidth - 16;
     height = window.innerHeight - 64;
   }
-  else {
-    height = width < 400 ? width * 1.2 : width / 2.8;
+  else if(!height) {
+    height = width < 400 ? width * 1.2 : width / 2.6;
   }
   const xDataKey = data.points && data.points.length && data.points[0].name || 'name';
 

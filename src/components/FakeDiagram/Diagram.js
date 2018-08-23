@@ -56,7 +56,7 @@ class Diagram extends React.Component {
   }
 
   render() {
-    const {width, data, classes, isFullscreen, toggleFullscreen, prev, next} = this.props;
+    const {width, height, data, classes, isFullscreen, toggleFullscreen, prev, next} = this.props;
     return [
       <div key="title" className={classes.container}>
         <Typography variant="title" component="h3" color="primary" className={classes.flex}>{data.title}</Typography>
@@ -71,6 +71,7 @@ class Diagram extends React.Component {
         swipingLeft={prev}
         swipingRight={next}
         width={width}
+        height={height}
         data={data}
         isFullscreen={isFullscreen}/>,
       ];

@@ -16,7 +16,6 @@ import Paper from '@material-ui/core/Paper';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Switch from '@material-ui/core/Switch';
 
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -29,6 +28,7 @@ import Grid3 from './grid3';
 import Grid12 from './grid12';
 import Grid13 from './grid13';
 import Grid123 from './grid123';
+import Grid23 from './grid23';
 
 import {withIface} from 'metadata-redux';
 
@@ -45,7 +45,7 @@ class Settings extends React.Component {
   };
 
   setLayout(mode) {
-    this.handleClose()
+    this.handleClose();
     this.props.handleNavigate(`${location.pathname}?grid=${mode}`);
   }
 
@@ -105,6 +105,12 @@ class Settings extends React.Component {
                 </ListItemIcon>
                 <ListItemText inset primary="Одна + три" />
               </MenuItem>
+              <MenuItem onClick={() => this.setLayout(23)}>
+                <ListItemIcon>
+                  <Grid23 />
+                </ListItemIcon>
+                <ListItemText inset primary="Две + три" />
+              </MenuItem>
               <MenuItem onClick={() => this.setLayout(123)}>
                 <ListItemIcon>
                   <Grid123 />
@@ -125,6 +131,10 @@ class Settings extends React.Component {
       </Popper>
     </div>;
   }
+}
+
+Settings.propTypes = {
+  handleNavigate: PropTypes.func.isRequired,
 };
 
 export default withIface(Settings);

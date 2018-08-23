@@ -11,15 +11,14 @@ import PropTypes from 'prop-types';
 
 import {chartData} from './Bar';
 
-function Radar({width, data, isFullscreen, Recharts}) {
+function Radar({width, height, data, isFullscreen, Recharts}) {
   const {Radar, RadarChart, PolarGrid, Legend, Tooltip, PolarAngleAxis, PolarRadiusAxis} = Recharts;
-  let height;
   if(isFullscreen) {
     width = window.innerWidth - 64;
     height = window.innerHeight - 64;
   }
-  else {
-    height = width < 400 ? width * 1.2 : width / 2.6;
+  else if(!height) {
+    height = width < 400 ? width * 1.2 : width / 2.4;
   }
   const xDataKey = data.points && data.points.length && data.points[0].name || 'name';
 

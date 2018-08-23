@@ -68,14 +68,9 @@ function mapStateToProps(state, {user}) {
     changes.length = 0;
   }
 
-  function grid() {
+  function queryGrid() {
     const query = qs.parse(location.search.replace('?',''));
-    if(query.grid) {
-      return Promise.resolve(query.grid);
-    }
-
-    const {reports, doc} = dbs();
-    charts(reports, doc)
+    return query.grid;
   }
 
   return {
@@ -83,13 +78,19 @@ function mapStateToProps(state, {user}) {
       unsubscribe();
       const {reports, doc} = dbs();
       return charts(reports, doc)
-        .then(({charts}) => {
-          return charts ?
-            Promise.all(charts.map((chart) => {
+        .then((settings) => {
+          const docs = settings && settings.charts ?
+            Promise.all(settings.charts.map((chart) => {
               const path = chart.split('/');
               const db = path[0] === 'doc' ? doc : reports;
               return db.get(path[1]);
-            })) : [];
+            })) : Promise.resolve([]);
+          const grid = queryGrid() || (settings && settings.grid) || "1";
+          return docs.then((diagrams) => ({
+            diagrams,
+            grid,
+            settings,
+          }));
         });
     },
 
@@ -119,7 +120,7 @@ function mapStateToProps(state, {user}) {
         });
     },
 
-    grid,
+    queryGrid,
 
     unsubscribe
   };

@@ -23,7 +23,12 @@ const ltitle = 'Диаграммы';
 
 class Diagrams extends React.Component {
 
-  state = {diagrams: [], snack: '', reseted: false};
+  state = {
+    diagrams: [],
+    grid: "1",
+    snack: '',
+    reseted: false,
+  };
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
@@ -37,8 +42,8 @@ class Diagrams extends React.Component {
     }
     this.logged_in = props.user.logged_in;
     props.diagrams()
-      .then(diagrams => {
-        this.setState({diagrams});
+      .then(({diagrams, grid}) => {
+        this.setState({diagrams, grid});
         props.subscribe(this.setDiagrams.bind(this, true));
 
         if(force) {
@@ -87,7 +92,7 @@ class Diagrams extends React.Component {
   }
 
   render() {
-    const {props: {classes}, state: {diagrams, snack}}  = this;
+    const {props: {classes, queryGrid}, state: {diagrams, snack, grid}}  = this;
     return <AppContent fullWidth>
       <Helmet title={ltitle}>
         <meta name="description" content="Комплект диаграмм" />
@@ -99,7 +104,12 @@ class Diagrams extends React.Component {
         />
       }
       <AutoSizer disableHeight style={{overflow: 'hidden', width: '100%', paddingBottom: 48}}>
-        {({width}) => <DiagramsArray width={width} classes={classes} diagrams={diagrams}/>}
+        {({width}) => <DiagramsArray
+          width={width}
+          classes={classes}
+          diagrams={diagrams}
+          grid={queryGrid() || grid}
+        />}
       </AutoSizer>
     </AppContent>;
   }
@@ -114,6 +124,7 @@ Diagrams.propTypes = {
   diagrams: PropTypes.func.isRequired,
   subscribe: PropTypes.func.isRequired,
   unsubscribe: PropTypes.func.isRequired,
+  queryGrid: PropTypes.func.isRequired,
   snack: PropTypes.object,
   user: PropTypes.object,
 };
