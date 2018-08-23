@@ -17,15 +17,24 @@ class DiagramsArray extends Component {
   state = {fullscreen: null};
 
   prev = () => {
-    if(this.state.fullscreen > 0) {
-      this.setState({fullscreen: this.state.fullscreen - 1});
+    const {props: {diagrams}, state: {fullscreen}} = this;
+    if(fullscreen > 0) {
+      this.setState({fullscreen: fullscreen - 1});
+    }
+    else if(fullscreen !== null) {
+      this.setState({fullscreen: diagrams.length - 1});
     }
   };
 
   next = () => {
     const {props: {diagrams}, state: {fullscreen}} = this;
-    if(fullscreen !== null && fullscreen < diagrams.length - 1) {
-      this.setState({fullscreen: fullscreen + 1});
+    if(fullscreen !== null) {
+      if(fullscreen < diagrams.length - 1) {
+        this.setState({fullscreen: fullscreen + 1});
+      }
+      else {
+        this.setState({fullscreen: 0});
+      }
     }
   };
 
@@ -34,35 +43,34 @@ class DiagramsArray extends Component {
     this.setState({fullscreen: this.state.fullscreen === key ? null : key});
   }
 
+  renderGrid() {
+
+  }
+
+  renderDiagram({width, classes, data, key, isFullscreen}) {
+    return <Diagram
+      key={`d-${key}`}
+      ref={(el) => this[`d-${key}`] = el}
+      width={width}
+      data={data}
+      classes={classes}
+      isFullscreen={isFullscreen}
+      toggleFullscreen={this.toggleFullscreen.bind(this, key)}
+      prev={this.prev}
+      next={this.next}
+    />;
+  }
+
   render() {
     const {width, classes, diagrams, isFullscreen} = this.props;
     const fullscreen = isFullscreen && this.state.fullscreen;
 
     return diagrams.length ?
       (
-        fullscreen ? <Diagram
-          key={`d-${fullscreen}`}
-          ref={(el) => this[`d-${fullscreen}`] = el}
-          width={width}
-          data={diagrams[fullscreen]}
-          classes={classes}
-          isFullscreen={isFullscreen}
-          toggleFullscreen={this.toggleFullscreen.bind(this, fullscreen)}
-          prev={this.prev}
-          next={this.next}
-        />
+        typeof fullscreen === 'number' ?
+          this.renderDiagram({width, classes, data: diagrams[fullscreen], key: fullscreen, isFullscreen})
         :
-          diagrams.map((data, key) => <Diagram
-            key={`d-${key}`}
-            ref={(el) => this[`d-${key}`] = el}
-            width={width}
-            data={data}
-            classes={classes}
-            isFullscreen={isFullscreen}
-            toggleFullscreen={this.toggleFullscreen.bind(this, key)}
-            prev={this.prev}
-            next={this.next}
-          />)
+          diagrams.map((data, key) => this.renderDiagram({width, classes, data, key, isFullscreen}))
       )
       :
       <div><CircularProgress size={24} /> Загрузка...</div>;

@@ -8,6 +8,7 @@
 import {connect} from 'react-redux';
 import withStyles from './styles';
 import compose from 'recompose/compose';
+import qs from 'qs';
 
 function mapStateToProps(state, {user}) {
 
@@ -39,24 +40,24 @@ function mapStateToProps(state, {user}) {
   function charts(reports, doc) {
     return doc.allDocs({include_docs: true, keys: ['default', user.name]})
       .then(({rows}) => {
-        let charts;
+        let settings;
         for(const row of rows) {
-          if(row.doc && (row.id === user.name || !charts)){
-            charts = row.doc.charts;
+          if(row.doc && (row.id === user.name || !settings)){
+            settings = row.doc;
           }
         }
-        if(!charts && reports !== doc) {
+        if(!settings && reports !== doc) {
           return reports.allDocs({include_docs: true, keys: ['default', user.name]})
             .then(({rows}) => {
               for(const row of rows) {
-                if(row.doc && (row.id === user.name || !charts)){
-                  charts = row.doc.charts;
+                if(row.doc && (row.id === user.name || !settings)){
+                  settings = row.doc;
                 }
               }
-              return charts;
+              return settings;
             });
         }
-        return charts;
+        return settings;
       });
   }
 
@@ -67,12 +68,22 @@ function mapStateToProps(state, {user}) {
     changes.length = 0;
   }
 
+  function grid() {
+    const query = qs.parse(location.search.replace('?',''));
+    if(query.grid) {
+      return Promise.resolve(query.grid);
+    }
+
+    const {reports, doc} = dbs();
+    charts(reports, doc)
+  }
+
   return {
     diagrams() {
       unsubscribe();
       const {reports, doc} = dbs();
       return charts(reports, doc)
-        .then((charts) => {
+        .then(({charts}) => {
           return charts ?
             Promise.all(charts.map((chart) => {
               const path = chart.split('/');
@@ -85,7 +96,7 @@ function mapStateToProps(state, {user}) {
     subscribe(onChange) {
       const {reports, doc} = dbs();
       charts(reports, doc)
-        .then((charts) => {
+        .then(({charts}) => {
           if(!charts) return;
           const map = new Map;
           for(const chart of charts) {
@@ -107,6 +118,8 @@ function mapStateToProps(state, {user}) {
           }
         });
     },
+
+    grid,
 
     unsubscribe
   };

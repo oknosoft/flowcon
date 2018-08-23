@@ -101,7 +101,7 @@ class MUiArticles extends Component {
   }
 
   get page() {
-    const query = qs.parse(this.props.location.search.replace('?',''));
+    const query = qs.parse(location.search.replace('?',''));
     return query.page ? query.page - 1 : 0;
   }
 
