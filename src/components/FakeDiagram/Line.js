@@ -19,7 +19,7 @@ function Line({width, height, data, isFullscreen, Recharts}) {
     height = window.innerHeight - 64;
   }
   else if(!height) {
-    height = width < 400 ? width * 1.2 : width / 2.6;
+    height = width <= 600 ? width * 1.2 : width / 2.6;
   }
   const xDataKey = data.points && data.points.length && data.points[0].name || 'name';
 

@@ -45,7 +45,7 @@ class DiagramsArray extends Component {
   }
 
   renderGrid({width, classes, diagrams, isFullscreen, grid}) {
-    if(grid == "1") {
+    if(grid == "1" || width <= 600) {
       return diagrams.map((data, key) => this.renderDiagram({width, classes, data, key, isFullscreen}));
     }
 
@@ -53,7 +53,8 @@ class DiagramsArray extends Component {
     return <Grid container spacing={spacing}>
       {
         diagrams.map((data, key) => {
-          let md, w, height;
+          let md, w;
+          const height = width >= 960 ? width / 5 : 0;
           switch (grid) {
           case '2':
             md = 6;
@@ -66,31 +67,23 @@ class DiagramsArray extends Component {
           case '12':
             md = key === 0 ? 12 : 6;
             w = key === 0 ? width - spacing : width / 2 - spacing;
-            if(key === 0 && width > 400) {
-              height = width / 6;
-            }
             break;
           case '13':
             md = key === 0 ? 12 : 4;
             w = key === 0 ? width - spacing : width / 3 - spacing;
-            if(key === 0 && width > 400) {
-              height = width / 6;
-            }
             break;
           case '123':
             md = key === 0 ? 12 : (key < 3 ? 6 : 4);
             w = key === 0 ? width - spacing : (key < 3 ? width / 2 : width / 3) - spacing;
-            if(key === 0 && width > 400) {
-              height = width / 6;
-            }
             break;
           case '23':
+          default:
             md = key < 2 ? 6 : 4;
             w = (key < 2 ? width / 2 : width / 3) - spacing;
             break;
           }
 
-          return <Grid key={`d-${key}`} item sm={12} md={md}>
+          return <Grid key={`d-${key}`} item  md={md}>
             {this.renderDiagram({width: w, height, classes, data, key, isFullscreen})}
           </Grid>;
         })

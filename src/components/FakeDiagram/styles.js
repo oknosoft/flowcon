@@ -10,7 +10,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 const styles = theme => ({
   flex: {
     flex: 1,
-    whiteSpace: 'nowrap',
+    //whiteSpace: 'nowrap',
     paddingTop: theme.spacing.unit,
   },
   container: {
