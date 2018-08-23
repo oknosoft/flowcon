@@ -8,13 +8,15 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import AutoSizer from 'react-virtualized/dist/es/AutoSizer';
 import AppContent from 'metadata-react/App/AppContent';
 import Snack from 'metadata-react/App/Snack';
 import DiagramsArray from './DiagramsArray';
+import Settings from './Settings';
 import connect from './connect';
-import PropTypes from 'prop-types';
+
 
 const ltitle = 'Диаграммы';
 
@@ -47,11 +49,17 @@ class Diagrams extends React.Component {
   }
 
   shouldComponentUpdate({handleIfaceState, title, user}) {
+
     if(title != ltitle) {
       handleIfaceState({
         component: '',
         name: 'title',
         value: ltitle,
+      });
+      handleIfaceState({
+        component: '',
+        name: 'CustomBtn',
+        value: Settings,
       });
       return false;
     }
@@ -71,11 +79,16 @@ class Diagrams extends React.Component {
 
   componentWillUnmount() {
     this.props.unsubscribe();
+    this.props.handleIfaceState({
+      component: '',
+      name: 'custom_btn',
+      value: null,
+    });
   }
 
   render() {
     const {props: {classes}, state: {diagrams, snack}}  = this;
-    return <AppContent>
+    return <AppContent fullWidth>
       <Helmet title={ltitle}>
         <meta name="description" content="Комплект диаграмм" />
       </Helmet>

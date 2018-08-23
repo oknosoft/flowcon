@@ -43,7 +43,7 @@ class Settings extends Component {
           <meta name="description" content="Параметры подключения" />
         </Helmet>
         <Typography variant="title" style={{paddingTop: 16}}>Подключение к базе данных</Typography>
-        <CnnSettings {...props} disable_settings={process.env.NODE_ENV !== 'development'}/>
+        <CnnSettings {...props} disable_settings={location.host === 'business-programming.ru'}/>
       </Paper>
     );
   }

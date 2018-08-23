@@ -1,5 +1,4 @@
-const serverUrl = process.env.NODE_ENV !== 'development' ? 'https://business-programming.ru' : 'https://flowcon.oknosoft.ru';
-//const serverUrl = 'https://business-programming.ru';
+const serverUrl = location.protocol === 'https' ? location.origin : 'https://flowcon.oknosoft.ru';
 
 module.exports = {
   // An optional URL to API server, by default a current window location is used.

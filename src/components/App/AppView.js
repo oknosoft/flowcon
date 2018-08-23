@@ -105,7 +105,7 @@ class AppView extends Component {
   render() {
     const {props, state} = this;
     const {classes, handleNavigate, location, snack, alert, confirm, doc_ram_loaded,
-      autologin, title, sync_started, fetch, user, couch_direct, offline} = props;
+      autologin, title, sync_started, fetch, user, couch_direct, offline, CustomBtn} = props;
     const meta_loaded = autologin && props.meta_loaded;
     const isHome = location.pathname === '/';
 
@@ -217,6 +217,7 @@ class AppView extends Component {
               handleNavigate={handleNavigate}
               compact
               barColor="default"
+              CustomBtn={CustomBtn}
             />
 
           </Toolbar>

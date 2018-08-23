@@ -1,7 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Line from './Line';
-
 /**
  * ### Диаграмма Bar
  *
@@ -9,6 +5,9 @@ import Line from './Line';
  *
  * Created by Evgeniy Malyarov on 18.08.2018.
  */
+
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export function CustomTooltip({payload, label, active}) {
   return active && <div>{`${label} : ${payload[0].value}`}</div>;
@@ -21,20 +20,20 @@ export function CustomLabel (props) {
       {`${value}`}
     </text>
   );
-};
+}
 
 function getPath (x, y, width, height) {
   return `M${x},${y + height} L${x},${y} L${x+width},${y} L${x+width},${y + height} Z`;
 }
 
 export function CustomImg(props) {
-  const { fill, x, y, width, height, img, value} = props;
+  const {x, y, width, height, img, value} = props;
   return img &&
     <g>
       <text x={x + width / 2} y={y - 5} textAnchor="middle">
         {`${value}`}
       </text>
-      <image href={img} x={x + width / 2 - 32} y={y}/>
+      <image href={img} x={x + width / 2 - 32} y={y} opacity={0.8}/>
     </g>;
 }
 
@@ -46,7 +45,7 @@ export function chartData({rows}) {
       clone[fld] = typeof val === 'object' ? (val.value || 0) : val;
     }
     return clone;
-  })
+  });
 }
 
 function Bar({width, data, isFullscreen, Recharts}) {
@@ -57,7 +56,7 @@ function Bar({width, data, isFullscreen, Recharts}) {
     height = window.innerHeight - 64;
   }
   else {
-    height = width < 400 ? width * 1.2 : width / 1.8;
+    height = width < 400 ? width * 1.2 : width / 2.8;
   }
   const xDataKey = data.points && data.points.length && data.points[0].name || 'name';
 
@@ -100,7 +99,7 @@ function Bar({width, data, isFullscreen, Recharts}) {
               fill={ser.color || '#8884d8'}
               fillOpacity={ser.opacity || 0.7}
               shape={<CustomImg/>}
-            />
+            />;
           case 'line':
             return <Line
               name={ser.presentation || ser.name}
@@ -109,7 +108,7 @@ function Bar({width, data, isFullscreen, Recharts}) {
               dataKey={ser.name}
               stroke={ser.color || '#8884d8'}
               activeDot={{r: ser.dotRadius || 6}}
-            />
+            />;
           default:
             return <Bar
               name={ser.presentation || ser.name}
@@ -117,7 +116,7 @@ function Bar({width, data, isFullscreen, Recharts}) {
               dataKey={ser.name}
               fill={ser.color || '#8884d8'}
               fillOpacity={ser.opacity || 0.7}
-            />
+            />;
           }
         })
       }
