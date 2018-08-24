@@ -46,6 +46,7 @@ function Radar({width, height, data, isFullscreen, Recharts}) {
 
 Radar.propTypes = {
   width: PropTypes.number.isRequired,
+  height: PropTypes.number,
   data: PropTypes.object.isRequired,
   isFullscreen: PropTypes.bool,
   Recharts: PropTypes.func.isRequired,

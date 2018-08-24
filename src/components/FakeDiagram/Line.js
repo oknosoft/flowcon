@@ -48,6 +48,7 @@ function Line({width, height, data, isFullscreen, Recharts}) {
 
 Line.propTypes = {
   width: PropTypes.number.isRequired,
+  height: PropTypes.number,
   data: PropTypes.object.isRequired,
   isFullscreen: PropTypes.bool,
   Recharts: PropTypes.func.isRequired,

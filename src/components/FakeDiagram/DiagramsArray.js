@@ -50,7 +50,7 @@ class DiagramsArray extends Component {
     }
 
     const spacing = 16;
-    return <Grid container spacing={spacing}>
+    return <Grid container>
       {
         diagrams.map((data, key) => {
           let md, w;

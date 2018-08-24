@@ -18,29 +18,30 @@ import Swipeable from 'react-swipeable';
 import Bar from './Bar';
 import Line from './Line';
 import Radar from './Radar';
+import Table from './Table';
 
 let Recharts;
 
 function TypedDiagram(props) {
-  const {kind} = props.data;
-  return <Swipeable onSwipingLeft={props.swipingLeft} onSwipingRight={props.swipingRight} delta={20}>
-    {kind === 'bar' ?
-      Bar(props) :
-      (
-        kind === 'line' ?
-          Line(props) :
-          (
-            kind === 'pie' ?
-              Bar(props) :
-              (
-                kind === 'radar' ?
-                  Radar(props) :
-                  <div>{`Неизвестный тип диаграммы '${props.data.kind}'`}</div>
-              )
-          )
-      )
-    }
-  </Swipeable>;
+  let diagram;
+  switch (props.data.kind) {
+  case 'line':
+    diagram = Line(props);
+    break;
+  case 'radar':
+    diagram = Radar(props);
+    break;
+  case 'bar':
+  case 'pie':
+    diagram = Bar(props);
+    break;
+  case 'table':
+    diagram = Table(props);
+    break;
+  default:
+    diagram = <div>{`Неизвестный тип диаграммы '${props.data.kind}'`}</div>;
+  };
+  return <Swipeable onSwipingLeft={props.swipingLeft} onSwipingRight={props.swipingRight} delta={20}>{diagram}</Swipeable>;
 }
 
 class Diagram extends React.Component {
@@ -86,6 +87,7 @@ TypedDiagram.propTypes = {
 
 Diagram.propTypes = {
   width: PropTypes.number.isRequired,
+  height: PropTypes.number,
   data: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   isFullscreen: PropTypes.bool,

@@ -125,6 +125,7 @@ function Bar({width, height, data, isFullscreen, Recharts}) {
 
 Bar.propTypes = {
   width: PropTypes.number.isRequired,
+  height: PropTypes.number,
   data: PropTypes.object.isRequired,
   isFullscreen: PropTypes.bool,
   Recharts: PropTypes.func.isRequired,
