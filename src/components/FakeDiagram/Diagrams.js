@@ -86,7 +86,7 @@ class Diagrams extends React.Component {
     this.props.unsubscribe();
     this.props.handleIfaceState({
       component: '',
-      name: 'custom_btn',
+      name: 'CustomBtn',
       value: null,
     });
   }

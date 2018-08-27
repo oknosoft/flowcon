@@ -40,7 +40,7 @@ function TypedDiagram(props) {
     break;
   default:
     diagram = <div>{`Неизвестный тип диаграммы '${props.data.kind}'`}</div>;
-  };
+  }
   return <Swipeable onSwipingLeft={props.swipingLeft} onSwipingRight={props.swipingRight} delta={20}>{diagram}</Swipeable>;
 }
 
