@@ -25,8 +25,8 @@ module.exports = {
       }
       ],
     series: [
-      {name: pv, color: "#7f7f7f"},
-      {name: uv, color: "#ff7f0e"}
+      {name: "pv", color: "#7f7f7f"},
+      {name: "uv", color: "#ff7f0e"}
       ],
     kind: "bar"
   }

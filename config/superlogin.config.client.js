@@ -1,4 +1,4 @@
-const serverUrl = location.protocol.indexOf('https') === 0 ? location.origin : 'https://flowcon.oknosoft.ru';
+const serverUrl = process.env.SERVER_URL || (location.protocol.indexOf('https') === 0 ? location.origin : 'https://flowcon.oknosoft.ru');
 
 module.exports = {
   // An optional URL to API server, by default a current window location is used.
