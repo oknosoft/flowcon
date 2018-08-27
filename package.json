@@ -74,6 +74,7 @@
     "react-dom": "^16.4.2",
     "rimraf": "^2.6",
     "style-loader": "^0.22.1",
+    "superlogin": "github:unpete/superlogin",
     "sw-precache-webpack-plugin": "^0.11.5",
     "url-loader": "^1.1.1",
     "webpack": "^3.12.0",
