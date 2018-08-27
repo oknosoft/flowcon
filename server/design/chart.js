@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-  "no_design": true,
+  "_no_design": true,
   "default": {
     charts: [
       "doc/chart|first"
