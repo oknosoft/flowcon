@@ -113,6 +113,11 @@ export function item_props(path) {
   if(path.endsWith('/')) {
     path = path.substr(0, path.length - 1);
   }
+
+  if(path.indexOf('password-reset')) {
+    return {need_meta: true};
+  }
+
   // здесь можно переопределить нужность meta и авторизованности для корневой страницы
   let res = with_recursion(path, items);
   if(!res && path.indexOf('/') !== -1) {

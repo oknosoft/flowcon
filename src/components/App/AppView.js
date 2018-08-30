@@ -174,6 +174,7 @@ class AppView extends Component {
             <Route path="/flowcon/diagram" render={(props) => wraper(FakeDiagram, props)}/>
             <Route path="/flowcon/list" render={(props) => wraper(FakeList, props)}/>
             <Route path="/login" render={(props) => wraper(FrmLogin, props)}/>
+            <Route path="/password-reset/:token" render={(props) => wraper(FrmLogin, props)}/>
             <Route path="/settings" render={(props) => wraper(Settings, props)}/>
             <Route render={(props) => wraper(MarkdownRoute, props)}/>
           </Switch>
