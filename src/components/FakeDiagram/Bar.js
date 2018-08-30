@@ -113,6 +113,7 @@ function Bar({width, height, data, isFullscreen, Recharts}) {
               name={ser.presentation || ser.name}
               key={key}
               dataKey={ser.name}
+              stackId={ser.stack}
               fill={ser.color || '#8884d8'}
               fillOpacity={ser.opacity || 0.7}
             />;
