@@ -1,4 +1,4 @@
-// шрифты и стили подгрузим асинхронно
+// шрифты и стили
 import './styles/global.css';
 
 import React, {Component} from 'react';
@@ -33,14 +33,8 @@ class RootProvider extends Component {
 
   componentDidMount() {
 
-    // шрифт Roboto грузим асинхронно
-    const s = document.createElement('link');
-    s.type = 'text/css';
-    s.rel = 'stylesheet';
-    s.href = 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
-    document.head.appendChild(s);
-
-    // font-awesome и стили metadata подгрузим асинхронно
+    // font-awesome, roboto и стили metadata подгрузим асинхронно
+    import('./styles/roboto/font.css');
     import('font-awesome/css/font-awesome.min.css');
     import('metadata-react/styles/react-data-grid.css');
 
