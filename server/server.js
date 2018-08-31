@@ -134,15 +134,16 @@ superlogin.on('signup', function(userDoc, provider){
     if(userDoc.personalDBs[name].type !== 'private') {
       continue;
     }
-    console.log(couchAuthDB);
-    // const db = new PouchDB(couchAuthDB._db_name.replace(/_users$/, name), {skip_setup: true});
-    // res.push(db.info()
-    //   .then((info) => {
-    //     info = null;
-    //   })
-    //   .catch((err) => {
-    //     err = null;
-    //   }));
+    if(couchAuthDB) {
+      // const db = new PouchDB(couchAuthDB.name.replace(/_users$/, name), {skip_setup: true});
+      // res.push(db.info()
+      //   .then((info) => {
+      //     info = null;
+      //   })
+      //   .catch((err) => {
+      //     err = null;
+      //   }));
+    }
   }
   return Promise.all(res);
 });
