@@ -18,6 +18,25 @@ const styles = theme => ({
   },
   secondary: {
     marginTop: -theme.spacing.unit * 1.5,
+  },
+  title: {
+    marginLeft: theme.spacing.unit,
+    fontSize: '1.1rem',
+  },
+  height: {
+    position: 'relative',
+    overflow: 'auto',
+    maxHeight: 'calc(100vh - 160px)',
+    minWidth: 260,
+  },
+  expansion: {
+    padding: 0,
+  },
+  summary: {
+    minHeight: '24px!important',
+  },
+  summaryCont: {
+    margin: '8px 0!important',
   }
 });
 
