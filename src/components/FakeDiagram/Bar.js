@@ -22,9 +22,9 @@ export function CustomLabel (props) {
   );
 }
 
-function getPath (x, y, width, height) {
-  return `M${x},${y + height} L${x},${y} L${x+width},${y} L${x+width},${y + height} Z`;
-}
+// function getPath (x, y, width, height) {
+//   return `M${x},${y + height} L${x},${y} L${x+width},${y} L${x+width},${y + height} Z`;
+// }
 
 export function CustomImg(props) {
   const {x, y, width, height, img, value} = props;
@@ -33,7 +33,7 @@ export function CustomImg(props) {
       <text x={x + width / 2} y={y - 5} textAnchor="middle">
         {`${value}`}
       </text>
-      <image href={img} x={x + width / 2 - 32} y={y} opacity={0.8}/>
+      <image href={img} x={x + width / 2 - 24} y={y} height={height*0.9} opacity={0.8}/>
     </g>;
 }
 

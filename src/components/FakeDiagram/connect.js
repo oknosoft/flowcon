@@ -12,14 +12,17 @@ import qs from 'qs';
 
 // раз в час сбрасываем кеш
 const cache = new Map();
-setInterval(() => cache.clear(), 3600000);
+function clearCache() {
+  cache.clear();
+}
+setInterval(clearCache, 3600000);
 
 const changes = [];
 
 function mapStateToProps(state, props) {
 
   function key() {
-    const user = props;
+    const {user} = props;
     return user && user.logged_in ? user.name : '';
   }
 
@@ -129,12 +132,12 @@ function mapStateToProps(state, props) {
       const {reports, doc} = dbs();
       return charts(reports, doc)
         .then(({settings, def}) => {
-          const grid = queryGrid() || (settings && settings.grid) || "1";
+          const grid = queryGrid() || (settings && settings.grid) || '1';
           const available = [];
+          let row = 0;
           if(def && def.charts_available) {
-            let row = 0;
             settings.charts.forEach((id) => {
-              for(const ava of def.charts_available) {
+              for (const ava of def.charts_available) {
                 if(ava.id === id) {
                   ava.row = ++row;
                   ava.use = true;
@@ -142,13 +145,18 @@ function mapStateToProps(state, props) {
                 }
               }
             });
-            for(const ava of def.charts_available) {
+            for (const ava of def.charts_available) {
               if(available.indexOf(ava) === -1) {
                 ava.row = ++row;
                 ava.use = false;
                 available.push(ava);
               }
             }
+          }
+          else {
+            settings.charts.forEach((id) => {
+              available.push({id, name: id, use: true, row: ++row});
+            });
           }
           return {
             available,
@@ -168,6 +176,23 @@ function mapStateToProps(state, props) {
             settings.grid = grid;
           }
         });
+    },
+
+    saveCharts(user) {
+      const {reports, doc} = dbs();
+      return charts(reports, doc)
+        .then(({settings}) => {
+          if(settings._id !== user.name){
+            settings._id = user.name;
+            delete settings._rev;
+          }
+          const grid = queryGrid();
+          if(grid) {
+            settings.grid = grid;
+          }
+          return doc.put(settings);
+        })
+        .then(clearCache);
     },
 
     subscribe(onChange) {

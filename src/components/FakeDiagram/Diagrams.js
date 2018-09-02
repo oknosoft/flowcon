@@ -17,9 +17,7 @@ import DiagramsArray from './DiagramsArray';
 import Settings from './Settings';
 import connect from './connect';
 
-
 const ltitle = 'Диаграммы';
-
 
 class Diagrams extends React.Component {
 
@@ -27,7 +25,7 @@ class Diagrams extends React.Component {
     super(props, context);
     this.state = {
       diagrams: [],
-      grid: "1",
+      grid: '1',
       snack: '',
       reseted: false,
     };
@@ -51,14 +49,18 @@ class Diagrams extends React.Component {
         props.subscribe(this.onChange);
 
         if(force) {
-          this.setState({snack: 'Данные обновлены'});
-          setTimeout(() => this.setState({snack: ''}), 1500);
+          this.setSnack('Данные обновлены');
+          setTimeout(this.setSnack, 1500);
         }
       });
   }
 
-  Settings = () => {
-    return <Settings onChange={this.onChange}/>;
+  setSnack = (snack = '') => {
+    this.setState({snack});
+  };
+
+  Settings = (props) => {
+    return <Settings {...props} onChange={this.onChange} setSnack={this.setSnack}/>;
   };
 
   shouldComponentUpdate({handleIfaceState, title, user}) {
@@ -79,12 +81,12 @@ class Diagrams extends React.Component {
 
     if(user.logged_in) {
       if(this.state.snack) {
-        this.setState({snack: ''});
+        this.setSnack();
         this.setDiagrams();
       }
     }
     else if(!this.state.reseted && !this.state.snack) {
-      this.setState({snack: 'Пользователь не авторизован - демо режим'});
+      this.setSnack('Пользователь не авторизован - демо режим');
       return false;
     }
     return true;
@@ -108,7 +110,7 @@ class Diagrams extends React.Component {
       {
         snack && <Snack
           snack={{open: true, message: snack, button: 'Закрыть'}}
-          handleClose={() => this.setState({snack: false, reseted: true})}
+          handleClose={() => this.setState({snack: '', reseted: true})}
         />
       }
       <AutoSizer disableHeight style={{overflow: 'hidden', width: '100%', paddingBottom: 48}}>
@@ -122,7 +124,6 @@ class Diagrams extends React.Component {
     </AppContent>;
   }
 }
-
 
 
 Diagrams.propTypes = {

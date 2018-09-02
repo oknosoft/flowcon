@@ -42,29 +42,38 @@ import {withIface} from 'metadata-redux';
 
 class Settings extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      open: false,
-      available: [],
-      expansion: {
-        layout: true,
-        composition: false,
-      },
-    };
-  }
-
-  componentDidMount() {
-    this.props.available()
-      .then((available) => this.setState({available: available.available}));
-  }
+  state = {
+    open: false,
+    available: [],
+    expansion: {
+      layout: true,
+      composition: false,
+    },
+  };
 
   handleOpen = () => {
-    this.setState({open: true});
+    this.setState({open: !this.state.open}, () => {
+      this.state.open && this.props.available()
+        .then((available) => this.setState({available: available.available}));
+    });
   };
 
   handleClose = () => {
     this.setState({open: false});
+  };
+
+  saveCharts = () => {
+    const {user, setSnack, saveCharts, onChange} = this.props;
+    if(!user || !user.logged_in) {
+      setSnack('Для записи настроек, необходимо авторизоваться');
+      return this.handleClose();
+    }
+    saveCharts(user)
+      .then(() => {
+        this.handleClose();
+        onChange();
+      })
+      .catch((err) => setSnack(err.toString()));
   };
 
   setLayout(mode) {
@@ -90,7 +99,7 @@ class Settings extends React.Component {
   };
 
   render() {
-    const {props: {classes, onChange, changeCharts, user}, state: {open, expansion, available}} = this;
+    const {props: {classes, onChange, changeCharts}, state: {open, expansion, available}} = this;
     return <div>
       <IconButton
 
@@ -176,9 +185,8 @@ class Settings extends React.Component {
 
           <DialogActions>
             <Button
-              onClick={this.handleClose}
+              onClick={this.saveCharts}
               color="primary"
-              disabled={!user || !user.logged_in}
               title="Сохранить настройки в профиле пользователя"
             >
               Записать
@@ -197,7 +205,9 @@ Settings.propTypes = {
   handleNavigate: PropTypes.func.isRequired,
   available: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  setSnack: PropTypes.func.isRequired,
   changeCharts: PropTypes.func.isRequired,
+  saveCharts: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   user: PropTypes.object,
 };
