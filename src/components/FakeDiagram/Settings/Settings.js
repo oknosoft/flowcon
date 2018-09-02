@@ -68,7 +68,6 @@ class Settings extends React.Component {
   };
 
   setLayout(mode) {
-    this.handleClose();
     this.props.handleNavigate(`${location.pathname}?grid=${mode}`);
   }
 
@@ -91,7 +90,7 @@ class Settings extends React.Component {
   };
 
   render() {
-    const {props: {classes, changeCharts}, state: {open, expansion, available}} = this;
+    const {props: {classes, onChange, changeCharts, user}, state: {open, expansion, available}} = this;
     return <div>
       <IconButton
 
@@ -171,12 +170,17 @@ class Settings extends React.Component {
               <Typography variant="title" color="textSecondary" className={classes.title}>Состав</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.expansion}>
-              <Composition rows={available} changeCharts={changeCharts}/>
+              <Composition rows={available} onChange={onChange} changeCharts={changeCharts}/>
             </ExpansionPanelDetails>
           </ExpansionPanel>
 
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button
+              onClick={this.handleClose}
+              color="primary"
+              disabled={!user || !user.logged_in}
+              title="Сохранить настройки в профиле пользователя"
+            >
               Записать
             </Button>
             <Button onClick={this.handleClose} color="primary">
@@ -192,8 +196,10 @@ class Settings extends React.Component {
 Settings.propTypes = {
   handleNavigate: PropTypes.func.isRequired,
   available: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   changeCharts: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  user: PropTypes.object,
 };
 
 export default compose(withIface, connect)(Settings);

@@ -23,12 +23,16 @@ const ltitle = 'Диаграммы';
 
 class Diagrams extends React.Component {
 
-  state = {
-    diagrams: [],
-    grid: "1",
-    snack: '',
-    reseted: false,
-  };
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      diagrams: [],
+      grid: "1",
+      snack: '',
+      reseted: false,
+    };
+    this.onChange = this.setDiagrams.bind(this, true);
+  }
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
@@ -44,7 +48,7 @@ class Diagrams extends React.Component {
     props.diagrams()
       .then(({diagrams, grid}) => {
         this.setState({diagrams, grid});
-        props.subscribe(this.setDiagrams.bind(this, true));
+        props.subscribe(this.onChange);
 
         if(force) {
           this.setState({snack: 'Данные обновлены'});
@@ -52,6 +56,10 @@ class Diagrams extends React.Component {
         }
       });
   }
+
+  Settings = () => {
+    return <Settings onChange={this.onChange}/>;
+  };
 
   shouldComponentUpdate({handleIfaceState, title, user}) {
 
@@ -64,7 +72,7 @@ class Diagrams extends React.Component {
       handleIfaceState({
         component: '',
         name: 'CustomBtn',
-        value: Settings,
+        value: this.Settings,
       });
       return false;
     }

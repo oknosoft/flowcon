@@ -15,13 +15,12 @@ const cache = new Map();
 setInterval(() => cache.clear(), 3600000);
 
 const changes = [];
-let listener;
 
 function mapStateToProps(state, props) {
 
   function key() {
     const user = props;
-    return user && user.logged_in ? user.name : ''
+    return user && user.logged_in ? user.name : '';
   }
 
   function dbs() {
@@ -97,7 +96,6 @@ function mapStateToProps(state, props) {
       ch.cancel();
     }
     changes.length = 0;
-    listener = null;
   }
 
   function queryGrid() {
@@ -110,7 +108,7 @@ function mapStateToProps(state, props) {
       unsubscribe();
       const {reports, doc} = dbs();
       return charts(reports, doc)
-        .then(({settings, def}) => {
+        .then(({settings}) => {
           const grid = queryGrid() || (settings && settings.grid) || "1";
           const docs = settings && settings.charts ?
             Promise.all(settings.charts.map((chart) => {
@@ -163,19 +161,17 @@ function mapStateToProps(state, props) {
     changeCharts(available) {
       const {reports, doc} = dbs();
       return charts(reports, doc)
-        .then(({settings, def}) => {
+        .then(({settings}) => {
           settings.charts = available.filter(r => r.use).map(r => r.id);
           const grid = queryGrid();
           if(grid) {
             settings.grid = grid;
           }
-          listener && listener();
         });
     },
 
     subscribe(onChange) {
       const {reports, doc} = dbs();
-      listener = onChange;
       charts(reports, doc)
         .then(({settings: {charts}}) => {
           if(!charts) return;
