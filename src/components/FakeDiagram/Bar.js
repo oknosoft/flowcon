@@ -42,7 +42,7 @@ export function chartData({rows}) {
     const clone = {};
     for(const fld in v) {
       const val = v[fld];
-      clone[fld] = typeof val === 'object' ? (val.value || 0) : val;
+      clone[fld] = (val && typeof val === 'object') ? (val.value || 0) : val;
     }
     return clone;
   });
