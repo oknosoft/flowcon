@@ -37,6 +37,9 @@ const styles = theme => ({
   },
   summaryCont: {
     margin: '8px 0!important',
+  },
+  padding7: {
+    padding: 7,
   }
 });
 

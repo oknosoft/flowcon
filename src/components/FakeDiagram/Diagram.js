@@ -68,6 +68,7 @@ class Diagram extends React.Component {
       !Recharts && <div key="loading"><CircularProgress size={24} /> Загрузка...</div>,
       Recharts && <TypedDiagram
         key="diagram"
+        classes={classes}
         Recharts={Recharts}
         swipingLeft={prev}
         swipingRight={next}

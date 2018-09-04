@@ -9,22 +9,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {chartData} from './Bar';
 import ReactDataGrid from 'metadata-external/react-data-grid.min';
 
+import './TableNoPadding.css';
 
-function Formatter({value}) {
-  if(value && typeof value === 'object') {
-    const val = value.presentation || value.value;
-    return <div title={val} style={value.css}>{val}</div>;
-  }
-  else {
-    return <div title={value}>{value}</div>;
-  }
+function Table ({width, height, data, classes, isFullscreen}) {
 
-}
-
-function Table ({width, height, data, isFullscreen}) {
   if(isFullscreen) {
     width = window.innerWidth - 16;
     height = window.innerHeight - 64;
@@ -36,6 +26,16 @@ function Table ({width, height, data, isFullscreen}) {
   const {rows} = data;
   function rowGetter(i) {
     return rows[i];
+  }
+
+  function Formatter({value}) {
+    if(value && typeof value === 'object') {
+      const val = value.presentation || value.value;
+      return <div className={classes.padding7} title={val} style={value.css}>{val}</div>;
+    }
+    else {
+      return <div className={classes.padding7} title={value}>{value}</div>;
+    }
   }
 
   function transform(column) {
@@ -64,14 +64,16 @@ function Table ({width, height, data, isFullscreen}) {
   }
 
   return (
-    <ReactDataGrid
-      columns={data.columns.map(transform)}
-      rowGetter={rowGetter}
-      rowsCount={rows.length}
-      minHeight={Math.min(height, 320)}
-      minWidth={width}
-      minColumnWidth={100}
-    />
+    <div className="noPadding">
+      <ReactDataGrid
+        columns={data.columns.map(transform)}
+        rowGetter={rowGetter}
+        rowsCount={rows.length}
+        minHeight={Math.min(height, 320)}
+        minWidth={width}
+        minColumnWidth={100}
+      />
+    </div>
   );
 }
 
