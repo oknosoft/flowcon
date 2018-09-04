@@ -81,6 +81,7 @@ Table.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number,
   data: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
   isFullscreen: PropTypes.bool,
 };
 

@@ -62,7 +62,8 @@ const styles = theme => ({
     flex: '1 1 auto',
   },
   disabled: {
-    display: 'none',
+    pointerEvents: 'none',
+    opacity: 0.4,
   }
 });
 
@@ -139,7 +140,7 @@ class MUiArticles extends Component {
           });
         }
         this.setState({
-          prev: false,
+          prev: page > 0,
           next: res.docs.length === 30,
         });
       });
@@ -165,29 +166,31 @@ class MUiArticles extends Component {
       <List key="list" className={cn(classes.list, classes.bottom)}>
         {this.renderRows()}
       </List>,
-      <div key="footer" className={classes.row}>
+      (prev || next) && <div key="footer" className={cn(classes.row, classes.bottom)}>
         <Typography
           component="a"
+          variant="subheading"
+          color="primary"
+          className={cn({[classes.disabled]: !prev})}
           href={`${match.path}${page > 1 ? `?page=${page-1}` : ''}`}
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
             handleNavigate(`${match.path}${page > 1 ? `?page=${page-1}` : ''}`);
           }}
-          color="primary"
-          className={cn({[classes.disabled]: !prev})}
         >← сюда</Typography>
         <div className={classes.scroller}> </div>
         <Typography
           component="a"
+          variant="subheading"
+          color="primary"
+          className={cn({[classes.disabled]: !next})}
           href={`${match.path}?page=${page+1}`}
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
-            handleNavigate(`${match.path}?page=${page+1}`);
+            handleNavigate(`${match.path}?page=${page > 0 ? page + 1 : 2}`);
           }}
-          color="primary"
-          className={cn({[classes.disabled]: !next})}
         >туда →</Typography>
       </div>
       ];
