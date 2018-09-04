@@ -56,6 +56,8 @@ class PageHome extends React.Component {
 
         <Helmet title={ltitle}>
           <meta name="description" content={description} />
+          <meta property="og:title" content={ltitle} />
+          <meta property="og:description" content={description} />
         </Helmet>
 
         <Grid container className={classes.hero} spacing={8}>

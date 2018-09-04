@@ -80,6 +80,8 @@ class Articles extends Component {
       <Helmet title={this.title}>
         <meta name="description" content={description} />
         <link rel="canonical" href={match.path + (match.path.endsWith('/') ? '' : '/')} />
+        <meta property="og:title" content={this.title} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <div style={{marginTop: 16}}>
         <Typography variant="display1" component="h1" color="primary">{this.title}</Typography>

@@ -29,7 +29,6 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconList from '@material-ui/icons/List';
 
-
 import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
 
@@ -240,6 +239,8 @@ class EditorArticle extends MDNRComponent {
     return _obj ? [
       <Helmet key="helmet" title={htitle}>
         <meta name="description" content={htitle} />
+        <meta property="og:title" content={htitle} />
+        <meta property="og:description" content={htitle} />
       </Helmet>,
 
       <Tabs key="tabs" value={index} onChange={(event, index) => this.setState({index})}>

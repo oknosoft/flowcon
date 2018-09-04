@@ -11,6 +11,8 @@ export default class FakeList extends React.Component {
     return <AppContent >
       <Helmet title="Некий список">
         <meta name="description" content="Прмер списка" />
+        <meta property="og:title" content="Некий список" />
+        <meta property="og:description" content="Прмер списка" />
       </Helmet>
       <div style={{marginTop: 16}}>
         <Typography variant="display1" component="h1" color="primary">Это список</Typography>

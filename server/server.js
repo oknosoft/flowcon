@@ -37,8 +37,11 @@ superlogin.config.getItem('providers.google.credentials.clientID') && superlogin
 superlogin.config.getItem('providers.yandex.credentials.clientID') && superlogin.registerOAuth2('yandex', YandexStrategy);
 superlogin.config.getItem('providers.vkontakte.credentials.clientID') && superlogin.registerOAuth2('vkontakte', VKontakteStrategy);
 
-
+// основной роутер superlogin
 app.use('/auth', superlogin.router);
+
+// смешанный рендеринг для поисковых машин и соцсетей
+app.get(/^\/(articles|files|news)/, require('./articles')(superlogin));
 
 const Profile = require('./profile');
 const profile = new Profile(superlogin);

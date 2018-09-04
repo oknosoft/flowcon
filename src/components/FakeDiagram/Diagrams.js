@@ -103,9 +103,12 @@ class Diagrams extends React.Component {
 
   render() {
     const {props: {classes, queryGrid}, state: {diagrams, snack, grid}}  = this;
+    const descr = "Комплект диаграмм с живыми данными";
     return <AppContent fullWidth>
       <Helmet title={ltitle}>
-        <meta name="description" content="Комплект диаграмм" />
+        <meta name="description" content={descr} />
+        <meta property="og:title" content={ltitle} />
+        <meta property="og:description" content={descr} />
       </Helmet>
       {
         snack && <Snack

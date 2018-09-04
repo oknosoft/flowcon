@@ -10,6 +10,7 @@ import withStyles from 'metadata-react/styles/paper600';
 import {withIface, withPrm} from 'metadata-redux';
 
 import compose from 'recompose/compose';
+import {description} from '../App/menu';
 
 class Settings extends Component {
 
@@ -41,6 +42,8 @@ class Settings extends Component {
       <Paper className={props.classes.root} elevation={4}>
         <Helmet title={props.title}>
           <meta name="description" content="Параметры подключения" />
+          <meta property="og:title" content={props.title} />
+          <meta property="og:description" content="Параметры подключения" />
         </Helmet>
         <Typography variant="title" style={{paddingTop: 16}}>Подключение к базе данных</Typography>
         <CnnSettings {...props} disable_settings={location.host === 'business-programming.ru'}/>
