@@ -41,7 +41,7 @@ superlogin.config.getItem('providers.vkontakte.credentials.clientID') && superlo
 app.use('/auth', superlogin.router);
 
 // смешанный рендеринг для поисковых машин и соцсетей
-app.get(/^\/(articles|files|news)/, require('./articles')(superlogin));
+app.get(/^\/(articles|files|news|sitemap\.xml)/, require('./articles')(superlogin));
 
 const Profile = require('./profile');
 const profile = new Profile(superlogin);

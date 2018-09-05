@@ -5,6 +5,8 @@
 
 const PouchDB = require('pouchdb');
 const https = require('https');
+const marked = require('marked');
+const sitemap = require('./sitemap');
 
 const cache = new Map();
 const timeout = 600000;
@@ -13,14 +15,10 @@ module.exports = function (superlogin) {
 
   // подключимся к базе со статьями
   const db = new PouchDB(superlogin.couchAuthDB.name.replace(/_users$/, 'fl_0_remote'), {skip_setup: true});
-  db.info()
-    .then(info => {
-      console.log(info);
-    });
 
   // вернём роутер
   return function (req, res, next) {
-    index()
+    sitemap(req, res, () => index()
       .then((html) => {
         const key = req.url.replace(/^\/(articles|files|news)/, '').replace(/^\//, '').split('?')[0];
         if(!key) {
@@ -34,7 +32,7 @@ module.exports = function (superlogin) {
             console.err(err);
             res.status(200).send(html);
           });
-      });
+      }));
   }
 }
 
@@ -93,6 +91,9 @@ function fill(html, doc) {
   html = html.replace(
     '<meta property="og:description" content="Сайт для владельцев и руководителей о решении проблем управления бизнесом" data-react-helmet="true">',
     `<meta property="og:description" content="${descr}" data-react-helmet="true">`);
+  html = html.replace(
+    '<div id="root"></div>',
+    `<div id="root">${marked(doc.content || '')}</div>`);
   return html;
 }
 
