@@ -10,7 +10,6 @@ import withStyles from 'metadata-react/styles/paper600';
 import {withIface, withPrm} from 'metadata-redux';
 
 import compose from 'recompose/compose';
-import {description} from '../App/menu';
 
 class Settings extends Component {
 

@@ -1,294 +1,88 @@
 {
   "_id": "meta",
-  "_rev": "1-92d7a8354d27fc91fa2d8dcf26820174",
+  "_rev": "41-75027ffe9c352f972cf0f43d570ca008",
   "enm": {
-    "accumulation_record_type": [
+    "couchdb_roles": [
       {
         "order": 0,
-        "name": "debit",
-        "synonym": "Приход"
+        "name": "ram_reader",
+        "synonym": "ram_reader"
       },
       {
         "order": 1,
-        "name": "credit",
-        "synonym": "Расход"
-      }
-    ],
-    "obj_delivery_states": [
-      {
-        "order": 0,
-        "name": "Черновик",
-        "synonym": "Черновик"
-      },
-      {
-        "order": 1,
-        "name": "Отправлен",
-        "synonym": "Отправлен"
+        "name": "ram_editor",
+        "synonym": "ram_editor"
       },
       {
         "order": 2,
-        "name": "Подтвержден",
-        "synonym": "Подтвержден"
+        "name": "doc_reader",
+        "synonym": "doc_reader"
       },
       {
         "order": 3,
-        "name": "Отклонен",
-        "synonym": "Отклонен"
+        "name": "doc_editor",
+        "synonym": "doc_editor"
       },
       {
         "order": 4,
-        "name": "Отозван",
-        "synonym": "Отозван"
+        "name": "doc_full",
+        "synonym": "doc_full"
       },
       {
         "order": 5,
-        "name": "Архив",
-        "synonym": "Перенесён в архив"
+        "name": "remote_reader",
+        "synonym": "remote_reader"
       },
       {
         "order": 6,
-        "name": "Шаблон",
-        "synonym": "Шаблон"
+        "name": "remote_editor",
+        "synonym": "remote_editor"
+      },
+      {
+        "order": 7,
+        "name": "remote_full",
+        "synonym": "remote_full"
       }
     ],
-    "caching_type": [
+    "gender": [
       {
         "order": 0,
-        "name": "ram",
-        "synonym": "ram"
+        "name": "Мужской",
+        "synonym": "Мужской"
       },
       {
         "order": 1,
-        "name": "doc",
-        "synonym": "doc"
-      },
-      {
-        "order": 2,
-        "name": "doc_remote",
-        "synonym": "doc_remote"
-      },
-      {
-        "order": 3,
-        "name": "meta",
-        "synonym": "meta"
-      },
-      {
-        "order": 4,
-        "name": "e1cib",
-        "synonym": "e1cib"
+        "name": "Женский",
+        "synonym": "Женский"
       }
     ],
-    "contact_information_types": [
+    "task_events": [
       {
         "order": 0,
-        "name": "Адрес",
-        "synonym": "Адрес"
+        "name": "created",
+        "synonym": "Создана"
       },
       {
         "order": 1,
-        "name": "Телефон",
-        "synonym": "Телефон"
+        "name": "deleted",
+        "synonym": "Удалена"
       },
       {
         "order": 2,
-        "name": "АдресЭлектроннойПочты",
-        "synonym": "Адрес электронной почты"
+        "name": "closed",
+        "synonym": "Закрыта"
       },
       {
         "order": 3,
-        "name": "ВебСтраница",
-        "synonym": "Веб страница"
-      },
-      {
-        "order": 4,
-        "name": "Факс",
-        "synonym": "Факс"
-      },
-      {
-        "order": 5,
-        "name": "Другое",
-        "synonym": "Другое"
-      },
-      {
-        "order": 6,
-        "name": "Skype",
-        "synonym": "Skype"
+        "name": "note",
+        "synonym": "Комментарий"
       }
     ]
   },
   "cat": {
-    "currencies": {
-      "name": "Валюты",
-      "splitted": true,
-      "synonym": "Валюты",
-      "illustration": "Валюты, используемые при расчетах",
-      "obj_presentation": "Валюта",
-      "list_presentation": "",
-      "input_by_string": [
-        "name",
-        "id"
-      ],
-      "hierarchical": false,
-      "has_owners": false,
-      "group_hierarchy": true,
-      "main_presentation_name": true,
-      "code_length": 3,
-      "fields": {
-        "name_full": {
-          "synonym": "Наименование валюты",
-          "multiline_mode": false,
-          "tooltip": "Полное наименование валюты",
-          "mandatory": true,
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 50
-          }
-        },
-        "extra_charge": {
-          "synonym": "Наценка",
-          "multiline_mode": false,
-          "tooltip": "Коэффициент, который применяется к курсу основной валюты для вычисления курса текущей валюты.",
-          "type": {
-            "types": [
-              "number"
-            ],
-            "digits": 10,
-            "fraction_figits": 2
-          }
-        },
-        "main_currency": {
-          "synonym": "Основная валюта",
-          "multiline_mode": false,
-          "tooltip": "Валюта, на основании курса которой рассчитывается курс текущей валюты",
-          "choice_groups_elm": "elm",
-          "mandatory": true,
-          "type": {
-            "types": [
-              "cat.currencies"
-            ],
-            "is_ref": true
-          }
-        },
-        "parameters_russian_recipe": {
-          "synonym": "Параметры прописи на русском",
-          "multiline_mode": false,
-          "tooltip": "Параметры прописи валюты на русском языке",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 200
-          }
-        },
-        "predefined_name": {
-          "synonym": "",
-          "multiline_mode": false,
-          "tooltip": "",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 256
-          }
-        }
-      },
-      "tabular_sections": {
-      },
-      "cachable": "ram"
-    },
-    "contact_information_kinds": {
-      "name": "ВидыКонтактнойИнформации",
-      "splitted": true,
-      "synonym": "Виды контактной информации",
-      "illustration": "",
-      "obj_presentation": "Вид контактной информации",
-      "list_presentation": "",
-      "input_by_string": [
-        "name"
-      ],
-      "hierarchical": true,
-      "has_owners": false,
-      "group_hierarchy": true,
-      "main_presentation_name": true,
-      "code_length": 0,
-      "fields": {
-        "ВидПоляДругое": {
-          "synonym": "Вид поля другое",
-          "multiline_mode": false,
-          "tooltip": "Внешний вид поля другое на форме",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 20
-          }
-        },
-        "used": {
-          "synonym": "Используется",
-          "multiline_mode": false,
-          "tooltip": "Вид контактной информации используется",
-          "type": {
-            "types": [
-              "boolean"
-            ]
-          }
-        },
-        "mandatory_fields": {
-          "synonym": "Обязательное заполнение",
-          "multiline_mode": false,
-          "tooltip": "Вид контактной информации обязателен к заполнению",
-          "type": {
-            "types": [
-              "boolean"
-            ]
-          }
-        },
-        "type": {
-          "synonym": "Тип",
-          "multiline_mode": false,
-          "tooltip": "Тип контактной информации (адрес, телефон и т.д.)",
-          "choice_groups_elm": "elm",
-          "mandatory": true,
-          "type": {
-            "types": [
-              "enm.contact_information_types"
-            ],
-            "is_ref": true
-          }
-        },
-        "predefined_name": {
-          "synonym": "",
-          "multiline_mode": false,
-          "tooltip": "",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 256
-          }
-        },
-        "parent": {
-          "synonym": "Группа",
-          "multiline_mode": false,
-          "tooltip": "Группа вида контактной информации",
-          "type": {
-            "types": [
-              "cat.contact_information_kinds"
-            ],
-            "is_ref": true
-          }
-        }
-      },
-      "tabular_sections": {
-      },
-      "cachable": "ram",
-      "hide": true
-    },
     "property_values": {
       "name": "ЗначенияСвойствОбъектов",
-      "splitted": true,
+      "splitted": false,
       "synonym": "Дополнительные значения",
       "illustration": "",
       "obj_presentation": "Дополнительное значение",
@@ -371,100 +165,8 @@
           }
         }
       },
-      "tabular_sections": {
-      },
-      "cachable": "ram",
-      "hide": true
-    },
-    "property_values_hierarchy": {
-      "name": "ЗначенияСвойствОбъектовИерархия",
-      "splitted": true,
-      "synonym": "Дополнительные значения (иерархия)",
-      "illustration": "",
-      "obj_presentation": "Дополнительное значение (иерархия)",
-      "list_presentation": "",
-      "input_by_string": [
-        "name"
-      ],
-      "hierarchical": true,
-      "has_owners": true,
-      "group_hierarchy": false,
-      "main_presentation_name": true,
-      "code_length": 0,
-      "fields": {
-        "heft": {
-          "synonym": "Весовой коэффициент",
-          "multiline_mode": false,
-          "tooltip": "Относительный вес дополнительного значения (значимость).",
-          "type": {
-            "types": [
-              "number"
-            ],
-            "digits": 10,
-            "fraction_figits": 2
-          }
-        },
-        "full_name": {
-          "synonym": "Полное наименование",
-          "multiline_mode": true,
-          "tooltip": "Подробное описание значения дополнительного реквизита",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 0
-          }
-        },
-        "predefined_name": {
-          "synonym": "",
-          "multiline_mode": false,
-          "tooltip": "",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 256
-          }
-        },
-        "owner": {
-          "synonym": "Свойство",
-          "multiline_mode": false,
-          "tooltip": "Дополнительный реквизит или сведение.",
-          "mandatory": true,
-          "type": {
-            "types": [
-              "cch.properties"
-            ],
-            "is_ref": true
-          }
-        },
-        "parent": {
-          "synonym": "Входит в группу",
-          "multiline_mode": false,
-          "tooltip": "Вышестоящее дополнительное значение свойства.",
-          "choice_links": [
-            {
-              "name": [
-                "selection",
-                "owner"
-              ],
-              "path": [
-                "owner"
-              ]
-            }
-          ],
-          "type": {
-            "types": [
-              "cat.property_values_hierarchy"
-            ],
-            "is_ref": true
-          }
-        }
-      },
-      "tabular_sections": {
-      },
-      "cachable": "ram",
-      "hide": true
+      "tabular_sections": {},
+      "cachable": "ram"
     },
     "meta_ids": {
       "name": "ИдентификаторыОбъектовМетаданных",
@@ -516,133 +218,99 @@
           }
         }
       },
-      "tabular_sections": {
-      },
-      "cachable": "ram",
-      "hide": true
+      "tabular_sections": {},
+      "cachable": "ram"
     },
-    "users_acl": {
-      "name": "ИнтеграцияПраваПользователей",
-      "splitted": true,
-      "synonym": "Права внешних пользователей",
+    "tags_category": {
+      "name": "КатегорииТегов",
+      "splitted": false,
+      "synonym": "Категории тегов",
       "illustration": "",
-      "obj_presentation": "Права внешних пользователей",
-      "list_presentation": "Права внешних пользователей",
+      "obj_presentation": "",
+      "list_presentation": "",
       "input_by_string": [
-      ],
-      "hierarchical": false,
-      "has_owners": true,
-      "group_hierarchy": true,
-      "main_presentation_name": false,
-      "code_length": 0,
-      "fields": {
-        "prefix": {
-          "synonym": "Префикс нумерации документов",
-          "multiline_mode": false,
-          "tooltip": "Префикс номеров документов текущего пользователя",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 2
-          }
-        },
-        "predefined_name": {
-          "synonym": "",
-          "multiline_mode": false,
-          "tooltip": "",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 256
-          }
-        },
-        "owner": {
-          "synonym": "Пользователь",
-          "multiline_mode": false,
-          "tooltip": "",
-          "mandatory": true,
-          "type": {
-            "types": [
-              "cat.users"
-            ],
-            "is_ref": true
-          }
-        }
-      },
-      "tabular_sections": {
-        "acl_objs": {
-          "name": "ОбъектыДоступа",
-          "synonym": "Объекты доступа",
-          "tooltip": "",
-          "fields": {
-            "acl_obj": {
-              "synonym": "Объект доступа",
-              "multiline_mode": false,
-              "tooltip": "",
-              "type": {
-                "types": [
-                  "cat.users",
-                  "cat.cashboxes",
-                  "cat.meta_ids"
-                ],
-                "is_ref": true
-              }
-            },
-            "type": {
-              "synonym": "Тип",
-              "multiline_mode": false,
-              "tooltip": "",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 50
-              }
-            },
-            "by_default": {
-              "synonym": "По умолчанию",
-              "multiline_mode": false,
-              "tooltip": "",
-              "type": {
-                "types": [
-                  "boolean"
-                ]
-              }
-            }
-          }
-        }
-      },
-      "cachable": "ram",
-      "hide": true
-    },
-    "cashboxes": {
-      "name": "Кассы",
-      "splitted": true,
-      "synonym": "Кассы, подотчетники, контрагенты",
-      "illustration": "Список мест фактического хранения и движения наличных денежных средств.",
-      "obj_presentation": "Касса",
-      "list_presentation": "Кассы, подотчетники, контрагенты",
-      "input_by_string": [
-        "name",
-        "id"
+        "name"
       ],
       "hierarchical": false,
       "has_owners": false,
       "group_hierarchy": true,
       "main_presentation_name": true,
-      "code_length": 9,
+      "code_length": 0,
       "fields": {
-        "funds_currency": {
-          "synonym": "Валюта",
+        "predefined_name": {
+          "synonym": "",
           "multiline_mode": false,
-          "tooltip": "Валюта учета денежных средств",
-          "choice_groups_elm": "elm",
-          "mandatory": true,
+          "tooltip": "",
           "type": {
             "types": [
-              "cat.currencies"
+              "string"
+            ],
+            "str_len": 256
+          }
+        }
+      },
+      "tabular_sections": {},
+      "cachable": "ram"
+    },
+    "parameters_keys": {
+      "name": "КлючиПараметров",
+      "splitted": false,
+      "synonym": "Ключи параметров",
+      "illustration": "Списки пар {Параметр:Значение} для фильтрации в подсистемах формирования спецификаций, планировании и ценообразовании\n",
+      "obj_presentation": "Ключ параметров",
+      "list_presentation": "Ключи параметров",
+      "input_by_string": [
+        "name"
+      ],
+      "hierarchical": true,
+      "has_owners": false,
+      "group_hierarchy": true,
+      "main_presentation_name": true,
+      "code_length": 0,
+      "fields": {
+        "priority": {
+          "synonym": "Приоритет",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "number"
+            ],
+            "digits": 6,
+            "fraction_figits": 0
+          }
+        },
+        "note": {
+          "synonym": "Комментарий",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 0
+          }
+        },
+        "sorting_field": {
+          "synonym": "Порядок",
+          "multiline_mode": false,
+          "tooltip": "Используется для упорядочивания",
+          "type": {
+            "types": [
+              "number"
+            ],
+            "digits": 5,
+            "fraction_figits": 0
+          }
+        },
+        "applying": {
+          "synonym": "Применение",
+          "multiline_mode": false,
+          "tooltip": "",
+          "choice_groups_elm": "elm",
+          "type": {
+            "types": [
+              "enm.parameters_keys_applying"
             ],
             "is_ref": true
           }
@@ -657,184 +325,220 @@
             ],
             "str_len": 256
           }
+        },
+        "parent": {
+          "synonym": "",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "cat.parameters_keys"
+            ],
+            "is_ref": true
+          }
         }
       },
       "tabular_sections": {
-        "contact_information": {
-          "name": "КонтактнаяИнформация",
-          "synonym": "Контактная информация",
-          "tooltip": "Хранение контактной информации (адреса, веб-страницы, номера телефонов и др.)",
+        "params": {
+          "name": "Параметры",
+          "synonym": "Параметры",
+          "tooltip": "",
           "fields": {
-            "type": {
-              "synonym": "Тип",
+            "property": {
+              "synonym": "Свойство",
               "multiline_mode": false,
-              "tooltip": "Тип контактной информации (телефон, адрес и т.п.)",
+              "tooltip": "",
               "choice_groups_elm": "elm",
+              "mandatory": true,
               "type": {
                 "types": [
-                  "enm.contact_information_types"
+                  "cch.properties"
                 ],
                 "is_ref": true
               }
             },
-            "kind": {
-              "synonym": "Вид",
+            "comparison_type": {
+              "synonym": "Вид сравнения",
               "multiline_mode": false,
-              "tooltip": "Вид контактной информации",
+              "tooltip": "",
               "choice_params": [
                 {
-                  "name": "parent",
-                  "path": {
-                    "ref": "8fc6d5dc-55bb-11e6-82b8-d85d4c80ec2a",
-                    "presentation": "Справочник \"Кассы\"",
-                    "type": "cat.contact_information_kinds"
-                  }
+                  "name": "ref",
+                  "path": [
+                    "gt",
+                    "gte",
+                    "lt",
+                    "lte",
+                    "eq",
+                    "ne",
+                    "in",
+                    "nin",
+                    "inh",
+                    "ninh"
+                  ]
                 }
               ],
               "choice_groups_elm": "elm",
               "type": {
                 "types": [
-                  "cat.contact_information_kinds"
+                  "enm.comparison_types"
                 ],
                 "is_ref": true
               }
             },
-            "presentation": {
-              "synonym": "Представление",
+            "value": {
+              "synonym": "Значение",
               "multiline_mode": false,
-              "tooltip": "Представление контактной информации для отображения в формах",
+              "tooltip": "",
+              "choice_links": [
+                {
+                  "name": [
+                    "comparison_type"
+                  ],
+                  "path": [
+                    "params",
+                    "comparison_type"
+                  ]
+                },
+                {
+                  "name": [
+                    "selection",
+                    "owner"
+                  ],
+                  "path": [
+                    "params",
+                    "property"
+                  ]
+                },
+                {
+                  "name": [
+                    "txt_row"
+                  ],
+                  "path": [
+                    "params",
+                    "txt_row"
+                  ]
+                }
+              ],
+              "choice_type": {
+                "path": [
+                  "params",
+                  "property"
+                ],
+                "elm": 0
+              },
               "type": {
                 "types": [
-                  "string"
+                  "cat.property_values_hierarchy",
+                  "boolean",
+                  "cat.property_values",
+                  "string",
+                  "date",
+                  "number",
+                  "cat.users"
                 ],
-                "str_len": 500
+                "is_ref": true,
+                "str_len": 1024,
+                "date_part": "date_time",
+                "digits": 15,
+                "fraction_figits": 3
               }
             },
-            "values_fields": {
-              "synonym": "Значения полей",
+            "txt_row": {
+              "synonym": "Текстовая строка",
               "multiline_mode": false,
-              "tooltip": "Служебное поле, для хранения контактной информации",
+              "tooltip": "Полный текст строкового реквизита либо сериализация списочного значения",
               "type": {
                 "types": [
                   "string"
                 ],
                 "str_len": 0
-              },
-              "hide": true
-            },
-            "country": {
-              "synonym": "Страна",
-              "multiline_mode": false,
-              "tooltip": "Страна (заполняется для адреса)",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 100
-              },
-              "hide": true
-            },
-            "region": {
-              "synonym": "Регион",
-              "multiline_mode": false,
-              "tooltip": "Регион (заполняется для адреса)",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 50
-              },
-              "hide": true
-            },
-            "city": {
-              "synonym": "Город",
-              "multiline_mode": false,
-              "tooltip": "Город (заполняется для адреса)",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 50
-              },
-              "hide": true
-            },
-            "АдресЭП": {
-              "synonym": "Адрес ЭП",
-              "multiline_mode": false,
-              "tooltip": "Адрес электронной почты",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 100
-              },
-              "hide": true
-            },
-            "server_domain_name": {
-              "synonym": "Доменное имя сервера",
-              "multiline_mode": false,
-              "tooltip": "Доменное имя сервера электронной почты или веб-страницы",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 100
-              },
-              "hide": true
-            },
-            "phone_number": {
-              "synonym": "Номер телефона",
-              "multiline_mode": false,
-              "tooltip": "Полный номер телефона",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 20
-              },
-              "hide": true
-            },
-            "phone_without_codes": {
-              "synonym": "Номер телефона без кодов",
-              "multiline_mode": false,
-              "tooltip": "Номер телефона без кодов и добавочного номера",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 20
-              },
-              "hide": true
-            },
-            "ВидДляСписка": {
-              "synonym": "Вид для списка",
-              "multiline_mode": false,
-              "tooltip": "Вид контактной информации для списка",
-              "choice_groups_elm": "elm",
-              "type": {
-                "types": [
-                  "cat.contact_information_kinds"
-                ],
-                "is_ref": true
-              }
-            },
-            "ДействуетС": {
-              "synonym": "Действует С",
-              "multiline_mode": false,
-              "tooltip": "Дата актуальности контактная информация",
-              "type": {
-                "types": [
-                  "date"
-                ],
-                "date_part": "date"
               }
             }
           }
+        }
+      },
+      "cachable": "ram"
+    },
+    "partners": {
+      "name": "Контрагенты",
+      "splitted": false,
+      "synonym": "Контрагенты",
+      "illustration": "Список юридических или физических лиц клиентов (поставщиков, покупателей).",
+      "obj_presentation": "Контрагент",
+      "list_presentation": "Контрагенты",
+      "input_by_string": [
+        "name",
+        "id",
+        "inn"
+      ],
+      "hierarchical": true,
+      "has_owners": false,
+      "group_hierarchy": true,
+      "main_presentation_name": true,
+      "code_length": 9,
+      "fields": {
+        "name_full": {
+          "synonym": "Полное наименование",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 0
+          }
         },
+        "note": {
+          "synonym": "Комментарий",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 0
+          }
+        },
+        "inn": {
+          "synonym": "ИНН",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 12
+          }
+        },
+        "predefined_name": {
+          "synonym": "",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 256
+          }
+        },
+        "parent": {
+          "synonym": "Группа контрагентов",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "cat.partners"
+            ],
+            "is_ref": true
+          }
+        }
+      },
+      "tabular_sections": {
         "extra_fields": {
           "name": "ДополнительныеРеквизиты",
           "synonym": "Дополнительные реквизиты",
-          "tooltip": "Набор реквизитов, состав которого определяется компанией.",
+          "tooltip": "",
           "fields": {
             "property": {
               "synonym": "Свойство",
@@ -874,15 +578,13 @@
               },
               "type": {
                 "types": [
-                  "cat.currencies",
                   "cat.property_values_hierarchy",
                   "boolean",
                   "cat.property_values",
                   "string",
                   "date",
                   "number",
-                  "cat.users",
-                  "cat.cashboxes"
+                  "cat.users"
                 ],
                 "is_ref": true,
                 "str_len": 1024,
@@ -906,11 +608,11 @@
           }
         }
       },
-      "cachable": "ram"
+      "cachable": "doc_ram"
     },
     "destinations": {
       "name": "НаборыДополнительныхРеквизитовИСведений",
-      "splitted": true,
+      "splitted": false,
       "synonym": "Наборы дополнительных реквизитов и сведений",
       "illustration": "",
       "obj_presentation": "Набор дополнительных реквизитов и сведений",
@@ -924,28 +626,6 @@
       "main_presentation_name": true,
       "code_length": 0,
       "fields": {
-        "КоличествоРеквизитов": {
-          "synonym": "Количество реквизитов",
-          "multiline_mode": false,
-          "tooltip": "Количество реквизитов в наборе не помеченных на удаление.",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 5
-          }
-        },
-        "КоличествоСведений": {
-          "synonym": "Количество сведений",
-          "multiline_mode": false,
-          "tooltip": "Количество сведений в наборе не помеченных на удаление.",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 5
-          }
-        },
         "used": {
           "synonym": "Используется",
           "multiline_mode": false,
@@ -1039,12 +719,163 @@
           }
         }
       },
-      "cachable": "ram",
-      "hide": true
+      "cachable": "ram"
+    },
+    "flow_tunes": {
+      "name": "НастройкиПотоков",
+      "splitted": false,
+      "synonym": "Настройки потоков",
+      "illustration": "",
+      "obj_presentation": "",
+      "list_presentation": "",
+      "input_by_string": [
+        "name"
+      ],
+      "hierarchical": false,
+      "has_owners": false,
+      "group_hierarchy": true,
+      "main_presentation_name": true,
+      "code_length": 0,
+      "fields": {
+        "start_date": {
+          "synonym": "Дата начала",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "date"
+            ],
+            "date_part": "date"
+          }
+        },
+        "predefined_name": {
+          "synonym": "",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 256
+          }
+        }
+      },
+      "tabular_sections": {
+        "flows": {
+          "name": "Потоки",
+          "synonym": "Потоки",
+          "tooltip": "",
+          "fields": {
+            "key": {
+              "synonym": "Ключ",
+              "multiline_mode": false,
+              "tooltip": "",
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "cat.parameters_keys"
+                ],
+                "is_ref": true
+              }
+            },
+            "rating_formula": {
+              "synonym": "Формула оценки",
+              "multiline_mode": false,
+              "tooltip": "",
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "cat.formulas"
+                ],
+                "is_ref": true
+              }
+            },
+            "priority_formula": {
+              "synonym": "Формула приоритетов",
+              "multiline_mode": false,
+              "tooltip": "",
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "cat.formulas"
+                ],
+                "is_ref": true
+              }
+            },
+            "rate": {
+              "synonym": "Процент потока",
+              "multiline_mode": false,
+              "tooltip": "",
+              "type": {
+                "types": [
+                  "number"
+                ],
+                "digits": 15,
+                "fraction_figits": 2
+              }
+            }
+          }
+        }
+      },
+      "cachable": "doc_ram"
+    },
+    "contents": {
+      "name": "Оглавление",
+      "splitted": false,
+      "synonym": "Оглавление",
+      "illustration": "",
+      "obj_presentation": "",
+      "list_presentation": "",
+      "input_by_string": [
+        "name"
+      ],
+      "hierarchical": true,
+      "has_owners": false,
+      "group_hierarchy": false,
+      "main_presentation_name": true,
+      "code_length": 0,
+      "fields": {
+        "sorting_field": {
+          "synonym": "Порядок",
+          "multiline_mode": false,
+          "tooltip": "Используется для упорядочивания (служебный)",
+          "type": {
+            "types": [
+              "number"
+            ],
+            "digits": 6,
+            "fraction_figits": 0
+          }
+        },
+        "predefined_name": {
+          "synonym": "",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 256
+          }
+        },
+        "parent": {
+          "synonym": "",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "cat.contents"
+            ],
+            "is_ref": true
+          }
+        }
+      },
+      "tabular_sections": {},
+      "cachable": "ram"
     },
     "users": {
       "name": "Пользователи",
-      "splitted": true,
+      "splitted": false,
       "synonym": "Пользователи",
       "illustration": "",
       "obj_presentation": "Пользователь",
@@ -1058,16 +889,6 @@
       "main_presentation_name": true,
       "code_length": 0,
       "fields": {
-        "invalid": {
-          "synonym": "Недействителен",
-          "multiline_mode": false,
-          "tooltip": "Пользователь больше не работает в программе, но сведения о нем сохранены.\nНедействительные пользователи скрываются из всех списков\nпри выборе или подборе в документах и других местах программы.",
-          "type": {
-            "types": [
-              "boolean"
-            ]
-          }
-        },
         "note": {
           "synonym": "Комментарий",
           "multiline_mode": true,
@@ -1079,42 +900,6 @@
             "str_len": 0
           }
         },
-        "ancillary": {
-          "synonym": "Служебный",
-          "multiline_mode": false,
-          "tooltip": "Неразделенный или разделенный служебный пользователь, права к которому устанавливаются непосредственно и программно.",
-          "type": {
-            "types": [
-              "boolean"
-            ]
-          }
-        },
-        "user_ib_uid": {
-          "synonym": "Идентификатор пользователя ИБ",
-          "multiline_mode": false,
-          "tooltip": "Уникальный идентификатор пользователя информационной базы, с которым сопоставлен этот элемент справочника.",
-          "choice_groups_elm": "elm",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 36,
-            "str_fix": true
-          }
-        },
-        "user_fresh_uid": {
-          "synonym": "Идентификатор пользователя сервиса",
-          "multiline_mode": false,
-          "tooltip": "Уникальный идентификатор пользователя сервиса, с которым сопоставлен этот элемент справочника.",
-          "choice_groups_elm": "elm",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 36,
-            "str_fix": true
-          }
-        },
         "id": {
           "synonym": "Логин",
           "multiline_mode": true,
@@ -1124,6 +909,95 @@
               "string"
             ],
             "str_len": 50
+          }
+        },
+        "prefix": {
+          "synonym": "Префикс нумерации документов",
+          "multiline_mode": false,
+          "tooltip": "Префикс номеров документов текущего пользователя",
+          "mandatory": true,
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 2
+          }
+        },
+        "branch": {
+          "synonym": "Отдел",
+          "multiline_mode": false,
+          "tooltip": "",
+          "choice_groups_elm": "elm",
+          "type": {
+            "types": [
+              "cat.ИнтеграцияОтделыАбонентов"
+            ],
+            "is_ref": true
+          }
+        },
+        "push_only": {
+          "synonym": "Только push репликация",
+          "multiline_mode": false,
+          "tooltip": "Для пользователя установлен режим push-only (изменения мигрируют в одну сторону - от пользователя на сервер)",
+          "type": {
+            "types": [
+              "boolean"
+            ]
+          }
+        },
+        "subscription": {
+          "synonym": "Подписан на рассылку",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "boolean"
+            ]
+          }
+        },
+        "suffix": {
+          "synonym": "Суффикс CouchDB",
+          "multiline_mode": false,
+          "tooltip": "Для разделения данных в CouchDB",
+          "mandatory": true,
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 4
+          }
+        },
+        "direct": {
+          "synonym": "Direct",
+          "multiline_mode": false,
+          "tooltip": "Для пользователя запрещен режим offline",
+          "type": {
+            "types": [
+              "boolean"
+            ]
+          }
+        },
+        "sex": {
+          "synonym": "Пол",
+          "multiline_mode": false,
+          "tooltip": "",
+          "choice_groups_elm": "elm",
+          "type": {
+            "types": [
+              "enm.gender"
+            ],
+            "is_ref": true
+          }
+        },
+        "email_addr": {
+          "synonym": "Адрес ЭП",
+          "multiline_mode": false,
+          "tooltip": "Адрес электронной почты",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 100
           }
         },
         "predefined_name": {
@@ -1173,17 +1047,22 @@
                 }
               ],
               "choice_groups_elm": "elm",
+              "choice_type": {
+                "path": [
+                  "extra_fields",
+                  "property"
+                ],
+                "elm": 0
+              },
               "type": {
                 "types": [
-                  "cat.currencies",
                   "cat.property_values_hierarchy",
                   "boolean",
                   "cat.property_values",
                   "string",
                   "date",
                   "number",
-                  "cat.users",
-                  "cat.cashboxes"
+                  "cat.users"
                 ],
                 "is_ref": true,
                 "str_len": 1024,
@@ -1205,82 +1084,29 @@
             }
           }
         },
-        "contact_information": {
-          "name": "КонтактнаяИнформация",
-          "synonym": "Контактная информация",
-          "tooltip": "Хранение контактной информации (адреса, веб-страницы, номера телефонов и др.)",
+        "acl_objs": {
+          "name": "ОбъектыДоступа",
+          "synonym": "Объекты доступа",
+          "tooltip": "",
           "fields": {
+            "acl_obj": {
+              "synonym": "Объект доступа",
+              "multiline_mode": false,
+              "tooltip": "",
+              "type": {
+                "types": [
+                  "cat.divisions",
+                  "cat.partners",
+                  "cat.users",
+                  "cat.meta_ids"
+                ],
+                "is_ref": true
+              }
+            },
             "type": {
               "synonym": "Тип",
               "multiline_mode": false,
-              "tooltip": "Тип контактной информации (телефон, адрес и т.п.)",
-              "choice_groups_elm": "elm",
-              "type": {
-                "types": [
-                  "enm.contact_information_types"
-                ],
-                "is_ref": true
-              }
-            },
-            "kind": {
-              "synonym": "Вид",
-              "multiline_mode": false,
-              "tooltip": "Вид контактной информации",
-              "choice_params": [
-                {
-                  "name": "parent",
-                  "path": {
-                    "ref": "2d084a4c-55b8-11e6-82b8-d85d4c80ec2a",
-                    "presentation": "Контактная информация справочника \"Пользователи\"",
-                    "type": "cat.contact_information_kinds"
-                  }
-                }
-              ],
-              "choice_groups_elm": "elm",
-              "type": {
-                "types": [
-                  "cat.contact_information_kinds"
-                ],
-                "is_ref": true
-              }
-            },
-            "presentation": {
-              "synonym": "Представление",
-              "multiline_mode": false,
-              "tooltip": "Представление контактной информации для отображения в формах",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 500
-              }
-            },
-            "values_fields": {
-              "synonym": "Значения полей",
-              "multiline_mode": false,
-              "tooltip": "Служебное поле, для хранения контактной информации",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 0
-              }
-            },
-            "country": {
-              "synonym": "Страна",
-              "multiline_mode": false,
-              "tooltip": "Страна (заполняется для адреса)",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 100
-              }
-            },
-            "region": {
-              "synonym": "Регион",
-              "multiline_mode": false,
-              "tooltip": "Регион (заполняется для адреса)",
+              "tooltip": "",
               "type": {
                 "types": [
                   "string"
@@ -1288,86 +1114,28 @@
                 "str_len": 50
               }
             },
-            "city": {
-              "synonym": "Город",
+            "by_default": {
+              "synonym": "По умолчанию",
               "multiline_mode": false,
-              "tooltip": "Город (заполняется для адреса)",
+              "tooltip": "",
               "type": {
                 "types": [
-                  "string"
-                ],
-                "str_len": 50
-              }
-            },
-            "АдресЭП": {
-              "synonym": "Адрес ЭП",
-              "multiline_mode": false,
-              "tooltip": "Адрес электронной почты",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 100
-              }
-            },
-            "server_domain_name": {
-              "synonym": "Доменное имя сервера",
-              "multiline_mode": false,
-              "tooltip": "Доменное имя сервера электронной почты или веб-страницы",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 100
-              }
-            },
-            "phone_number": {
-              "synonym": "Номер телефона",
-              "multiline_mode": false,
-              "tooltip": "Полный номер телефона",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 20
-              }
-            },
-            "phone_without_codes": {
-              "synonym": "Номер телефона без кодов",
-              "multiline_mode": false,
-              "tooltip": "Номер телефона без кодов и добавочного номера",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 20
-              }
-            },
-            "ВидДляСписка": {
-              "synonym": "Вид для списка",
-              "multiline_mode": false,
-              "tooltip": "Вид контактной информации для списка",
-              "choice_groups_elm": "elm",
-              "type": {
-                "types": [
-                  "cat.contact_information_kinds"
-                ],
-                "is_ref": true
+                  "boolean"
+                ]
               }
             }
           }
         }
       },
-      "cachable": "ram",
-      "hide": true
+      "cachable": "ram"
     },
-    "cash_flow_articles": {
-      "name": "СтатьиДвиженияДенежныхСредств",
-      "splitted": true,
-      "synonym": "Статьи движения денежных средств",
-      "illustration": "Перечень статей движения денежных средств (ДДС), используемых в предприятии для проведения анализа поступлений и расходов в разрезе статей движения денежных средств. ",
-      "obj_presentation": "Статья движения денежных средств",
-      "list_presentation": "Статьи движения денежных средств",
+    "projects": {
+      "name": "Проекты",
+      "splitted": false,
+      "synonym": "Проекты",
+      "illustration": "",
+      "obj_presentation": "",
+      "list_presentation": "",
       "input_by_string": [
         "name",
         "id"
@@ -1376,31 +1144,8 @@
       "has_owners": false,
       "group_hierarchy": true,
       "main_presentation_name": true,
-      "code_length": 9,
+      "code_length": 11,
       "fields": {
-        "definition": {
-          "synonym": "Описание",
-          "multiline_mode": true,
-          "tooltip": "Рекомендации по выбору статьи движения денежных средств в документах",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 1024
-          }
-        },
-        "sorting_field": {
-          "synonym": "Порядок",
-          "multiline_mode": false,
-          "tooltip": "Определяет порядок вывода вариантов анализа в мониторе целевых показателей при группировке по категориям целей.",
-          "type": {
-            "types": [
-              "number"
-            ],
-            "digits": 5,
-            "fraction_figits": 0
-          }
-        },
         "predefined_name": {
           "synonym": "",
           "multiline_mode": false,
@@ -1413,37 +1158,401 @@
           }
         },
         "parent": {
-          "synonym": "В группе статей",
+          "synonym": "",
           "multiline_mode": false,
-          "tooltip": "Группа статей движения денежных средств",
+          "tooltip": "",
           "type": {
             "types": [
-              "cat.cash_flow_articles"
+              "cat.projects"
             ],
             "is_ref": true
           }
         }
       },
       "tabular_sections": {
+        "extra_fields": {
+          "name": "ДополнительныеРеквизиты",
+          "synonym": "Дополнительные реквизиты",
+          "tooltip": "Набор реквизитов, состав которого определяется компанией.",
+          "fields": {
+            "property": {
+              "synonym": "Свойство",
+              "multiline_mode": false,
+              "tooltip": "Дополнительный реквизит",
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "cch.properties"
+                ],
+                "is_ref": true
+              }
+            },
+            "value": {
+              "synonym": "Значение",
+              "multiline_mode": false,
+              "tooltip": "Значение дополнительного реквизита",
+              "choice_links": [
+                {
+                  "name": [
+                    "selection",
+                    "owner"
+                  ],
+                  "path": [
+                    "extra_fields",
+                    "property"
+                  ]
+                }
+              ],
+              "choice_groups_elm": "elm",
+              "choice_type": {
+                "path": [
+                  "extra_fields",
+                  "property"
+                ],
+                "elm": 0
+              },
+              "type": {
+                "types": [
+                  "cat.property_values_hierarchy",
+                  "boolean",
+                  "cat.property_values",
+                  "string",
+                  "date",
+                  "number",
+                  "cat.users"
+                ],
+                "is_ref": true,
+                "str_len": 1024,
+                "date_part": "date_time",
+                "digits": 15,
+                "fraction_figits": 3
+              }
+            },
+            "txt_row": {
+              "synonym": "Текстовая строка",
+              "multiline_mode": false,
+              "tooltip": "Полный текст строкового дополнительного реквизита",
+              "type": {
+                "types": [
+                  "string"
+                ],
+                "str_len": 0
+              }
+            }
+          }
+        }
       },
-      "cachable": "ram"
+      "cachable": "doc_ram"
     },
-    "formulas": {
-      "name": "Формулы",
-      "splitted": true,
-      "synonym": "Формулы",
-      "illustration": "Формулы пользователя, для выполнения при расчете спецификаций в справочниках Вставки, Соединения, Фурнитура и регистре Корректировки спецификации",
-      "obj_presentation": "Формула",
+    "articles": {
+      "name": "Статьи",
+      "splitted": false,
+      "synonym": "Статьи",
+      "illustration": "Основной объект CMS. Новости и файлы - это тоже статьи",
+      "obj_presentation": "",
       "list_presentation": "",
       "input_by_string": [
         "name",
         "id"
       ],
+      "hierarchical": false,
+      "has_owners": false,
+      "group_hierarchy": true,
+      "main_presentation_name": true,
+      "code_length": 50,
+      "fields": {
+        "h1": {
+          "synonym": "H1",
+          "multiline_mode": false,
+          "tooltip": "Заголовок в теле статьи",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 255
+          }
+        },
+        "descr": {
+          "synonym": "Description",
+          "multiline_mode": false,
+          "tooltip": "Краткое содержание для SEO",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 255
+          }
+        },
+        "introduction": {
+          "synonym": "Introduction",
+          "multiline_mode": false,
+          "tooltip": "Вводный текст",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 0
+          }
+        },
+        "content": {
+          "synonym": "Content",
+          "multiline_mode": false,
+          "tooltip": "Текст статьи",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 0
+          }
+        },
+        "date": {
+          "synonym": "Дата",
+          "multiline_mode": false,
+          "tooltip": "",
+          "mandatory": true,
+          "type": {
+            "types": [
+              "date"
+            ],
+            "date_part": "date_time"
+          }
+        },
+        "author": {
+          "synonym": "Автор",
+          "multiline_mode": false,
+          "tooltip": "",
+          "choice_groups_elm": "elm",
+          "type": {
+            "types": [
+              "cat.users"
+            ],
+            "is_ref": true
+          }
+        },
+        "sorting_field": {
+          "synonym": "Порядок",
+          "multiline_mode": false,
+          "tooltip": "Используется для упорядочивания (служебный)",
+          "type": {
+            "types": [
+              "number"
+            ],
+            "digits": 6,
+            "fraction_figits": 0
+          }
+        },
+        "published": {
+          "synonym": "Материал опубликован",
+          "multiline_mode": false,
+          "tooltip": "Показывать на сайте",
+          "type": {
+            "types": [
+              "boolean"
+            ]
+          }
+        },
+        "contents": {
+          "synonym": "Оглавление",
+          "multiline_mode": false,
+          "tooltip": "",
+          "choice_groups_elm": "elm",
+          "type": {
+            "types": [
+              "cat.contents"
+            ],
+            "is_ref": true
+          }
+        },
+        "version_from": {
+          "synonym": "Версия от",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 50
+          }
+        },
+        "version_till": {
+          "synonym": "Версия до",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 50
+          }
+        },
+        "formula": {
+          "synonym": "Формула",
+          "multiline_mode": false,
+          "tooltip": "Модификатор",
+          "choice_params": [
+            {
+              "name": "parent",
+              "path": "4c94da29-5643-11e6-82b8-d85d4c80ec2a"
+            }
+          ],
+          "choice_groups_elm": "elm",
+          "type": {
+            "types": [
+              "cat.formulas"
+            ],
+            "is_ref": true
+          }
+        },
+        "predefined_name": {
+          "synonym": "",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 256
+          }
+        }
+      },
+      "tabular_sections": {
+        "tags": {
+          "name": "Теги",
+          "synonym": "Теги",
+          "tooltip": "Произвольные ярлыки",
+          "fields": {
+            "tag": {
+              "synonym": "Тег (категория)",
+              "multiline_mode": false,
+              "tooltip": "",
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "cat.tags"
+                ],
+                "is_ref": true
+              }
+            }
+          }
+        },
+        "acl": {
+          "name": "acl",
+          "synonym": "Права",
+          "tooltip": "",
+          "fields": {
+            "role": {
+              "synonym": "role",
+              "multiline_mode": false,
+              "tooltip": "",
+              "type": {
+                "types": [
+                  "string"
+                ],
+                "str_len": 25
+              }
+            },
+            "w": {
+              "synonym": "w",
+              "multiline_mode": false,
+              "tooltip": "Резрешена запись объекта",
+              "type": {
+                "types": [
+                  "boolean"
+                ]
+              }
+            }
+          }
+        },
+        "aliases": {
+          "name": "aliases",
+          "synonym": "Псевдонимы url",
+          "tooltip": "",
+          "fields": {
+            "url": {
+              "synonym": "Псевдоним Url",
+              "multiline_mode": false,
+              "tooltip": "",
+              "type": {
+                "types": [
+                  "string"
+                ],
+                "str_len": 50
+              }
+            }
+          }
+        }
+      },
+      "cachable": "remote"
+    },
+    "tags": {
+      "name": "Теги",
+      "splitted": false,
+      "synonym": "Теги",
+      "illustration": "",
+      "obj_presentation": "Тег",
+      "list_presentation": "",
+      "input_by_string": [
+        "name"
+      ],
+      "hierarchical": false,
+      "has_owners": false,
+      "group_hierarchy": true,
+      "main_presentation_name": true,
+      "code_length": 0,
+      "fields": {
+        "category": {
+          "synonym": "Категория",
+          "multiline_mode": false,
+          "tooltip": "",
+          "choice_groups_elm": "elm",
+          "type": {
+            "types": [
+              "cat.tags_category"
+            ],
+            "is_ref": true
+          }
+        },
+        "synonym": {
+          "synonym": "Синоним",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 255
+          }
+        },
+        "predefined_name": {
+          "synonym": "",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 256
+          }
+        }
+      },
+      "tabular_sections": {},
+      "cachable": "ram"
+    },
+    "formulas": {
+      "name": "Формулы",
+      "splitted": false,
+      "synonym": "Формулы",
+      "illustration": "Формулы пользователя, для выполнения при расчете спецификаций в справочниках Вставки, Соединения, Фурнитура и регистре Корректировки спецификации",
+      "obj_presentation": "Формула",
+      "list_presentation": "",
+      "input_by_string": [
+        "name"
+      ],
       "hierarchical": true,
       "has_owners": false,
       "group_hierarchy": true,
       "main_presentation_name": true,
-      "code_length": 9,
+      "code_length": 0,
       "fields": {
         "formula": {
           "synonym": "Формула",
@@ -1463,11 +1572,7 @@
           "choice_params": [
             {
               "name": "leading_formula",
-              "path": {
-                "ref": "00000000-0000-0000-0000-000000000000",
-                "presentation": "",
-                "type": "cat.formulas"
-              }
+              "path": "00000000-0000-0000-0000-000000000000"
             }
           ],
           "choice_groups_elm": "elm",
@@ -1508,6 +1613,50 @@
               "string"
             ],
             "str_len": 0
+          }
+        },
+        "sorting_field": {
+          "synonym": "Порядок",
+          "multiline_mode": false,
+          "tooltip": "Используется для упорядочивания (служебный)",
+          "type": {
+            "types": [
+              "number"
+            ],
+            "digits": 6,
+            "fraction_figits": 0
+          }
+        },
+        "async": {
+          "synonym": "Асинхронный режим",
+          "multiline_mode": false,
+          "tooltip": "Создавать асинхронную функцию",
+          "type": {
+            "types": [
+              "boolean"
+            ]
+          }
+        },
+        "disabled": {
+          "synonym": "Отключена",
+          "multiline_mode": false,
+          "tooltip": "Имеет смысл только для печатных форм и модификаторов",
+          "type": {
+            "types": [
+              "boolean"
+            ]
+          }
+        },
+        "zone": {
+          "synonym": "Область",
+          "multiline_mode": false,
+          "tooltip": "Разделитель (префикс) данных",
+          "type": {
+            "types": [
+              "number"
+            ],
+            "digits": 6,
+            "fraction_figits": 0
           }
         },
         "predefined_name": {
@@ -1568,7 +1717,6 @@
                   ]
                 }
               ],
-              "choice_groups_elm": "elm",
               "choice_type": {
                 "path": [
                   "params",
@@ -1578,15 +1726,13 @@
               },
               "type": {
                 "types": [
-                  "cat.currencies",
                   "cat.property_values_hierarchy",
                   "boolean",
                   "cat.property_values",
                   "string",
                   "date",
                   "number",
-                  "cat.users",
-                  "cat.cashboxes"
+                  "cat.users"
                 ],
                 "is_ref": true,
                 "str_len": 1024,
@@ -1598,15 +1744,14 @@
           }
         }
       },
-      "cachable": "doc",
-      "hide": true
+      "cachable": "ram"
     }
   },
   "doc": {
-    "cash_moving": {
-      "name": "ДвижениеДенег",
-      "splitted": true,
-      "synonym": "Перемещение денег",
+    "work_record": {
+      "name": "ЗаписьЛУРВ",
+      "splitted": false,
+      "synonym": "Запись ЛУРВ",
       "illustration": "",
       "obj_presentation": "",
       "list_presentation": "",
@@ -1617,61 +1762,24 @@
       "has_owners": false,
       "group_hierarchy": false,
       "main_presentation_name": false,
-      "code_length": 11,
+      "code_length": 9,
       "fields": {
-        "sender": {
-          "synonym": "Отправитель",
+        "partner": {
+          "synonym": "Контрагент",
           "multiline_mode": false,
           "tooltip": "",
           "choice_groups_elm": "elm",
           "type": {
             "types": [
-              "cat.cashboxes"
+              "cat.partners"
             ],
             "is_ref": true
           }
         },
-        "recipient": {
-          "synonym": "Получатель",
+        "executor": {
+          "synonym": "Исполнитель",
           "multiline_mode": false,
           "tooltip": "",
-          "choice_groups_elm": "elm",
-          "type": {
-            "types": [
-              "cat.cashboxes"
-            ],
-            "is_ref": true
-          }
-        },
-        "doc_amount": {
-          "synonym": "Сумма документа",
-          "multiline_mode": false,
-          "tooltip": "",
-          "mandatory": true,
-          "type": {
-            "types": [
-              "number"
-            ],
-            "digits": 15,
-            "fraction_figits": 2
-          }
-        },
-        "cash_flow_article": {
-          "synonym": "Статья ДДС",
-          "multiline_mode": false,
-          "tooltip": "",
-          "choice_groups_elm": "elm",
-          "type": {
-            "types": [
-              "cat.cash_flow_articles"
-            ],
-            "is_ref": true
-          }
-        },
-        "responsible": {
-          "synonym": "Ответственный",
-          "multiline_mode": false,
-          "tooltip": "Пользователь, ответственный за  документ.",
           "choice_groups_elm": "elm",
           "type": {
             "types": [
@@ -1680,6 +1788,50 @@
             "is_ref": true
           }
         },
+        "issue": {
+          "synonym": "Проблема",
+          "multiline_mode": false,
+          "tooltip": "",
+          "choice_groups_elm": "elm",
+          "type": {
+            "types": [
+              "doc.issue"
+            ],
+            "is_ref": true
+          }
+        },
+        "internal": {
+          "synonym": "Внутренняя",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "boolean"
+            ]
+          }
+        },
+        "start": {
+          "synonym": "Старт",
+          "multiline_mode": false,
+          "tooltip": "Время начала работ",
+          "type": {
+            "types": [
+              "date"
+            ],
+            "date_part": "date"
+          }
+        },
+        "finish": {
+          "synonym": "Финиш",
+          "multiline_mode": false,
+          "tooltip": "Время окончания работ",
+          "type": {
+            "types": [
+              "date"
+            ],
+            "date_part": "date"
+          }
+        },
         "note": {
           "synonym": "Комментарий",
           "multiline_mode": false,
@@ -1692,33 +1844,29 @@
           }
         }
       },
-      "tabular_sections": {
-      },
+      "tabular_sections": {},
       "cachable": "doc"
-    }
-  },
-  "ireg": {
-    "$log": {
-      "name": "$log",
-      "note": "",
-      "synonym": "Журнал событий",
-      "dimensions": {
-        "date": {
-          "synonym": "Дата",
+    },
+    "issue": {
+      "name": "Проблема",
+      "splitted": false,
+      "synonym": "Задача",
+      "illustration": "",
+      "obj_presentation": "",
+      "list_presentation": "Задачи",
+      "input_by_string": [
+        "number_doc"
+      ],
+      "hierarchical": false,
+      "has_owners": false,
+      "group_hierarchy": false,
+      "main_presentation_name": false,
+      "code_length": 9,
+      "fields": {
+        "complexity": {
+          "synonym": "Сложность",
           "multiline_mode": false,
-          "tooltip": "Время события",
-          "type": {
-            "types": [
-              "number"
-            ],
-            "digits": 15,
-            "fraction_figits": 0
-          }
-        },
-        "sequence": {
-          "synonym": "Порядок",
-          "multiline_mode": false,
-          "tooltip": "Порядок следования",
+          "tooltip": "",
           "type": {
             "types": [
               "number"
@@ -1726,54 +1874,206 @@
             "digits": 6,
             "fraction_figits": 0
           }
+        },
+        "identifier": {
+          "synonym": "Внешний идентификатор",
+          "multiline_mode": false,
+          "tooltip": "Ссылка на внешнюю issue, например, в github",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 1000
+          }
+        },
+        "caption": {
+          "synonym": "Заголовок",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 255
+          }
+        },
+        "definition": {
+          "synonym": "Описание",
+          "multiline_mode": false,
+          "tooltip": "",
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 0
+          }
+        },
+        "responsible": {
+          "synonym": "Ответственный",
+          "multiline_mode": false,
+          "tooltip": "",
+          "choice_groups_elm": "elm",
+          "type": {
+            "types": [
+              "cat.users"
+            ],
+            "is_ref": true
+          }
         }
       },
-      "resources": {
-        "class": {
-          "synonym": "Класс",
-          "multiline_mode": false,
-          "tooltip": "Класс события",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 100
+      "tabular_sections": {
+        "tags": {
+          "name": "Теги",
+          "synonym": "Теги",
+          "tooltip": "Произвольные ярлыки",
+          "fields": {
+            "tag": {
+              "synonym": "Тег",
+              "multiline_mode": false,
+              "tooltip": "",
+              "choice_params": [
+                {
+                  "name": "category",
+                  "path": "00000000-0000-0000-0000-000000000000"
+                }
+              ],
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "cat.tags"
+                ],
+                "is_ref": true
+              }
+            }
           }
         },
-        "note": {
-          "synonym": "Комментарий",
-          "multiline_mode": true,
-          "tooltip": "Текст события",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 0
+        "projects": {
+          "name": "Проекты",
+          "synonym": "Проекты",
+          "tooltip": "Проблема может относиться к нескольким проектам",
+          "fields": {
+            "project": {
+              "synonym": "Проект",
+              "multiline_mode": false,
+              "tooltip": "",
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "cat.projects"
+                ],
+                "is_ref": true
+              }
+            }
           }
         },
-        "obj": {
-          "synonym": "Объект",
-          "multiline_mode": true,
-          "tooltip": "Объект, к которому относится событие",
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 0
+        "executors": {
+          "name": "Исполнители",
+          "synonym": "Исполнители",
+          "tooltip": "",
+          "fields": {
+            "executor": {
+              "synonym": "Исполнитель",
+              "multiline_mode": false,
+              "tooltip": "",
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "cat.users"
+                ],
+                "is_ref": true
+              }
+            },
+            "coefficient": {
+              "synonym": "Коэффициент",
+              "multiline_mode": false,
+              "tooltip": "",
+              "type": {
+                "types": [
+                  "number"
+                ],
+                "digits": 15,
+                "fraction_figits": 2
+              }
+            }
+          }
+        },
+        "events": {
+          "name": "События",
+          "synonym": "События",
+          "tooltip": "Даты открытия, закрытия, редактирования",
+          "fields": {
+            "identifier": {
+              "synonym": "Идентификатор строки",
+              "multiline_mode": false,
+              "tooltip": "Позволяет сослаться на конкретное событие",
+              "type": {
+                "types": [
+                  "string"
+                ],
+                "str_len": 36,
+                "str_fix": true
+              }
+            },
+            "date": {
+              "synonym": "Дата",
+              "multiline_mode": false,
+              "tooltip": "",
+              "type": {
+                "types": [
+                  "date"
+                ],
+                "date_part": "date_time"
+              }
+            },
+            "event": {
+              "synonym": "Событие",
+              "multiline_mode": false,
+              "tooltip": "",
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "enm.task_events"
+                ],
+                "is_ref": true
+              }
+            },
+            "executor": {
+              "synonym": "Исполнитель",
+              "multiline_mode": false,
+              "tooltip": "",
+              "choice_groups_elm": "elm",
+              "type": {
+                "types": [
+                  "cat.users"
+                ],
+                "is_ref": true
+              }
+            },
+            "note": {
+              "synonym": "Комментарий",
+              "multiline_mode": false,
+              "tooltip": "",
+              "type": {
+                "types": [
+                  "string"
+                ],
+                "str_len": 0
+              }
+            }
           }
         }
-      }
+      },
+      "cachable": "doc"
     }
   },
-  "areg": {
-  },
-  "dp": {
-  },
+  "ireg": {},
+  "areg": {},
+  "dp": {},
   "rep": {
-    "cash_moving": {
-      "name": "ДвижениеДенег",
+    "current_tasks": {
+      "name": "ТекущиеЗадачи",
       "splitted": false,
-      "synonym": "Движение денег",
+      "synonym": "Текущие задачи",
       "illustration": "",
       "obj_presentation": "",
       "list_presentation": "",
@@ -1782,55 +2082,29 @@
       "group_hierarchy": false,
       "main_presentation_name": false,
       "code_length": 0,
-      "fields": {
-      },
-      "tabular_sections": {
-        "cashboxes": {
-          "name": "Кассы",
-          "synonym": "Кассы",
-          "tooltip": "",
-          "fields": {
-            "cashbox": {
-              "synonym": "Касса",
-              "multiline_mode": false,
-              "tooltip": "",
-              "choice_groups_elm": "elm",
-              "type": {
-                "types": [
-                  "cat.cashboxes"
-                ],
-                "is_ref": true
-              }
-            }
-          }
-        },
-        "cash_flow_articles": {
-          "name": "СтатьиДвиженияДенежныхСредств",
-          "synonym": "Статьи ДДС",
-          "tooltip": "",
-          "fields": {
-            "cash_flow_article": {
-              "synonym": "Статья ДДС",
-              "multiline_mode": false,
-              "tooltip": "",
-              "choice_groups_elm": "elm",
-              "type": {
-                "types": [
-                  "cat.cash_flow_articles"
-                ],
-                "is_ref": true
-              }
-            }
-          }
-        }
-      },
-      "cachable": "ram"
+      "fields": {},
+      "tabular_sections": {}
+    },
+    "efficiency": {
+      "name": "Эффективность",
+      "splitted": false,
+      "synonym": "Эффективность",
+      "illustration": "",
+      "obj_presentation": "",
+      "list_presentation": "",
+      "hierarchical": false,
+      "has_owners": false,
+      "group_hierarchy": false,
+      "main_presentation_name": false,
+      "code_length": 0,
+      "fields": {},
+      "tabular_sections": {}
     }
   },
   "cch": {
     "properties": {
       "name": "ДополнительныеРеквизитыИСведения",
-      "splitted": true,
+      "splitted": false,
       "synonym": "Дополнительные реквизиты и сведения",
       "illustration": "",
       "obj_presentation": "Дополнительный реквизит / сведение",
@@ -1852,6 +2126,18 @@
             "types": [
               "boolean"
             ]
+          }
+        },
+        "sorting_field": {
+          "synonym": "Порядок",
+          "multiline_mode": false,
+          "tooltip": "Используется для упорядочивания (служебный)",
+          "type": {
+            "types": [
+              "number"
+            ],
+            "digits": 6,
+            "fraction_figits": 0
           }
         },
         "extra_values_owner": {
@@ -1876,18 +2162,6 @@
             ]
           }
         },
-        "caption": {
-          "synonym": "Наименование",
-          "multiline_mode": false,
-          "tooltip": "Краткое представление свойства, которое\nвыводится в формах редактирования его значения",
-          "mandatory": true,
-          "type": {
-            "types": [
-              "string"
-            ],
-            "str_len": 75
-          }
-        },
         "mandatory": {
           "synonym": "Заполнять обязательно",
           "multiline_mode": false,
@@ -1896,6 +2170,28 @@
             "types": [
               "boolean"
             ]
+          }
+        },
+        "include_to_name": {
+          "synonym": "Включать в наименование",
+          "multiline_mode": false,
+          "tooltip": "Добавлять значение параметра в наименование продукции",
+          "type": {
+            "types": [
+              "boolean"
+            ]
+          }
+        },
+        "list": {
+          "synonym": "Список",
+          "multiline_mode": false,
+          "tooltip": "Реквизит подсистемы интеграции metadata.js - реализует функциональность списка опций",
+          "type": {
+            "types": [
+              "number"
+            ],
+            "digits": 1,
+            "fraction_figits": 0
           }
         },
         "note": {
@@ -1932,6 +2228,18 @@
             "str_len": 0
           }
         },
+        "caption": {
+          "synonym": "Наименование",
+          "multiline_mode": false,
+          "tooltip": "Краткое представление свойства, которое\nвыводится в формах редактирования его значения",
+          "mandatory": true,
+          "type": {
+            "types": [
+              "string"
+            ],
+            "str_len": 75
+          }
+        },
         "is_extra_property": {
           "synonym": "Это дополнительное сведение",
           "multiline_mode": false,
@@ -1942,10 +2250,10 @@
             ]
           }
         },
-        "list": {
-          "synonym": "Список",
+        "include_to_description": {
+          "synonym": "Включать в описание",
           "multiline_mode": false,
-          "tooltip": "Значение представляет собой список опций",
+          "tooltip": "Добавлять имя и значение параметра в строку описания продукции",
           "type": {
             "types": [
               "boolean"
@@ -1970,15 +2278,13 @@
           "mandatory": true,
           "type": {
             "types": [
-              "cat.currencies",
               "cat.property_values_hierarchy",
               "boolean",
               "cat.property_values",
               "string",
               "date",
               "number",
-              "cat.users",
-              "cat.cashboxes"
+              "cat.users"
             ],
             "is_ref": true,
             "str_len": 1024,
@@ -1988,99 +2294,19 @@
           }
         }
       },
-      "tabular_sections": {
-        "extra_fields_dependencies": {
-          "name": "ЗависимостиДополнительныхРеквизитов",
-          "synonym": "Зависимости дополнительных реквизитов",
-          "tooltip": "",
-          "fields": {
-            "ЗависимоеСвойство": {
-              "synonym": "Зависимое свойство",
-              "multiline_mode": false,
-              "tooltip": "Имя свойства дополнительного реквизита, для которого настроена зависимость.",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 0
-              }
-            },
-            "field": {
-              "synonym": "Реквизит",
-              "multiline_mode": false,
-              "tooltip": "Имя реквизита формы или ссылка на дополнительный реквизит, от которого зависит текущий дополнительный реквизит.",
-              "choice_groups_elm": "elm",
-              "type": {
-                "types": [
-                  "cch.properties",
-                  "string"
-                ],
-                "is_ref": true,
-                "str_len": 99
-              }
-            },
-            "condition": {
-              "synonym": "Условие",
-              "multiline_mode": false,
-              "tooltip": "Вид зависимости. \"Равно\", \"Не равно\", \"Заполнено\" или \"Не заполнено\".",
-              "type": {
-                "types": [
-                  "string"
-                ],
-                "str_len": 20
-              }
-            },
-            "value": {
-              "synonym": "Значение",
-              "multiline_mode": false,
-              "tooltip": "Значение реквизита в условии.",
-              "choice_groups_elm": "elm",
-              "type": {
-                "types": [
-                  "cat.ПапкиЭлектронныхПисем",
-                  "enm.caching_type",
-                  "doc.cash_moving",
-                  "cch.predefined_elmnts",
-                  "cat.currencies",
-                  "enm.contact_information_types",
-                  "cat.property_values_hierarchy",
-                  "cat.formulas",
-                  "boolean",
-                  "cat.property_values",
-                  "cat.cash_flow_articles",
-                  "cat.destinations",
-                  "cch.properties",
-                  "string",
-                  "date",
-                  "number",
-                  "cat.users",
-                  "cat.cashboxes",
-                  "enm.obj_delivery_states",
-                  "cat.meta_ids",
-                  "cat.users_acl",
-                  "cat.contact_information_kinds"
-                ],
-                "is_ref": true,
-                "str_len": 50,
-                "date_part": "date",
-                "digits": 10,
-                "fraction_figits": 0
-              }
-            }
-          }
-        }
-      },
-      "cachable": "ram",
-      "hide": true
+      "tabular_sections": {},
+      "cachable": "ram"
     },
     "predefined_elmnts": {
       "name": "ПредопределенныеЭлементы",
-      "splitted": true,
+      "splitted": false,
       "synonym": "Константы и списки",
       "illustration": "Хранит значения настроек и параметров подсистем",
       "obj_presentation": "Значение настроек",
       "list_presentation": "",
       "input_by_string": [
+        "name",
+        "synonym"
       ],
       "hierarchical": true,
       "has_owners": false,
@@ -2100,11 +2326,14 @@
           },
           "type": {
             "types": [
+              "cat.formulas",
               "boolean",
+              "cch.properties",
               "string",
               "date",
               "number"
             ],
+            "is_ref": true,
             "str_len": 1024,
             "date_part": "date",
             "digits": 8,
@@ -2146,6 +2375,18 @@
             "fraction_figits": 0
           }
         },
+        "zone": {
+          "synonym": "Область",
+          "multiline_mode": false,
+          "tooltip": "Разделитель (префикс) данных",
+          "type": {
+            "types": [
+              "number"
+            ],
+            "digits": 6,
+            "fraction_figits": 0
+          }
+        },
         "predefined_name": {
           "synonym": "",
           "multiline_mode": false,
@@ -2174,11 +2415,14 @@
           "tooltip": "",
           "type": {
             "types": [
+              "cat.formulas",
               "boolean",
+              "cch.properties",
               "string",
               "date",
               "number"
             ],
+            "is_ref": true,
             "str_len": 1024,
             "date_part": "date",
             "digits": 8,
@@ -2204,11 +2448,14 @@
               },
               "type": {
                 "types": [
+                  "cat.formulas",
                   "boolean",
+                  "cch.properties",
                   "string",
                   "date",
                   "number"
                 ],
+                "is_ref": true,
                 "str_len": 1024,
                 "date_part": "date",
                 "digits": 8,
@@ -2221,11 +2468,14 @@
               "tooltip": "",
               "type": {
                 "types": [
+                  "cat.formulas",
                   "boolean",
+                  "cch.properties",
                   "string",
                   "date",
                   "number"
                 ],
+                "is_ref": true,
                 "str_len": 1024,
                 "date_part": "date",
                 "digits": 8,
@@ -2235,56 +2485,39 @@
           }
         }
       },
-      "cachable": "doc"
+      "cachable": "ram"
     }
   },
-  "cacc": {
-  },
-  "bp": {
-  },
-  "tsk": {
-  },
+  "cacc": {},
+  "bp": {},
+  "tsk": {},
   "syns_1с": [
     "Автор",
-    "Артикул",
-    "БазоваяЕдиницаИзмерения",
-    "Банк",
-    "БанкДляРасчетов",
-    "Банки",
-    "БанковскиеСчета",
-    "БанковскиеСчетаКонтрагентов",
-    "БанковскиеСчетаОрганизаций",
-    "БанковскийСчет",
+    "АдресЭП",
     "БизнесПроцесс",
-    "БИКБанка",
-    "БИКБанкаДляРасчетов",
     "Булево",
     "Валюта",
-    "ВалютаВзаиморасчетов",
-    "ВалютаДенежныхСредств",
-    "ВалютаДокумента",
-    "ВалютаЦены",
     "Валюты",
     "ВводПоСтроке",
-    "ВедениеВзаиморасчетов",
-    "ВедениеВзаиморасчетовПоДоговорам",
     "ВедущаяЗадача",
     "ВедущаяФормула",
     "Ведущий",
     "ВерсияДанных",
     "Вес",
     "Вид",
-    "ВидДоговора",
+    "ВидДляСписка",
     "Виден",
-    "ВидНоменклатуры",
     "ВидОперации",
+    "ВидСравнения",
     "ВидСчета",
-    "ВидыДоговоровКонтрагентов",
     "ВидыКонтактнойИнформации",
-    "ВидыНоменклатуры",
+    "ВидыПолейФормы",
+    "ВключатьВНаименование",
+    "ВключатьВОписание",
     "Владелец",
     "ВладелецДополнительныхЗначений",
     "Владельцы",
+    "Внутренняя",
     "ВремяИзменения",
     "ВремяНачала",
     "ВремяОкончания",
@@ -2293,16 +2526,12 @@
     "ВходящееИсходящееСобытие",
     "ВыборГруппИЭлементов",
     "Выполнена",
-    "Высота",
-    "Глубина",
     "Город",
-    "ГородБанка",
-    "ГородБанкаДляРасчетов",
     "Готовность",
     "ГрафикиРаботников",
     "ГрафикРаботы",
-    "ГруппыФинансовогоУчетаНоменклатуры",
     "ДаНет",
+    "Данные",
     "Дата",
     "ДатаДоставки",
     "ДатаИзменения",
@@ -2310,38 +2539,32 @@
     "ДатаОкончания",
     "ДатаРождения",
     "ДатаСобытия",
-    "ДвижениеДенег",
     "ДебетКредит",
     "Действие",
-    "ДержатьРезервБезОплатыОграниченноеВремя",
     "Длина",
     "ДлинаКода",
     "ДлинаНомера",
     "ДниНедели",
-    "ДоговорКонтрагента",
-    "ДоговорыКонтрагентов",
     "ДокументУдостоверяющийЛичность",
     "Долгота",
+    "Должность",
+    "ДолжностьРП",
     "ДоменноеИмяСервера",
     "ДополнительныеРеквизиты",
     "ДополнительныеРеквизитыИСведения",
     "ДополнительныеСведения",
-    "ДопустимаяСуммаЗадолженности",
-    "ДопустимоеЧислоДнейЗадолженности",
     "Доступен",
-    "ЕдиницаИзмерения",
-    "ЕдиницаПоКлассификатору",
-    "ЕдиницаХраненияОстатков",
-    "ЕдиницыИзмерения",
     "Завершен",
     "Завершение",
     "ЗависимостиДополнительныхРеквизитов",
     "Заголовок",
+    "Задача",
     "Заказ",
     "ЗаказПокупателя",
     "ЗаказПоставщику",
     "Закрыт",
     "Запасы",
+    "ЗаписьЛУРВ",
     "ЗаполнятьОбязательно",
     "Запуск",
     "Значение",
@@ -2359,23 +2582,23 @@
     "ИерархияГруппИЭлементов",
     "Имя",
     "ИмяПредопределенныхДанных",
-    "Инд",
+    "ИмяРП",
     "Индекс",
-    "ИндивидуальныйПредприниматель",
     "ИНН",
+    "ИнтеграцияВидыСравнений",
     "ИнтеграцияКешСсылок",
-    "ИнтеграцияПраваПользователей",
+    "ИнтеграцияРолиCouchDB",
     "ИнтеграцияСостоянияТранспорта",
+    "ИнтеграцияТипВыгрузки",
     "ИнтеграцияТипКеширования",
-    "ИнтеграцияТипРегистрации",
+    "ИнтеграцияТипСвёртки",
     "Исполнители",
     "Исполнитель",
     "Используется",
-    "Касса",
-    "Кассы",
+    "КатегорииТегов",
     "Категория",
-    "КлассификаторБанковРФ",
-    "КлассификаторЕдиницИзмерения",
+    "Ключ",
+    "КлючиПараметров",
     "Код",
     "КодАльфа2",
     "КодАльфа3",
@@ -2384,20 +2607,12 @@
     "Количество",
     "Комментарий",
     "КонецПериода",
+    "КонечныйОстаток",
     "КонтактнаяИнформация",
-    "КонтактныеЛица",
-    "КонтактныеЛицаКонтрагентов",
     "Контрагент",
     "Контрагенты",
-    "КонтролироватьСуммуЗадолженности",
-    "КонтролироватьЧислоДнейЗадолженности",
     "КорректировкаРегистров",
-    "КоррСчет",
-    "КоррСчетБанка",
-    "КоррСчетБанкаДляРасчетов",
     "Коэффициент",
-    "КоэффициентПотерь",
-    "КПП",
     "Кратность",
     "КратностьВзаиморасчетов",
     "Курс",
@@ -2405,8 +2620,6 @@
     "КурсыВалют",
     "Марка",
     "Масса",
-    "Материалы",
-    "МеждународноеСокращение",
     "Менеджер",
     "МестоРождения",
     "МногострочныйРежим",
@@ -2415,15 +2628,13 @@
     "НаборСвойств",
     "НаборыДополнительныхРеквизитовИСведений",
     "Наименование",
-    "НаименованиеБанка",
     "НаименованиеПолное",
-    "НаименованиеСокращенное",
-    "НалогообложениеНДС",
-    "Наценка",
+    "Направление",
+    "НаправленияСортировки",
+    "НастройкиПотоков",
     "НачалоПериода",
+    "НачальныйОстаток",
     "Недействителен",
-    "Номенклатура",
-    "НоменклатурнаяГруппа",
     "Номер",
     "НомерСтроки",
     "НомерСчета",
@@ -2435,60 +2646,45 @@
     "ОбъектыДоступа",
     "Объем",
     "ОбязательноеЗаполнение",
-    "ОкруглятьВБольшуюСторону",
-    "ОкруглятьКоличество",
+    "Оглавление",
     "Описание",
-    "Организации",
-    "Организация",
+    "Основание",
+    "ОснованиеРП",
     "ОсновнаяВалюта",
-    "ОсновнаяСтатьяДвиженияДенежныхСредств",
-    "ОсновноаяКасса",
     "ОсновноеПредставлениеИмя",
-    "ОсновнойБанковскийСчет",
-    "ОсновнойДоговорКонтрагента",
-    "ОсновнойМенеджерПокупателя",
     "ОсновнойПроект",
     "Отбор",
     "Ответственный",
+    "Отдел",
     "Отправитель",
-    "ОтражатьВБухгалтерскомУчете",
-    "ОтражатьВНалоговомУчете",
     "Отступы",
+    "Отчество",
+    "ОтчествоРП",
     "Параметр",
     "Параметры",
     "ПараметрыВыбора",
     "ПараметрыОтбора",
-    "ПараметрыПрописиНаРусском",
+    "Период",
     "Планирование",
-    "ПлатежноеПоручениеВходящее",
-    "ПлатежноеПоручениеИсходящее",
-    "ПлатежныйКалендарь",
-    "Плотность",
-    "Площадь",
     "Поворачивать",
-    "ПоДоговоруВЦелом",
     "Подразделение",
     "Подразделения",
     "Подсказка",
     "Подчиненый",
-    "ПоЗаказам",
     "Покупатель",
     "Пол",
     "ПолноеИмя",
     "ПолноеНаименование",
+    "ПоложенияЗаголовка",
     "Получатель",
     "ПолФизическихЛиц",
     "Пользователи",
     "ПометкаУдаления",
-    "ПорогОкругления",
     "Порядок",
-    "ПорядокОкругления",
     "Поставщик",
-    "ПоступлениеТоваровУслуг",
-    "ПоСчетам",
+    "Потоки",
     "ПоУмолчанию",
     "Пояснение",
-    "Предоплата",
     "ПредопределенныеЭлементы",
     "Предопределенный",
     "Представление",
@@ -2496,77 +2692,53 @@
     "ПредставлениеОбъекта",
     "ПредставлениеСписка",
     "Префикс",
+    "Применение",
+    "ПримененияКлючейПараметров",
     "Принудительно",
     "Приоритет",
-    "ПриходныйКассовыйОрдер",
+    "Приход",
+    "Проблема",
+    "Проблемы",
     "Проведен",
     "Проект",
     "Проекты",
     "Процент",
-    "ПроцентАвтоматическихСкидок",
-    "ПроцентПредоплаты",
-    "ПроцентСкидкиНаценки",
-    "ПроцентСкидкиНаценкиВнутр",
     "Прочее",
     "Разделитель",
-    "РасходныйКассовыйОрдер",
-    "РасчетныйСчет",
-    "РасчетыСКонтрагентами",
+    "Расход",
     "РасширенныйРежим",
-    "РасшифровкаПлатежа",
-    "РеализацияТоваровУслуг",
     "Регион",
     "Реквизит",
     "РеквизитДопУпорядочивания",
     "Реквизиты",
     "Родитель",
-    "СвидетельствоДатаВыдачи",
-    "СвидетельствоКодОргана",
-    "СвидетельствоНаименованиеОргана",
-    "СвидетельствоСерияНомер",
-    "СВИФТБИК",
     "Свойство",
     "Связи",
     "СвязиПараметровВыбора",
     "СвязьПоТипу",
     "Сделка",
-    "Себестоимость",
     "Синоним",
     "Скидка",
-    "СкидкиНаценки",
-    "Склад",
-    "Склады",
-    "СКомиссионером",
-    "СКомитентом",
     "Скрыть",
+    "Сложность",
     "Сложный",
     "Служебный",
     "Событие",
+    "События",
+    "СобытияЗадач",
     "Содержание",
     "Соответствие",
     "Состояние",
     "СостояниеТранспорта",
     "Сотрудник",
     "Сотрудники",
-    "Спецификации",
-    "Спецификация",
     "Список",
-    "СПокупателем",
-    "СпособУстановкиКурса",
-    "СпособыУстановкиКурсаВалюты",
-    "СПоставщиком",
     "СрокДействия",
     "Ссылка",
-    "СтавкаНДС",
-    "СтавкиНДС",
+    "СтандартныйПериод",
     "Старт",
     "Стартован",
-    "СтатусМатериальныхЗатрат",
-    "СтатусыЗаказов",
-    "СтатьиДвиженияДенежныхСредств",
-    "СтатьиЗатрат",
-    "СтатьяДвиженияДенежныхСредств",
-    "СтатьяЗатрат",
+    "Статьи",
     "Стоимость",
     "Страна",
     "СтраныМира",
@@ -2574,69 +2746,42 @@
     "Строка",
     "СтруктурнаяЕдиница",
     "Сумма",
-    "СуммаАвтоматическойСкидки",
-    "СуммаВзаиморасчетов",
-    "СуммаВключаетНДС",
     "СуммаДокумента",
-    "СуммаНДС",
-    "СуммаСНаценкой",
-    "СуммаУпр",
     "Суффикс",
     "СчетУчета",
-    "ТаблицаРегистров",
     "ТабличнаяЧасть",
     "ТабличныеЧасти",
-    "ТекстКорреспондента",
-    "ТекстНазначения",
+    "Тег",
+    "Теги",
     "ТекстоваяСтрока",
+    "ТекущиеЗадачи",
     "Телефон",
     "Телефоны",
     "ТелефоныБанка",
     "Тип",
-    "ТипДенежныхСредств",
-    "ТипНоменклатуры",
     "ТипСчета",
-    "ТипЦен",
-    "ТипыДенежныхСредств",
     "ТипыКонтактнойИнформации",
-    "ТипыНалогообложенияНДС",
-    "ТипыНоменклатуры",
     "ТипыСобытий",
-    "ТипыСтруктурныхЕдиниц",
     "ТипыСчетов",
-    "ТипыЦенНоменклатуры",
     "Товары",
-    "Толщина",
     "ТочкаМаршрута",
-    "ТранспортныеСредства",
     "Управленческий",
     "Условие",
     "Услуги",
-    "УстановкаЦенНоменклатуры",
-    "УчитыватьНДС",
+    "Фамилия",
+    "ФамилияРП",
     "ФизическиеЛица",
     "ФизическоеЛицо",
     "Финиш",
     "Формула",
-    "ФормулаРасчетаКурса",
+    "ФормулаОценки",
+    "ФормулаПриоритетов",
     "ФормулаУсловия",
     "Формулы",
-    "Характеристика",
-    "ХарактеристикаНоменклатуры",
-    "ХарактеристикиНоменклатуры",
-    "Цвет",
-    "Цвета",
     "Цена",
-    "ЦенаВключаетНДС",
-    "ЦенаВнутр",
-    "ЦеноваяГруппа",
-    "ЦеновыеГруппы",
-    "ЦеныНоменклатуры",
     "Число",
-    "ЧислоДнейРезерваБезОплаты",
     "Шаблон",
     "Шаг",
-    "Ширина",
     "Широта",
     "Штуки",
     "Экземпляр",
@@ -2644,54 +2789,37 @@
     "Элементы",
     "ЭтоГруппа",
     "ЭтоДополнительноеСведение",
-    "ЭтоНабор",
-    "ЭтоУслуга",
+    "Эффективность",
     "ЮрЛицо",
-    "ЮрФизЛицо",
-    "Ячейка",
-    "Ячейки"
+    "ЮрФизЛицо"
   ],
   "syns_js": [
     "author",
-    "article",
-    "base_unit",
-    "bank",
-    "settlements_bank",
-    "banks",
-    "bank_accounts",
-    "partner_bank_accounts",
-    "organization_bank_accounts",
-    "bank_account",
+    "email_addr",
     "buisness_process",
-    "bank_bic",
-    "settlements_bank_bic",
     "boolean",
     "currency",
-    "settlements_currency",
-    "funds_currency",
-    "doc_currency",
-    "price_currency",
     "currencies",
     "input_by_string",
-    "mutual_settlements",
-    "mutual_contract_settlements",
     "leading_task",
     "leading_formula",
     "master",
     "data_version",
     "heft",
     "kind",
-    "contract_kind",
+    "list_view",
     "shown",
-    "nom_kind",
     "transactions_kind",
+    "comparison_type",
     "account_kind",
-    "contract_kinds",
     "contact_information_kinds",
-    "nom_kinds",
+    "data_field_kinds",
+    "include_to_name",
+    "include_to_description",
     "owner",
     "extra_values_owner",
     "owners",
+    "internal",
     "change_time",
     "begin_time",
     "end_time",
@@ -2700,16 +2828,12 @@
     "inbound_outbound",
     "choice_groups_elm",
     "completed",
-    "height",
-    "depth",
     "city",
-    "bank_city",
-    "settlements_bank_city",
     "readiness",
     "workers_schedules",
     "worker_schedule",
-    "nom_groups",
     "yes_no",
+    "data",
     "date",
     "shipping_date",
     "change_date",
@@ -2717,38 +2841,32 @@
     "expiration_date",
     "birth_date",
     "event_date",
-    "cash_moving",
     "debit_credit",
     "action",
-    "check_days_without_pay",
     "len",
     "code_length",
     "number_doc_len",
     "week_days",
-    "contract",
-    "contracts",
     "identification_document",
     "longitude",
+    "position",
+    "position_r",
     "server_domain_name",
     "extra_fields",
     "properties",
     "extra_properties",
-    "allowable_debts_amount",
-    "allowable_debts_days",
     "available",
-    "unit",
-    "qualifier_unit",
-    "storage_unit",
-    "nom_units",
     "finished",
     "completion",
     "extra_fields_dependencies",
     "caption",
+    "task",
     "invoice",
     "buyers_order",
     "purchase_order",
     "closed",
     "inventories",
+    "work_record",
     "mandatory",
     "launch",
     "value",
@@ -2766,23 +2884,23 @@
     "group_hierarchy",
     "moniker",
     "predefined_name",
-    "icounter",
+    "moniker_r",
     "ind",
-    "individual_entrepreneur",
     "inn",
+    "comparison_types",
     "integration_links_cache",
-    "users_acl",
+    "couchdb_roles",
     "obj_delivery_states",
+    "unload_type",
     "caching_type",
-    "registration_type",
+    "reduce_type",
     "executors",
     "executor",
     "used",
-    "cashbox",
-    "cashboxes",
+    "tags_category",
     "category",
-    "banks_qualifier",
-    "units",
+    "key",
+    "parameters_keys",
     "id",
     "alpha2",
     "alpha3",
@@ -2791,20 +2909,12 @@
     "quantity",
     "note",
     "period_till",
+    "final_balance",
     "contact_information",
-    "contact_persons",
-    "contact_persons_partners",
     "partner",
     "partners",
-    "check_debts_amount",
-    "check_debts_days",
     "registers_correction",
-    "correspondent_account",
-    "bank_correspondent_account",
-    "settlements_bank_correspondent_account",
     "coefficient",
-    "loss_factor",
-    "kpp",
     "multiplicity",
     "settlements_multiplicity",
     "course",
@@ -2812,8 +2922,6 @@
     "currency_courses",
     "brand",
     "weight",
-    "materials",
-    "international_short",
     "manager",
     "birth_place",
     "multiline_mode",
@@ -2822,15 +2930,13 @@
     "destination",
     "destinations",
     "name",
-    "bank_name",
     "name_full",
-    "name_short",
-    "vat",
-    "extra_charge",
+    "direction",
+    "sort_directions",
+    "flow_tunes",
     "period_from",
+    "initial_balance",
     "invalid",
-    "nom",
-    "nom_group",
     "number_doc",
     "row",
     "account_number",
@@ -2842,60 +2948,45 @@
     "acl_objs",
     "volume",
     "mandatory_fields",
-    "rounding_in_a_big_way",
-    "rounding_quantity",
+    "contents",
     "definition",
-    "organizations",
-    "organization",
+    "cause",
+    "cause_r",
     "main_currency",
-    "main_cash_flow_article",
-    "main_cashbox",
     "main_presentation_name",
-    "main_bank_account",
-    "main_contract",
-    "buyer_main_manager",
     "main_project",
     "selection",
     "responsible",
+    "branch",
     "sender",
-    "accounting_reflect",
-    "tax_accounting_reflect",
     "offsets",
+    "patronymic",
+    "patronymic_r",
     "param",
     "params",
     "choice_params",
     "selection_params",
-    "parameters_russian_recipe",
+    "period",
     "planning",
-    "debit_bank_order",
-    "credit_bank_order",
-    "calendar_payments",
-    "density",
-    "s",
     "rotate",
-    "by_entire_contract",
     "department",
     "divisions",
     "tooltip",
     "has_owners",
-    "by_orders",
     "is_buyer",
     "sex",
     "full_moniker",
     "full_name",
+    "label_positions",
     "recipient",
     "gender",
     "users",
     "_deleted",
-    "rounding_threshold",
     "sorting",
-    "rounding_order",
     "is_supplier",
-    "purchase",
-    "by_invoices",
+    "flows",
     "by_default",
     "illustration",
-    "prepayment",
     "predefined_elmnts",
     "predefined",
     "presentation",
@@ -2903,147 +2994,96 @@
     "obj_presentation",
     "list_presentation",
     "prefix",
+    "applying",
+    "parameters_keys_applying",
     "forcibly",
     "priority",
-    "debit_cash_order",
+    "debit",
+    "issue",
+    "issues",
     "posted",
     "project",
     "projects",
     "rate",
-    "discount_percent_automatic",
-    "prepayment_percent",
-    "discount_percent",
-    "discount_percent_internal",
     "others",
     "delimiter",
-    "credit_cash_order",
-    "current_account",
-    "invoice_payments",
+    "credit",
     "extended_mode",
-    "payment_details",
-    "selling",
     "region",
     "field",
     "sorting_field",
     "fields",
     "parent",
-    "certificate_date_issue",
-    "certificate_authority_code",
-    "certificate_authority_name",
-    "certificate_series_number",
-    "swift",
     "property",
     "links",
     "choice_links",
     "choice_type",
     "trans",
-    "first_cost",
     "synonym",
     "discount",
-    "charges_discounts",
-    "warehouse",
-    "stores",
-    "with_commission_agent",
-    "with_committent",
     "hide",
+    "complexity",
     "difficult",
     "ancillary",
     "event",
+    "events",
+    "task_events",
     "content",
     "conformity",
     "state",
     "obj_delivery_state",
     "employee",
     "staff",
-    "specifications",
-    "specification",
     "list",
-    "with_buyer",
-    "course_installation_method",
-    "course_installation_methods",
-    "with_supplier",
     "validity",
     "ref",
-    "vat_rate",
-    "vat_rates",
+    "standard_period",
     "start",
     "started",
-    "costs_material_feed",
-    "invoice_conditions",
-    "cash_flow_articles",
-    "cost_items",
-    "cash_flow_article",
-    "cost_item",
+    "articles",
     "cost",
     "country",
     "countries",
-    "pfr_number",
+    "snils",
     "string",
     "organizational_unit",
     "amount",
-    "discount_amount_automatic",
-    "amount_mutual",
-    "vat_included",
     "doc_amount",
-    "vat_amount",
-    "amount_marged",
-    "amount_operation",
     "suffix",
     "account_accounting",
-    "registers_table",
     "tabular_section",
     "tabular_sections",
-    "correspondent_text",
-    "appointments_text",
+    "tag",
+    "tags",
     "txt_row",
+    "current_tasks",
     "phone",
     "phone_numbers",
     "bank_phone_numbers",
     "type",
-    "cash_flow_type",
-    "nom_type",
     "account_type",
-    "price_type",
-    "cash_flow_types",
     "contact_information_types",
-    "vat_types",
-    "nom_types",
     "event_types",
-    "structural_unit_types",
     "account_types",
-    "nom_prices_types",
     "goods",
-    "thickness",
     "buisness_process_point",
-    "transport_means",
     "managerial",
     "condition",
     "services",
-    "nom_prices_setup",
-    "vat_consider",
+    "surname",
+    "surname_r",
     "individuals",
     "individual_person",
     "finish",
     "formula",
-    "course_calc_formula",
+    "rating_formula",
+    "priority_formula",
     "condition_formula",
     "formulas",
-    "characteristic",
-    "nom_characteristic",
-    "characteristics",
-    "clr",
-    "colors",
     "price",
-    "vat_price_included",
-    "price_internal",
-    "price_group",
-    "price_groups",
-    "nom_prices",
     "number",
-    "days_without_pay",
     "template",
     "step",
-    "width",
     "latitude",
     "is_pieces",
     "specimen",
@@ -3051,11 +3091,8 @@
     "elmnts",
     "is_folder",
     "is_extra_property",
-    "is_set",
-    "is_service",
+    "efficiency",
     "legal_person",
-    "individual_legal",
-    "cell",
-    "cells"
+    "individual_legal"
   ]
 }
