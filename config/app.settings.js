@@ -10,9 +10,11 @@ module.exports = function settings(prm) {
     prm = {};
   };
 
-  const couch_path = Object.assign(new URL(location), {pathname: '/couchdb/fl_', search: '', hash: ''}).href;
+  const couch_path = typeof location === 'undefined' ?
+    'https://dh4.oknosoft.ru:211/fl_'
+    :
+    Object.assign(new URL(location), {pathname: '/couchdb/fl_', search: '', hash: ''}).href;
   //const couch_path = 'http://fl211:5984/fl_';
-  //const couch_path = '/couchdb/fl_';
 
   return Object.assign(prm, {
 

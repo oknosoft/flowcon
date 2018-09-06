@@ -27,16 +27,14 @@ const config = require(settings_path)();
 const MetaEngine = require('metadata-core')
   .plugin(require('metadata-pouchdb'));
 
-const db = new MetaEngine.classes.PouchDB(config.couch_local + config.zone + '_ram', {skip_setup: true});
-
 const {DBUSER, DBPWD} = process.env;
+const db = new MetaEngine.classes.PouchDB(config.couch_local + config.zone + '_ram', {skip_setup: true});
 const slu = new MetaEngine.classes.PouchDB(config.couch_local.replace('fl_', 'sl_users'), {
   auth: {
     username: DBUSER,
     password: DBPWD
   },
-  skip_setup: true,
-});
+  skip_setup: true});
 
 debug(`Читаем данные из CouchDB ${config.couch_local}`);
 return db.info()
