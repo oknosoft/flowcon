@@ -136,7 +136,7 @@ class PageHome extends React.Component {
                     <Typography  variant="headline" component="h3">Новости</Typography>
                     {
                       tagFilter.length ?
-                        <InfiniteArticles news tags={tags} tagList={tagList} match={match} location={location} handleNavigate={handleNavigate}/>
+                        <InfiniteArticles news tags={tags} tagList={tagList} match={match} location={location} pageSize={8} handleNavigate={handleNavigate}/>
                         :
                         <Typography>Загрузка...</Typography>
                     }

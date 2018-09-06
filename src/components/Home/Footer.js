@@ -43,7 +43,7 @@ function AppFooter(props) {
             <Grid item xs={12} sm={6}>
               <ul className={classes.list}>
                 <li className={classes.listItem}>
-                  <a href="https://github.com/oknosoft/flowcon">GitHub</a>
+                  <a href="https://business-programming.ru/articles/about-company" onClick={onClick}>О компании</a>
                 </li>
                 <li className={classes.listItem}>
                   <a href="https://github.com/oknosoft/metadata.js">Metadata.js</a>

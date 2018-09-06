@@ -1,5 +1,5 @@
 /**
- * Бесконечный список статей
+ * Список статей
  * @module Infinit
  *
  * Created by Evgeniy Malyarov on 17.04.2018.
@@ -108,7 +108,7 @@ class MUiArticles extends Component {
 
   loadRows() {
 
-    const {props: {tags, tagList, news}, page} = this;
+    const {props: {tags, tagList, news, pageSize}, page} = this;
 
     this.clearData();
 
@@ -124,8 +124,8 @@ class MUiArticles extends Component {
       fields: ['_id', 'id', 'name', 'h1', 'introduction', 'date', 'author', 'tags', 'acl'],
       use_index: 'sorting_field_tags',
       sort: [{'sorting_field': 'asc'}],
-      skip: page * 30,
-      limit: 30,
+      skip: page * pageSize,
+      limit: pageSize,
     };
 
     return $p.cat.articles.pouch_db.find(selector)
@@ -141,7 +141,7 @@ class MUiArticles extends Component {
         }
         this.setState({
           prev: page > 0,
-          next: res.docs.length === 30,
+          next: res.docs.length === pageSize,
         });
       });
   }
@@ -172,11 +172,11 @@ class MUiArticles extends Component {
           variant="subheading"
           color="primary"
           className={cn({[classes.disabled]: !prev})}
-          href={`${match.path}${page > 1 ? `?page=${page-1}` : ''}`}
+          href={`${match.path}${page > 1 ? `?page=${page}` : ''}`}
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
-            handleNavigate(`${match.path}${page > 1 ? `?page=${page-1}` : ''}`);
+            handleNavigate(`${match.path}${page > 1 ? `?page=${page}` : ''}`);
           }}
         >← сюда</Typography>
         <div className={classes.scroller}> </div>
@@ -185,11 +185,11 @@ class MUiArticles extends Component {
           variant="subheading"
           color="primary"
           className={cn({[classes.disabled]: !next})}
-          href={`${match.path}?page=${page+1}`}
+          href={`${match.path}?page=${page + 2}`}
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
-            handleNavigate(`${match.path}?page=${page > 0 ? page + 1 : 2}`);
+            handleNavigate(`${match.path}?page=${page + 2}`);
           }}
         >туда →</Typography>
       </div>
@@ -200,12 +200,17 @@ class MUiArticles extends Component {
 
 MUiArticles.propTypes = {
   tags: PropTypes.array.isRequired,
+  pageSize: PropTypes.number,
   news: PropTypes.bool,
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   tagList: PropTypes.array.isRequired,
   handleNavigate: PropTypes.func.isRequired,
+};
+
+MUiArticles.defaultProps = {
+  pageSize: 30,
 };
 
 export default withStyles(styles)(MUiArticles);
