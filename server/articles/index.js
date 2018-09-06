@@ -3,10 +3,19 @@
  * для смешанного рендеринга
  */
 
-const PouchDB = require('pouchdb');
 const https = require('https');
 const marked = require('marked');
 const sitemap = require('./sitemap');
+const fs = require('fs');
+
+let pluginFind;
+try {
+  pluginFind = require('superlogin/node_modules/pouchdb-find');
+}
+catch(err) {
+  pluginFind = require('pouchdb-find');
+}
+const PouchDB = require('pouchdb').plugin(pluginFind);
 
 const cache = new Map();
 const timeout = 600000;
@@ -22,17 +31,20 @@ module.exports = function (superlogin) {
       .then((html) => {
         const key = req.url.replace(/^\/(articles|files|news)/, '').replace(/^\//, '').split('?')[0];
         if(!key) {
-          res.status(200).send(html);
+          return res.send(html);
         }
         doc(db, key)
           .then((doc) => {
-            res.status(200).send(fill(html, doc));
+            res.send(fill(html, doc));
+            if(!doc) {
+              console.error(req.url);
+            }
           })
-          .catch(() => {
-            console.err(err);
-            res.status(200).send(html);
+          .catch((err) => {
+            res.send(html);
+            console.error(`${req.url}/n${err}`);
           });
-      }));
+      }), db);
   }
 }
 
@@ -77,7 +89,7 @@ function doc(db, key) {
 
 function fill(html, doc) {
   if(!doc) return html;
-  const title = doc.h1 || doc.name;
+  const title = doc.name;
   const descr = doc.descr || doc.introduction;
   html = html.replace(
     '<title>Программирование бизнеса</title>',
@@ -93,7 +105,8 @@ function fill(html, doc) {
     `<meta property="og:description" content="${descr}" data-react-helmet="true">`);
   html = html.replace(
     '<div id="root"></div>',
-    `<div id="root">${marked(doc.content || '')}</div>`);
+    `<div id="root"><div style="max-width: 960px; padding-top: 48px; margin: auto;">
+<h1>${doc.h1 || doc.name}</h1>${marked(doc.content || '')}</div></div>`);
   return html;
 }
 
