@@ -7,14 +7,13 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
 import cn from 'classnames';
 
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ArticleRow from './ArticleRow';
-
+import {path} from './queryString';
 
 const list = new Map();
 list.set(0, {name: 'Загрузка списка статей...'});
@@ -101,14 +100,23 @@ class MUiArticles extends Component {
     });
   }
 
-  get page() {
-    const query = qs.parse(location.search.replace('?',''));
-    return query.page ? query.page - 1 : 0;
+  prev = (event) => {
+    this.navigate(event, this.props.page);
+  }
+
+  next = (event) => {
+    this.navigate(event, this.props.page + 2);
+  }
+
+  navigate(event, page) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.handleNavigate(path({page}));
   }
 
   loadRows() {
 
-    const {props: {tags, tagList, news, pageSize}, page} = this;
+    const {props: {tags, tagList, news, pageSize, page}} = this;
 
     this.clearData();
 
@@ -159,8 +167,7 @@ class MUiArticles extends Component {
   }
 
   render() {
-    const {props: {classes, match, handleNavigate}, page} = this;
-    const {prev, next} = this.state;
+    const {props: {classes, page}, state: {prev, next}} = this;
 
     return [
       <List key="list" className={cn(classes.list, classes.bottom)}>
@@ -172,12 +179,8 @@ class MUiArticles extends Component {
           variant="subheading"
           color="primary"
           className={cn({[classes.disabled]: !prev})}
-          href={`${match.path}${page > 1 ? `?page=${page}` : ''}`}
-          onClick={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            handleNavigate(`${match.path}${page > 1 ? `?page=${page}` : ''}`);
-          }}
+          href={path({page})}
+          onClick={this.prev}
         >← сюда</Typography>
         <div className={classes.scroller}> </div>
         <Typography
@@ -185,12 +188,8 @@ class MUiArticles extends Component {
           variant="subheading"
           color="primary"
           className={cn({[classes.disabled]: !next})}
-          href={`${match.path}?page=${page + 2}`}
-          onClick={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            handleNavigate(`${match.path}?page=${page + 2}`);
-          }}
+          href={path({page: page + 2})}
+          onClick={this.next}
         >туда →</Typography>
       </div>
       ];
@@ -211,6 +210,7 @@ MUiArticles.propTypes = {
 
 MUiArticles.defaultProps = {
   pageSize: 30,
+  page: 0,
 };
 
 export default withStyles(styles)(MUiArticles);

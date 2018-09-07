@@ -15,40 +15,17 @@ import AppContent from 'metadata-react/App/AppContent';
 import SelectTags from 'metadata-react/DataField/SelectTags';
 //import InfiniteArticles from './InfiniteArticles';
 import InfiniteArticles from './MUiArticles';
-
 import {description} from '../App/menu';
+import {fromQuery, path} from './queryString';
 
 class Articles extends Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = {tags: [], tagList: null};
-    this.setLtitle(props, true);
-  }
-
-  setLtitle({match, tagFilter}, direct) {
-    if(match.path === '/articles') {
-      this.ltitle = 'Статьи';
-      this.title = this.ltitle + ' о программировании бизнеса';
-    }
-    else if(match.path === '/news') {
-      this.ltitle = 'Новости';
-      this.title = this.ltitle + ' и события';
-    }
-    else {
-      this.ltitle = 'Файлы';
-      this.title = this.ltitle + ' и дополнительные материалы';
-    }
-
-    const tagList = [];
-    $p.cat.tags.find_rows({category: {in: tagFilter}}, (tag) => tagList.push(tag));
-    if(direct) {
-      /* eslint-disable-next-line */
-      this.state.tagList = tagList;
-    }
-    else {
-      this.setState({tagList, tags: []});
-    }
+    this.state = {
+      tags: [],
+      tagList: this.tagList(props.tagFilter)
+    };
   }
 
   handleChange = event => {
@@ -59,14 +36,36 @@ class Articles extends Component {
     this.shouldComponentUpdate(this.props);
   }
 
-  shouldComponentUpdate({handleIfaceState, title, match, tagFilter}) {
+  tagList(tagFilter) {
+    const tagList = [];
+    $p.cat.tags.find_rows({category: {in: tagFilter}}, (tag) => tagList.push(tag));
+    return tagList;
+  }
+
+  shouldComponentUpdate({title, match, tagFilter}) {
     if(title != this.ltitle || match.path !== this.props.match.path) {
-      this.setLtitle({match, tagFilter});
-      handleIfaceState({
+
+      if(match.path === '/articles') {
+        this.ltitle = 'Статьи';
+        this.title = this.ltitle + ' о программировании бизнеса';
+      }
+      else if(match.path === '/news') {
+        this.ltitle = 'Новости';
+        this.title = this.ltitle + ' и события';
+      }
+      else {
+        this.ltitle = 'Файлы';
+        this.title = this.ltitle + ' и дополнительные материалы';
+      }
+      this.props.handleIfaceState({
         component: '',
         name: 'title',
         value: this.ltitle,
       });
+
+
+      this.setState({tagList: this.tagList(tagFilter), tags: []});
+
       return false;
     }
     return true;
@@ -76,6 +75,8 @@ class Articles extends Component {
     const session = $p.superlogin.getSession();
     const {handleNavigate, match, location} = this.props;
     const {tagList, tags} = this.state;
+    const prm = fromQuery();
+
     return <AppContent >
       <Helmet title={this.title}>
         <meta name="description" content={description} />
@@ -96,7 +97,14 @@ class Articles extends Component {
           <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти к редактору статей</Button>
         }
 
-        <InfiniteArticles tags={tags} tagList={tagList} match={match} location={location} handleNavigate={handleNavigate}/>
+        <InfiniteArticles
+          tags={tags}
+          tagList={tagList}
+          page={prm.page}
+          match={match}
+          location={location}
+          handleNavigate={handleNavigate}
+        />
       </div>
     </AppContent>;
   }

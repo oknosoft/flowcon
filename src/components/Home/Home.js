@@ -13,7 +13,7 @@ import MedicalBag from '../../styles/icons/MedicalBag';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import Timer from '@material-ui/icons/Timer';
 import InfiniteArticles from '../Articles/MUiArticles';
-
+import {fromQuery} from '../Articles/queryString';
 
 import {description} from '../App/menu';
 
@@ -42,6 +42,7 @@ class PageHome extends React.Component {
   render() {
     const {classes, handleIfaceState, handleNavigate, title, match, location} = this.props;
     const {tags, tagList, tagFilter} = this;
+    const prm = fromQuery();
 
     if(title != ltitle) {
       handleIfaceState({
@@ -136,7 +137,16 @@ class PageHome extends React.Component {
                     <Typography  variant="headline" component="h3">Новости</Typography>
                     {
                       tagFilter.length ?
-                        <InfiniteArticles news tags={tags} tagList={tagList} match={match} location={location} pageSize={8} handleNavigate={handleNavigate}/>
+                        <InfiniteArticles
+                          news
+                          tags={tags}
+                          tagList={tagList}
+                          page={prm.page}
+                          match={match}
+                          location={location}
+                          pageSize={8}
+                          handleNavigate={handleNavigate}
+                        />
                         :
                         <Typography>Загрузка...</Typography>
                     }
