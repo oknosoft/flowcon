@@ -29,7 +29,7 @@ import compose from 'recompose/compose';
 
 import items, {item_props} from './menu';      // массив элементов меню и метод для вычисления need_meta, need_user по location.pathname
 
-import FakeDiagram from '../FakeDiagram';
+import FakeDiagram from '../Diagrams';
 import FakeList from '../FakeList';
 
 const mainTitle = 'Flowcon';

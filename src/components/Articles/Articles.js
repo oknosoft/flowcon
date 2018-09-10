@@ -16,7 +16,7 @@ import SelectTags from 'metadata-react/DataField/SelectTags';
 //import InfiniteArticles from './InfiniteArticles';
 import InfiniteArticles from './MUiArticles';
 import {description} from '../App/menu';
-import {fromQuery, path} from './queryString';
+import {fromQuery} from './queryString';
 
 class Articles extends Component {
 

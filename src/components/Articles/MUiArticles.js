@@ -200,6 +200,7 @@ class MUiArticles extends Component {
 MUiArticles.propTypes = {
   tags: PropTypes.array.isRequired,
   pageSize: PropTypes.number,
+  page: PropTypes.number,
   news: PropTypes.bool,
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
