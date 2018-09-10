@@ -13,13 +13,13 @@ import Helmet from 'react-helmet';
 import AutoSizer from 'react-virtualized/dist/es/AutoSizer';
 import AppContent from 'metadata-react/App/AppContent';
 import Snack from 'metadata-react/App/Snack';
-import DiagramsArray from './DiagramsArray';
-import Settings from './Settings';
-import connect from './connect';
+import DiagramsArray from 'metadata-react/Diagrams/DiagramsArray';
+import Settings from 'metadata-react/Diagrams/Settings';
+import connect from 'metadata-react/Diagrams/connect';
 
 const ltitle = 'Диаграммы';
 
-class Diagrams extends React.Component {
+class DiagramsPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -129,7 +129,7 @@ class Diagrams extends React.Component {
 }
 
 
-Diagrams.propTypes = {
+DiagramsPage.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
@@ -141,4 +141,4 @@ Diagrams.propTypes = {
   user: PropTypes.object,
 };
 
-export default connect(Diagrams);
+export default connect(DiagramsPage);
