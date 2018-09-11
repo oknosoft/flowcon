@@ -22,7 +22,7 @@ const su = process.env.SERVER_URL;
 
 function row({id, date, tags}) {
   // находим tag
-  const tag = tags.length && ram.find((row) => {
+  const tag = tags && tags.length && ram.find((row) => {
     return row._id.indexOf(tags[0]) !== -1;
   });
   // находим group
