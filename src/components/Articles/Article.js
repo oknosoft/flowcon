@@ -50,7 +50,7 @@ class Article extends Component {
   }
 
   render() {
-    const {doc} = this.state;
+    const {props, state: {doc}} = this;
     if(!doc) {
       return <AppContent><CircularProgress size={24} /> Загрузка...</AppContent>;
     }
@@ -66,11 +66,12 @@ class Article extends Component {
         htitle={doc.name || 'без названия'}
         h1={doc.h1}
         descr={doc.descr}
+        canonical={props.match.path.replace(':ref', doc.id)}
         markdown={doc.content || 'текст отсутствует'}
-        footer={ this.props.match.path.match(/\/(articles|files)\//) && [
-          <Attachments key="attachments" _obj={doc} handleIfaceState={this.props.handleIfaceState} />,
+        footer={ props.match.path.match(/\/(articles|files)\//) && [
+          <Attachments key="attachments" _obj={doc} handleIfaceState={props.handleIfaceState} />,
           <Social key="social" title={doc.name}/>,
-          this.props.match.path.match(/\/(articles)\//) &&
+          props.match.path.match(/\/(articles)\//) &&
           <Grid key="subscribe" container >
             <Grid item sm={12} md={6}>
               <Subscribe title="Художественная литература про ИТ" area="comp.paper.itfiction" />

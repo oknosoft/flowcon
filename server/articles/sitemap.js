@@ -29,8 +29,9 @@ function row({id, date, tags}) {
   const category = tag && ram.find((row) => {
     return row._id.indexOf(tag.category) !== -1;
   });
-  let cat = category.predefined_name;
+  let cat = category && category.predefined_name;
   if(!cat) {
+    console.error(id, date, tags);
     return '';
   }
   if(!cat.endsWith('s')) {
