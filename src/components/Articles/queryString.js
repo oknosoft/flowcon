@@ -31,12 +31,6 @@ export function path(newPrm) {
   if(newPrm.hasOwnProperty('page')) {
     prm.page = newPrm.page;
   }
-  if(newPrm.hasOwnProperty('view')) {
-    prm.view = newPrm.view;
-  }
-  if(!prm.view) {
-    delete prm.view;
-  }
   if(prm.page <= 1) {
     delete prm.page;
   }

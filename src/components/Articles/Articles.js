@@ -11,13 +11,14 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import AppContent from 'metadata-react/App/AppContent';
 import SelectTags from 'metadata-react/DataField/SelectTags';
 //import InfiniteArticles from './InfiniteArticles';
 import InfiniteArticles from './MUiArticles';
 import {description} from '../App/menu';
 import {fromQuery} from './queryString';
-import SelectMode from './SelectMode';
+import IconContents from '@material-ui/icons/FormatListNumbered';
 import withStyles from './styles';
 
 class Articles extends Component {
@@ -95,7 +96,13 @@ class Articles extends Component {
             handleChange={this.handleChange}
             tagList={tagList}
           />
-          <SelectMode classes={classes} view={prm.view} handleNavigate={handleNavigate}/>
+          <IconButton
+            onClick={() => handleNavigate('/contents/')}
+            className={classes.top}
+            title="Перейти к оглавлению"
+          >
+            <IconContents />
+          </IconButton>
         </div>
         {
           session && session.roles.indexOf('doc_full') !== -1 &&

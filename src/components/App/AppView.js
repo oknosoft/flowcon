@@ -18,6 +18,7 @@ import DumbScreen from '../DumbScreen';             // заставка "заг�
 import DataRoute from './DataRoute';                // вложенный маршрутизатор страниц с данными
 import MarkdownRoute from '../Pages';               // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
 import ArticlesRoute from '../Articles';            // маршрутизатор статей
+import Contents from '../Articles/Contents';        // оглавление
 import HomeView from '../Home';                     // домашняя страница
 import MetaTreePage from '../MetaTreePage';         // дерево метаданных
 import Settings from '../Settings';                 // страница настроек приложения
@@ -170,6 +171,7 @@ class AppView extends Component {
             <Route path="/articles" render={(props) => wraper(ArticlesRoute, props)}/>
             <Route path="/files" render={(props) => wraper(ArticlesRoute, props)}/>
             <Route path="/news" render={(props) => wraper(ArticlesRoute, props)}/>
+            <Route path="/contents" render={(props) => wraper(Contents, props)}/>
             <Route path="/meta" render={(props) => wraper(MetaTreePage, props)}/>
             <Route path="/flowcon/diagram" render={(props) => wraper(FakeDiagram, props)}/>
             <Route path="/flowcon/list" render={(props) => wraper(FakeList, props)}/>
