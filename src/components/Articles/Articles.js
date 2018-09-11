@@ -17,6 +17,8 @@ import SelectTags from 'metadata-react/DataField/SelectTags';
 import InfiniteArticles from './MUiArticles';
 import {description} from '../App/menu';
 import {fromQuery} from './queryString';
+import SelectMode from './SelectMode';
+import withStyles from './styles';
 
 class Articles extends Component {
 
@@ -73,7 +75,7 @@ class Articles extends Component {
 
   render() {
     const session = $p.superlogin.getSession();
-    const {handleNavigate, match, location} = this.props;
+    const {handleNavigate, match, location, classes} = this.props;
     const {tagList, tags} = this.state;
     const prm = fromQuery();
 
@@ -84,14 +86,17 @@ class Articles extends Component {
         <meta property="og:title" content={this.title} />
         <meta property="og:description" content={description} />
       </Helmet>
-      <div style={{marginTop: 16}}>
+      <div className={classes.top}>
         <Typography variant="display1" component="h1" color="primary">{this.title}</Typography>
-        <SelectTags
-          tags={tags}
-          fullWidth
-          handleChange={this.handleChange}
-          tagList={tagList}
-        />
+        <div className={classes.container}>
+          <SelectTags
+            tags={tags}
+            fullWidth
+            handleChange={this.handleChange}
+            tagList={tagList}
+          />
+          <SelectMode classes={classes} view={prm.view} handleNavigate={handleNavigate}/>
+        </div>
         {
           session && session.roles.indexOf('doc_full') !== -1 &&
           <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти к редактору статей</Button>
@@ -113,10 +118,11 @@ class Articles extends Component {
 Articles.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   tagFilter: PropTypes.array.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
 };
 
-export default Articles;
+export default withStyles(Articles);

@@ -11,6 +11,7 @@ import AppFooter from './Footer';
 import Flask from '../../styles/icons/Flask';
 import MedicalBag from '../../styles/icons/MedicalBag';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import Timer from '@material-ui/icons/Timer';
 import InfiniteArticles from '../Articles/MUiArticles';
 import {fromQuery} from '../Articles/queryString';
@@ -67,13 +68,26 @@ class PageHome extends React.Component {
             <Grid container alignItems="stretch" direction="column" justify="space-around">
 
               <Grid item>
+                <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/products')}>
+                  <Hidden smDown><Grid item xs={1}/></Hidden>
+                  <Grid item>
+                    <ShoppingBasket alt="Продукты" className={classes.logo} color="disabled"/>
+                  </Grid>
+                  <Grid item className={classes.content}>
+                    <Typography variant="headline" component="h2">Продукты</Typography>
+                    <Typography color="textSecondary">Что у нас можно купить</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid item>
                 <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/')}>
                   <Hidden smDown><Grid item xs={1}/></Hidden>
                   <Grid item>
                     <LibraryBooks alt="Статьи" className={classes.logo} color="disabled"/>
                   </Grid>
                   <Grid item className={classes.content}>
-                    <Typography variant="headline" component="h2">Статьи</Typography>
+                    <Typography variant="headline" component="h2">Статьи и книги</Typography>
                     <Typography color="textSecondary">
                       Методические материалы, кейсы и технический блог
                     </Typography>
@@ -96,6 +110,7 @@ class PageHome extends React.Component {
                 </Grid>
               </Grid>
 
+              {/*
               <Grid item>
                 <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/team_of_concilium')}>
                   <Hidden smDown><Grid item xs={1}/></Hidden>
@@ -125,6 +140,7 @@ class PageHome extends React.Component {
                   </Grid>
                 </Grid>
               </Grid>
+              */}
             </Grid>
           </Grid>
 
@@ -144,7 +160,7 @@ class PageHome extends React.Component {
                           page={prm.page}
                           match={match}
                           location={location}
-                          pageSize={8}
+                          pageSize={7}
                           handleNavigate={handleNavigate}
                         />
                         :
