@@ -10,6 +10,12 @@ const styles = theme => ({
   top: {
     marginTop: theme.spacing.unit * 2,
   },
+  bottom: {
+    marginBottom: theme.spacing.unit * 2,
+  },
+  details: {
+    flexDirection: 'column',
+  }
 });
 
 export default withStyles(styles);
