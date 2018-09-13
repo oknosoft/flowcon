@@ -234,7 +234,7 @@ class AppView extends Component {
           handleNavigate={handleNavigate}
           items={items}
           isHome={isHome}
-          title={mainTitle}
+          title="Главная"
         />
 
         {

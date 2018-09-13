@@ -10,12 +10,16 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import IconContents from '@material-ui/icons/FormatListNumbered';
+
 import AppContent from 'metadata-react/App/AppContent';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import NotFound from '../Pages/NotFound';  // 404
 import Social from './Social';
 import Subscribe from './Subscribe';
 import Attachments from './Attachments';
+
 
 class Article extends Component {
 
@@ -60,10 +64,17 @@ class Article extends Component {
     else if(doc instanceof Error) {
       return <NotFound />;
     }
+    const contents = !$p.utils.is_empty_guid(doc.contents) && $p.cat.contents.get(doc.contents);
     return (
       <MarkdownDocs
         key="doc"
         htitle={doc.name || 'без названия'}
+        TopButton={contents && <IconButton
+          onClick={() => props.handleNavigate(`/contents/${contents.id}`)}
+          title="Перейти к оглавлению"
+        >
+          <IconContents />
+        </IconButton>}
         h1={doc.h1}
         descr={doc.descr}
         canonical={props.match.path.replace(':ref', doc.id)}

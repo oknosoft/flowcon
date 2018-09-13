@@ -81,7 +81,7 @@ class PageHome extends React.Component {
               </Grid>
 
               <Grid item>
-                <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/articles/')}>
+                <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/contents/')}>
                   <Hidden smDown><Grid item xs={1}/></Hidden>
                   <Grid item>
                     <LibraryBooks alt="Статьи" className={classes.logo} color="disabled"/>

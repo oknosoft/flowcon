@@ -22,11 +22,11 @@ const items = [
     need_meta: true,
   },
   {
-    text: 'Статьи',
+    text: 'Статьи и книги',
     icon: <LibraryBooks/>,
     id: 'articles',
     //bold: true,
-    navigate: '/articles/',
+    navigate: '/contents/',
     need_meta: true,
   },
   {
@@ -38,35 +38,20 @@ const items = [
     need_meta: true,
   },
   {
-    text: 'Flowcon',
-    icon: <Flask/>,
-    id: 'flowcon',
-    open: true,
-    items: [
-      {
-        text: 'Flowcon - что это',
-        icon: <IconHelp/>,
-        id: 'readme',
-        navigate: '/articles/flowcon-readme',
-        need_meta: true,
-      },
-      {
-        text: 'Задачи',
-        id: 'issues',
-        navigate: '/doc.issue/list',
-        icon: <IconDoc/>,
-        need_meta: true,
-        need_user: true,
-      },
-      {
-        text: 'Дашборды',
-        icon: <IconChart/>,
-        id: 'diagram',
-        navigate: '/flowcon/diagram',
-        need_meta: true,
-        need_user: false,
-      },
-    ]
+    text: 'Задачи',
+    id: 'issues',
+    navigate: '/doc.issue/list',
+    icon: <IconDoc/>,
+    need_meta: true,
+    need_user: true,
+  },
+  {
+    text: 'Дашборды',
+    icon: <IconChart/>,
+    id: 'diagram',
+    navigate: '/flowcon/diagram',
+    need_meta: true,
+    need_user: false,
   },
   {
     divider: true,
@@ -82,6 +67,13 @@ const items = [
     navigate: '/settings',
     need_meta: true,
     icon: <IconSettings/>,
+  },
+  {
+    text: 'Flowcon - что это',
+    icon: <IconHelp/>,
+    id: 'readme',
+    navigate: '/articles/flowcon-readme',
+    need_meta: true,
   },
   {
     text: 'О сайте',

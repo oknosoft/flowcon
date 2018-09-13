@@ -14,12 +14,15 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import IconBulleted from '@material-ui/icons/FormatListBulleted';
 
 import AppContent from 'metadata-react/App/AppContent';
 import SubLink from 'metadata-react/Markdown/SubLink';
 import withStyles from './styles';
 import cn from 'classnames';
 import {description} from '../App/menu';
+
 
 const ltitle = 'Оглавление';
 
@@ -73,7 +76,7 @@ class Contents extends Component {
       group: true,
     })
       .then((res) => {
-        for({key, value} of res.rows) {
+        for(const {key, value} of res.rows) {
           contents.get(key).articles = value.map((v) => v.split('π'));
         }
         this.setState({rows});
@@ -154,13 +157,13 @@ class Contents extends Component {
             {children.length ? this.renderSubRows(children.sort(sort)) : this.renderArticles(row)}
           </ExpansionPanelDetails>
         </ExpansionPanel>);
-      })
+      });
       return res;
     }
   }
 
   render() {
-    const {props: {match, location, classes}, state: {rows}} = this;
+    const {props: {match, classes}, state: {rows}} = this;
 
     return <AppContent >
       <Helmet title={ltitle}>
@@ -170,10 +173,18 @@ class Contents extends Component {
         <meta property="og:description" content={description} />
       </Helmet>
       <div className={classes.top}>
-        <Typography variant="display1" component="h1" color="primary" className={classes.bottom}>
-          {ltitle}
-          <SubLink url="/contents/" onClick={(e) => this.navigate(e, `/contents/`)}/>
-        </Typography>
+        <div className={classes.container}>
+          <Typography variant="display1" component="h1" color="primary" className={classes.bottom}>
+            {ltitle}
+            <SubLink url="/contents/" onClick={(e) => this.navigate(e, `/contents/`)}/>
+          </Typography>
+          <IconButton
+            onClick={(e) => this.navigate(e, `/articles/`)}
+            title="Перейти к списку статей"
+          >
+            <IconBulleted />
+          </IconButton>
+        </div>
         {this.renderRows(rows)}
       </div>
     </AppContent>;
@@ -183,6 +194,7 @@ class Contents extends Component {
 Contents.propTypes = {
   classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,

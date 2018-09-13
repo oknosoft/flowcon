@@ -12,6 +12,7 @@ const styles = theme => ({
   },
   bottom: {
     marginBottom: theme.spacing.unit * 2,
+    width: '100%',
   },
   subrow: {
     marginTop: theme.spacing.unit,

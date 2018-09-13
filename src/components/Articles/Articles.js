@@ -88,22 +88,21 @@ class Articles extends Component {
         <meta property="og:description" content={description} />
       </Helmet>
       <div className={classes.top}>
-        <Typography variant="display1" component="h1" color="primary">{this.title}</Typography>
         <div className={classes.container}>
-          <SelectTags
-            tags={tags}
-            fullWidth
-            handleChange={this.handleChange}
-            tagList={tagList}
-          />
-          <IconButton
+          <Typography variant="display1" component="h1" color="primary" className={classes.bottom}>{this.title}</Typography>
+          {match.path.indexOf('articles') !== -1 && <IconButton
             onClick={() => handleNavigate('/contents/')}
-            className={classes.top}
             title="Перейти к оглавлению"
           >
             <IconContents />
-          </IconButton>
+          </IconButton>}
         </div>
+        <SelectTags
+          tags={tags}
+          fullWidth
+          handleChange={this.handleChange}
+          tagList={tagList}
+        />
         {
           session && session.roles.indexOf('doc_full') !== -1 &&
           <Button color="primary" size="small" onClick={() => handleNavigate('/cat.articles/list')}>Перейти к редактору статей</Button>
