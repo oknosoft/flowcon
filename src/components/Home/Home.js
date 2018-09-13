@@ -29,6 +29,7 @@ class PageHome extends React.Component {
     this.tags = [];
     this.tagList = [];
     this.tagFilter = [];
+    this.shouldComponentUpdate(props);
   }
 
   shouldComponentUpdate({complete_loaded, title, handleIfaceState}) {
@@ -49,7 +50,7 @@ class PageHome extends React.Component {
   }
 
   render() {
-    const {classes, handleNavigate, match, location} = this.props;
+    const {classes, handleNavigate, match, title, location} = this.props;
     const {tags, tagList, tagFilter} = this;
     const prm = fromQuery();
 
@@ -175,7 +176,7 @@ class PageHome extends React.Component {
         </Grid>
 
 
-        <AppFooter handleNavigate={handleNavigate}/>
+        <AppFooter handleNavigate={handleNavigate} title={title}/>
       </div>
     );
   }
