@@ -31,27 +31,27 @@ class PageHome extends React.Component {
     this.tagFilter = [];
   }
 
-  shouldComponentUpdate({complete_loaded}) {
+  shouldComponentUpdate({complete_loaded, title, handleIfaceState}) {
     const {tagList, tagFilter} = this;
     if(!tagFilter.length && complete_loaded) {
       tagFilter.push($p.cat.tags_category.predefined('news'));
       $p.cat.tags.find_rows({category: {in: tagFilter}}, (tag) => tagList.push(tag));
     }
-    return true;
-  }
-
-  render() {
-    const {classes, handleIfaceState, handleNavigate, title, match, location} = this.props;
-    const {tags, tagList, tagFilter} = this;
-    const prm = fromQuery();
-
     if(title != ltitle) {
       handleIfaceState({
         component: '',
         name: 'title',
         value: ltitle,
       });
+      return false;
     }
+    return true;
+  }
+
+  render() {
+    const {classes, handleNavigate, match, location} = this.props;
+    const {tags, tagList, tagFilter} = this;
+    const prm = fromQuery();
 
     return (
       <div className={classes.root}>

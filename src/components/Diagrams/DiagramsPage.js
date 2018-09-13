@@ -17,7 +17,7 @@ import DiagramsArray from 'metadata-react/Diagrams/DiagramsArray';
 import Settings from 'metadata-react/Diagrams/Settings';
 import connect from 'metadata-react/Diagrams/connect';
 
-const ltitle = 'Диаграммы';
+const ltitle = 'Дашборды';
 
 class DiagramsPage extends React.Component {
 

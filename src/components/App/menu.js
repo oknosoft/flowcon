@@ -59,7 +59,7 @@ const items = [
         need_user: true,
       },
       {
-        text: 'Диаграммы',
+        text: 'Дашборды',
         icon: <IconChart/>,
         id: 'diagram',
         navigate: '/flowcon/diagram',
