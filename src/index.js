@@ -26,6 +26,9 @@ import theme from './styles/muiTheme';
 // типовой RootView, в котором подключается Router и основной макет приложения
 import RootView from 'metadata-react/App/RootView';
 
+// sw для оффлайна и прочих дел
+import * as serviceWorker from './serviceWorker';
+
 // создаём redux-store
 const store = configureStore();
 
@@ -62,3 +65,5 @@ class RootProvider extends Component {
 }
 
 render(<RootProvider/>, document.getElementById('root'));
+
+serviceWorker.register();

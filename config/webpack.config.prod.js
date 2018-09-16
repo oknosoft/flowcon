@@ -325,7 +325,7 @@ module.exports = {
         }
         console.log(message);
       },
-      minify: true,
+      //minify: true,
       // For unknown URLs, fallback to the index page
       navigateFallback: publicUrl + '/index.html',
       // Ignores URLs starting from /__ (useful for Firebase):
@@ -333,6 +333,8 @@ module.exports = {
       navigateFallbackWhitelist: [/^(?!\/__).*/],
       // Don't precache sourcemaps (they're large) and build asset manifest:
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      // дополнительные скрипты сервисворкера
+      importScripts: ['sw-ext.js'],
     }),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical

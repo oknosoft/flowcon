@@ -9,10 +9,10 @@ import Hidden from '@material-ui/core/Hidden';
 import Helmet from 'react-helmet';
 import AppFooter from './Footer';
 import Flask from '../../styles/icons/Flask';
-import MedicalBag from '../../styles/icons/MedicalBag';
+//import MedicalBag from '../../styles/icons/MedicalBag';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
-import Timer from '@material-ui/icons/Timer';
+//import Timer from '@material-ui/icons/Timer';
 import InfiniteArticles from '../Articles/MUiArticles';
 import {fromQuery} from '../Articles/queryString';
 
@@ -50,7 +50,7 @@ class PageHome extends React.Component {
   }
 
   render() {
-    const {classes, handleNavigate, match, title, location} = this.props;
+    const {classes, handleNavigate, match, location} = this.props;
     const {tags, tagList, tagFilter} = this;
     const prm = fromQuery();
 
@@ -175,8 +175,7 @@ class PageHome extends React.Component {
 
         </Grid>
 
-
-        <AppFooter handleNavigate={handleNavigate} title={title}/>
+        <AppFooter handleNavigate={handleNavigate}/>
       </div>
     );
   }
