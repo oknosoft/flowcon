@@ -38,7 +38,7 @@ export function register(config) {
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {
+        navigator.serviceWorker.ready.then((registration) => {
           console.log(
             'This web app is being served cache-first by a service ' +
             'worker. To learn more, visit https://goo.gl/SC7cgQ'
@@ -56,6 +56,9 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
+
+      setTimeout(() => registration.sync.register('reload'), 3000);
+
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         installingWorker.onstatechange = () => {

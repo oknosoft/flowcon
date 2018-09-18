@@ -56,7 +56,6 @@ class RootProvider extends Component {
           theme={theme}
           DumbScreen={DumbScreen}
           AppView={AppView}
-          ie11
           disableAutoLogin
         />
       </Provider>
@@ -66,4 +65,8 @@ class RootProvider extends Component {
 
 render(<RootProvider/>, document.getElementById('root'));
 
-serviceWorker.register();
+serviceWorker.register({
+  onUpdate(registration) {
+    store.dispatch;
+  }
+});

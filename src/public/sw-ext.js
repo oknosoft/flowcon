@@ -7,7 +7,11 @@
  */
 
 self.addEventListener('sync', function(event) {
-  if (event.tag == 'myFirstSync') {
-    event.waitUntil(doSomeStuff());
+  if (event.tag == 'reload') {
+    event.waitUntil(reloadStuff());
   }
 });
+
+function reloadStuff() {
+  return Promise.resolve();
+}

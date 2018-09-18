@@ -1,7 +1,7 @@
 {
   "lang": "ru",
-  "name": "Flowcon: tasks flow",
-  "short_name": "flowcon",
+  "name": "Бизнес-программирование",
+  "short_name": "Flowcon",
   "icons": [
     {
       "src": "imgs/flask_32.png",
@@ -15,7 +15,7 @@
     },
     {
       "src": "imgs/flask_192.png",
-      "sizes": "192x192",
+      "sizes": "220x220",
       "type": "image/png"
     }],
   "background_color": "#ffffff",
