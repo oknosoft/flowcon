@@ -35,7 +35,7 @@ class DataRoute extends Component {
   };
 
   render() {
-    const {match, handlers, windowHeight, windowWidth, disablePermanent, couch_direct, offline} = this.props;
+    const {match, handlers, windowHeight, windowWidth, disablePermanent, couch_direct, offline, user} = this.props;
     const {area, name} = match.params;
     const _mgr = $p[area][name];
 
@@ -44,7 +44,7 @@ class DataRoute extends Component {
     }
 
     // если нет текущего пользователя, считаем, что нет прав на просмотр
-    if(!$p.current_user) {
+    if(!$p.current_user || !user.logged_in) {
       return (
         <NeedAuth
           handleNavigate={handlers.handleNavigate}

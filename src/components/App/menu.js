@@ -3,11 +3,12 @@ import IconChart from '@material-ui/icons/InsertChart';
 import IconDoc from '@material-ui/icons/EventNote';
 import IconInfo from '@material-ui/icons/Info';
 import IconPerson from '@material-ui/icons/Person';
-import IconSettings from 'metadata-react/styles/Setting';
+import IconSettings from '@material-ui/icons/Settings';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import FiberNew from '@material-ui/icons/FiberNew';
 import IconDownload from '@material-ui/icons/CloudDownload';
 import IconHelp from '@material-ui/icons/Help';
+import IconAccessibility from '@material-ui/icons/AccessibilityNew';
 // import Flask from '../../styles/icons/Flask';
 // import IconDrafts from '@material-ui/icons/Drafts';
 // import IconList from '@material-ui/icons/List';
@@ -42,6 +43,14 @@ const items = [
     id: 'issues',
     navigate: '/doc.issue/list',
     icon: <IconDoc/>,
+    need_meta: true,
+    need_user: true,
+  },
+  {
+    text: 'Активность',
+    id: 'activity',
+    navigate: '/activity',
+    icon: <IconAccessibility/>,
     need_meta: true,
     need_user: true,
   },
@@ -106,7 +115,7 @@ export function item_props(path) {
     path = path.substr(0, path.length - 1);
   }
 
-  if(path.indexOf('password-reset')) {
+  if(path.indexOf('password-reset') !== -1) {
     return {need_meta: true};
   }
 
@@ -116,7 +125,7 @@ export function item_props(path) {
     res = with_recursion(path.substr(0, path.lastIndexOf('/')), items);
   }
   if(!res && path.match(/\/(doc|cat|ireg|cch|rep)\./)){
-    res = {need_meta: true, need_user: true};
+    res = {need_meta: true, need_user: true, need_doc_ram: true};
   }
   return res || {};
 }

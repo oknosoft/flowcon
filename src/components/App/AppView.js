@@ -19,6 +19,7 @@ import DataRoute from './DataRoute';                // вложенный мар
 import MarkdownRoute from '../Pages';               // вложенный маршрутизатор страниц с Markdown, 404 живёт внутри Route
 import ArticlesRoute from '../Articles';            // маршрутизатор статей
 import Contents from '../Articles/Contents';        // оглавление
+import Activity from '../Activity';                 // активности
 import HomeView from '../Home';                     // домашняя страница
 import MetaTreePage from '../MetaTreePage';         // дерево метаданных
 import Settings from '../Settings';                 // страница настроек приложения
@@ -45,22 +46,22 @@ class AppView extends Component {
     this.state = {
       need_meta: !!iprops.need_meta,
       need_user: !!iprops.need_user,
+      need_doc_ram: !!iprops.need_doc_ram,
       mobileOpen: false,
       permanentClose: false,
     };
   }
 
-  shouldComponentUpdate(props, {need_user, need_meta}) {
+  shouldComponentUpdate(props, {need_user, need_meta, need_doc_ram}) {
     const iprops = item_props();
     let res = true;
 
-    if(need_user != !!iprops.need_user) {
-      this.setState({need_user: !!iprops.need_user});
-      res = false;
-    }
-
-    if(need_meta != !!iprops.need_meta) {
-      this.setState({need_meta: !!iprops.need_meta});
+    if(need_user != !!iprops.need_user || need_meta != !!iprops.need_meta || need_doc_ram != !!iprops.need_doc_ram) {
+      this.setState({
+        need_meta: !!iprops.need_meta,
+        need_user: !!iprops.need_user,
+        need_doc_ram: !!iprops.need_doc_ram,
+      });
       res = false;
     }
 
@@ -140,7 +141,11 @@ class AppView extends Component {
         );
       }
 
-      if(!location.pathname.match(/\/login$/) && ((state.need_meta && !meta_loaded) || (state.need_user && !props.complete_loaded))) {
+      if(!location.pathname.match(/\/login$/) && (
+        (state.need_meta && !meta_loaded) ||
+        (state.need_doc_ram && !doc_ram_loaded) ||
+        (state.need_user && !props.complete_loaded)
+      )) {
         return <DumbScreen
           title={doc_ram_loaded ? 'Подготовка данных в памяти...' :
             (user.try_log_in ? 'Авторизация на сервере CouchDB...' : 'Загрузка из IndexedDB...')}
@@ -171,6 +176,7 @@ class AppView extends Component {
             <Route path="/articles" render={(props) => wraper(ArticlesRoute, props)}/>
             <Route path="/files" render={(props) => wraper(ArticlesRoute, props)}/>
             <Route path="/news" render={(props) => wraper(ArticlesRoute, props)}/>
+            <Route path="/activity" render={(props) => wraper(Activity, props)}/>
             <Route path="/contents" render={(props) => wraper(Contents, props)}/>
             <Route path="/meta" render={(props) => wraper(MetaTreePage, props)}/>
             <Route path="/flowcon/diagram" render={(props) => wraper(FakeDiagram, props)}/>
