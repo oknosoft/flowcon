@@ -7,8 +7,8 @@ import IconSettings from 'metadata-react/styles/Setting';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import FiberNew from '@material-ui/icons/FiberNew';
 import IconDownload from '@material-ui/icons/CloudDownload';
-import Flask from '../../styles/icons/Flask';
 import IconHelp from '@material-ui/icons/Help';
+// import Flask from '../../styles/icons/Flask';
 // import IconDrafts from '@material-ui/icons/Drafts';
 // import IconList from '@material-ui/icons/List';
 

@@ -28,6 +28,7 @@ import RootView from 'metadata-react/App/RootView';
 
 // sw для оффлайна и прочих дел
 import * as serviceWorker from './serviceWorker';
+import {ifaceActions} from 'metadata-redux';
 
 // создаём redux-store
 const store = configureStore();
@@ -66,7 +67,11 @@ class RootProvider extends Component {
 render(<RootProvider/>, document.getElementById('root'));
 
 serviceWorker.register({
-  onUpdate(registration) {
-    store.dispatch;
+  onUpdate() {
+    store.dispatch(ifaceActions.IFACE_STATE({
+      component: '',
+      name: 'snack',
+      value: {open: true, reset: true, message: 'Доступен новый контент, обновите страницу'},
+    }));
   }
 });
