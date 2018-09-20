@@ -30,9 +30,18 @@ export default function ({cat, CatArticles}) {
       },
       set(v) {
         const {_obj} = this;
-        if(_obj.tags != v) {
+        if(!Array.isArray(v)) {
+          v = [];
+        }
+        if(_obj.tags !== v) {
           this.__notify('tags');
-          _obj.tags = Array.isArray(v) ? v : [];
+          if(_obj.tags) {
+            _obj.tags.length = 0;
+            _obj.tags.push.apply(_obj.tags, v);
+          }
+          else {
+            _obj.tags = v;
+          }
         }
       }
     },
@@ -43,9 +52,18 @@ export default function ({cat, CatArticles}) {
       },
       set(v) {
         const {_obj} = this;
-        if(_obj.acl != v) {
+        if(!Array.isArray(v)) {
+          v = [];
+        }
+        if(_obj.acl !== v) {
           this.__notify('acl');
-          _obj.acl = Array.isArray(v) ? v : [];
+          if(_obj.acl) {
+            _obj.acl.length = 0;
+            _obj.acl.push.apply(_obj.acl, v);
+          }
+          else {
+            _obj.acl = v;
+          }
         }
       }
     },

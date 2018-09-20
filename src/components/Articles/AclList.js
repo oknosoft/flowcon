@@ -17,10 +17,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 
 const suggestions = [
-  { label: '_anonymous' },
-  { label: 'r_subscribers' },
-  { label: 'r_doc_editor' },
-  { label: 'r_remote_editor' },
+  {label: '_anonymous'},
+  {label: 'r_charts_editor'},
+  {label: 'r_doc_editor'},
+  {label: 'r_remote_editor'},
+  {label: 'r_subscribers'},
 ];
 
 function renderInput(inputProps) {
@@ -110,23 +111,19 @@ class DownshiftMultiple extends React.Component {
   };
 
   handleChange = item => {
-    let { selectedItem } = this.state;
-
+    let {state: { selectedItem }, props: {_obj}}  = this;
     if (selectedItem.indexOf(item) === -1) {
       selectedItem = [...selectedItem, item];
     }
-
-    this.setState({
-      inputValue: '',
-      selectedItem,
-    });
+    this.setState({inputValue: '', selectedItem});
+    _obj.acl = selectedItem;
   };
 
   handleDelete = item => () => {
     const selectedItem = [...this.state.selectedItem];
     selectedItem.splice(selectedItem.indexOf(item), 1);
-
-    this.setState({ selectedItem });
+    this.setState({selectedItem});
+    this.props._obj.acl = selectedItem;
   };
 
   render() {
