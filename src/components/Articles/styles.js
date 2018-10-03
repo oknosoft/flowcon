@@ -6,12 +6,12 @@ const styles = theme => ({
   },
   container: {
     display: 'flex',
+    marginBottom: theme.spacing.unit,
   },
   top: {
     marginTop: theme.spacing.unit * 2,
   },
   bottom: {
-    marginBottom: theme.spacing.unit * 2,
     width: '100%',
   },
   subrow: {
