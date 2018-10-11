@@ -71,7 +71,7 @@ function Social(props) {
 
   return (
     <div key="share" className={classes.root}>
-      <Typography variant="title" component="h3" color="primary">Поделиться ссылкой:</Typography>
+      <Typography variant="h6" component="h3" color="primary">Поделиться ссылкой:</Typography>
       <FacebookShareButton
         url={href}
         quote={title}

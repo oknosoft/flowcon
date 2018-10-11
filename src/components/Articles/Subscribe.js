@@ -21,7 +21,7 @@ function Subscribe(props) {
   const {title, classes, area} = props;
   return (
     <div className={classes.root}>
-      <Typography variant="title" component="h3" color="primary">Подписаться на рассылку:</Typography>
+      <Typography variant="h6" component="h3" color="primary">Подписаться на рассылку:</Typography>
       <form target="_blank" rel="noopener noreferrer" action="https://subscribe.ru/member/quick" method="get">
         <input type="hidden" name="action" value="quick" />
         <input type="hidden" name="src" value={`list_${area}`} />

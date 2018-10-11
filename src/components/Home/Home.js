@@ -75,7 +75,7 @@ class PageHome extends React.Component {
                     <ShoppingBasket alt="Продукты" className={classes.logo} color="disabled"/>
                   </Grid>
                   <Grid item className={classes.content}>
-                    <Typography variant="headline" component="h2">Продукты</Typography>
+                    <Typography variant="h5" component="h2">Продукты</Typography>
                     <Typography color="textSecondary">Что у нас можно купить</Typography>
                   </Grid>
                 </Grid>
@@ -88,7 +88,7 @@ class PageHome extends React.Component {
                     <LibraryBooks alt="Статьи" className={classes.logo} color="disabled"/>
                   </Grid>
                   <Grid item className={classes.content}>
-                    <Typography variant="headline" component="h2">Статьи и книги</Typography>
+                    <Typography variant="h5" component="h2">Статьи и книги</Typography>
                     <Typography color="textSecondary">
                       Методические материалы, кейсы и технический блог
                     </Typography>
@@ -103,7 +103,7 @@ class PageHome extends React.Component {
                     <Flask alt="Flowcon Logo" className={classes.logo} color="disabled"/>
                   </Grid>
                   <Grid item className={classes.content}>
-                    <Typography variant="headline" component="h2">Flowcon</Typography>
+                    <Typography variant="h5" component="h2">Flowcon</Typography>
                     <Typography color="textSecondary">
                       Программно-методический комплекс для управления потоками задач
                     </Typography>
@@ -119,7 +119,7 @@ class PageHome extends React.Component {
                     <MedicalBag alt="Проверка данных" className={classes.logo} color="disabled"/>
                   </Grid>
                   <Grid item className={classes.content}>
-                    <Typography variant="headline" component="h2">Консилиум</Typography>
+                    <Typography variant="h5" component="h2">Консилиум</Typography>
                     <Typography color="textSecondary">
                       Библиотека алгоритмов проверки данных в 1С
                     </Typography>
@@ -134,7 +134,7 @@ class PageHome extends React.Component {
                     <Timer alt="Планирование" className={classes.logo} color="disabled"/>
                   </Grid>
                   <Grid item className={classes.content}>
-                    <Typography variant="headline" component="h2">Планирование ресурсов</Typography>
+                    <Typography variant="h5" component="h2">Планирование ресурсов</Typography>
                     <Typography color="textSecondary">
                       Простое решение сложной проблемы
                     </Typography>
@@ -151,7 +151,7 @@ class PageHome extends React.Component {
                 <Grid container spacing={16} wrap="nowrap">
                   <Hidden smDown><Grid item xs={1}/></Hidden>
                   <Grid item>
-                    <Typography  variant="headline" component="h3">Новости</Typography>
+                    <Typography  variant="h5" component="h3">Новости</Typography>
                     {
                       tagFilter.length ?
                         <InfiniteArticles

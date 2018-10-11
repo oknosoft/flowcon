@@ -37,7 +37,7 @@ export default function Attachments({_obj, handleIfaceState}) {
   }
   const download = () => handleDownload(_obj, handleIfaceState);
   return [
-    <Typography key="title" variant="title" component="h3" color="primary">Вложенные файлы:</Typography>,
+    <Typography key="title" variant="h6" component="h3" color="primary">Вложенные файлы:</Typography>,
     <AttachmentsToolbar key="toolbar" short handleDownload={download} />,
     <AttachmentsList key="data" _obj={_obj} handleDownload={download} handleSelect={handleSelect} />
   ];

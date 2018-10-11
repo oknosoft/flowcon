@@ -20,6 +20,10 @@ const theme = createMuiTheme({
     }
   },
 
+  typography: {
+    useNextVariants: true,
+  },
+
   // overrides: {
   //   MuiToolbar: {
   //     root: {

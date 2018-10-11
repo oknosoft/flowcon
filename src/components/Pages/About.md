@@ -1,8 +1,8 @@
 # О сайте
 business-programming.ru - это ресурс о Бизнес-программировании  
 На этой странице - техническая информация  
-Страница о компании находится [здесь](/articles/about-company)  
-Зачем нужен Flowcon, можно почитать [здесь](/articles/flowcon-readme)
+Страница о компании находится <a href="/articles/about-company" title="О компании">здесь</a>  
+Зачем нужен Flowcon, можно почитать <a href="/articles/flowcon-readme" title="Зачем нужен Flowcon">здесь</a>
 
 ### Использованы следующие библиотеки и инструменты:
 

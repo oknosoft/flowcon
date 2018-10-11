@@ -62,7 +62,7 @@ class Activity extends Component {
       const row = activity.get(ref);
       return <ExpansionPanel key={`c-${index}`}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="title" component="h2" color="primary">
+          <Typography variant="h6" component="h2" color="primary">
             {row.name}
           </Typography>
         </ExpansionPanelSummary>
@@ -85,7 +85,7 @@ class Activity extends Component {
       </Helmet>
       <div className={classes.top}>
         <div className={classes.container}>
-          <Typography variant="display1" component="h1" color="primary" className={classes.bottom}>
+          <Typography variant="h4" component="h1" color="primary" className={classes.bottom}>
             {ltitle}
           </Typography>
           <IconButton

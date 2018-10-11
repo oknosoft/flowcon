@@ -176,7 +176,7 @@ class MUiArticles extends Component {
       (prev || next) && <div key="footer" className={cn(classes.row, classes.bottom)}>
         <Typography
           component="a"
-          variant="subheading"
+          variant="subtitle1"
           color="primary"
           className={cn({[classes.disabled]: !prev})}
           href={path({page})}
@@ -185,7 +185,7 @@ class MUiArticles extends Component {
         <div className={classes.scroller}> </div>
         <Typography
           component="a"
-          variant="subheading"
+          variant="subtitle1"
           color="primary"
           className={cn({[classes.disabled]: !next})}
           href={path({page: page + 2})}

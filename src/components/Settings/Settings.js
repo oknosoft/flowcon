@@ -44,7 +44,7 @@ class Settings extends Component {
           <meta property="og:title" content={props.title} />
           <meta property="og:description" content="Параметры подключения" />
         </Helmet>
-        <Typography variant="title" style={{paddingTop: 16}}>Подключение к базе данных</Typography>
+        <Typography variant="h6" style={{paddingTop: 16}}>Подключение к базе данных</Typography>
         <CnnSettings {...props} disable_settings={location.host === 'business-programming.ru'}/>
       </Paper>
     );

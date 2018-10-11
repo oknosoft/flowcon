@@ -216,7 +216,7 @@ class AppView extends Component {
               <MenuIcon color="inherit"/>
             </IconButton>
 
-            <Typography className={classes.title} variant="title" color="textSecondary" noWrap>{title || mainTitle}</Typography>
+            <Typography className={classes.title} variant="h6" color="textSecondary" noWrap>{title || mainTitle}</Typography>
 
             <HeaderButtons
               sync_started={sync_started}

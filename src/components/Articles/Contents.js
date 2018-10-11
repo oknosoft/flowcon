@@ -99,7 +99,7 @@ class Contents extends Component {
     return cnt.articles && cnt.articles.map((v) => <Typography
       key={v[1]}
       component="a"
-      variant="subheading"
+      variant="subtitle1"
       color="primary"
       href={`/articles/${v[2]}`}
       onClick={(e) => this.navigate(e, `/articles/${v[2]}`)}
@@ -111,7 +111,7 @@ class Contents extends Component {
     const {classes} = this.props;
     return rows.map((row, index) => {
       return <div key={`s-${index}`}>
-        <Typography variant="title" component="h3" color="primary" className={classes.subrow}>
+        <Typography variant="h6" component="h3" color="primary" className={classes.subrow}>
           {row.name}
           <SubLink url={`/contents/${row.id}`} onClick={(e) => this.navigate(e, `/contents/${row.id}`)}/>
         </Typography>
@@ -126,11 +126,11 @@ class Contents extends Component {
       const row = rows[0];
       const children = row._children();
       return [
-        !row.parent.empty() && <Typography key="h2" variant="title" component="h2" color="primary">
+        !row.parent.empty() && <Typography key="h2" variant="h6" component="h2" color="primary">
           {row.parent.name}
           <SubLink url={`/contents/${row.parent.id}`} onClick={(e) => this.navigate(e, `/contents/${row.parent.id}`)}/>
         </Typography>,
-        <Typography key="h3" variant="title" component="h2" color="primary" className={cn({
+        <Typography key="h3" variant="h6" component="h2" color="primary" className={cn({
           [classes.subrow]: !row.parent.empty(),
           [classes.bottom]: row.parent.empty()
         })}>
@@ -148,7 +148,7 @@ class Contents extends Component {
         const children = row._children();
         res.push(<ExpansionPanel key={`c-${index}`}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="title" component="h2" color="primary">
+            <Typography variant="h6" component="h2" color="primary">
               {row.name}
               <SubLink url={`/contents/${row.id}`} onClick={(e) => this.navigate(e, `/contents/${row.id}`)}/>
             </Typography>
@@ -174,7 +174,7 @@ class Contents extends Component {
       </Helmet>
       <div className={classes.top}>
         <div className={classes.container}>
-          <Typography variant="display1" component="h1" color="primary" className={classes.bottom}>
+          <Typography variant="h4" component="h1" color="primary" className={classes.bottom}>
             {ltitle}
             <SubLink url="/contents/" onClick={(e) => this.navigate(e, `/contents/`)}/>
           </Typography>
