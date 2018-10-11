@@ -30,6 +30,9 @@ import docs from './ram';
 import {addMiddleware} from 'redux-dynamic-middlewares';
 import {metaActions, metaMiddleware} from 'metadata-redux';
 
+// индексеры статей и задач
+import issue_indexer from './documents/doc_issue_indexer';
+
 MetaEngine
   .plugin(plugin_pouchdb)     // подключаем pouchdb-адаптер к прототипу metadata.js
   .plugin(plugin_ui)          // подключаем общие методы интерфейса пользователя
@@ -79,6 +82,10 @@ export function init(store) {
       page: 1,
       limit: 300,
       start: Date.now(),
+    });
+
+    pouch.on('on_log_in', () => {
+      return issue_indexer();
     });
 
   }

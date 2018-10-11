@@ -155,9 +155,9 @@ function create_modules(_m) {
       rep: {mgr: 'DataProcessorsManager', proto: 'DataProcessorObj'},
     };
   let text = `(function(){
-  const {EnumManager,CatManager,DocManager,DataProcessorsManager,ChartOfCharacteristicManager,ChartOfAccountManager,
-    InfoRegManager,AccumRegManager,BusinessProcessManager,TaskManager,CatObj, DocObj, TabularSectionRow, DataProcessorObj,
-    RegisterRow, BusinessProcessObj, TaskObj} = $p.constructor.classes;
+  const {MetaEventEmitter,EnumManager,CatManager,DocManager,DataProcessorsManager,ChartOfCharacteristicManager,ChartOfAccountManager,
+    InfoRegManager,AccumRegManager,BusinessProcessManager,TaskManager,CatObj,DocObj,TabularSectionRow,DataProcessorObj,
+    RegisterRow,BusinessProcessObj,TaskObj} = $p.constructor.classes;
     
   const _define = Object.defineProperties;
 
