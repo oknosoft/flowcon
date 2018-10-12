@@ -6,12 +6,8 @@
  * Created by Evgeniy Malyarov on 11.10.2018.
  */
 
-const fields = [
-  '_id',
-  'date',
-  'number_doc',
-  'note'];
-const search_fields = ['number_doc', 'note'];
+const fields = ['_id','date','number_doc','definition','caption','mark','quickly','important','initiator','executor'];
+const search_fields = ['definition','caption'];
 
 export default function indexer() {
   const {adapters: {pouch}, doc: {issue}, classes} = $p;
@@ -42,7 +38,7 @@ export default function indexer() {
         }
 
         // извлекаем значения полей фильтра из селектора
-        let dfrom, dtill, from, till, search;
+        let dfrom, dtill, from, till, search = [];
         for(const row of selector.$and) {
           const fld = Object.keys(row)[0];
           const cond = Object.keys(row[fld])[0];

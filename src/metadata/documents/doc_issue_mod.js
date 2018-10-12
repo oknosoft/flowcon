@@ -6,12 +6,14 @@
  * @module doc_issue
  */
 
-import FrmObjIssue from '../../components/Issues/FrmObjIssue';
+import FrmObjIssue from '../../components/Issues/FrmObj';
+import FrmIssueList from '../../components/Issues/FrmList';
 
 export default function ({doc, DocIssue}) {
 
-  // подключаем особую форму объекта
+  // подключаем особые формы объекта и списка
   doc.issue.FrmObj = FrmObjIssue;
+  doc.issue.FrmList = FrmIssueList;
 
   // модифицируем работу с табчастью тегов
   const {prototype} = DocIssue;
