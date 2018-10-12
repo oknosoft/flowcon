@@ -12,6 +12,7 @@ const cors = require('cors');
 const SuperLogin = require('superlogin');
 const PouchDB = require('pouchdb');
 const uuidv1 = require('uuid/v1');
+const fetch = require('node-fetch');
 
 const FacebookStrategy  = require('passport-facebook').Strategy;
 const GitHubStrategy    = require('passport-github').Strategy;
@@ -45,6 +46,29 @@ app.get(/^\/(articles|files|news|sitemap\.xml)/, require('./articles')(superlogi
 
 const Profile = require('./profile');
 const profile = new Profile(superlogin);
+
+// смена имени пользователя
+app.post('/user/proxy', (req, res, next) => {
+
+  const server = superlogin.config.getItem('dbServer');
+  const url = `${server.protocol}${server.host}${req.query.url.startsWith('/') ? '' : '/'}${req.query.url}`;
+
+  fetch(url, {
+    method: 'POST',
+    headers: req.headers,
+    body: JSON.stringify(req.body),
+  })
+    .then((qreq) => {
+      qreq.json()
+        .then((json) => {
+          res.status(qreq.status).json(json);
+        });
+    })
+    .catch((err) => {
+      res.status(err.status || 500).json(json);
+    });
+
+});
 
 app.get('/user/profile', superlogin.requireAuth, function(req, res, next) {
   profile.get(req.user._id)

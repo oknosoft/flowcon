@@ -150,5 +150,7 @@ export default function indexer() {
     }
   }
 
-  return issue._indexer.init();
+  return issue._indexer
+    .init()
+    .catch($p.record_log);
 }
