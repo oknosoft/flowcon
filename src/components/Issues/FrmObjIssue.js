@@ -143,15 +143,17 @@ class FrmObjIssue extends MDNRComponent {
   };
 
   renderFields(_obj, classes) {
+    // <SelectTags tags={_obj.tags} categories tagList={this.tagList} handleChange={this.tagsChange}/>
     return (
       <FormGroup key="props" className={classes.spaceLeft}>
         <FormGroup row>
-          <DataField _obj={_obj} _fld="number_doc"/>
-          <DataField _obj={_obj} _fld="date"/>
-          <DataField _obj={_obj} _fld="responsible"/>
+          <DataField _obj={_obj} _fld="caption"/>
+          <DataField _obj={_obj} _fld="date" readOnly/>
         </FormGroup>
-        <DataField _obj={_obj} _fld="caption" fullWidth/>
-        <SelectTags tags={_obj.tags} categories tagList={this.tagList} handleChange={this.tagsChange}/>
+        <FormGroup row>
+          <DataField _obj={_obj} _fld="initiator"/>
+          <DataField _obj={_obj} _fld="executor"/>
+        </FormGroup>
       </FormGroup>
     );
   }

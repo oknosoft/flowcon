@@ -1182,7 +1182,10 @@ get value(){return this._getter('value')}
 set value(v){this._setter('value',v)}
 }
 $p.DocIssueHistoryRow = DocIssueHistoryRow;
-$p.doc.create('issue');
+class DocIssueManager extends DocManager {
+
+}
+$p.doc.create('issue', DocIssueManager, false);
 
 /**
 * ### Регистр сведений log_view

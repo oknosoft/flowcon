@@ -28,7 +28,7 @@ export default function ArticleRow(props) {
   return (
     <FormGroup classes={{root: cn(classes.nowrap, classes.bottom)}}>
       <Typography
-        variant={news ? "body2" : "title"}
+        variant={news ? "body2" : "h6"}
         component="a"
         href={href}
         onClick={onClick}

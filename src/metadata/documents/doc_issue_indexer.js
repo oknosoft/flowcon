@@ -6,7 +6,7 @@
  * Created by Evgeniy Malyarov on 11.10.2018.
  */
 
-const fields = ['_id','date','number_doc','definition','caption','mark','quickly','important','initiator','executor'];
+const fields = '_id,date,number_doc,definition,caption,mark,quickly,important,initiator,executor,history,canceled,completed,executor_accepted,initiator_accepted'.split(',');
 const search_fields = ['definition','caption'];
 
 export default function indexer() {
@@ -16,7 +16,7 @@ export default function indexer() {
 
   for(const db in remote) {
     if(db !== 'remote' && db !== issue.cachable) {
-      const mngr = new classes.DocManager($p.doc, 'doc.issue');
+      const mngr = new issue.constructor($p.doc, issue.class_name);
       mngr._cachable = db;
       mngrs.push(mngr);
     }

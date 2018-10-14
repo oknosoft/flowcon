@@ -20,6 +20,8 @@ class FrmIssueList extends Component {
 
   constructor(props, context) {
     super(props, context);
+    this.handlers = Object.assign({}, props.handlers);
+    this.handlers.handleEdit = this.handleEdit.bind(this);
     //this.state = {open: false};
   }
 
@@ -27,6 +29,10 @@ class FrmIssueList extends Component {
     this.handleRequestClose();
     this.props.handleSelect(row, _mgr);
   };
+
+  handleEdit({row: {_area}, ref, _mgr}) {
+    this.props.handleEdit({ref: `${ref}?area=${_area}`, _mgr});
+  }
 
   find_rows = (selector) => {
     const {token, password} = $p.superlogin.getSession();
@@ -54,7 +60,7 @@ class FrmIssueList extends Component {
 
   render() {
 
-    const {props: {windowHeight, windowWidth, handlers, location}, state} = this;
+    const {props: {windowHeight, windowWidth, location}, state, handlers} = this;
 
     const sizes = {
       windowHeight,

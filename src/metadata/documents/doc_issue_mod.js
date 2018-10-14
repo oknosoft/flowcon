@@ -12,8 +12,8 @@ import FrmIssueList from '../../components/Issues/FrmList';
 export default function ({doc, DocIssue}) {
 
   // подключаем особые формы объекта и списка
-  doc.issue.FrmObj = FrmObjIssue;
-  doc.issue.FrmList = FrmIssueList;
+  doc.issue.constructor.prototype.FrmObj = FrmObjIssue;
+  doc.issue.constructor.prototype.FrmList = FrmIssueList;
 
   // модифицируем работу с табчастью тегов
   const {prototype} = DocIssue;

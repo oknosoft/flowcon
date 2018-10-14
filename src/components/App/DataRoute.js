@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route} from 'react-router';
+import qs from 'qs';
 
 import {withObj} from 'metadata-redux';
 import NeedAuth, {ltitle} from 'metadata-react/App/NeedAuth'; // страница "необхлдима авторизация"
@@ -37,7 +38,7 @@ class DataRoute extends Component {
   render() {
     const {match, handlers, windowHeight, windowWidth, disablePermanent, couch_direct, offline, user} = this.props;
     const {area, name} = match.params;
-    const _mgr = $p[area][name];
+    let _mgr = $p[area][name];
 
     if(!_mgr) {
       return <NotFound/>;
@@ -65,6 +66,19 @@ class DataRoute extends Component {
     };
 
     const wraper = (Component, props, type) => {
+
+      // уточняем _mgr для MultiManagers
+      if(type === 'obj' && _mgr._indexer) {
+        const prm = qs.parse(location.search.replace('?',''));
+        if(prm.area && _mgr.cachable !== prm.area){
+          _mgr._indexer._mgrs.some((mgr) => {
+            if(mgr.cachable === prm.area){
+              return _mgr = mgr;
+            }
+          })
+        }
+      }
+
       if(type === 'obj' && _mgr.FrmObj) {
         Component = _mgr.FrmObj;
       }
