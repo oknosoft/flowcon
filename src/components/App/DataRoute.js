@@ -75,7 +75,7 @@ class DataRoute extends Component {
             if(mgr.cachable === prm.area){
               return _mgr = mgr;
             }
-          })
+          });
         }
       }
 
