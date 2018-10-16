@@ -16,6 +16,7 @@ import {withObj} from 'metadata-redux';
 import qs from 'qs';
 
 import SelectMgr from './SelectMgr';
+import Reaponsable from './Reaponsable';
 
 
 class FrmIssueList extends React.Component {
@@ -25,7 +26,7 @@ class FrmIssueList extends React.Component {
     this.handlers = Object.assign({}, props.handlers);
     this.handlers.handleEdit = this.handleEdit.bind(this);
     this.handlers.handleAdd = this.handleAdd.bind(this);
-    this.state = {anchorEl: null};
+    this.state = {anchorEl: null, reaponsable: null};
   }
 
   handleSelect = (row, _mgr) => {
@@ -42,13 +43,16 @@ class FrmIssueList extends React.Component {
   }
 
   find_rows = (selector) => {
-    const {token, password} = $p.superlogin.getSession();
     const {$and} = selector.selector;
 
     if(!$and.some((elm) => Object.keys(elm)[0] === 'date')){
       $and.push({date: {$gte: moment().subtract(3, 'month').format()}});
       $and.push({date: {$lte: moment().add(1, 'day').format()}});
     }
+
+    const {reaponsable} = this.state;
+    reaponsable && $and.push({reaponsable});
+
     selector.sort = [{date: 'desc'}];
 
     return Promise.resolve()
@@ -71,6 +75,12 @@ class FrmIssueList extends React.Component {
 
   handleMenuSelect = (_mgr) => {
     this.props.handleAdd(_mgr);
+  };
+
+  handleReaponsable = (reaponsable) => {
+    this.setState({reaponsable: reaponsable.empty() ? null : reaponsable.ref}, () => {
+      this.filterChange && this.filterChange();
+    });
   };
 
   render() {
@@ -98,7 +108,8 @@ class FrmIssueList extends React.Component {
         //denyAddDel
         show_variants
         show_search
-        //btns={<Statuses/>}
+        btns={<Reaponsable onChange={this.handleReaponsable}/>}
+        registerFilterChange={(filterChange) => this.filterChange = filterChange}
         {...sizes}
       />,
       anchorEl && <SelectMgr key="select" anchorEl={anchorEl} onClose={this.handleMenuClose} onSelect={this.handleMenuSelect} />
