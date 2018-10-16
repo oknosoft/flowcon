@@ -9,7 +9,30 @@
 const fields = '_id,date,number_doc,definition,caption,mark,quickly,important,initiator,executor,history,canceled,completed,specify,executor_accepted,initiator_accepted'.split(',');
 const search_fields = ['definition','caption'];
 
+function subscribe(mngrs) {
+
+  const {articles} = $p.cat;
+
+  for(const mngr of mngrs) {
+    mngr._indexer_listener = mngr.pouch_db.changes({
+      since: 'now',
+      live: true,
+      include_docs: true,
+      selector: {class_name: {$in: [mngr.class_name, articles.class_name]}}
+    }).on('change', (change) => {
+      change.doc.class_name == mngr.class_name ? mngr.emit('change', change.doc) : articles.emit('change', change.doc);
+    });
+  }
+}
+
+function unsubscribe(mngrs) {
+  for(const mngr of mngrs) {
+    mngr._indexer_listener && mngr._indexer_listener.cancel();
+  }
+}
+
 export default function indexer() {
+
   const {adapters: {pouch}, doc: {issue}, classes} = $p;
   const {remote} = pouch;
   const mngrs = [issue];
@@ -25,6 +48,7 @@ export default function indexer() {
   // создаём
   if(issue._indexer) {
     issue._indexer.reset(mngrs);
+    unsubscribe(mngrs);
   }
   else {
     class RamIndexer extends classes.RamIndexer {
@@ -144,6 +168,7 @@ export default function indexer() {
     if(mngr !== issue) {
       mngr._indexer = issue._indexer;
     }
+    subscribe(mngrs);
   }
 
   return issue._indexer

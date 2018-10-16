@@ -88,6 +88,10 @@ export function init(store) {
       return issue_indexer();
     });
 
+    pouch.on('user_log_out', () => {
+      changes && changes.cancel();
+    });
+
   }
   catch (err) {
     $p && $p.record_log(err);
