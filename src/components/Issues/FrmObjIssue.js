@@ -13,6 +13,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Helmet from 'react-helmet';
 import FormGroup from '@material-ui/core/FormGroup';
+import Typography from '@material-ui/core/Typography';
 
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
@@ -28,17 +29,6 @@ const htitle = 'Задача';
 
 class FrmObjIssue extends MDNRComponent {
 
-  static propTypes = {
-    _mgr: PropTypes.object,             // DataManager, с которым будет связан компонент
-    _acl: PropTypes.string,             // Права на чтение-изменение
-    _meta: PropTypes.object,            // Здесь можно переопределить метаданные
-    _layout: PropTypes.object,          // Состав и расположение полей, если не задано - рисуем типовую форму
-
-    read_only: PropTypes.object,        // Элемент только для чтения
-
-    handlers: PropTypes.object.isRequired, // обработчики редактирования объекта
-  };
-
   constructor(props, context) {
     super(props, context);
     const {_mgr, _meta} = props;
@@ -51,7 +41,6 @@ class FrmObjIssue extends MDNRComponent {
       _meta: _meta || _mgr.metadata(),
       _obj: null,
       MarkdownInput: null,
-      index: 0,
     };
     // в редакторе доступны все категории
     this.tagList = [];
@@ -80,7 +69,9 @@ class FrmObjIssue extends MDNRComponent {
   /* eslint-disable-next-line*/
   onDataChange = (obj, fields) => {
     if(obj === this.state._obj) {
-      this.shouldComponentUpdate(this.props);
+      if(this.shouldComponentUpdate(this.props)) {
+        this.forceUpdate();
+      }
     }
   }
 
@@ -131,7 +122,9 @@ class FrmObjIssue extends MDNRComponent {
   editorStyles(el) {
     const content = el && el.querySelector('.react-markdown--slate-content');
     if(content) {
-      content.style.minHeight = '140px';
+      content.style.minHeight = '90px';
+      const {style} = el.querySelector('.react-markdown--slate-editor');
+      style.marginRight = '8px';
     }
   }
 
@@ -144,30 +137,18 @@ class FrmObjIssue extends MDNRComponent {
 
   renderFields(_obj, classes) {
     // <SelectTags tags={_obj.tags} categories tagList={this.tagList} handleChange={this.tagsChange}/>
-    return (
-      <FormGroup key="props" className={classes.spaceLeft}>
-        <FormGroup row>
-          <DataField _obj={_obj} _fld="caption"/>
-          <DataField _obj={_obj} _fld="date" readOnly/>
-        </FormGroup>
-        <FormGroup row>
-          <DataField _obj={_obj} _fld="initiator"/>
-          <DataField _obj={_obj} _fld="executor"/>
-        </FormGroup>
-      </FormGroup>
-    );
+    return ;
   }
 
   render() {
     const {
       props: {_mgr, classes, handleIfaceState},
-      state: {_obj, _meta, index, MarkdownInput},
+      state: {_obj, _meta, MarkdownInput},
       context, _handlers} = this;
     const toolbar_props = Object.assign({
       closeButton: !context.dnr,
-      posted: _obj && _obj.posted,
       deleted: _obj && _obj.deleted,
-      postable: !!(_meta.posted || _mgr.metadata('posted')),
+      postable: false,
       deletable: false,
     }, _handlers);
 
@@ -178,42 +159,68 @@ class FrmObjIssue extends MDNRComponent {
         <meta property="og:description" content="Редактор задачи" />
       </Helmet>,
 
-      <Tabs key="tabs" value={index} onChange={(event, index) => this.setState({index})}>
-        <Tab label="Реквизиты"/>
-        <Tab label="Текст"/>
-        <Tab label="Вложения"/>
-      </Tabs>,
+      <DataObjToolbar key="toolbar" {...toolbar_props} />,
 
-      index === 0 && <DataObjToolbar key="toolbar" {...toolbar_props} />,
+      <FormGroup row key="fields" className={classes.spaceLeft}>
 
-      index === 0 && this.renderFields(_obj, classes),
+        <FormGroup className={classes.fullFlex}>
+          <DataField _obj={_obj} _fld="caption"/>
+          <DataField _obj={_obj} _fld="identifier"/>
 
-      index === 1 && (
-        MarkdownInput ?
-          <div key="definition" ref={this.editorStyles}>
-            <MarkdownInput
-              onChange={(val) => {
-                _obj._obj.definition = val;
-                _obj._modified = true;
-              }}
-              value={_obj.definition}
-              autoFocus={false}
-              readOnly={false}
-              showFullScreenButton={false}
-              hideToolbar
-              locale='ru'
-            />
-          </div>
-          :
-          <LoadingMessage key="loading" />
-      ),
+          { MarkdownInput ?
+            <div key="definition" ref={this.editorStyles}>
+              <Typography variant="caption" color="textSecondary" className={classes.paddingTop}>Описание задачи</Typography>
+              <MarkdownInput
+                onChange={(val) => {
+                  _obj._obj.definition = val;
+                  _obj._modified = true;
+                }}
+                value={_obj.definition}
+                autoFocus={false}
+                readOnly={false}
+                showFullScreenButton={false}
+                hideToolbar
+                locale='ru'
+              />
+            </div>
+            :
+            <LoadingMessage key="loading" />
+          }
 
-      index === 2 && <FrmAttachments key="attachments" _obj={_obj} handleIfaceState={handleIfaceState}/>,
+        </FormGroup>
+
+        <FormGroup>
+          <DataField _obj={_obj} _fld="date" readOnly/>
+          <DataField _obj={_obj} _fld="initiator"/>
+          <DataField _obj={_obj} _fld="executor"/>
+          <DataField _obj={_obj} _fld="quickly"/>
+          <DataField _obj={_obj} _fld="important"/>
+          <DataField _obj={_obj} _fld="mark"/>
+          {!_obj.specify && <DataField _obj={_obj} _fld="executor_accepted"/>}
+          {!_obj.executor_accepted && <DataField _obj={_obj} _fld="specify"/>}
+          {!_obj.canceled && _obj.executor_accepted && <DataField _obj={_obj} _fld="completed"/>}
+          {_obj.completed && <DataField _obj={_obj} _fld="initiator_accepted"/>}
+          {!_obj.completed && <DataField _obj={_obj} _fld="canceled"/>}
+
+        </FormGroup>
+
+      </FormGroup>,
 
     ]
       :
       <LoadingMessage />;
   }
 }
+
+FrmObjIssue.propTypes = {
+  _mgr: PropTypes.object,             // DataManager, с которым будет связан компонент
+  _acl: PropTypes.string,             // Права на чтение-изменение
+  _meta: PropTypes.object,            // Здесь можно переопределить метаданные
+  _layout: PropTypes.object,          // Состав и расположение полей, если не задано - рисуем типовую форму
+
+  read_only: PropTypes.object,        // Элемент только для чтения
+
+  handlers: PropTypes.object.isRequired, // обработчики редактирования объекта
+};
 
 export default withStyles(withIface(FrmObjIssue));

@@ -6,7 +6,7 @@
  * Created by Evgeniy Malyarov on 05.10.2018.
  */
 
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -15,14 +15,17 @@ import WindowSizer from 'metadata-react/WindowSize';
 import {withObj} from 'metadata-redux';
 import qs from 'qs';
 
+import SelectMgr from './SelectMgr';
 
-class FrmIssueList extends Component {
+
+class FrmIssueList extends React.Component {
 
   constructor(props, context) {
     super(props, context);
     this.handlers = Object.assign({}, props.handlers);
     this.handlers.handleEdit = this.handleEdit.bind(this);
-    //this.state = {open: false};
+    this.handlers.handleAdd = this.handleAdd.bind(this);
+    this.state = {anchorEl: null};
   }
 
   handleSelect = (row, _mgr) => {
@@ -32,6 +35,10 @@ class FrmIssueList extends Component {
 
   handleEdit({row: {_area}, ref, _mgr}) {
     this.props.handleEdit({ref: `${ref}?area=${_area}`, _mgr});
+  }
+
+  handleAdd(_mgr, event) {
+    this.setState({anchorEl: event.currentTarget});
   }
 
   find_rows = (selector) => {
@@ -58,9 +65,17 @@ class FrmIssueList extends Component {
 
   };
 
+  handleMenuClose = () => {
+    this.setState({anchorEl: null});
+  };
+
+  handleMenuSelect = (_mgr) => {
+    this.props.handleAdd(_mgr);
+  };
+
   render() {
 
-    const {props: {windowHeight, windowWidth, location}, state, handlers} = this;
+    const {props: {windowHeight, windowWidth, location}, state: {anchorEl}} = this;
 
     const sizes = {
       windowHeight,
@@ -71,12 +86,13 @@ class FrmIssueList extends Component {
 
     const prm = qs.parse(location.search.replace('?',''));
 
-    return (
+    return [
       <DataList
+        key="list"
         _mgr={$p.doc.issue}
         _acl={'e'}
         _ref={prm.ref}
-        handlers={handlers}
+        handlers={this.handlers}
         find_rows={this.find_rows}
         //selectionMode
         //denyAddDel
@@ -84,8 +100,9 @@ class FrmIssueList extends Component {
         show_search
         //btns={<Statuses/>}
         {...sizes}
-      />
-    );
+      />,
+      anchorEl && <SelectMgr key="select" anchorEl={anchorEl} onClose={this.handleMenuClose} onSelect={this.handleMenuSelect} />
+      ];
   }
 }
 
