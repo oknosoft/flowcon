@@ -42,7 +42,7 @@ class FrmIssueList extends React.Component {
     this.setState({anchorEl: event.currentTarget});
   }
 
-  find_rows = (selector) => {
+  find_rows = (selector, scheme) => {
     const {$and} = selector.selector;
 
     if(!$and.some((elm) => Object.keys(elm)[0] === 'date')){
@@ -50,8 +50,12 @@ class FrmIssueList extends React.Component {
       $and.push({date: {$lte: moment().add(1, 'day').format()}});
     }
 
+    // дополняем селектор отбором по ответственному
     const {reaponsable} = this.state;
     reaponsable && $and.push({reaponsable});
+
+    // дополняем селектор отбором по булевым полям
+    scheme.append_selection(selector.selector);
 
     selector.sort = [{date: 'desc'}];
 

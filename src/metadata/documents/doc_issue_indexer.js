@@ -6,7 +6,7 @@
  * Created by Evgeniy Malyarov on 11.10.2018.
  */
 
-const fields = '_id,date,number_doc,definition,caption,mark,quickly,important,initiator,executor,history,canceled,completed,specify,executor_accepted,initiator_accepted'.split(',');
+const fields = '_id,date,number_doc,definition,caption,mark,quickly,important,initiator,executor,history,canceled,completed,specify,executor_accepted,initiator_accepted,quickly_setted'.split(',');
 const search_fields = ['definition','caption'];
 
 function subscribe(mngrs) {
@@ -28,6 +28,40 @@ function subscribe(mngrs) {
 function unsubscribe(mngrs) {
   for(const mngr of mngrs) {
     mngr._indexer_listener && mngr._indexer_listener.cancel();
+  }
+}
+
+function truth(fld, cond) {
+  const {blank} = $p.utils;
+  if(cond === true || (cond && cond.hasOwnProperty('$ne') && !cond.$ne)) {
+    return function (doc) {
+      return doc[fld];
+    }
+  }
+  else if(cond === false || (cond && cond.hasOwnProperty('$ne') && cond.$ne && typeof cond.$ne === 'boolean')) {
+    return function (doc) {
+      return !doc[fld];
+    }
+  }
+  else if(cond && cond.hasOwnProperty('filled')) {
+    return function (doc) {
+      return doc[fld] && doc[fld] !== blank.guid;
+    }
+  }
+  else if(cond && cond.hasOwnProperty('nfilled')) {
+    return function (doc) {
+      return !doc[fld] || doc[fld] === blank.guid;
+    }
+  }
+  else if(cond && cond.hasOwnProperty('$ne')) {
+    return function (doc) {
+      return doc[fld] !== cond.$ne;
+    }
+  }
+  else {
+    return function (doc) {
+      return doc[fld] === cond;
+    }
   }
 }
 
@@ -62,7 +96,7 @@ export default function indexer() {
         }
 
         // извлекаем значения полей фильтра из селектора
-        let dfrom, dtill, from, till, reaponsable, search = [];
+        let dfrom, dtill, from, till, reaponsable, search = [], conditions = [];
         for(const row of selector.$and) {
           const fld = Object.keys(row)[0];
           const cond = Object.keys(row[fld])[0];
@@ -81,6 +115,9 @@ export default function indexer() {
           }
           else if(fld === 'reaponsable') {
             reaponsable = row[fld];
+          }
+          else if(fields.includes(fld)) {
+            conditions.push(truth(fld, row[fld]));
           }
         }
 
@@ -130,6 +167,13 @@ export default function indexer() {
           // фильтруем по ответственному
           if(reaponsable && doc.initiator !== reaponsable && doc.executor !== reaponsable) {
             return;
+          }
+
+          // фильтруем по булевым условиям
+          for(const fn of conditions) {
+            if(!fn(doc)) {
+              return;
+            }
           }
 
           // фильтруем по строке
