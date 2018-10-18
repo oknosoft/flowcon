@@ -37,7 +37,7 @@ class Reaponsable extends React.Component {
       _fld="value"
       bar
       label_position={$p.enm.label_positions.hide}
-    />
+    />;
   }
 }
 

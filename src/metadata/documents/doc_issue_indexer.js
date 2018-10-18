@@ -6,7 +6,8 @@
  * Created by Evgeniy Malyarov on 11.10.2018.
  */
 
-const fields = '_id,date,number_doc,definition,caption,mark,quickly,important,initiator,executor,history,canceled,completed,specify,executor_accepted,initiator_accepted,quickly_setted'.split(',');
+const fields = ('_id,date,number_doc,definition,caption,mark,quickly,important,initiator,executor,history,canceled,completed,specify,' +
+  'executor_accepted,initiator_accepted,quickly_setted').split(',');
 const search_fields = ['definition','caption'];
 
 function subscribe(mngrs) {
@@ -36,32 +37,32 @@ function truth(fld, cond) {
   if(cond === true || (cond && cond.hasOwnProperty('$ne') && !cond.$ne)) {
     return function (doc) {
       return doc[fld];
-    }
+    };
   }
   else if(cond === false || (cond && cond.hasOwnProperty('$ne') && cond.$ne && typeof cond.$ne === 'boolean')) {
     return function (doc) {
       return !doc[fld];
-    }
+    };
   }
   else if(cond && cond.hasOwnProperty('filled')) {
     return function (doc) {
       return doc[fld] && doc[fld] !== blank.guid;
-    }
+    };
   }
   else if(cond && cond.hasOwnProperty('nfilled')) {
     return function (doc) {
       return !doc[fld] || doc[fld] === blank.guid;
-    }
+    };
   }
   else if(cond && cond.hasOwnProperty('$ne')) {
     return function (doc) {
       return doc[fld] !== cond.$ne;
-    }
+    };
   }
   else {
     return function (doc) {
       return doc[fld] === cond;
-    }
+    };
   }
 }
 
@@ -82,7 +83,6 @@ export default function indexer() {
   // создаём
   if(issue._indexer) {
     issue._indexer.reset(mngrs);
-    unsubscribe(mngrs);
   }
   else {
     class RamIndexer extends classes.RamIndexer {
@@ -211,6 +211,12 @@ export default function indexer() {
         }
 
         return {docs, scroll, flag, count};
+      }
+
+      // чистит кеш и подписки на события
+      reset(mgrs) {
+        unsubscribe(this._mgrs);
+        super.reset(mgrs);
       }
     }
 

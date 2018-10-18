@@ -9,8 +9,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Helmet from 'react-helmet';
 import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +18,8 @@ import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
 import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
 import FrmAttachments from 'metadata-react/FrmAttachments';
 import DataField from 'metadata-react/DataField';
-import SelectTags from 'metadata-react/DataField/SelectTags';
+import TabularSection from 'metadata-react/TabularSection';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
@@ -35,6 +34,7 @@ class FrmObjIssue extends MDNRComponent {
     this._handlers = {
       handleSave: this.handleSave.bind(this),
       handleClose: this.handleClose.bind(this),
+      handleSaveClose: this.handleSaveClose.bind(this),
       handleMarkDeleted: this.handleMarkDeleted.bind(this),
     };
     this.state = {
@@ -78,7 +78,7 @@ class FrmObjIssue extends MDNRComponent {
   handleSave() {
     //this.props.handleSave(this.state._obj);
     const {_obj} = this.state;
-    _obj && _obj.save()
+    return _obj ? _obj.save()
       .then(() => this.shouldComponentUpdate(this.props))
       .catch((err) => {
         // показываем диалог
@@ -87,18 +87,26 @@ class FrmObjIssue extends MDNRComponent {
           name: 'alert',
           value: {open: true, title: _obj.presentation, text: err.reason || err.message}
         });
-      });
-  }
-
-
-  handleMarkDeleted() {
-
+      })
+      :
+      Promise.resolve();
   }
 
   handleClose() {
     const {handlers, _mgr} = this.props;
     const {_obj} = this.state;
     handlers.handleNavigate(`/${_mgr.class_name}/list${_obj ? '/?ref=' + _obj.ref : ''}`);
+  }
+
+  handleSaveClose() {
+    this.handleSave()
+      .then((res) => {
+        typeof res === 'boolean' && this.handleClose();
+      });
+  }
+
+  handleMarkDeleted() {
+
   }
 
   handleValueChange(_fld) {
@@ -122,7 +130,7 @@ class FrmObjIssue extends MDNRComponent {
   editorStyles(el) {
     const content = el && el.querySelector('.react-markdown--slate-content');
     if(content) {
-      content.style.minHeight = '90px';
+      content.style.minHeight = '120px';
       const {style} = el.querySelector('.react-markdown--slate-editor');
       style.marginRight = '8px';
     }
@@ -135,11 +143,6 @@ class FrmObjIssue extends MDNRComponent {
     this.forceUpdate();
   };
 
-  renderFields(_obj, classes) {
-    // <SelectTags tags={_obj.tags} categories tagList={this.tagList} handleChange={this.tagsChange}/>
-    return ;
-  }
-
   render() {
     const {
       props: {_mgr, classes, handleIfaceState},
@@ -150,6 +153,12 @@ class FrmObjIssue extends MDNRComponent {
       deleted: _obj && _obj.deleted,
       postable: false,
       deletable: false,
+      handleAttachments: () => null,
+      menu_buttons: <MenuItem
+        onClick={null}
+        title="Идентификатор в github или иной программе">
+        Внешний ID
+      </MenuItem>,
     }, _handlers);
 
     return _obj ? [
@@ -165,7 +174,10 @@ class FrmObjIssue extends MDNRComponent {
 
         <FormGroup className={classes.fullFlex}>
           <DataField _obj={_obj} _fld="caption"/>
-          <DataField _obj={_obj} _fld="identifier"/>
+          <FormGroup row>
+            <DataField _obj={_obj} _fld="initiator"/>
+            <DataField _obj={_obj} _fld="executor"/>
+          </FormGroup>
 
           { MarkdownInput ?
             <div key="definition" ref={this.editorStyles}>
@@ -190,21 +202,27 @@ class FrmObjIssue extends MDNRComponent {
         </FormGroup>
 
         <FormGroup>
-          <DataField _obj={_obj} _fld="date" readOnly/>
-          <DataField _obj={_obj} _fld="initiator"/>
-          <DataField _obj={_obj} _fld="executor"/>
-          <DataField _obj={_obj} _fld="quickly"/>
-          <DataField _obj={_obj} _fld="important"/>
+          <DataField _obj={_obj} _fld="date" read_only/>
+          <DataField _obj={_obj} _fld="quickly" ctrl_type="threestate" labels={['Не срочно', 'Срочность не задана', 'Срочно']}/>
+          <DataField _obj={_obj} _fld="important" ctrl_type="threestate" labels={['Не важно', 'Важность не задана', 'Важно']}/>
           <DataField _obj={_obj} _fld="mark"/>
           {!_obj.specify && <DataField _obj={_obj} _fld="executor_accepted"/>}
           {!_obj.executor_accepted && <DataField _obj={_obj} _fld="specify"/>}
           {!_obj.canceled && _obj.executor_accepted && <DataField _obj={_obj} _fld="completed"/>}
           {_obj.completed && <DataField _obj={_obj} _fld="initiator_accepted"/>}
           {!_obj.completed && <DataField _obj={_obj} _fld="canceled"/>}
-
         </FormGroup>
 
       </FormGroup>,
+
+      <FormGroup row key="adds" className={classes.spaceLeft}>
+        <FormGroup className={classes.fullFlex}>
+          Прения
+        </FormGroup>
+        <FormGroup>
+          <TabularSection _obj={_obj} _tabular="flows" />
+        </FormGroup>
+      </FormGroup>
 
     ]
       :

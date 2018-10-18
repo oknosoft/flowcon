@@ -89,7 +89,7 @@ export function init(store) {
     });
 
     pouch.on('user_log_out', () => {
-      changes && changes.cancel();
+      return null;
     });
 
   }
