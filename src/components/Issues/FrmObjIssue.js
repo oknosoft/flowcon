@@ -66,10 +66,8 @@ class FrmObjIssue extends MDNRComponent {
 
   /* eslint-disable-next-line*/
   onDataChange = (obj, fields) => {
-    if(obj === this.state._obj) {
-      if(this.shouldComponentUpdate(this.props)) {
-        this.forceUpdate();
-      }
+    if(obj === this.state._obj && !this.props.title.endsWith('*')) {
+      this.shouldComponentUpdate(this.props);
     }
   }
 
@@ -171,11 +169,8 @@ class FrmObjIssue extends MDNRComponent {
 
           <CommentEditor
             key="definition"
-            onChange={(val) => {
-              _obj._obj.definition = val;
-              _obj._modified = true;
-            }}
-            value={_obj.definition}
+            _obj={_obj}
+            _fld="definition"
             caption="Описание задачи"
             classes={classes}
           />
@@ -201,6 +196,10 @@ class FrmObjIssue extends MDNRComponent {
             _obj={_obj}
             add_note={() => {
               _obj.add_note();
+              this.forceUpdate();
+            }}
+            del_note={(row) => {
+              row._owner.del(row);
               this.forceUpdate();
             }}
             classes={classes}
