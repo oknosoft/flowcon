@@ -45,11 +45,9 @@ class FrmObjIssue extends MDNRComponent {
       _meta: _meta || _mgr.metadata(),
       _obj: null,
     };
-    // в редакторе доступны все категории
-    this.tagList = [];
-    $p.cat.tags.forEach((tag) => {
-      this.tagList.push(tag);
-    });
+
+    // признак установленности *
+    this._star = false;
   }
 
   componentDidMount() {
@@ -66,8 +64,9 @@ class FrmObjIssue extends MDNRComponent {
 
   /* eslint-disable-next-line*/
   onDataChange = (obj, fields) => {
-    if(obj === this.state._obj && !this.props.title.endsWith('*')) {
+    if(obj === this.state._obj && !this._star) {
       this.shouldComponentUpdate(this.props);
+      this._star = true;
     }
   }
 
@@ -75,7 +74,10 @@ class FrmObjIssue extends MDNRComponent {
     //this.props.handleSave(this.state._obj);
     const {_obj} = this.state;
     return _obj ? _obj.save()
-      .then(() => this.shouldComponentUpdate(this.props))
+      .then(() => {
+        this.shouldComponentUpdate(this.props);
+        this._star = false;
+      })
       .catch((err) => {
         // показываем диалог
         this.props.handleIfaceState({
