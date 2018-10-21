@@ -31,7 +31,7 @@ function Comments (props) {
   });
 
   return (
-    <div>
+    <div style={{minWidth: 280, marginBottom: 16}}>
       {notes}
       <Button
         variant="fab"
