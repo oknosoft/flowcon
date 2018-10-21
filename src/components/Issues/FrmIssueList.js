@@ -17,7 +17,6 @@ import qs from 'qs';
 import SelectMgr from './SelectMgr';
 import Reaponsable from './Reaponsable';
 
-
 class FrmIssueList extends React.Component {
 
   constructor(props, context) {

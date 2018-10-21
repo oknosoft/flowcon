@@ -18,16 +18,27 @@ export default function ({doc, DocIssue}) {
   // модифицируем работу с табчастью тегов
   const {prototype} = DocIssue;
   delete prototype.tags;
-  Object.defineProperty(prototype, 'tags', {
-    get() {
-      const {tags} = this._obj;
-      return Array.isArray(tags) ? tags : [];
+  Object.defineProperties(prototype, {
+    tags: {
+      get() {
+        const {tags} = this._obj;
+        return Array.isArray(tags) ? tags : [];
+      },
+      set(v) {
+        const {_obj} = this;
+        if(_obj.tags != v) {
+          this.__notify('tags');
+          _obj.tags = Array.isArray(v) ? v : [];
+        }
+      }
     },
-    set(v) {
-      const {_obj} = this;
-      if(_obj.tags != v) {
-        this.__notify('tags');
-        _obj.tags = Array.isArray(v) ? v : [];
+
+    add_note: {
+      value() {
+        this.notes.add({
+          date: new Date(),
+          author: $p.current_user,
+        });
       }
     }
   });

@@ -13,6 +13,7 @@ import Helmet from 'react-helmet';
 import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
 
+
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
 import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
@@ -23,6 +24,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
+
+import CommentEditor from './CommentEditor';
+import Comments from './Comments';
 
 const htitle = 'Задача';
 
@@ -40,7 +44,6 @@ class FrmObjIssue extends MDNRComponent {
     this.state = {
       _meta: _meta || _mgr.metadata(),
       _obj: null,
-      MarkdownInput: null,
     };
     // в редакторе доступны все категории
     this.tagList = [];
@@ -54,11 +57,6 @@ class FrmObjIssue extends MDNRComponent {
     _mgr.get(match.params.ref, 'promise').then((_obj) => {
       this.setState({_obj}, () => this.shouldComponentUpdate(this.props));
     });
-    import('@opuscapita/react-markdown')
-      .then((module) => {
-        this.setState({MarkdownInput: module.default});
-      });
-
     _mgr.on('update', this.onDataChange);
   }
 
@@ -127,15 +125,6 @@ class FrmObjIssue extends MDNRComponent {
     return ltitle;
   }
 
-  editorStyles(el) {
-    const content = el && el.querySelector('.react-markdown--slate-content');
-    if(content) {
-      content.style.minHeight = '120px';
-      const {style} = el.querySelector('.react-markdown--slate-editor');
-      style.marginRight = '8px';
-    }
-  }
-
   tagsChange = ({target}) => {
     const {state: {_obj}} = this;
     _obj.tags = target.value;
@@ -146,7 +135,7 @@ class FrmObjIssue extends MDNRComponent {
   render() {
     const {
       props: {_mgr, classes, handleIfaceState},
-      state: {_obj, _meta, MarkdownInput},
+      state: {_obj, _meta},
       context, _handlers} = this;
     const toolbar_props = Object.assign({
       closeButton: !context.dnr,
@@ -177,32 +166,23 @@ class FrmObjIssue extends MDNRComponent {
           <FormGroup row>
             <DataField _obj={_obj} _fld="initiator"/>
             <DataField _obj={_obj} _fld="executor"/>
+            <DataField _obj={_obj} _fld="date" read_only/>
           </FormGroup>
 
-          { MarkdownInput ?
-            <div key="definition" ref={this.editorStyles}>
-              <Typography variant="caption" color="textSecondary" className={classes.paddingTop}>Описание задачи</Typography>
-              <MarkdownInput
-                onChange={(val) => {
-                  _obj._obj.definition = val;
-                  _obj._modified = true;
-                }}
-                value={_obj.definition}
-                autoFocus={false}
-                readOnly={false}
-                showFullScreenButton={false}
-                hideToolbar
-                locale='ru'
-              />
-            </div>
-            :
-            <LoadingMessage key="loading" />
-          }
+          <CommentEditor
+            key="definition"
+            onChange={(val) => {
+              _obj._obj.definition = val;
+              _obj._modified = true;
+            }}
+            value={_obj.definition}
+            caption="Описание задачи"
+            classes={classes}
+          />
 
         </FormGroup>
 
-        <FormGroup>
-          <DataField _obj={_obj} _fld="date" read_only/>
+        <FormGroup className={classes.rightWidth}>
           <DataField _obj={_obj} _fld="quickly" ctrl_type="threestate" labels={['Не срочно', 'Срочность не задана', 'Срочно']}/>
           <DataField _obj={_obj} _fld="important" ctrl_type="threestate" labels={['Не важно', 'Важность не задана', 'Важно']}/>
           <DataField _obj={_obj} _fld="mark"/>
@@ -217,9 +197,16 @@ class FrmObjIssue extends MDNRComponent {
 
       <FormGroup row key="adds" className={classes.spaceLeft}>
         <FormGroup className={classes.fullFlex}>
-          Прения
+          <Comments
+            _obj={_obj}
+            add_note={() => {
+              _obj.add_note();
+              this.forceUpdate();
+            }}
+            classes={classes}
+          />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={classes.rightWidth}>
           <TabularSection _obj={_obj} _tabular="flows" />
         </FormGroup>
       </FormGroup>
