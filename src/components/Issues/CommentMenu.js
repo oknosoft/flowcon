@@ -47,4 +47,10 @@ class CommentMenu extends React.Component {
 
 }
 
+CommentMenu.propTypes = {
+  classes: PropTypes.object,
+  toggleEdit: PropTypes.func,
+  handleDelete: PropTypes.func,
+};
+
 export default CommentMenu;

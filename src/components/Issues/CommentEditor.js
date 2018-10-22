@@ -100,9 +100,17 @@ class CommentEditor extends React.Component {
       edit={edit}
       toggleEdit={this.toggleEdit}
       handleDelete={handleDelete}
-    />
+    />;
 
   }
 }
+
+CommentEditor.propTypes = {
+  _obj: PropTypes.object,
+  _fld: PropTypes.string,
+  caption: PropTypes.string,
+  classes: PropTypes.object,
+  handleDelete: PropTypes.func,
+};
 
 export default CommentEditor;

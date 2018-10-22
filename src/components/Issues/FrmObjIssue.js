@@ -11,13 +11,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import FormGroup from '@material-ui/core/FormGroup';
-import Typography from '@material-ui/core/Typography';
 
 
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
 import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
-import FrmAttachments from 'metadata-react/FrmAttachments';
 import DataField from 'metadata-react/DataField';
 import TabularSection from 'metadata-react/TabularSection';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -76,7 +74,7 @@ class FrmObjIssue extends MDNRComponent {
     return _obj ? _obj.save()
       .then(() => {
         this.shouldComponentUpdate(this.props);
-        this._star = false;
+        return this._star = false;
       })
       .catch((err) => {
         // показываем диалог
@@ -87,7 +85,7 @@ class FrmObjIssue extends MDNRComponent {
         });
       })
       :
-      Promise.resolve();
+      Promise.resolve(true);
   }
 
   handleClose() {
@@ -133,10 +131,7 @@ class FrmObjIssue extends MDNRComponent {
   };
 
   render() {
-    const {
-      props: {_mgr, classes, handleIfaceState},
-      state: {_obj, _meta},
-      context, _handlers} = this;
+    const {props: {classes}, state: {_obj}, context, _handlers} = this;
     const toolbar_props = Object.assign({
       closeButton: !context.dnr,
       deleted: _obj && _obj.deleted,

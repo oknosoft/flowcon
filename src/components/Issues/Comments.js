@@ -46,4 +46,11 @@ function Comments (props) {
   );
 }
 
+Comments.propTypes = {
+  _obj: PropTypes.object,
+  classes: PropTypes.object,
+  add_note: PropTypes.func,
+  del_note: PropTypes.func,
+};
+
 export default Comments;
