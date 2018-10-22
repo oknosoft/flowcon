@@ -7,9 +7,13 @@ import EditIcon from '@material-ui/icons/Edit';
 import ShareIcon from '@material-ui/icons/Share';
 import withStyles from 'metadata-react/Header/toolbar';
 
+import CreateArea from './CreateArea';
+
+
+
 function BasesToolbar({classes, handleAdd}) {
  return <Toolbar disableGutters className={classes.toolbar}>
-   <IconButton title="Создать область" onClick={handleAdd}><AddIcon/></IconButton>
+   <CreateArea />
    <IconButton title="Удалить область" onClick={handleAdd}><RemoveIcon/></IconButton>
    <IconButton title="Поделиться областью" onClick={handleAdd}><ShareIcon/></IconButton>
    <IconButton title="Состав баз пользователя" onClick={handleAdd}><EditIcon/></IconButton>

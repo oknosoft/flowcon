@@ -42,7 +42,7 @@ class Cnn extends Component {
         <meta property="og:title" content={props.title} />
         <meta property="og:description" content="Параметры подключения" />
       </Helmet>,
-      <Typography key="title" variant="h6" style={{paddingTop: 16}}>Подключение к базе данных</Typography>,
+      <Typography key="title" variant="h6" color="primary" className={props.classes.paddingTop}>Подключение к базе данных</Typography>,
       <CnnSettings key="settings" {...props} disable_settings={location.host === 'business-programming.ru'}/>
     ];
   }
