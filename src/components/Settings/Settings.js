@@ -1,54 +1,33 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Helmet from 'react-helmet';
-import CnnSettings from 'metadata-react/FrmLogin/CnnSettings';
+import AppContent from 'metadata-react/App/AppContent';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
-import withStyles from 'metadata-react/styles/paper600';
-import {withIface, withPrm} from 'metadata-redux';
+import Cnn from './Cnn';
+import Bases from './Bases';
 
-import compose from 'recompose/compose';
+class Settings extends React.Component {
 
-class Settings extends Component {
-
-  static propTypes = {
-    handleIfaceState: PropTypes.func.isRequired,
-    title: PropTypes.string,
-  };
-
-  componentDidMount() {
-    this.shouldComponentUpdate(this.props);
-  }
-
-  shouldComponentUpdate({handleIfaceState, title}) {
-    const ltitle = 'Настройки';
-    if(title != ltitle) {
-      handleIfaceState({
-        component: '',
-        name: 'title',
-        value: ltitle,
-      });
-      return false;
-    }
-    return true;
-  }
+  state = {index: 0};
 
   render() {
-    const {props} = this;
-    return (
-      <Paper className={props.classes.root} elevation={4}>
-        <Helmet title={props.title}>
-          <meta name="description" content="Параметры подключения" />
-          <meta property="og:title" content={props.title} />
-          <meta property="og:description" content="Параметры подключения" />
-        </Helmet>
-        <Typography variant="h6" style={{paddingTop: 16}}>Подключение к базе данных</Typography>
-        <CnnSettings {...props} disable_settings={location.host === 'business-programming.ru'}/>
-      </Paper>
-    );
+    const {state, props} = this;
+
+    return <AppContent>
+
+      <Tabs value={state.index} onChange={(event, index) => this.setState({index})}>
+        <Tab label="Подключение"/>
+        <Tab label="Области данных"/>
+      </Tabs>
+
+      {state.index === 0 && <Cnn {...props}/>}
+
+      {state.index === 1 && <Bases {...props}/>}
+
+    </AppContent>;
   }
 }
 
-export default compose(withStyles, withIface, withPrm)(Settings);
+export default Settings;
