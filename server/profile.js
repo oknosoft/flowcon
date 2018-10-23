@@ -1,6 +1,7 @@
 'use strict';
 
 const YAML = require('yamljs');
+const uuidv1 = require('uuid/v1');
 
 module.exports = function(superlogin) {
   const {userDB, config} = superlogin;
@@ -47,6 +48,60 @@ module.exports = function(superlogin) {
       .then((userDoc) => {
         userDoc.profile.subscription = subscription;
         return userDB.put(userDoc);
+      });
+  };
+
+  // создаёт недостающие поля в профиле
+  this.onCreate = function (userDoc, provider)  {
+    if(!userDoc.profile) {
+      userDoc.profile = {};
+    }
+    const {profile} = userDoc;
+    if(provider !== 'local' && !profile.name) {
+      const displayName = userDoc[provider].profile.displayName;
+      if(displayName) {
+        profile.name = displayName;
+      }
+    }
+    if(!profile.ref) {
+      profile.ref = uuidv1();
+      profile.subscription = true;
+    }
+    if(!profile.myDBs) {
+      profile.myDBs = [];
+    }
+    if(!profile.myUsers) {
+      profile.myUsers = [];
+    }
+    return Promise.resolve(userDoc);
+  };
+
+  // создаёт общую базу и добавляет её в профиль подписчика
+  this.createSharedDB = function(user_id, dbName) {
+    return userDB.get(user_id)
+      .then((userDoc) => {
+
+        // генерируем ошибку, если нет роли r_subscribers
+        if(!userDoc.roles.includes('r_subscribers') && !userDoc.roles.includes('doc_full')) {
+          throw new Error('Недостаточно прав. В профиле пользователя отсутствует роль "r_subscribers"');
+        }
+
+        // проверяем название базы
+        if (!dbName.match(/^[a-z0-9_-]{4,20}$/)) {
+          throw new Error('Ошибка в имени базы. Разрешены строчные буквы латинскгого алфавита и цифры, длина от 4 до 20 символов');
+        }
+
+        // если есть такая база
+        if(userDoc.personalDBs[dbName]) {
+          throw new Error(`База ${dbName} уже назначена пользователю ${user_id}`);
+        }
+
+        return superlogin.uniqueDbName(dbName)
+          .then((finalName) => {
+            if(finalName !== dbName) {
+              throw new Error(`Имя '${dbName}' занято. Вместо него можно использовать '${finalName}'`);
+            }
+          });
       });
   };
 

@@ -11,7 +11,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const SuperLogin = require('superlogin');
 const PouchDB = require('pouchdb');
-const uuidv1 = require('uuid/v1');
 const fetch = require('node-fetch');
 
 const FacebookStrategy  = require('passport-facebook').Strategy;
@@ -47,7 +46,7 @@ app.get(/^\/(articles|files|news|sitemap\.xml)/, require('./articles')(superlogi
 const Profile = require('./profile');
 const profile = new Profile(superlogin);
 
-// смена имени пользователя
+// прокси к couchdb
 app.post('/user/proxy', (req, res, next) => {
 
   const server = superlogin.config.getItem('dbServer');
@@ -70,17 +69,15 @@ app.post('/user/proxy', (req, res, next) => {
 
 });
 
-app.get('/user/profile', superlogin.requireAuth, function(req, res, next) {
+app.get('/user/profile', superlogin.requireAuth, (req, res, next) => {
   profile.get(req.user._id)
-    .then(function(userProfile) {
+    .then((userProfile) => {
       res.status(200).json(userProfile);
-    }, function(err) {
-      return next(err);
-    });
+    }, (err) => next(err));
 });
 
 // смена имени пользователя
-app.post('/user/change-name', superlogin.requireAuth, function(req, res, next) {
+app.post('/user/change-name', superlogin.requireAuth, (req, res, next) => {
   if(!req.body.newName) {
     return next({
       error: "Field 'newName' is required",
@@ -88,15 +85,13 @@ app.post('/user/change-name', superlogin.requireAuth, function(req, res, next) {
     });
   }
   profile.changeName(req.user._id, req.body.newName)
-    .then(function(userProfile) {
+    .then((userProfile) => {
       res.status(200).json(userProfile);
-    }, function(err) {
-      return next(err);
-    });
+    }, (err) => next(err));
 });
 
 // смена подписки на рассылку
-app.post('/user/change-subscription', superlogin.requireAuth, function(req, res, next) {
+app.post('/user/change-subscription', superlogin.requireAuth, (req, res, next) => {
   if(!req.body.hasOwnProperty('subscription')) {
     return next({
       error: "Field 'subscription' is required",
@@ -104,28 +99,36 @@ app.post('/user/change-subscription', superlogin.requireAuth, function(req, res,
     });
   }
   profile.changeSubscription(req.user._id, req.body.subscription)
-    .then(function(userProfile) {
+    .then((userProfile) => {
       res.status(200).json(userProfile);
-    }, function(err) {
-      return next(err);
-    });
+    }, (err) => next(err));
 });
 
-app.post('/user/destroy', superlogin.requireAuth, function(req, res, next) {
+// создание общей базы
+app.post('/user/create-db', superlogin.requireAuth, (req, res, next) => {
+  if(!req.body.hasOwnProperty('name')) {
+    return next({
+      error: "Field 'name' is required",
+      status: 400
+    });
+  }
+  profile.createSharedDB(req.user._id, req.body.name)
+    .then((result) => {
+      res.status(200).json(result);
+    }, (err) => next(err));
+});
+
+app.post('/user/destroy', superlogin.requireAuth, (req, res, next) => {
   superlogin.removeUser(req.user._id, true)
-    .then(function() {
+    .then(() => {
       console.log('User destroyed!');
       res.status(200).json({ok: true, success: 'User: ' + req.user._id + ' destroyed.'});
-    }, function(err) {
-      return next(err);
-    });
+    }, (err) => next(err));
 });
 
-// подключаем прокси
-//zd_proxy(app, superloginConfig);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -136,7 +139,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use((err, req, res, next) => {
     res.status(err.status || 500).json({
       message: err.message,
       error: err
@@ -146,51 +149,16 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     message: err.message,
     error: {}
   });
 });
 
-// дополним роли и design-документы
-superlogin.on('signup', function(userDoc, provider){
-  const {couchAuthDB} = superlogin;
-  const res = []
-  for(const name in userDoc.personalDBs) {
-    if(userDoc.personalDBs[name].type !== 'private') {
-      continue;
-    }
-    if(couchAuthDB) {
-      // const db = new PouchDB(couchAuthDB.name.replace(/_users$/, name), {skip_setup: true});
-      // res.push(db.info()
-      //   .then((info) => {
-      //     info = null;
-      //   })
-      //   .catch((err) => {
-      //     err = null;
-      //   }));
-    }
-  }
-  return Promise.all(res);
-});
-
 // создаём недостающие поля в профиле
-superlogin.onCreate(function (userDoc, provider) {
-  if(!userDoc.profile) {
-    userDoc.profile = {};
-  }
-  if(provider !== 'local' && !userDoc.profile.name) {
-    const displayName = userDoc[provider].profile.displayName;
-    if(displayName) {
-      userDoc.profile.name = displayName;
-    }
-  }
-  if(!userDoc.profile.ref) {
-    userDoc.profile.ref = uuidv1();
-    userDoc.profile.subscription = true;
-  }
-  return Promise.resolve(userDoc);
+superlogin.onCreate((userDoc, provider) => {
+  return profile.onCreate(userDoc, provider);
 });
 
 module.exports = app;
