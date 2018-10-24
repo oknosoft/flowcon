@@ -11,7 +11,7 @@ function SelectMgr({anchorEl, onClose, onSelect}) {
 }
 
 SelectMgr.propTypes = {
-  anchorEl: PropTypes.node,
+  anchorEl: PropTypes.object,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
 };

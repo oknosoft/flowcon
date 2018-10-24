@@ -11,9 +11,9 @@ import CreateArea from './CreateArea';
 
 
 
-function BasesToolbar({classes, handleAdd}) {
+function BasesToolbar({classes, handleAdd, refresh}) {
  return <Toolbar disableGutters className={classes.toolbar}>
-   <CreateArea />
+   <CreateArea refresh={refresh}/>
    <IconButton title="Удалить область" onClick={handleAdd}><RemoveIcon/></IconButton>
    <IconButton title="Поделиться областью" onClick={handleAdd}><ShareIcon/></IconButton>
    <IconButton title="Состав баз пользователя" onClick={handleAdd}><EditIcon/></IconButton>

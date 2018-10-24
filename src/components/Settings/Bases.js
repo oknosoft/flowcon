@@ -23,14 +23,10 @@ class Bases extends React.Component {
     }
 
     const {profile, roles, userDBs} = session;
-    const myDBs = profile.myDBs || [];
+    const myDBs = (profile.myDBs || [])._clone();
     const myUsers = profile.myUsers || [{name: 'noname', value: 'nobase'}];
-    const sharedDBs = [];
     for(const name in userDBs) {
-      if(name !== 'fl_0_doc') {
-        const pos = userDBs[name].lastIndexOf('/') + 1;
-        sharedDBs.push({name, value: userDBs[name].substr(pos)});
-      }
+      name !== 'fl_0_doc' && !myDBs.includes(name) && myDBs.push({name, value: 'Внешняя', disabled: true});
     }
 
     if(!roles.includes('r_subscribers') && !roles.includes('doc_full')) {
@@ -56,19 +52,14 @@ class Bases extends React.Component {
       <Helmet key="helmet" title="Общие базы" />,
       <Typography key="title" variant="h6" color="primary" className={props.classes.paddingTop}>Управление областями и пользователями</Typography>,
 
-      <BasesToolbar key="toolbar"/>,
+      <BasesToolbar key="toolbar" refresh={() => this.forceUpdate()}/>,
 
       <Grid key="bases" container direction="row" spacing={24}>
         <Grid item sm={12} md={6}>
-          <BasesTable title="Общие базы" rows={sharedDBs} />
+          <BasesTable title="Общие базы" rows={myDBs} check />
         </Grid>
         <Grid item sm={12} md={6}>
-          <BasesTable title="Мои общие базы" rows={sharedDBs} />
-        </Grid>
-      </Grid>,
-      <Grid key="users" container direction="row" spacing={24}>
-        <Grid item xs={12}>
-          <BasesTable title="Пользователи моих общих баз" rows={myUsers} />
+          <BasesTable title="Пользователи общих баз" rows={myUsers} check />
         </Grid>
       </Grid>
     ];

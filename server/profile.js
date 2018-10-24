@@ -101,6 +101,7 @@ module.exports = function(superlogin) {
             if(finalName !== dbName) {
               throw new Error(`Имя '${dbName}' занято. Вместо него можно использовать '${finalName}'`);
             }
+            return superlogin.addUserDB(user_id, dbName, 'shared', superlogin.config.getItem('userDBs.model.fl_0_doc.designDocs'));
           });
       });
   };

@@ -1,4 +1,4 @@
-const serverUrl = process.env.SERVER_URL || (location.protocol.indexOf('https') === 0 ? location.origin : 'http://fl211:3001');
+const serverUrl = process.env.SERVER_URL || (location.protocol.indexOf('https') === 0 ? location.origin : 'http://localhost:3001');
 
 module.exports = {
   // An optional URL to API server, by default a current window location is used.

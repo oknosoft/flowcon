@@ -10,6 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import withStyles from 'metadata-react/styles/paper600';
 
 class CreateArea extends React.Component {
 
@@ -17,39 +18,52 @@ class CreateArea extends React.Component {
     open: false,
     name: '',
     error: '',
+    query: false,
   };
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    this.setState({open: true});
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({open: false, query: false});
   };
 
   handleChange = ({target}) => {
-    this.setState({name: target.value});
+    this.setState({name: target.value, error: ''});
   };
 
   handleSend = () => {
-    this.setState({name: target.value});
+    const {name} = this.state;
+    if(!name) {
+      return this.setState({error: 'Пустое имя области'});
+    }
+    this.setState({query: true});
+    $p.superlogin.create_db(name)
+      .then((data) => {
+        this.handleClose();
+        this.props.refresh();
+      })
+      .catch((err) => {
+        const error = err.response && err.response.data.message || err.message;
+        this.setState({query: false, error});
+      });
   };
 
   render() {
-    const {open, name, error} = this.state;
+    const {state: {open, name, error, query}, props: {classes}} = this;
     return <div>
       <IconButton title="Создать область" onClick={this.handleClickOpen}><AddIcon/></IconButton>
       <Dialog
         open={open}
         onClose={this.handleClose}
+        classes={{paper: query ? classes.disabled : ''}}
       >
         <DialogTitle>Новая область данных</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            В названии области допустимы стрчные символы латинского алфавита и цифры
-          </DialogContentText>
           <TextField
             label="Имя области"
+            helperText="Разрешены стрчные символы латинского алфавита и цифры"
             value={name}
             margin="dense"
             onChange={this.handleChange}
@@ -72,4 +86,4 @@ class CreateArea extends React.Component {
 
 }
 
-export default CreateArea;
+export default withStyles(CreateArea);

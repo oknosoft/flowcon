@@ -1,5 +1,5 @@
 module.exports = {
-  search: {
+  mango: {
     language: "query",
     views: {
       search: {

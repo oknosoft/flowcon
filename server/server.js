@@ -115,7 +115,9 @@ app.post('/user/create-db', superlogin.requireAuth, (req, res, next) => {
   profile.createSharedDB(req.user._id, req.body.name)
     .then((result) => {
       res.status(200).json(result);
-    }, (err) => next(err));
+    }, (err) => {
+      return next(err);
+    });
 });
 
 app.post('/user/destroy', superlogin.requireAuth, (req, res, next) => {
