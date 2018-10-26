@@ -54,4 +54,12 @@ class BasesTable extends React.Component {
   }
 }
 
+BasesTable.propTypes = {
+  onToggle: PropTypes.func,
+  rows: PropTypes.array,
+  multi: PropTypes.bool,
+  check: PropTypes.bool,
+  title: PropTypes.string,
+};
+
 export default BasesTable;

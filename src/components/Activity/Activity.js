@@ -19,9 +19,6 @@ import IconSettings from '@material-ui/icons/Settings';
 
 import AppContent from 'metadata-react/App/AppContent';
 import withStyles from '../Articles/styles';
-import cn from 'classnames';
-import {item_props} from '../App/menu';
-import SubLink from 'metadata-react/Markdown/SubLink';
 
 const ltitle = 'Активность';
 const description = 'Регистрация активностей';
@@ -37,7 +34,7 @@ class Activity extends Component {
     this.shouldComponentUpdate(this.props);
   }
 
-  shouldComponentUpdate({title, match, location, handleIfaceState}) {
+  shouldComponentUpdate({title, handleIfaceState}) {
     let needUpdate = true;
     if(title != ltitle) {
       handleIfaceState({

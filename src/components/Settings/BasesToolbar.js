@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveIcon from '@material-ui/icons/DeleteOutline';
-import EditIcon from '@material-ui/icons/Edit';
 import withStyles from 'metadata-react/Header/toolbar';
 
 import CreateArea from './CreateArea';
@@ -17,7 +17,17 @@ function BasesToolbar({classes, handleAdd, refresh, base, user, myDBs, myUsers})
    <IconButton title="Удалить область" onClick={handleAdd}><RemoveIcon/></IconButton>
    <ShareArea refresh={refresh} name={base} rows={myUsers} />
    <UserBases refresh={refresh} name={user} rows={myDBs}/>
- </Toolbar>
+ </Toolbar>;
 }
+
+BasesToolbar.propTypes = {
+  classes: PropTypes.object,
+  handleAdd: PropTypes.func,
+  refresh: PropTypes.func,
+  base: PropTypes.string,
+  user: PropTypes.any,
+  myDBs: PropTypes.array,
+  myUsers: PropTypes.array,
+};
 
 export default withStyles(BasesToolbar);

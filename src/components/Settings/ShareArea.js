@@ -33,7 +33,7 @@ class ShareArea extends BtnsDialog {
   render() {
     let {state: {open, error, query}, props} = this;
     if(!props.name) {
-      error = 'Не указана область данных'
+      error = 'Не указана область данных';
     }
     return <div>
       <IconButton title="Пользователи общей базы" onClick={this.handleClickOpen}><ShareIcon/></IconButton>
@@ -72,6 +72,6 @@ class ShareArea extends BtnsDialog {
 ShareArea.propTypes = {
   name: PropTypes.func,
   refresh: PropTypes.func,
-}
+};
 
 export default withStyles(ShareArea);

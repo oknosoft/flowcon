@@ -18,10 +18,10 @@ class BtnsDialog extends React.Component {
       name: typeof props.name === 'object' ? props.name.name : props.name || '',
       error: '',
       query: false,
-    }
+    };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if(this.props.name !== nextProps.name) {
       this.setState({name: typeof nextProps.name === 'object' ? nextProps.name.name : nextProps.name || ''});
       return false;
@@ -46,6 +46,6 @@ class BtnsDialog extends React.Component {
 BtnsDialog.propTypes = {
   name: PropTypes.func,
   refresh: PropTypes.func,
-}
+};
 
 export default BtnsDialog;

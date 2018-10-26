@@ -30,6 +30,7 @@ class CreateArea extends BtnsDialog {
     }
     this.setState({query: true});
     $p.superlogin.create_db(name)
+    /* eslint-disable-next-line*/
       .then((data) => {
         this.handleClose();
         this.props.refresh();
@@ -75,5 +76,9 @@ class CreateArea extends BtnsDialog {
   }
 
 }
+
+CreateArea.propTypes = {
+  classes: PropTypes.object,
+};
 
 export default withStyles(CreateArea);

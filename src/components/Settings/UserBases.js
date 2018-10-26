@@ -69,6 +69,6 @@ class UserBases extends BtnsDialog {
 UserBases.propTypes = {
   name: PropTypes.func,
   refresh: PropTypes.func,
-}
+};
 
 export default withStyles(UserBases);

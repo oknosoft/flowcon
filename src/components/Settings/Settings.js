@@ -30,4 +30,8 @@ class Settings extends React.Component {
   }
 }
 
+Settings.propTypes = {
+  handlers: PropTypes.object,
+};
+
 export default Settings;

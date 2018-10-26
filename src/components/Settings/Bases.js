@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Helmet from 'react-helmet';
-import FormGroup from '@material-ui/core/FormGroup';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import NeedAuth from 'metadata-react/App/NeedAuth';
@@ -9,6 +9,7 @@ import withStyles from 'metadata-react/styles/paper600';
 
 import BasesToolbar from './BasesToolbar';
 import BasesTable from './BasesTable';
+import BtnsDialog from './BtnsDialog';
 
 
 class Bases extends React.Component {
@@ -18,7 +19,7 @@ class Bases extends React.Component {
     this.state = {
       base: '',
       user: '',
-    }
+    };
   }
 
   toggleBase = (name, value) => {
@@ -92,5 +93,10 @@ class Bases extends React.Component {
     ];
   }
 }
+
+BtnsDialog.propTypes = {
+  classes: PropTypes.object,
+  handleNavigate: PropTypes.func,
+};
 
 export default withStyles(Bases);
