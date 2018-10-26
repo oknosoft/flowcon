@@ -1,3 +1,11 @@
+/**
+ * Создаёт область данных
+ *
+ * @module CreateArea
+ *
+ * Created by Evgeniy Malyarov on 23.10.2018.
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -11,27 +19,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import withStyles from 'metadata-react/styles/paper600';
+import BtnsDialog from './BtnsDialog';
 
-class CreateArea extends React.Component {
-
-  state = {
-    open: false,
-    name: '',
-    error: '',
-    query: false,
-  };
-
-  handleClickOpen = () => {
-    this.setState({open: true});
-  };
-
-  handleClose = () => {
-    this.setState({open: false, query: false});
-  };
-
-  handleChange = ({target}) => {
-    this.setState({name: target.value, error: ''});
-  };
+class CreateArea extends BtnsDialog {
 
   handleSend = () => {
     const {name} = this.state;

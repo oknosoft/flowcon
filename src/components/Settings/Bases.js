@@ -13,6 +13,26 @@ import BasesTable from './BasesTable';
 
 class Bases extends React.Component {
 
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      base: '',
+      user: '',
+    }
+  }
+
+  toggleBase = (name, value) => {
+    return new Promise((resolve) => {
+      this.setState({base: value ? name : ''}, resolve);
+    });
+  };
+
+  toggleUser = (name, value) => {
+    return new Promise((resolve) => {
+      this.setState({user: value ? name : ''}, resolve);
+    });
+  };
+
   render() {
     const {state, props} = this;
 
@@ -24,7 +44,7 @@ class Bases extends React.Component {
 
     const {profile, roles, userDBs} = session;
     const myDBs = (profile.myDBs || [])._clone();
-    const myUsers = profile.myUsers || [{name: 'noname', value: 'nobase'}];
+    const myUsers = profile.myUsers || [];
     for(const name in userDBs) {
       name !== 'fl_0_doc' && !myDBs.includes(name) && myDBs.push({name, value: 'Внешняя', disabled: true});
     }
@@ -52,14 +72,21 @@ class Bases extends React.Component {
       <Helmet key="helmet" title="Общие базы" />,
       <Typography key="title" variant="h6" color="primary" className={props.classes.paddingTop}>Управление областями и пользователями</Typography>,
 
-      <BasesToolbar key="toolbar" refresh={() => this.forceUpdate()}/>,
+      <BasesToolbar
+        key="toolbar"
+        refresh={() => this.forceUpdate()}
+        base={state.base}
+        user={state.user}
+        myDBs={myDBs.filter((db) => typeof db === 'string')}
+        myUsers={myUsers}
+      />,
 
       <Grid key="bases" container direction="row" spacing={24}>
         <Grid item sm={12} md={6}>
-          <BasesTable title="Общие базы" rows={myDBs} check />
+          <BasesTable title="Общие базы" rows={myDBs} check onToggle={this.toggleBase}/>
         </Grid>
         <Grid item sm={12} md={6}>
-          <BasesTable title="Пользователи общих баз" rows={myUsers} check />
+          <BasesTable title="Пользователи общих баз" rows={myUsers} check onToggle={this.toggleUser}/>
         </Grid>
       </Grid>
     ];

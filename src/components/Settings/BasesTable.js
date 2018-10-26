@@ -12,12 +12,9 @@ class BasesTable extends React.Component {
   state = {checked: null};
 
   handleToggle = index => () => {
-    if(this.state.checked === index) {
-      this.setState({checked: null});
-    }
-    else {
-      this.setState({checked: index});
-    }
+    const {props: {onToggle, rows, multi}, state: {checked}}  = this;
+    (onToggle ? onToggle(rows[index], checked !== index) : Promise.resolve())
+      .then(() => !multi && this.setState({checked: checked === index ? null : index}));
   };
 
   render() {
@@ -29,7 +26,7 @@ class BasesTable extends React.Component {
         {rows.map((value, index) => (
           <ListItem
             key={`i-${index}`}
-            dense
+
             button
             onClick={this.handleToggle(index)}
             disabled={value.disabled}
@@ -37,7 +34,7 @@ class BasesTable extends React.Component {
 
             {
               check && <Checkbox
-                checked={this.state.checked === index}
+                checked={value.checked || this.state.checked === index}
                 tabIndex={-1}
                 disableRipple
               />
