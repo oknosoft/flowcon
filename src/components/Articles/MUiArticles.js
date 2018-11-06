@@ -127,7 +127,12 @@ class MUiArticles extends Component {
           $elemMatch: {
             $in: tags.length ? tags : tagList.map(({ref}) => ref)
           }
-        }
+        },
+        acl: {
+          $elemMatch: {
+            $in: ['_anonymous']
+          }
+        },
       },
       fields: ['_id', 'id', 'name', 'h1', 'introduction', 'date', 'author', 'tags', 'acl'],
       use_index: 'sorting_field_tags',
@@ -136,7 +141,13 @@ class MUiArticles extends Component {
       limit: pageSize,
     };
 
-    return $p.cat.articles.pouch_db.find(selector)
+    const {superlogin, cat} = $p;
+    const session = superlogin.getSession();
+    session && session.roles.forEach((role) => {
+      selector.selector.acl.$elemMatch.$in.push(role.startsWith('r_') ? role : `r_${role}`);
+    });
+
+    return cat.articles.pouch_db.find(selector)
       .then((res) => {
         for(let i=0; i < res.docs.length; i++) {
           list.set(i, res.docs[i]);

@@ -67,5 +67,13 @@ export default function ({cat, CatArticles}) {
         }
       }
     },
+    after_create: {
+      value() {
+        this.acl = ['_anonymous'];
+        this.date = new Date();
+        this.author = $p.current_user;
+        return this;
+      }
+    }
   });
 }

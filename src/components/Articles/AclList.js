@@ -88,9 +88,6 @@ class DownshiftMultiple extends React.Component {
     super(props, context);
 
     const {acl} = props._obj;
-    if(!acl.length) {
-      acl.push('_anonymous');
-    }
     this.state = {
       inputValue: '',
       selectedItem: acl,

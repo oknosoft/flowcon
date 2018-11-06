@@ -202,6 +202,7 @@ class EditorArticle extends MDNRComponent {
             )
           }}/>
           <DataField _obj={_obj} _fld="sorting_field"/>
+          <DataField _obj={_obj} _fld="img" />
         </FormGroup>
         <FormGroup row>
           <DataField _obj={_obj} _fld="contents"/>

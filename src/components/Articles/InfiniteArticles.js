@@ -134,7 +134,8 @@ class InfiniteArticles extends Component {
     const selector = {
       selector: {
         sorting_field: {$gt: 0},
-        tags: {$ne: null}
+        tags: {$gt: null},
+        $or: [{acl: {$gt: null}}]
       },
       fields: ['_id', 'id', 'name', 'h1', 'introduction', 'date', 'author', 'tags', 'acl'],
       use_index: 'sorting_field_tags',
