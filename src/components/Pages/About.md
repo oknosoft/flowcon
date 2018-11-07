@@ -11,6 +11,7 @@ business-programming.ru - это ресурс о Бизнес-программи
 - [Nginx](http://nginx.org/ru/), высокопроизводительный HTTP-сервер
 - [NodeJS](https://nodejs.org/en/), JavaScript runtime built on Chrome`s V8 JavaScript engine
 - [SuperLogin](https://github.com/colinskow/superlogin), библиотека oAuth авторизации
+- [CoverCouch](https://github.com/ermouth/covercouch), ACL для CouchDB
 
 #### Управление данными в памяти браузера
 - [Metadata.js](https://github.com/oknosoft/metadata.js/tree/develop/packages), движок ссылочной типизации для браузера и Node.js
@@ -20,13 +21,12 @@ business-programming.ru - это ресурс о Бизнес-программи
 - [Redux](https://github.com/reactjs/redux), диспетчер состояния веб-приложения
 
 #### UI библиотеки и компоненты интерфейса
-- [Material-ui](https://material-ui-next.com/), компоненты React UI в стиле Google`s material design
-- [React virtualized](https://github.com/bvaughn/react-virtualized), компоненты React для динамических списков
+- [Material-ui](https://material-ui-next.com/), компоненты UI в стиле Google`s material design
+- [React virtualized](https://github.com/bvaughn/react-virtualized), компоненты для динамических списков
 - [React data grid](https://github.com/adazzle/react-data-grid), React компонент табличной части
 - [Moment.js](http://momentjs.com/), библиотека форматирования интервалов и дат
-- [Rubles.js](http://meritt.github.io/rubles/), библиотека форматирования чисел - сумма прописью
-- [Xlsx](https://github.com/SheetJS/js-xlsx), библиотека для чтения и записи XLSX / XLSM / XLSB / XLS / ODS
-- [Docxtemplater](https://github.com/open-xml-templating/docxtemplater), библиотека формирования файлов DOCX
+- [Recharts](https://github.com/recharts/recharts), диаграммы на базе D3
+- [React-markdown](https://github.com/OpusCapita/react-markdown), редактор markdown
 - [Fontawesome](https://fortawesome.github.io/Font-Awesome/), набор шрифтовых иконок
 
 ### Лицензия
