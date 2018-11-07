@@ -31,7 +31,7 @@ import {addMiddleware} from 'redux-dynamic-middlewares';
 import {metaActions, metaMiddleware} from 'metadata-redux';
 
 // индексеры статей и задач
-//import issue_indexer from './documents/doc_issue_indexer';
+import issue_indexer from './documents/doc_issue_indexer';
 
 MetaEngine
   .plugin(plugin_pouchdb)     // подключаем pouchdb-адаптер к прототипу metadata.js
@@ -69,7 +69,7 @@ export function init(store) {
     pouch.init(wsql, job_prm);
 
     // выполняем модификаторы
-    modifiers($p);
+    modifiers($p, dispatch);
 
     // информируем хранилище о готовности MetaEngine
     dispatch(metaActions.META_LOADED($p));
@@ -84,13 +84,14 @@ export function init(store) {
       start: Date.now(),
     });
 
-    // pouch.on('on_log_in', () => {
-    //   return issue_indexer();
-    // });
-    //
-    // pouch.on('user_log_out', () => {
-    //   return null;
-    // });
+    pouch.on('on_log_in', () => {
+      return issue_indexer();
+    });
+
+    pouch.on('user_log_out', () => {
+      const {_indexer} = $p.doc.issue;
+      _indexer && _indexer.reset();
+    });
 
   }
   catch (err) {

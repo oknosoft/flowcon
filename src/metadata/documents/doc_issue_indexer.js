@@ -15,13 +15,15 @@ function subscribe(mngrs) {
   const {articles} = $p.cat;
 
   for(const mngr of mngrs) {
+    mngr._indexer_listener && mngr._indexer_listener.cancel();
     mngr._indexer_listener = mngr.pouch_db.changes({
       since: 'now',
       live: true,
       include_docs: true,
       selector: {class_name: {$in: [mngr.class_name, articles.class_name]}}
     }).on('change', (change) => {
-      change.doc.class_name == mngr.class_name ? mngr.emit('change', change.doc) : articles.emit('change', change.doc);
+      const cmgr = change.id.startsWith(mngr.class_name) ? mngr : articles;
+      cmgr.emit('change', change.deleted ? {_id: change.id, _deleted: true} : change.doc);
     });
   }
 }
@@ -73,7 +75,7 @@ export default function indexer() {
   const mngrs = [issue];
 
   for(const db in remote) {
-    if(db !== 'remote' && db !== issue.cachable) {
+    if(!/^(doc|log|remote)$/.test(db)) {
       const mngr = new issue.constructor($p.doc, issue.class_name);
       mngr._cachable = db;
       mngrs.push(mngr);
@@ -226,10 +228,13 @@ export default function indexer() {
     if(mngr !== issue) {
       mngr._indexer = issue._indexer;
     }
-    subscribe(mngrs);
   }
+  subscribe(mngrs);
 
   return issue._indexer
     .init()
+    .then(() => {
+      issue.emit('change');
+    })
     .catch($p.record_log);
 }
