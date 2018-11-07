@@ -27,6 +27,18 @@ class FrmIssueList extends React.Component {
     this.state = {anchorEl: null, reaponsable: null};
   }
 
+  componentDidMount() {
+    $p.doc.issue._indexer._mgrs.forEach((_mgr) => _mgr.on('change', this.handleChange));
+  }
+
+  componentWillUnmount() {
+    $p.doc.issue._indexer._mgrs.forEach((_mgr) => _mgr.off('change', this.handleChange));
+  }
+
+  handleChange = () => {
+    this.filterChange && Promise.resolve().then(() => this.filterChange());
+  };
+
   handleSelect = (row, _mgr) => {
     this.handleRequestClose();
     this.props.handleSelect(row, _mgr);
@@ -81,7 +93,7 @@ class FrmIssueList extends React.Component {
 
   handleReaponsable = (reaponsable) => {
     this.setState({reaponsable: reaponsable.empty() ? null : reaponsable.ref}, () => {
-      this.filterChange && this.filterChange();
+      this.handleChange();
     });
   };
 
