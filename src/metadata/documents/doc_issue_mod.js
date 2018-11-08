@@ -52,10 +52,23 @@ export default function ({doc, DocIssue}) {
       }
     },
 
-    // при изменении реквизита, регистрируем дату события
+    // при изменении реквизита, регистрируем факт события
     value_change: {
       value(field, type, value) {
+        if(/mark|executor|quickly|important|canceled|completed|specify|executor_accepted|initiator_accepted/.test(field) && this[field] !== value) {
+          const stub = {date: $p.utils.blank.date, event: field};
+          const row = this.history.find(stub) || this.history.add(stub);
+          row.value = value;
+        }
+      }
+    },
 
+    // перед записью, проставляем даты пустых событий
+    before_save: {
+      value() {
+        this.history.find_rows({date: $p.utils.blank.date}, (row) => {
+          row.date = new Date();
+        });
       }
     }
 
