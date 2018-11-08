@@ -96,15 +96,25 @@ class Contents extends Component {
 
   renderArticles(cnt) {
     const {classes} = this.props;
-    return cnt.articles && cnt.articles.map((v) => <Typography
-      key={v[1]}
-      component="a"
-      variant="subtitle1"
-      color="primary"
-      href={`/articles/${v[2]}`}
-      onClick={(e) => this.navigate(e, `/articles/${v[2]}`)}
-      className={classes.link}
-    >{v[3]}</Typography>);
+    return cnt.articles && cnt.articles
+      .filter((v) => {
+        if(v.includes('_anonymous')) {
+          return true;
+        }
+        const session = $p.superlogin.getSession();
+        return session && session.roles.some((role) => {
+          return v.includes(role) || v.includes(`r_${role}`);
+        });
+      })
+      .map((v) => <Typography
+        key={v[1]}
+        component="a"
+        variant="subtitle1"
+        color="primary"
+        href={`/articles/${v[2]}`}
+        onClick={(e) => this.navigate(e, `/articles/${v[2]}`)}
+        className={classes.link}
+      >{v[3]}</Typography>);
   }
 
   renderSubRows(rows) {
