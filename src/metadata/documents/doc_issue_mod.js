@@ -33,6 +33,7 @@ export default function ({doc, DocIssue}) {
       }
     },
 
+    // умолчания при добавлении комментария
     add_note: {
       value() {
         this.notes.add({
@@ -40,7 +41,24 @@ export default function ({doc, DocIssue}) {
           author: $p.current_user,
         });
       }
+    },
+
+    // умолчания при создании объекта
+    after_create: {
+      value() {
+        this.date = new Date();
+        this.initiator = $p.current_user;
+        return this;
+      }
+    },
+
+    // при изменении реквизита, регистрируем дату события
+    value_change: {
+      value(field, type, value) {
+
+      }
     }
+
   });
 
 }
