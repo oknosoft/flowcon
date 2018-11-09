@@ -20,7 +20,6 @@ import Social from './Social';
 import Subscribe from './Subscribe';
 import Attachments from './Attachments';
 
-
 class Article extends Component {
 
   state = {doc: null, name: ''};
@@ -78,6 +77,7 @@ class Article extends Component {
         h1={doc.h1}
         descr={doc.descr}
         canonical={props.match.path.replace(':ref', doc.id)}
+        img={doc.img || 'https://business-programming.ru/imgs/flask_192.png'}
         markdown={doc.content || 'текст отсутствует'}
         footer={ props.match.path.match(/\/(articles|files)\//) && [
           <Attachments key="attachments" _obj={doc} handleIfaceState={props.handleIfaceState} />,

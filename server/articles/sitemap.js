@@ -15,7 +15,7 @@ const selector = {
     search: {$gt: null},
     published: true
   },
-  fields: ['id', 'date', 'tags'],
+  fields: ['id', 'date', 'tags', 'acl'],
   limit: 1000,
 };
 const su = process.env.SERVER_URL;
@@ -26,9 +26,12 @@ function row({id, date, tags}) {
     return row._id.indexOf(tags[0]) !== -1;
   });
   // находим group
-  const category = tag && ram.find((row) => {
+  let category = tag && ram.find((row) => {
     return row._id.indexOf(tag.category) !== -1;
   });
+  if(!category && /terms_of_use|decent_subscription|privacy_policy/.test(id)) {
+    category = {predefined_name: 'articles'};
+  }
   let cat = category && category.predefined_name;
   if(!cat) {
     console.error(id, date, tags);
@@ -53,7 +56,9 @@ module.exports = function (req, res, next, db) {
     .then(({docs}) => {
       let rows = '';
       for(const doc of docs) {
-        rows += row(doc);
+        if(doc.acl && doc.acl.includes('_anonymous')){
+          rows += row(doc);
+        }
       }
       res
         .set('Content-Type', 'application/xml; charset=utf-8')

@@ -182,6 +182,7 @@ class DownshiftMultiple extends React.Component {
 DownshiftMultiple.propTypes = {
   classes: PropTypes.object.isRequired,
   _obj: PropTypes.object.isRequired,
+  endAdornment: PropTypes.node,
 };
 
 const styles = theme => ({
