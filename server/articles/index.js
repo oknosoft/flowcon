@@ -81,8 +81,11 @@ function doc(db, key) {
   })
     .then(({rows}) => {
       if(rows.length) {
-        cache.set(key, {time: Date.now(), doc: rows[0].doc});
-        return rows[0].doc;
+        const {doc} = rows[0];
+        if(doc.acl && doc.acl.includes('_anonymous')){
+          cache.set(key, {time: Date.now(), doc: rows[0].doc});
+          return rows[0].doc;
+        }
       }
     });
 }
@@ -107,6 +110,11 @@ function fill(html, doc) {
     '<div id="root"></div>',
     `<div id="root"><div style="max-width: 960px; padding-top: 48px; margin: auto;">
 <h1>${doc.h1 || doc.name}</h1>${marked(doc.content || '')}</div></div>`);
+
+  if(doc.img) {
+    html = html.replace('https://business-programming.ru/imgs/flask_192.png', doc.img);
+  }
+
   return html;
 }
 
