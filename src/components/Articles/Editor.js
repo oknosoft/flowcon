@@ -62,6 +62,7 @@ class EditorArticle extends MDNRComponent {
       TabularSection: () => null,
       index: 0,
       synonyms: false,
+      acl_att: false,
     };
     // в редакторе доступны все категории
     this.tagList = [];
@@ -130,14 +131,6 @@ class EditorArticle extends MDNRComponent {
     event.preventDefault();
   }
 
-  handleOpenSynonyms = () => {
-    this.setState({synonyms: true});
-  }
-
-  handleCloseSynonyms = () => {
-    this.setState({synonyms: false});
-  }
-
   handleValueChange(_fld) {
     return (event, value) => {
       const {_obj, handlers} = this.props;
@@ -147,6 +140,21 @@ class EditorArticle extends MDNRComponent {
     };
   }
 
+  handleOpenSynonyms = () => {
+    this.setState({synonyms: true});
+  };
+
+  handleCloseSynonyms = () => {
+    this.setState({synonyms: false});
+  };
+
+  handleOpenAclAtt = () => {
+    this.setState({acl_att: true});
+  };
+
+  handleCloseAclAtt = () => {
+    this.setState({acl_att: false});
+  };
 
   get ltitle() {
     const {_meta, _obj} = this.state;
@@ -207,7 +215,19 @@ class EditorArticle extends MDNRComponent {
         <FormGroup row>
           <DataField _obj={_obj} _fld="contents"/>
           <SelectTags tags={_obj.tags} categories tagList={this.tagList} handleChange={this.tagsChange}/>
-          <AclList _obj={_obj}/>
+          <AclList
+            _obj={_obj}
+            endAdornment={
+              <InputAdornment position="end" title="ACL вложений">
+                <IconButton
+                  onClick={this.handleOpenAclAtt}
+                  onMouseDown={this.handleMouseDown}
+                >
+                  <IconList />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
         </FormGroup>
         <DataField _obj={_obj} _fld="name" fullWidth/>
         <DataField _obj={_obj} _fld="h1" fullWidth/>
@@ -220,6 +240,7 @@ class EditorArticle extends MDNRComponent {
           </FormGroup>
         }
         <DataField _obj={_obj} _fld="formula" fullWidth/>
+
       </FormGroup>
     );
   }
@@ -227,7 +248,7 @@ class EditorArticle extends MDNRComponent {
   render() {
     const {
       props: {_mgr, classes, handleIfaceState},
-      state: {_obj, _meta, index, MarkdownInput, TabularSection, synonyms},
+      state: {_obj, _meta, index, MarkdownInput, TabularSection, synonyms, acl_att},
       context, _handlers} = this;
     const toolbar_props = Object.assign({
       closeButton: !context.dnr,
@@ -297,7 +318,19 @@ class EditorArticle extends MDNRComponent {
         >
           <TabularSection _obj={_obj} _tabular="aliases"/>
         </Dialog>
-      )
+      ),
+
+      acl_att && (
+        <Dialog
+          key="acl_att"
+          open
+          minheight
+          title="ACL вложений"
+          onClose={this.handleCloseAclAtt}
+        >
+          <TabularSection _obj={_obj} _tabular="acl_att"/>
+        </Dialog>
+      ),
 
     ]
       :

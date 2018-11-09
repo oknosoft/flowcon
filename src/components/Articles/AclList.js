@@ -18,10 +18,10 @@ import Chip from '@material-ui/core/Chip';
 
 const suggestions = [
   {label: '_anonymous'},
-  {label: 'r_charts_editor'},
-  {label: 'r_doc_editor'},
-  {label: 'r_remote_editor'},
-  {label: 'r_subscribers'},
+  {label: 'r-subscribers'},
+  {label: 'r-charts_editor'},
+  {label: 'r-doc_editor'},
+  {label: 'r-remote_editor'},
 ];
 
 function renderInput(inputProps) {
@@ -124,7 +124,7 @@ class DownshiftMultiple extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, endAdornment } = this.props;
     const { inputValue, selectedItem } = this.state;
 
     return (
@@ -155,6 +155,7 @@ class DownshiftMultiple extends React.Component {
                 onChange: this.handleInputChange,
                 onKeyDown: this.handleKeyDown,
                 placeholder: 'введите текст или нажмите ↓',
+                endAdornment,
               }),
               label: 'Роли доступа',
             })}

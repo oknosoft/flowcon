@@ -103,7 +103,7 @@ class Contents extends Component {
         }
         const session = $p.superlogin.getSession();
         return session && session.roles.some((role) => {
-          return v.includes(role) || v.includes(`r_${role}`);
+          return v.includes(role) || v.includes(`r-${role}`);
         });
       })
       .map((v) => <Typography

@@ -144,7 +144,7 @@ class MUiArticles extends Component {
     const {superlogin, cat} = $p;
     const session = superlogin.getSession();
     session && session.roles.forEach((role) => {
-      selector.selector.acl.$elemMatch.$in.push(role.startsWith('r_') ? role : `r_${role}`);
+      selector.selector.acl.$elemMatch.$in.push(role.startsWith('r-') ? role : `r-${role}`);
     });
 
     return cat.articles.pouch_db.find(selector)
