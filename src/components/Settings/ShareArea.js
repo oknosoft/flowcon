@@ -70,7 +70,7 @@ class ShareArea extends BtnsDialog {
 }
 
 ShareArea.propTypes = {
-  name: PropTypes.func,
+  name: PropTypes.string,
   refresh: PropTypes.func,
 };
 

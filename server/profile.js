@@ -35,18 +35,11 @@ module.exports = function(superlogin) {
       });
   };
 
+  // изменяет полное имя в профиле пользователя
   this.changeName = function(user_id, newName) {
     return userDB.get(user_id)
       .then((userDoc) => {
         userDoc.profile.name = newName;
-        return userDB.put(userDoc);
-      });
-  };
-
-  this.changeSubscription = function(user_id, subscription) {
-    return userDB.get(user_id)
-      .then((userDoc) => {
-        userDoc.profile.subscription = subscription;
         return userDB.put(userDoc);
       });
   };
@@ -76,14 +69,93 @@ module.exports = function(superlogin) {
     return Promise.resolve(userDoc);
   };
 
+  // изменяет признак "подписан на рассылку"
+  this.changeSubscription = function(user_id, subscription) {
+    return userDB.get(user_id)
+      .then((userDoc) => {
+        userDoc.profile.subscription = subscription;
+        return userDB.put(userDoc);
+      });
+  };
+
+  // добавляет пользователя в список администрирования
+  this.addUser = function(user_id, sub_id) {
+    if(user_id === sub_id) {
+      return Promise.reject(new Error('Нельзя добавить в список администрирования самого себя'));
+    }
+    return userDB.get(user_id)
+      .then((userDoc) => {
+        return userDB.get(sub_id)
+          .then((subDoc) => {
+            return {userDoc, subDoc};
+          });
+      })
+      .then(({userDoc, subDoc}) => {
+        const {profile} = userDoc;
+        if(!profile.myUsers) {
+          profile.myUsers = [];
+        }
+        if(profile.myUsers.some((v) => v.name === sub_id)) {
+          return profile;
+        }
+        profile.myUsers.push({name: sub_id, value: []});
+        return userDB.put(userDoc)
+          .then(() => profile);
+      });
+  };
+
+  // удаляет пользователя из списка администрирования
+  this.rmUser = function(user_id, sub_id) {
+    if(user_id === sub_id) {
+      return Promise.reject(new Error('Нельзя удалить самого себя из списка администрирования'));
+    }
+    return userDB.get(user_id)
+      .then((userDoc) => {
+        return userDB.get(sub_id)
+          .then((subDoc) => {
+            return {userDoc, subDoc};
+          });
+      })
+      .then(({userDoc, subDoc}) => {
+        const {profile} = userDoc;
+
+        // удаляем из наших пользователей
+        if(!profile.myUsers || !profile.myUsers.some((v, index) => {
+          if(v.name === sub_id) {
+            profile.myUsers.splice(index, 1);
+            return true;
+          }
+        })) {
+          return profile;
+        }
+
+        // отнимаем у стороннего пользователя наши базы
+        let changed;
+        profile.myDBs.forEach((db) => {
+          if(subDoc.personalDBs[db]) {
+            changed = true;
+            delete subDoc.personalDBs[db];
+          }
+        });
+        const sub = changed ?
+          userDB.put(subDoc)
+            .then(() => superlogin.logoutUser(sub_id))
+          :
+          Promise.resolve();
+
+        return sub.then(() => userDB.put(userDoc))
+          .then(() => profile);
+      });
+  };
+
   // создаёт общую базу и добавляет её в профиль подписчика
   this.createSharedDB = function(user_id, dbName) {
     return userDB.get(user_id)
       .then((userDoc) => {
 
-        // генерируем ошибку, если нет роли r_subscribers
-        if(!userDoc.roles.includes('r_subscribers') && !userDoc.roles.includes('doc_full')) {
-          throw new Error('Недостаточно прав. В профиле пользователя отсутствует роль "r_subscribers"');
+        // генерируем ошибку, если нет роли subscribers
+        if(!userDoc.roles.includes('subscribers') && !userDoc.roles.includes('doc_full')) {
+          throw new Error('Недостаточно прав. В профиле пользователя отсутствует роль "subscribers"');
         }
 
         // проверяем название базы
@@ -101,7 +173,9 @@ module.exports = function(superlogin) {
             if(finalName !== dbName) {
               throw new Error(`Имя '${dbName}' занято. Вместо него можно использовать '${finalName}'`);
             }
-            return superlogin.addUserDB(user_id, dbName, 'shared', superlogin.config.getItem('userDBs.model.fl_0_doc.designDocs'));
+            return superlogin.addUserDB(user_id, dbName, 'shared', superlogin.config.getItem('userDBs.model.fl_0_doc.designDocs'))
+              .then(() => userDB.get(user_id))
+              .then((userDoc) => userDoc.profile);
           });
       });
   };

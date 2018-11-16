@@ -7,9 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import NeedAuth from 'metadata-react/App/NeedAuth';
 import withStyles from 'metadata-react/styles/paper600';
 
-import BasesToolbar from './BasesToolbar';
 import BasesTable from './BasesTable';
 import BtnsDialog from './BtnsDialog';
+import BasesToolbar from './BasesToolbar';
+import UsersToolbar from './UsersToolbar';
 
 
 class Bases extends React.Component {
@@ -50,7 +51,7 @@ class Bases extends React.Component {
       name !== 'fl_0_doc' && !myDBs.includes(name) && myDBs.push({name, value: 'Внешняя', disabled: true});
     }
 
-    if(!roles.includes('r_subscribers') && !roles.includes('doc_full')) {
+    if(!roles.includes('subscribers') && !roles.includes('doc_full')) {
       return [
         <Helmet key="helmet" title="Общие базы" />,
         <Typography key="title" variant="h6" color="primary" className={props.classes.paddingTop}>Недостаточно прав</Typography>,
@@ -73,21 +74,36 @@ class Bases extends React.Component {
       <Helmet key="helmet" title="Общие базы" />,
       <Typography key="title" variant="h6" color="primary" className={props.classes.paddingTop}>Управление областями и пользователями</Typography>,
 
-      <BasesToolbar
-        key="toolbar"
-        refresh={() => this.forceUpdate()}
-        base={state.base}
-        user={state.user}
-        myDBs={myDBs.filter((db) => typeof db === 'string')}
-        myUsers={myUsers}
-      />,
-
       <Grid key="bases" container direction="row" spacing={24}>
         <Grid item sm={12} md={6}>
-          <BasesTable title="Общие базы" rows={myDBs} check onToggle={this.toggleBase}/>
+          <BasesTable
+            title="Общие базы"
+            rows={myDBs}
+            check
+            onToggle={this.toggleBase}
+            toolbar={<BasesToolbar
+              refresh={() => this.forceUpdate()}
+              base={state.base}
+              user={state.user}
+              myDBs={myDBs.filter((db) => typeof db === 'string')}
+              myUsers={myUsers}
+            />}
+          />
         </Grid>
         <Grid item sm={12} md={6}>
-          <BasesTable title="Пользователи общих баз" rows={myUsers} check onToggle={this.toggleUser}/>
+          <BasesTable
+            title="Пользователи общих баз"
+            rows={myUsers}
+            check
+            onToggle={this.toggleUser}
+            toolbar={<UsersToolbar
+              refresh={() => this.forceUpdate()}
+              base={state.base}
+              user={state.user}
+              myDBs={myDBs.filter((db) => typeof db === 'string')}
+              myUsers={myUsers}
+            />}
+          />
         </Grid>
       </Grid>
     ];

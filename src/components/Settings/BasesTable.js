@@ -7,6 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import BasesToolbar from './BasesToolbar';
+
 class BasesTable extends React.Component {
 
   state = {checked: null};
@@ -18,11 +20,12 @@ class BasesTable extends React.Component {
   };
 
   render() {
-    const {title, rows, check} = this.props;
+    const {title, rows, check, toolbar} = this.props;
 
     return <div>
-      <Typography>{title}</Typography>
-      <List>
+      <Typography key="title">{title}</Typography>
+      {toolbar}
+      <List key="list">
         {rows.map((value, index) => (
           <ListItem
             key={`i-${index}`}

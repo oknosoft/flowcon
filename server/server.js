@@ -120,6 +120,38 @@ app.post('/user/create-db', superlogin.requireAuth, (req, res, next) => {
     });
 });
 
+// добавление пользователя в список администрирования
+app.post('/user/add-user', superlogin.requireAuth, (req, res, next) => {
+  if(!req.body.hasOwnProperty('name')) {
+    return next({
+      error: "Field 'name' is required",
+      status: 400
+    });
+  }
+  profile.addUser(req.user._id, req.body.name)
+    .then((result) => {
+      res.status(200).json(result);
+    }, (err) => {
+      return next(err);
+    });
+});
+
+// добавление пользователя в список администрирования
+app.post('/user/rm-user', superlogin.requireAuth, (req, res, next) => {
+  if(!req.body.hasOwnProperty('name')) {
+    return next({
+      error: "Field 'name' is required",
+      status: 400
+    });
+  }
+  profile.rmUser(req.user._id, req.body.name)
+    .then((result) => {
+      res.status(200).json(result);
+    }, (err) => {
+      return next(err);
+    });
+});
+
 app.post('/user/destroy', superlogin.requireAuth, (req, res, next) => {
   superlogin.removeUser(req.user._id, true)
     .then(() => {
