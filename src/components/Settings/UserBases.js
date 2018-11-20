@@ -67,7 +67,7 @@ class UserBases extends BtnsDialog {
 }
 
 UserBases.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   refresh: PropTypes.func,
 };
 

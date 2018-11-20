@@ -52,6 +52,10 @@ class AppView extends Component {
     };
   }
 
+  componentDidMount() {
+    $p.ui.dialogs.init({handleIfaceState: this.props.handleIfaceState});
+  }
+
   shouldComponentUpdate(props, {need_user, need_meta, need_doc_ram}) {
     const iprops = item_props();
     let res = true;
@@ -259,7 +263,7 @@ class AppView extends Component {
 
       // диалог сообщений пользователю
       alert && alert.open &&
-        <Alert key="alert" open text={alert.text} title={alert.title} handleOk={this.handleAlertClose}/>,
+        <Alert key="alert" open text={alert.text} title={alert.title} handleOk={alert.handleOk || this.handleAlertClose}/>,
 
       // диалог вопросов пользователю (да, нет)
       confirm && confirm.open &&

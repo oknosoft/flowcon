@@ -84,8 +84,6 @@ class Bases extends React.Component {
             toolbar={<BasesToolbar
               refresh={() => this.forceUpdate()}
               base={state.base}
-              user={state.user}
-              myDBs={myDBs.filter((db) => typeof db === 'string')}
               myUsers={myUsers}
             />}
           />
@@ -98,10 +96,8 @@ class Bases extends React.Component {
             onToggle={this.toggleUser}
             toolbar={<UsersToolbar
               refresh={() => this.forceUpdate()}
-              base={state.base}
               user={state.user}
               myDBs={myDBs.filter((db) => typeof db === 'string')}
-              myUsers={myUsers}
             />}
           />
         </Grid>
@@ -110,7 +106,7 @@ class Bases extends React.Component {
   }
 }
 
-BtnsDialog.propTypes = {
+Bases.propTypes = {
   classes: PropTypes.object,
   handleNavigate: PropTypes.func,
 };

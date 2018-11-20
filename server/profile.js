@@ -109,6 +109,9 @@ module.exports = function(superlogin) {
     if(user_id === sub_id) {
       return Promise.reject(new Error('Нельзя удалить самого себя из списка администрирования'));
     }
+    if(!sub_id) {
+      return Promise.reject(new Error('Пустое имя пользователя для удаления'));
+    }
     return userDB.get(user_id)
       .then((userDoc) => {
         return userDB.get(sub_id)
