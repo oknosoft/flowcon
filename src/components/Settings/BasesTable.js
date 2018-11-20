@@ -7,8 +7,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import BasesToolbar from './BasesToolbar';
-
 class BasesTable extends React.Component {
 
   state = {checked: null};
@@ -63,6 +61,7 @@ BasesTable.propTypes = {
   multi: PropTypes.bool,
   check: PropTypes.bool,
   title: PropTypes.string,
+  toolbar: PropTypes.node,
 };
 
 export default BasesTable;

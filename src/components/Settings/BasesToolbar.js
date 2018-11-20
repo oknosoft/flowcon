@@ -7,11 +7,10 @@ import RemoveIcon from '@material-ui/icons/DeleteOutline';
 import withStyles from 'metadata-react/Header/toolbar';
 
 import CreateArea from './CreateArea';
-import UserBases from './UserBases';
 import ShareArea from './ShareArea';
 
 
-function BasesToolbar({classes, handleAdd, refresh, base, user, myDBs, myUsers}) {
+function BasesToolbar({classes, handleAdd, refresh, base, myUsers}) {
  return <Toolbar disableGutters className={classes.toolbar}>
    <CreateArea refresh={refresh}/>
    <IconButton title="Удалить область" onClick={handleAdd}><RemoveIcon/></IconButton>
@@ -24,8 +23,6 @@ BasesToolbar.propTypes = {
   handleAdd: PropTypes.func,
   refresh: PropTypes.func,
   base: PropTypes.string,
-  user: PropTypes.any,
-  myDBs: PropTypes.array,
   myUsers: PropTypes.array,
 };
 

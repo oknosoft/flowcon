@@ -8,10 +8,8 @@ import withStyles from 'metadata-react/Header/toolbar';
 
 import AddUser from './AddUser';
 import UserBases from './UserBases';
-import ShareArea from './ShareArea';
 
-
-function UsersToolbar({classes, handleAdd, refresh, base, user, myDBs, myUsers}) {
+function UsersToolbar({classes, handleAdd, refresh, user, myDBs}) {
  return <Toolbar disableGutters className={classes.toolbar}>
    <AddUser refresh={refresh}/>
    <IconButton title="Удалить область" onClick={handleAdd}><RemoveIcon/></IconButton>
@@ -23,10 +21,8 @@ UsersToolbar.propTypes = {
   classes: PropTypes.object,
   handleAdd: PropTypes.func,
   refresh: PropTypes.func,
-  base: PropTypes.string,
   user: PropTypes.any,
   myDBs: PropTypes.array,
-  myUsers: PropTypes.array,
 };
 
 export default withStyles(UsersToolbar);
