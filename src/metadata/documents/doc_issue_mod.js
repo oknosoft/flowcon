@@ -68,6 +68,9 @@ export default function ({doc, DocIssue}) {
       value() {
         this.history.find_rows({date: $p.utils.blank.date}, (row) => {
           row.date = new Date();
+          if(/quickly|important|canceled|completed|specify|executor_accepted|initiator_accepted/.test(row.event.valueOf())) {
+            this.state_date = row.date;
+          }
         });
       }
     }

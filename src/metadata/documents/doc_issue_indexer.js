@@ -6,7 +6,7 @@
  * Created by Evgeniy Malyarov on 11.10.2018.
  */
 
-const fields = ('_id,date,number_doc,definition,caption,mark,quickly,important,initiator,executor,history,canceled,completed,specify,' +
+const fields = ('_id,date,number_doc,definition,caption,mark,quickly,important,initiator,executor,state_date,canceled,completed,specify,' +
   'executor_accepted,initiator_accepted,quickly_setted').split(',');
 const search_fields = ['definition','caption'];
 
