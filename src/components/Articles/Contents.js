@@ -77,7 +77,7 @@ class Contents extends Component {
     })
       .then((res) => {
         for(const {key, value} of res.rows) {
-          contents.get(key).articles = value.map((v) => v.split('π'));
+          contents.get(key).articles = value.sort().reverse().map((v) => v.split('π'));
         }
         this.setState({rows});
       })
