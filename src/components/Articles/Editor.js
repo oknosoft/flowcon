@@ -213,7 +213,7 @@ class EditorArticle extends MDNRComponent {
           <DataField _obj={_obj} _fld="img" />
         </FormGroup>
         <FormGroup row>
-          <DataField _obj={_obj} _fld="contents"/>
+          <DataField _obj={_obj} _fld="contents" tree/>
           <SelectTags tags={_obj.tags} categories tagList={this.tagList} handleChange={this.tagsChange}/>
           <AclList
             _obj={_obj}

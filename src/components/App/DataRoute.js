@@ -12,10 +12,12 @@ import NotFound from '../Pages/NotFound';
 const stub = () => null;
 const lazy = {
   DataList: stub,
+  DataTree: stub,
   DataObj: stub,
   FrmReport: stub,
 };
 import(/* webpackChunkName: "metadata-react" */ 'metadata-react/DataList').then(module => lazy.DataList = module.default);
+import(/* webpackChunkName: "metadata-react" */ 'metadata-react/DataTree').then(module => lazy.DataTree = module.default);
 import(/* webpackChunkName: "metadata-react" */ 'metadata-react/FrmObj').then(module => lazy.DataObj = module.default);
 import(/* webpackChunkName: "metadata-react" */ 'metadata-react/FrmReport').then(module => lazy.FrmReport = module.default);
 
