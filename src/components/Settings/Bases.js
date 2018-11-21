@@ -8,7 +8,6 @@ import NeedAuth from 'metadata-react/App/NeedAuth';
 import withStyles from 'metadata-react/styles/paper600';
 
 import BasesTable from './BasesTable';
-import BtnsDialog from './BtnsDialog';
 import BasesToolbar from './BasesToolbar';
 import UsersToolbar from './UsersToolbar';
 

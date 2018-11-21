@@ -30,6 +30,16 @@ function getRows(rows, db) {
 
 class ShareArea extends BtnsDialog {
 
+  onToggle = (row) => {
+    const {name, refresh} = this.props;
+    return $p.superlogin[row.checked ? 'unshare_db' : 'share_db'](row.name, name)
+      .then(refresh)
+      .catch((err) => {
+        const error = err.response && err.response.data.message || err.message;
+        $p.ui.dialogs.alert({title: 'Ошибка добавления базы', text: error});
+      });
+  };
+
   render() {
     let {state: {open, error, query}, props} = this;
     if(!props.name) {
@@ -53,7 +63,7 @@ class ShareArea extends BtnsDialog {
               readOnly: true,
             }}
           />
-          {props.name && <BasesTable title="Пользователи" rows={getRows(props.rows, props.name)} check />}
+          {props.name && <BasesTable title="Пользователи" rows={getRows(props.rows, props.name)} onToggle={this.onToggle} check multi />}
           <DialogContentText>
             {error}
           </DialogContentText>

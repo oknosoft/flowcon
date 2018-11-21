@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
+import ShareIcon from '@material-ui/icons/Share';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -33,7 +33,7 @@ class UserBases extends BtnsDialog {
   render() {
     const {state: {open, name, error, query}, props} = this;
     return <div>
-      <IconButton title="Состав баз пользователя" onClick={this.handleClickOpen}><EditIcon/></IconButton>
+      <IconButton title="Состав баз пользователя" onClick={this.handleClickOpen}><ShareIcon/></IconButton>
       <Dialog
         open={open}
         onClose={this.handleClose}
