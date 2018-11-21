@@ -38,9 +38,9 @@ class RootProvider extends Component {
   componentDidMount() {
 
     // font-awesome, roboto и стили metadata подгрузим асинхронно
-    import('./styles/roboto/font.css');
-    import('font-awesome/css/font-awesome.min.css');
+    import('metadata-react/styles/roboto/font.css');
     import('metadata-react/styles/react-data-grid.css');
+    import('font-awesome/css/font-awesome.min.css');
 
     // скрипт инициализации структуры метаданных и модификаторы
     import('./metadata')
