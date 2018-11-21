@@ -53,7 +53,12 @@ class AppView extends Component {
   }
 
   componentDidMount() {
-    $p.ui.dialogs.init({handleIfaceState: this.props.handleIfaceState});
+    if(typeof $p === 'undefined') {
+      setTimeout(() => this.componentDidMount.bind(this), 1000);
+    }
+    else {
+      $p.ui.dialogs.init({handleIfaceState: this.props.handleIfaceState});
+    }
   }
 
   shouldComponentUpdate(props, {need_user, need_meta, need_doc_ram}) {

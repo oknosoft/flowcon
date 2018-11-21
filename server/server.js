@@ -136,7 +136,7 @@ app.post('/user/add-user', superlogin.requireAuth, (req, res, next) => {
     });
 });
 
-// добавление пользователя в список администрирования
+// удаление пользователя в список администрирования
 app.post('/user/rm-user', superlogin.requireAuth, (req, res, next) => {
   if(!req.body.hasOwnProperty('name')) {
     return next({
@@ -145,6 +145,38 @@ app.post('/user/rm-user', superlogin.requireAuth, (req, res, next) => {
     });
   }
   profile.rmUser(req.user._id, req.body.name)
+    .then((result) => {
+      res.status(200).json(result);
+    }, (err) => {
+      return next(err);
+    });
+});
+
+// предоставление доступа к общей базе
+app.post('/user/share-db', superlogin.requireAuth, (req, res, next) => {
+  if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('db')) {
+    return next({
+      error: "Fields 'name' and 'db' is required",
+      status: 400
+    });
+  }
+  profile.shareDB(req.user._id, req.body.name, req.body.db)
+    .then((result) => {
+      res.status(200).json(result);
+    }, (err) => {
+      return next(err);
+    });
+});
+
+// отъём доступа к общей базе
+app.post('/user/unshare-db', superlogin.requireAuth, (req, res, next) => {
+  if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('db')) {
+    return next({
+      error: "Fields 'name' and 'db' is required",
+      status: 400
+    });
+  }
+  profile.unshareDB(req.user._id, req.body.name, req.body.db)
     .then((result) => {
       res.status(200).json(result);
     }, (err) => {

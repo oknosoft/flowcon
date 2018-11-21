@@ -183,4 +183,116 @@ module.exports = function(superlogin) {
       });
   };
 
+  // добавляет общую базу пользователю
+  this.shareDB = function(user_id, sub_id, dbName) {
+    if(user_id === sub_id) {
+      return Promise.reject(new Error('Нельзя добавить базу самому себе'));
+    }
+    if(!sub_id) {
+      return Promise.reject(new Error('Не указан пользователь'));
+    }
+    if(!dbName) {
+      return Promise.reject(new Error('Не указано имя базы'));
+    }
+    return userDB.get(user_id)
+      .then((userDoc) => {
+        return userDB.get(sub_id)
+          .then((subDoc) => {
+            return {userDoc, subDoc};
+          });
+      })
+      .then(({userDoc, subDoc}) => {
+        const {profile} = userDoc;
+        // есть ли пользователь в myUsers
+        let user;
+        if(!profile.myUsers || !profile.myUsers.some((v) => {
+          if(v.name === sub_id) {
+            user = v;
+            return true;
+          }
+        })) {
+          return Promise.reject(new Error(`Пользователя '${sub_id}' нет в списке администрирования`));
+        }
+        // есть ли у нас права шарить эту базу
+        if(!profile.myDBs.includes(dbName)) {
+          return Promise.reject(new Error(`У пользователя '${user_id}' нет прав на базу '${dbName}'`));
+        }
+
+        // добавляем разрешение пользователю
+        let sub;
+        if(!subDoc.personalDBs[dbName]) {
+          subDoc.personalDBs[dbName] = userDoc.personalDBs[dbName];
+          sub = userDB.put(subDoc);
+        }
+        else {
+          sub = Promise.resolve();
+        }
+
+        // добавляем инфо в запись пользователя
+        if(!user.value.includes(dbName)){
+          user.value.push(dbName);
+          sub = sub.then(() => userDB.put(userDoc));
+        }
+
+        return sub.then(() => profile);
+      });
+  };
+
+  // отнимает общую базу у пользователя
+  this.unshareDB = function(user_id, sub_id, dbName) {
+    if(user_id === sub_id) {
+      return Promise.reject(new Error('Нельзя отнять базу у самомого себя'));
+    }
+    if(!sub_id) {
+      return Promise.reject(new Error('Не указан пользователь'));
+    }
+    if(!dbName) {
+      return Promise.reject(new Error('Не указано имя базы'));
+    }
+    return userDB.get(user_id)
+      .then((userDoc) => {
+        return userDB.get(sub_id)
+          .then((subDoc) => {
+            return {userDoc, subDoc};
+          });
+      })
+      .then(({userDoc, subDoc}) => {
+        const {profile} = userDoc;
+        // есть ли пользователь в myUsers
+        let user;
+        if(!profile.myUsers || !profile.myUsers.some((v) => {
+          if(v.name === sub_id) {
+            user = v;
+            return true;
+          }
+        })) {
+          return Promise.reject(new Error(`Пользователя '${sub_id}' нет в списке администрирования`));
+        }
+        // есть ли у нас права шарить эту базу
+        if(!profile.myDBs.includes(dbName)) {
+          return Promise.reject(new Error(`У пользователя '${user_id}' нет прав на базу '${dbName}'`));
+        }
+
+        // удаляем разрешение
+        let sub;
+        if(subDoc.personalDBs[dbName]) {
+          delete subDoc.personalDBs[dbName];
+          sub = userDB.put(subDoc)
+            .then(() => superlogin.logoutUser(sub_id));
+        }
+        else {
+          sub = Promise.resolve();
+        }
+
+        // изменяем инфо в записи пользователя
+        const index = user.value.indexOf(dbName);
+        if(index !== -1){
+          user.value.splice(index, 1);
+          sub = sub.then(() => userDB.put(userDoc));
+        }
+
+        return sub.then(() => profile);
+      });
+  };
+
 };
