@@ -32,9 +32,14 @@ class ShareArea extends BtnsDialog {
 
   onToggle = (row) => {
     const {name, refresh} = this.props;
+    this.setState({query: true});
     return $p.superlogin[row.checked ? 'unshare_db' : 'share_db'](row.name, name)
-      .then(refresh)
+      .then(() => {
+        this.setState({query: false});
+        refresh();
+      })
       .catch((err) => {
+        this.setState({query: false});
         const error = err.response && err.response.data.message || err.message;
         $p.ui.dialogs.alert({title: 'Ошибка добавления базы', text: error});
       });
@@ -50,7 +55,6 @@ class ShareArea extends BtnsDialog {
       <Dialog
         open={open}
         onClose={this.handleClose}
-        classes={{paper: query ? props.classes.disabled : ''}}
       >
         <DialogTitle>Пользователи области данных</DialogTitle>
         <DialogContent>
@@ -63,7 +67,14 @@ class ShareArea extends BtnsDialog {
               readOnly: true,
             }}
           />
-          {props.name && <BasesTable title="Пользователи" rows={getRows(props.rows, props.name)} onToggle={this.onToggle} check multi />}
+          {props.name && <BasesTable
+            title="Пользователи"
+            className={query ? props.classes.disabled : ''}
+            rows={getRows(props.rows, props.name)}
+            onToggle={this.onToggle}
+            check
+            multi
+          />}
           <DialogContentText>
             {error}
           </DialogContentText>

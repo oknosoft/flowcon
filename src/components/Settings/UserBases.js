@@ -30,6 +30,22 @@ function getRows(rows, user) {
 
 class UserBases extends BtnsDialog {
 
+  onToggle = (row) => {
+    const {name, refresh} = this.props;
+    const db = typeof row === 'object' ? row.name : row;
+    this.setState({query: true});
+    return $p.superlogin[row.checked ? 'unshare_db' : 'share_db'](name.name, db)
+      .then(() => {
+        this.setState({query: false});
+        refresh(name.name, db, row.checked);
+      })
+      .catch((err) => {
+        this.setState({query: false});
+        const error = err.response && err.response.data.message || err.message;
+        $p.ui.dialogs.alert({title: 'Ошибка добавления базы', text: error});
+      });
+  };
+
   render() {
     const {state: {open, name, error, query}, props} = this;
     return <div>
@@ -37,7 +53,6 @@ class UserBases extends BtnsDialog {
       <Dialog
         open={open}
         onClose={this.handleClose}
-        classes={{paper: query ? props.classes.disabled : ''}}
       >
         <DialogTitle>Области данных пользователя</DialogTitle>
         <DialogContent>
@@ -50,7 +65,14 @@ class UserBases extends BtnsDialog {
               readOnly: Boolean(props.name),
             }}
           />
-          <BasesTable title="Области" rows={getRows(props.rows, props.name)} check multi/>
+          {props.name && <BasesTable
+            title="Области"
+            className={query ? props.classes.disabled : ''}
+            rows={getRows(props.rows, props.name)}
+            onToggle={this.onToggle}
+            check
+            multi
+          />}
           <DialogContentText>
             {error}
           </DialogContentText>

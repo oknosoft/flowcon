@@ -18,9 +18,9 @@ class BasesTable extends React.Component {
   };
 
   render() {
-    const {title, rows, check, toolbar} = this.props;
+    const {title, rows, check, toolbar, className} = this.props;
 
-    return <div>
+    return <div className={className}>
       <Typography key="title">{title}</Typography>
       {toolbar}
       <List key="list">
@@ -61,6 +61,7 @@ BasesTable.propTypes = {
   multi: PropTypes.bool,
   check: PropTypes.bool,
   title: PropTypes.string,
+  className: PropTypes.string,
   toolbar: PropTypes.node,
 };
 

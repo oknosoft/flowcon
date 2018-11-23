@@ -94,7 +94,17 @@ class Bases extends React.Component {
             check
             onToggle={this.toggleUser}
             toolbar={<UsersToolbar
-              refresh={() => this.forceUpdate()}
+              refresh={(name, db, checked) => {
+                const user = myUsers.filter((v) => v.name === name)[0];
+                const index = user.value.indexOf(db);
+                if(checked && index > -1) {
+                  user.value.splice(index, 1);
+                }
+                if(!checked && index == -1) {
+                  user.value.push(db);
+                }
+                this.setState({user});
+              }}
               user={state.user}
               myDBs={myDBs.filter((db) => typeof db === 'string')}
             />}
