@@ -152,7 +152,7 @@ function create_modules(_m) {
       ireg: {mgr: 'InfoRegManager', proto: 'RegisterRow'},
       areg: {mgr: 'AccumRegManager', proto: 'RegisterRow'},
       dp: {mgr: 'DataProcessorsManager', proto: 'DataProcessorObj'},
-      rep: {mgr: 'DataProcessorsManager', proto: 'DataProcessorObj'},
+      rep: {mgr: 'DataProcessorsManager', proto: 'DataProcessorObj', dir: 'reports'},
     };
   let text = `(function(){
   const {MetaEventEmitter,EnumManager,CatManager,DocManager,DataProcessorsManager,ChartOfCharacteristicManager,ChartOfAccountManager,

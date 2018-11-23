@@ -20,7 +20,7 @@ function fromDir(startPath, filter, callback) {
   const files = fs.readdirSync(startPath);
   for (let i = 0; i < files.length; i++) {
     const filename = path.join(startPath, files[i]);
-    if(/node_modules/.test(filename)){
+    if(/node_modules|\\src\\|\/src\//.test(filename)){
       continue;
     }
     const stat = fs.lstatSync(filename);
