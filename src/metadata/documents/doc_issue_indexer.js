@@ -147,16 +147,9 @@ export default function indexer() {
         function add(doc) {
           count++;
           if(flag && doc._id.endsWith(ref)) {
-            scroll = count - 1;
             flag = false;
           }
-          if(skip > 0) {
-            return skip--;
-          }
-          if(limit > 0) {
-            limit--;
-            docs.push(doc);
-          }
+          docs.push(doc);
         }
 
         function check(doc) {
@@ -211,6 +204,24 @@ export default function indexer() {
             }
           }
         }
+
+        // sort, skip, limit, scroll
+        docs.sort((a, b) => {
+          if (a.state_date > b.state_date || (a.state_date && !b.state_date)) {
+            return 1;
+          }
+          if (a.state_date < b.state_date || (b.state_date && !a.state_date)) {
+            return -1;
+          }
+          return 0;
+        });
+        // if(skip > 0) {
+        //   return skip--;
+        // }
+        // if(limit > 0) {
+        //   limit--;
+        // }
+        // scroll = count - 1;
 
         return {docs, scroll, flag, count};
       }
