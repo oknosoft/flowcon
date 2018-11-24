@@ -16,9 +16,8 @@ import qs from 'qs';
 
 import SelectMgr from './SelectMgr';
 import Reaponsable from './Reaponsable';
+import ExecutionMenuItem from './Execution/MenuItem';
 
-import MenuItem from '@material-ui/core/MenuItem';
-import IconChart from '@material-ui/icons/InsertChart';
 
 class FrmIssueList extends React.Component {
 
@@ -100,13 +99,10 @@ class FrmIssueList extends React.Component {
     });
   };
 
-  handleExecution = () => {
-    this.props.handleNavigate('/doc.issue/list/execution');
-  };
 
   render() {
 
-    const {props: {windowHeight, windowWidth, location}, state: {anchorEl}} = this;
+    const {props: {windowHeight, windowWidth, location, handleNavigate}, state: {anchorEl}} = this;
 
     const sizes = {
       windowHeight,
@@ -131,9 +127,7 @@ class FrmIssueList extends React.Component {
         show_search
         btns={<Reaponsable onChange={this.handleReaponsable}/>}
         menu_items={[
-          <MenuItem key="execution" onClick={this.handleExecution}>
-            <IconChart/> &nbsp;Исполнение
-          </MenuItem>
+          <ExecutionMenuItem key="execution" handleNavigate={handleNavigate}/>
         ]}
         registerFilterChange={(filterChange) => this.filterChange = filterChange}
         {...sizes}

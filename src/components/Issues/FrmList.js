@@ -10,8 +10,11 @@ class FrmIssueList extends Lazy {
   }
 }
 
-function Execution(props) {
-  return 'Execution';
+class ExecutionDiagrams extends Lazy {
+  componentDidMount() {
+    import('./Execution/Diagrams')
+      .then((module) => this.setState({Component: module.default}));
+  }
 }
 
 export default function IssuesRoute(props) {
@@ -21,7 +24,7 @@ export default function IssuesRoute(props) {
   };
 
   return <Switch>
-    <Route path={`${props.match.url}/execution`} render={(routeProps) => wraper(Execution, routeProps)}/>
+    <Route path={`${props.match.url}/execution`} render={(routeProps) => wraper(ExecutionDiagrams, routeProps)}/>
     <Route render={(routeProps) => wraper(FrmIssueList, routeProps)}/>
   </Switch>;
 }
