@@ -14,7 +14,7 @@ import Helmet from 'react-helmet';
 import AutoSizer from 'react-virtualized/dist/es/AutoSizer';
 import AppContent from 'metadata-react/App/AppContent';
 import DiagramsArray from 'metadata-react/Diagrams/DiagramsArray';
-import connect from 'metadata-react/Diagrams/connect';
+import withStyles from 'metadata-react/Diagrams/styles';
 import {withIface} from 'metadata-redux';
 
 const ltitle = 'Исполнение задач';
@@ -40,9 +40,7 @@ class ExecutionDiagrams extends React.Component {
   setDiagrams() {
     const diagrams = [
       {
-        "_id": "chart|ЗадачиGitHubЗаПоследнююНеделю",
-        "_rev": "1054-b70b75cab5e2c58c4b2d0ecdd0a3858c",
-        "title": "С такой эффективностью прошли 7 дней",
+        "title": "7 дней",
         "description": "Сколько задач мы решили за неделю",
         "kind": "line",
         "hideLegend": false,
@@ -222,4 +220,4 @@ ExecutionDiagrams.propTypes = {
   user: PropTypes.object,
 };
 
-export default withIface(connect(ExecutionDiagrams));
+export default withIface(withStyles(ExecutionDiagrams));
