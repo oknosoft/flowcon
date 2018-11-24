@@ -17,6 +17,9 @@ import qs from 'qs';
 import SelectMgr from './SelectMgr';
 import Reaponsable from './Reaponsable';
 
+import MenuItem from '@material-ui/core/MenuItem';
+import IconChart from '@material-ui/icons/InsertChart';
+
 class FrmIssueList extends React.Component {
 
   constructor(props, context) {
@@ -97,6 +100,10 @@ class FrmIssueList extends React.Component {
     });
   };
 
+  handleExecution = () => {
+    this.props.handleNavigate('/doc.issue/list/execution');
+  };
+
   render() {
 
     const {props: {windowHeight, windowWidth, location}, state: {anchorEl}} = this;
@@ -123,6 +130,11 @@ class FrmIssueList extends React.Component {
         show_variants
         show_search
         btns={<Reaponsable onChange={this.handleReaponsable}/>}
+        menu_items={[
+          <MenuItem key="execution" onClick={this.handleExecution}>
+            <IconChart/> &nbsp;Исполнение
+          </MenuItem>
+        ]}
         registerFilterChange={(filterChange) => this.filterChange = filterChange}
         {...sizes}
       />,
