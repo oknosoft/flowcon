@@ -14,7 +14,13 @@ export default function calculate() {
   const start = moment().startOf('month').subtract(5, 'month').format();
   const format = 'YYYY-MM-DD';
 
-  const raw = $p.doc.issue._indexer.find({
+  const {cat: {users}, doc: {issue}, utils} = $p;
+  if(!users.predefined.together) {
+    users.create({name: 'Вместе'})
+      .then((together) => users.predefined.together = together);
+  }
+
+  const raw = issue._indexer.find({
     selector: {
       $and: [
         {date: {$gte: minus_6month}},
@@ -28,7 +34,7 @@ export default function calculate() {
       date: moment(v.state_date).format(format),
       week: moment(v.state_date).startOf('week').format(format),
       month: moment(v.state_date).startOf('month').format(format),
-      executor: v.executor,
+      executor: users.get(v.executor),
       mark: v.mark
     }));
 
