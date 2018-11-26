@@ -97,6 +97,16 @@ export default function calculate() {
       mark: v.mark
     }));
 
+  if(!raw.length) {
+    raw.push({
+      date: moment().format(format),
+      week: moment().startOf('week').format(format),
+      month: moment().startOf('month').format(format),
+      executor: users.predefined.together,
+      mark: 0
+    })
+  }
+
   return Promise.resolve()
     .then(() => {
 
