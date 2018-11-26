@@ -66,12 +66,14 @@ class RootProvider extends Component {
 
 render(<RootProvider/>, document.getElementById('root'));
 
-serviceWorker.register({
-  onUpdate() {
-    store.dispatch(ifaceActions.IFACE_STATE({
-      component: '',
-      name: 'snack',
-      value: {open: true, reset: true, message: 'Доступен новый контент, обновите страницу'},
-    }));
-  }
-});
+serviceWorker.unregister();
+
+// serviceWorker.register({
+//   onUpdate() {
+//     store.dispatch(ifaceActions.IFACE_STATE({
+//       component: '',
+//       name: 'snack',
+//       value: {open: true, reset: true, message: 'Доступен новый контент, обновите страницу'},
+//     }));
+//   }
+// });
