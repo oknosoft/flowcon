@@ -6,18 +6,77 @@
  * Created by Evgeniy Malyarov on 25.11.2018.
  */
 
+const {cat: {users}, doc: {issue}, utils} = $p;
+const clrs = ['#aa0000', '#bb33ff', '#cc66cc', '#624fac', '#669933', '#cc9933', '#3300ff', '#660000'];
+class Chart {
+  constructor({title, description, rows, rformat}) {
+    this.title = title;
+    this.description = description;
+    this.kind = 'line';
+    this.hideLegend = false;
+    this.points = [{name: 'date', presentation: 'Дата'}];
+    this.series = [];
+    this.rows = [];
+
+    this.calculate(rows, rformat);
+  }
+
+  calculate(rows, rformat) {
+    rows.push.apply(rows, alasql('select date, ? as executor, sum(mark) as mark from ? group by date',
+      [users.predefined.together, rows]));
+    rows = alasql('select * from ? order by date, executor', [rows]);
+
+    // вычисляемые
+    const _executors = alasql('select distinct executor from ? order by executor', [rows]);
+    const _days = alasql('select distinct date from ?', [rows]);
+
+    // заполним серии
+    _executors.forEach(({executor}) => {
+      this.series.push({
+        name: executor.name,
+        color: clrs[this.series.length]
+      });
+    });
+
+    // заполним строки
+    _days.forEach(({date}) => {
+      const row = {date: moment(date).format(rformat)};
+      _executors.forEach(({executor}) => {
+        if(!rows.some((v) => {
+          if(v.date === date && v.executor === executor) {
+            row[executor.name] = v.mark;
+            return true;
+          }
+        })){
+          row[executor.name] = {value: 0};
+        }
+      });
+      this.rows.push(row);
+    });
+
+    // добавляет пустую точку в конец
+    this.series.push({
+      name: '',
+      color: clrs[this.series.length]
+    });
+    this.rows.push({
+      '': {value: ''},
+      date: ''
+    });
+    return this;
+  }
+
+}
+
 export default function calculate() {
 
   // получаем даты
-  const minus_3month = moment().startOf('month').subtract(2, 'month').format();
   const minus_6month = moment().startOf('month').subtract(6, 'month').format();
   const start = moment().startOf('month').subtract(5, 'month').format();
   const format = 'YYYY-MM-DD';
 
-  const {cat: {users}, doc: {issue}, utils} = $p;
   if(!users.predefined.together) {
-    users.create({name: 'Вместе'})
-      .then((together) => users.predefined.together = together);
+    users.predefined.together = users.create({ref: utils.blank.guid.replace('00000000', 'ffffffff'), name: 'Вместе'}, false, true);
   }
 
   const raw = issue._indexer.find({
@@ -38,145 +97,33 @@ export default function calculate() {
       mark: v.mark
     }));
 
-  const d7days = alasql('select date, executor, sum(mark) as mark from ? where date >= ? group by date, executor',
-    [raw, moment().subtract(7, 'days').format(format)]);
+  return Promise.resolve()
+    .then(() => {
 
-  return [
-    {
-      "title": "7 дней",
-      "description": "Сколько задач мы решили за неделю",
-      "kind": "line",
-      "hideLegend": false,
-      "acl": [
-        "_anonymous"
-      ],
-      "points": [
-        {
-          "name": "ПредставлениеДаты",
-          "presentation": "ПредставлениеДаты"
-        }
-      ],
-      "series": [
-        {
-          "name": "Белокаменцев И.Е.",
-          "presentation": "Белокаменцев И.Е.",
-          "color": "#FF0000",
-          "opacity": 1
-        },
-        {
-          "name": "Маляров Е.С.",
-          "presentation": "Маляров Е.С.",
-          "color": "#624FAC",
-          "opacity": 1
-        },
-        {
-          "name": "",
-          "presentation": "",
-          "color": "#D02A35",
-          "opacity": 1
-        }
-      ],
-      "rows": [
-        {
-          "Маляров Е.С.": {
-            "value": 23,
-            "presentation": "23",
-            "color": "#000000"
-          },
-          "Белокаменцев И.Е.": {
-            "value": 27,
-            "presentation": "27",
-            "color": "#000000"
-          },
-          "ПредставлениеДаты": "16.11.2018"
-        },
-        {
-          "Маляров Е.С.": {
-            "value": 13,
-            "presentation": "13",
-            "color": "#000000"
-          },
-          "Белокаменцев И.Е.": {
-            "value": 0,
-            "presentation": "",
-            "color": "#000000"
-          },
-          "ПредставлениеДаты": "17.11.2018"
-        },
-        {
-          "Маляров Е.С.": {
-            "value": 30,
-            "presentation": "30",
-            "color": "#000000"
-          },
-          "Белокаменцев И.Е.": {
-            "value": 53,
-            "presentation": "53",
-            "color": "#000000"
-          },
-          "ПредставлениеДаты": "19.11.2018"
-        },
-        {
-          "Маляров Е.С.": {
-            "value": 29,
-            "presentation": "29",
-            "color": "#000000"
-          },
-          "Белокаменцев И.Е.": {
-            "value": 52,
-            "presentation": "52",
-            "color": "#000000"
-          },
-          "ПредставлениеДаты": "20.11.2018"
-        },
-        {
-          "Маляров Е.С.": {
-            "value": 42,
-            "presentation": "42",
-            "color": "#000000"
-          },
-          "Белокаменцев И.Е.": {
-            "value": 25,
-            "presentation": "25",
-            "color": "#000000"
-          },
-          "ПредставлениеДаты": "21.11.2018"
-        },
-        {
-          "Маляров Е.С.": {
-            "value": 3,
-            "presentation": "3",
-            "color": "#000000"
-          },
-          "Белокаменцев И.Е.": {
-            "value": 42,
-            "presentation": "42",
-            "color": "#000000"
-          },
-          "ПредставлениеДаты": "22.11.2018"
-        },
-        {
-          "Маляров Е.С.": {
-            "value": 5,
-            "presentation": "5",
-            "color": "#000000"
-          },
-          "Белокаменцев И.Е.": {
-            "value": 5,
-            "presentation": "5",
-            "color": "#000000"
-          },
-          "ПредставлениеДаты": "23.11.2018"
-        },
-        {
-          "": {
-            "value": 0,
-            "presentation": "",
-            "color": "#000000"
-          },
-          "ПредставлениеДаты": ""
-        }
-      ]
-    }
-  ];
+      const chart7days = new Chart({
+        title: '7 дней',
+        description: 'Сколько задач мы решили за неделю',
+        rows: alasql('select date, executor, sum(mark) as mark from ? where date >= ? group by date, executor',
+          [raw, moment().subtract(7, 'days').format(format)]),
+        rformat: 'DD.MM.YY',
+      });
+
+      const chart3month = new Chart({
+        title: '3 месяца',
+        description: 'Задачи за 3 месяца по неделям',
+        rows: alasql('select week as date, executor, sum(mark) as mark from ? where date >= ? group by week, executor',
+          [raw, moment().startOf('month').subtract(2, 'month').format()]),
+        rformat: 'DD.MM.YY',
+      });
+
+      const chart6month= new Chart({
+        title: '6 месяцев',
+        description: 'Задачи за полгода по месяцам',
+        rows: alasql('select month as date, executor, sum(mark) as mark from ? group by month, executor', [raw]),
+        rformat: 'MMM YY',
+      });
+
+      return [chart7days, chart3month, chart6month];
+
+    });
 }

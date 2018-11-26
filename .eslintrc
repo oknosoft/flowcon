@@ -26,6 +26,7 @@
     "$p": true,
     "global": true,
     "moment": true,
+    "alasql": true,
     "process": true,
     "__DEV__"      : false,
     "__PROD__"     : false,

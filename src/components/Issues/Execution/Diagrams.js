@@ -43,8 +43,7 @@ class ExecutionDiagrams extends React.Component {
   }
 
   calculate = () => {
-    Promise.resolve()
-      .then(() => this.setState({diagrams: calculate()}));
+    calculate().then((diagrams) => this.setState({diagrams}));
   };
 
 
