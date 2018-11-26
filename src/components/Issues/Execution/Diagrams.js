@@ -47,7 +47,7 @@ class ExecutionDiagrams extends React.Component {
   };
 
 
-  shouldComponentUpdate({handleIfaceState, title, user}) {
+  shouldComponentUpdate({handleIfaceState, title}) {
     if(title != ltitle) {
       handleIfaceState({
         component: '',

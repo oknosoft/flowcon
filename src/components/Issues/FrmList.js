@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Lazy from 'metadata-react/DumbLoader/Lazy';
 import {Switch, Route} from 'react-router';
@@ -28,3 +29,7 @@ export default function IssuesRoute(props) {
     <Route render={(routeProps) => wraper(FrmIssueList, routeProps)}/>
   </Switch>;
 }
+
+IssuesRoute.propTypes = {
+  match: PropTypes.object.isRequired,
+};
