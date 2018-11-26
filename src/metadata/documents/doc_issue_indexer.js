@@ -144,14 +144,6 @@ export default function indexer() {
 
         const docs = [];
 
-        function add(doc) {
-          count++;
-          if(flag && doc._id.endsWith(ref)) {
-            flag = false;
-          }
-          docs.push(doc);
-        }
-
         function check(doc) {
 
           // фильтруем по дате
@@ -186,7 +178,7 @@ export default function indexer() {
             }
           }
 
-          ok && add(doc);
+          ok && docs.push(doc);
         }
 
         // получаем очередной кусочек кеша
@@ -215,15 +207,23 @@ export default function indexer() {
           }
           return 0;
         });
-        // if(skip > 0) {
-        //   return skip--;
-        // }
-        // if(limit > 0) {
-        //   limit--;
-        // }
-        // scroll = count - 1;
+        count = docs.length;
+        if(flag) {
+          docs.some((doc, index) => {
+            if(doc._id.endsWith(ref)){
+              flag = false;
+              scroll = index;
+            }
 
-        return {docs, scroll, flag, count};
+          });
+        }
+
+        return {
+          docs: limit ? docs.splice(skip, limit) : docs,
+          scroll,
+          flag,
+          count
+        };
       }
 
       // чистит кеш и подписки на события

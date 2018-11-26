@@ -68,6 +68,8 @@ class Chart {
 
 }
 
+let counter = 0;
+
 export default function calculate() {
 
   // получаем даты
@@ -79,61 +81,73 @@ export default function calculate() {
     users.predefined.together = users.create({ref: utils.blank.guid.replace('00000000', 'ffffffff'), name: 'Вместе'}, false, true);
   }
 
-  const raw = issue._indexer.find({
-    selector: {
-      $and: [
-        {date: {$gte: minus_6month}},
-        {date: {$lte: moment().endOf("day").format()}},
-        {completed: true},
-      ]
-    }
-  }).docs
-    .filter(({state_date}) => state_date > start)
-    .map((v) => ({
-      date: moment(v.state_date).format(format),
-      week: moment(v.state_date).startOf('week').format(format),
-      month: moment(v.state_date).startOf('month').format(format),
-      executor: users.get(v.executor),
-      mark: v.mark
-    }));
+  if(issue._indexer._ready) {
+    counter = 0;
+    return Promise.resolve()
+      .then(() => {
 
-  if(!raw.length) {
-    raw.push({
-      date: moment().format(format),
-      week: moment().startOf('week').format(format),
-      month: moment().startOf('month').format(format),
-      executor: users.predefined.together,
-      mark: 0
-    })
+        const raw = issue._indexer.find({
+          selector: {
+            $and: [
+              {date: {$gte: minus_6month}},
+              {date: {$lte: moment().endOf("day").format()}},
+              {completed: true},
+            ]
+          }
+        }).docs
+          .filter(({state_date}) => state_date > start)
+          .map((v) => ({
+            date: moment(v.state_date).format(format),
+            week: moment(v.state_date).startOf('week').format(format),
+            month: moment(v.state_date).startOf('month').format(format),
+            executor: users.get(v.executor),
+            mark: v.mark
+          }));
+
+        if(!raw.length) {
+          raw.push({
+            date: moment().format(format),
+            week: moment().startOf('week').format(format),
+            month: moment().startOf('month').format(format),
+            executor: users.predefined.together,
+            mark: 0
+          });
+        }
+
+        const chart7days = new Chart({
+          title: '7 дней',
+          description: 'Сколько задач мы решили за неделю',
+          rows: alasql('select date, executor, sum(mark) as mark from ? where date >= ? group by date, executor',
+            [raw, moment().subtract(7, 'days').format(format)]),
+          rformat: 'DD.MM.YY',
+        });
+
+        const chart3month = new Chart({
+          title: '3 месяца',
+          description: 'Задачи за 3 месяца по неделям',
+          rows: alasql('select week as date, executor, sum(mark) as mark from ? where date >= ? group by week, executor',
+            [raw, moment().startOf('month').subtract(2, 'month').format()]),
+          rformat: 'DD.MM.YY',
+        });
+
+        const chart6month= new Chart({
+          title: '6 месяцев',
+          description: 'Задачи за полгода по месяцам',
+          rows: alasql('select month as date, executor, sum(mark) as mark from ? group by month, executor', [raw]),
+          rformat: 'MMM YY',
+        });
+
+        return [chart7days, chart3month, chart6month];
+
+      });
   }
-
-  return Promise.resolve()
-    .then(() => {
-
-      const chart7days = new Chart({
-        title: '7 дней',
-        description: 'Сколько задач мы решили за неделю',
-        rows: alasql('select date, executor, sum(mark) as mark from ? where date >= ? group by date, executor',
-          [raw, moment().subtract(7, 'days').format(format)]),
-        rformat: 'DD.MM.YY',
-      });
-
-      const chart3month = new Chart({
-        title: '3 месяца',
-        description: 'Задачи за 3 месяца по неделям',
-        rows: alasql('select week as date, executor, sum(mark) as mark from ? where date >= ? group by week, executor',
-          [raw, moment().startOf('month').subtract(2, 'month').format()]),
-        rformat: 'DD.MM.YY',
-      });
-
-      const chart6month= new Chart({
-        title: '6 месяцев',
-        description: 'Задачи за полгода по месяцам',
-        rows: alasql('select month as date, executor, sum(mark) as mark from ? group by month, executor', [raw]),
-        rformat: 'MMM YY',
-      });
-
-      return [chart7days, chart3month, chart6month];
-
+  else {
+    return new Promise((resolve, reject) => {
+      if(counter > 10) {
+        reject(new Error('RamIndexer init timeout'));
+      }
+      counter++;
+      setTimeout(() => resolve(calculate()), 2000);
     });
+  }
 }
