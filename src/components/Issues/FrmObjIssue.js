@@ -43,29 +43,26 @@ class FrmObjIssue extends MDNRComponent {
       _meta: _meta || _mgr.metadata(),
       _obj: null,
     };
-
-    // признак установленности *
-    this._star = false;
   }
 
   componentDidMount() {
+    const t = this;
     const {_mgr, match} = this.props;
+    this._mounted = true;
     _mgr.get(match.params.ref, 'promise').then((_obj) => {
       this.setState({_obj}, () => this.shouldComponentUpdate(this.props));
     });
+    this.onDataChange = function(obj, fields) {
+      if(obj === t.state._obj && t._mounted && t.shouldComponentUpdate(t.props)) {
+        t.forceUpdate();
+      }
+    }
     _mgr.on('update', this.onDataChange);
   }
 
   componentWillUnmount() {
+    this._mounted = false;
     this.props._mgr.off('update', this.onDataChange);
-  }
-
-  /* eslint-disable-next-line*/
-  onDataChange = (obj, fields) => {
-    if(obj === this.state._obj && !this._star) {
-      this.shouldComponentUpdate(this.props);
-      this._star = true;
-    }
   }
 
   handleSave() {
@@ -74,7 +71,7 @@ class FrmObjIssue extends MDNRComponent {
     return _obj ? _obj.save()
       .then(() => {
         this.shouldComponentUpdate(this.props);
-        return this._star = false;
+        return false;
       })
       .catch((err) => {
         // показываем диалог

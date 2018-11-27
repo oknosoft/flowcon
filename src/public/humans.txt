@@ -2,7 +2,8 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    <Евгений Маляров> -- <программист> -- <https://github.com/unpete>
+    <Иван Белокаменцев> -- <методист> -- <https://github.com/nmivan>
 
 # THANKS
 
