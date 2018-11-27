@@ -53,10 +53,10 @@ class FrmObjIssue extends MDNRComponent {
       this.setState({_obj}, () => this.shouldComponentUpdate(this.props));
     });
     this.onDataChange = function(obj, fields) {
-      if(obj === t.state._obj && t._mounted && t.shouldComponentUpdate(t.props)) {
-        t.forceUpdate();
+      if(obj === t.state._obj && t._mounted && !fields.hasOwnProperty('definition') && t.shouldComponentUpdate(t.props)) {
+         t.forceUpdate();
       }
-    }
+    };
     _mgr.on('update', this.onDataChange);
   }
 

@@ -15,8 +15,8 @@ import {withObj} from 'metadata-redux';
 import qs from 'qs';
 
 import SelectMgr from './SelectMgr';
-import Reaponsable from './Reaponsable';
-import ExecutionMenuItem from './Execution/MenuItem';
+import Responsable from './Responsable';
+import ExecutionMenuItem from '../Execution/MenuItem';
 
 
 class FrmIssueList extends React.Component {
@@ -125,7 +125,7 @@ class FrmIssueList extends React.Component {
         //denyAddDel
         show_variants
         show_search
-        btns={<Reaponsable onChange={this.handleReaponsable}/>}
+        btns={<Responsable onChange={this.handleReaponsable}/>}
         menu_items={[
           <ExecutionMenuItem key="execution" handleNavigate={handleNavigate}/>
         ]}

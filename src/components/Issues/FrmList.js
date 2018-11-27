@@ -6,7 +6,7 @@ import {Switch, Route} from 'react-router';
 
 class FrmIssueList extends Lazy {
   componentDidMount() {
-    import('./FrmIssueList')
+    import('./List/FrmIssueList')
       .then((module) => this.setState({Component: module.default}));
   }
 }

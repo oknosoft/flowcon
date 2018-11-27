@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 
 import DataField from 'metadata-react/DataField';
 
-class Reaponsable extends React.Component {
+class Responsable extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -41,8 +41,8 @@ class Reaponsable extends React.Component {
   }
 }
 
-Reaponsable.propTypes = {
+Responsable.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default Reaponsable;
+export default Responsable;
