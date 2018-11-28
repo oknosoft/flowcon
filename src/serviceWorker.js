@@ -127,9 +127,24 @@ function checkValidServiceWorker(swUrl, config) {
 }
 
 export function unregister() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.unregister();
-    });
-  }
+  return new Promise((resolve) => {
+
+    if (!navigator.serviceWorker || localStorage.getItem('fl_sw_unregister')) {
+      return resolve();
+    }
+
+    const final = () => {
+      localStorage.setItem('fl_sw_unregister', 1);
+      clearTimeout(timer);
+      resolve();
+    }
+
+    const timer = setTimeout(final, 30000);
+
+    navigator.serviceWorker.ready
+      .then(registration => {
+        registration.unregister();
+      })
+      .then(final);
+  });
 }
