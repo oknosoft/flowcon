@@ -20,9 +20,10 @@ import cn from 'classnames';
 class ActivityRow extends React.Component {
 
   render() {
-    const {row, classes, register} = this.props;
+    const {row, classes, register, totals} = this.props;
     return <FormGroup row classes={{root: classes.nowrap}}>
       <Typography color="primary" className={cn(classes.flex, classes.ptop)}>{row.name}</Typography>
+      <Typography color="primary" className={cn(classes.mr16, classes.ptop)}>{(totals.get(row) || 0).toFixed(1)}</Typography>
       <IconButton
         className={classes.icon}
         onClick={() => register(row, true)}

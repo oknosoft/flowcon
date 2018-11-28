@@ -13,6 +13,8 @@ import Helmet from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import IconSettings from '@material-ui/icons/Settings';
+import IconHelp from '@material-ui/icons/HelpOutline';
+import IconDate from '@material-ui/icons/DateRange';
 import AppContent from 'metadata-react/App/AppContent';
 import DumbScreen from '../DumbScreen';
 
@@ -23,6 +25,8 @@ const ltitle = 'Активность';
 const description = 'Регистрация активностей';
 
 class Activity extends React.Component {
+
+  state = {periodicity: 'week'};
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
@@ -47,8 +51,12 @@ class Activity extends React.Component {
     this.props.handleNavigate(page);
   }
 
+  handlePeriodicity = (event) => {
+    this.setState({periodicity: 'week'});
+  };
+
   render() {
-    const {props: {match, classes, doc_ram_loaded}} = this;
+    const {props: {match, classes, doc_ram_loaded}, state: {periodicity}} = this;
 
     if(!doc_ram_loaded) {
       return <DumbScreen
@@ -70,13 +78,25 @@ class Activity extends React.Component {
             {ltitle}
           </Typography>
           <IconButton
+            title="Интервал итогов"
+            periodicity={periodicity}
+            handlePeriodicity={this.handlePeriodicity}
+          >
+            <IconDate />
+          </IconButton>
+          <IconButton
             onClick={(e) => this.navigate(e, `/cat.activity/list`)}
             title="Настройка состава активностей"
           >
             <IconSettings />
           </IconButton>
+          <IconButton
+            title="Справка"
+          >
+            <IconHelp />
+          </IconButton>
         </div>
-        <Categories classes={classes}/>
+        <Categories classes={classes} periodicity={periodicity}/>
       </div>
     </AppContent>;
   }

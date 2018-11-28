@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ActivityRow from './ActivityRow';
 import calculate from './calculate';
 import register from './register';
+import cn from 'classnames';
 
 class Categories extends React.Component {
 
@@ -40,12 +41,8 @@ class Categories extends React.Component {
     return this.categories.map((row, cind) => {
       return <ExpansionPanel key={`c-${cind}`}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h6" component="h3" color="primary" className={classes.width20}>
-            {row.name}
-          </Typography>
-          <Typography color="primary">
-            {`(${this.totals.get(row) || 0})`}
-          </Typography>
+          <Typography variant="h6" component="h3" color="primary" className={classes.flex}>{row.name}</Typography>
+          <Typography color="primary" className={cn(classes.mr48, classes.ptop)}>{(this.totals.get(row) || 0).toFixed(1)}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails classes={{root: classes.details}}>
           {this.select([row.ref]).map(({ref}, aind) => <ActivityRow

@@ -17,11 +17,14 @@ const styles = theme => ({
   bottom: {
     width: '100%',
   },
-  width20: {
-    minWidth: '70%',
-  },
   icon: {
     padding: theme.spacing.unit / 2,
+  },
+  mr16: {
+    marginRight: theme.spacing.unit * 2,
+  },
+  mr48: {
+    marginRight: theme.spacing.unit * 6,
   },
   subrow: {
     marginTop: theme.spacing.unit,
