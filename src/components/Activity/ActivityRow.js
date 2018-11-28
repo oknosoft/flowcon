@@ -1,0 +1,41 @@
+/**
+ * ### Строка активности
+ * С кнопками добавить, итогом и раскраской
+ *
+ * @module ActivityRow
+ *
+ * Created by Evgeniy Malyarov on 28.11.2018.
+ */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import Typography from '@material-ui/core/Typography';
+import FormGroup from '@material-ui/core/FormGroup';
+import IconButton from '@material-ui/core/IconButton';
+import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
+import AddIcon from '@material-ui/icons/AddCircleOutline';
+
+class ActivityRow extends React.Component {
+
+  render() {
+    const {row, classes, register} = this.props;
+    return <FormGroup row classes={{root: classes.nowrap}}>
+      <Typography color="primary" className={classes.flex}>{row.name}</Typography>
+      <IconButton
+        className={classes.icon}
+        onClick={() => register(row, true)}
+      ><RemoveIcon /></IconButton>
+      <IconButton
+        className={classes.icon}
+        onClick={() => register(row)}
+      ><AddIcon /></IconButton>
+    </FormGroup>;
+  }
+}
+
+ActivityRow.propTypes = {
+  row: PropTypes.object.isRequired,
+};
+
+export default ActivityRow;

@@ -14,6 +14,14 @@ const styles = theme => ({
   bottom: {
     width: '100%',
   },
+  width20: {
+    minWidth: '70%',
+  },
+  icon: {
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingLeft: theme.spacing.unit,
+  },
   subrow: {
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit / 2,

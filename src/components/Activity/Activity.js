@@ -6,29 +6,23 @@
  * Created by Evgeniy Malyarov on 18.09.2018.
  */
 
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+
 import Helmet from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 import IconSettings from '@material-ui/icons/Settings';
-
 import AppContent from 'metadata-react/App/AppContent';
+import DumbScreen from '../DumbScreen';
+
+import Categories from './Categories';
 import withStyles from '../Articles/styles';
 
 const ltitle = 'Активность';
 const description = 'Регистрация активностей';
 
-class Activity extends Component {
-
-  constructor(props, context) {
-    super(props, context);
-    this._select = $p.wsql.alasql.compile('select ref from cat_activity where `use` == true order by sorting_field');
-  }
+class Activity extends React.Component {
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
@@ -53,25 +47,15 @@ class Activity extends Component {
     this.props.handleNavigate(page);
   }
 
-  renderRows() {
-    const {activity} = $p.cat;
-    return this._select().map(({ref}, index) => {
-      const row = activity.get(ref);
-      return <ExpansionPanel key={`c-${index}`}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h6" component="h2" color="primary">
-            {row.name}
-          </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails classes={{root: this.props.classes.details}}>
-          {'detales'}
-        </ExpansionPanelDetails>
-      </ExpansionPanel>;
-    });
-  }
-
   render() {
-    const {props: {match, classes}} = this;
+    const {props: {match, classes, doc_ram_loaded}} = this;
+
+    if(!doc_ram_loaded) {
+      return <DumbScreen
+        title="Загрузка из IndexedDB..."
+        page={{text: 'Получение данных...'}}
+      />;
+    }
 
     return <AppContent >
       <Helmet title={ltitle}>
@@ -92,7 +76,7 @@ class Activity extends Component {
             <IconSettings />
           </IconButton>
         </div>
-        {this.renderRows()}
+        <Categories classes={classes}/>
       </div>
     </AppContent>;
   }

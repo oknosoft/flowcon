@@ -9,6 +9,7 @@
 exports.CatActivityManager = class CatActivityManager extends Object {
   constructor(owner, class_name) {
     super(owner, class_name);
+    // структура индивидуальной формы объекта
     const _meta = this.metadata();
     if(!_meta.form) {
       _meta.form = {};
