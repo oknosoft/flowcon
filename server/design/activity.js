@@ -1,46 +1,11 @@
-/**
- * демо виды активности
- */
-
 module.exports = {
-  "_no_design": true,
-  "cat.activity|d0b0abf8-bb55-11e8-855f-d85d4c80ec2a": {
-    "name": "Гантели",
-    "flow": "ab79d46b-bb52-11e8-855f-d85d4c80ec2a",
-    "heft": 0.1,
-    "use": false,
-    "class_name": "cat.activity",
-    "timestamp": {
-      "user": "Администратор",
-      "moment": "2018-09-18T08:16:29 +0500",
-      "e1cib": true
-    },
-    "search": "гантели"
-  },
-  "cat.activity|d0b0abf9-bb55-11e8-855f-d85d4c80ec2a": {
-    "name": "Гулять с детьми",
-    "flow": "ab79d46c-bb52-11e8-855f-d85d4c80ec2a",
-    "heft": 0.3,
-    "use": false,
-    "class_name": "cat.activity",
-    "timestamp": {
-      "user": "Администратор",
-      "moment": "2018-09-18T08:16:52 +0500",
-      "e1cib": true
-    },
-    "search": "гулять с детьми"
-  },
-  "cat.activity|d0b0abfa-bb55-11e8-855f-d85d4c80ec2a": {
-    "name": "Ни дня без строчки",
-    "flow": "ab79d46a-bb52-11e8-855f-d85d4c80ec2a",
-    "heft": 0.2,
-    "use": true,
-    "class_name": "cat.activity",
-    "timestamp": {
-      "user": "Администратор",
-      "moment": "2018-09-18T08:17:36 +0500",
-      "e1cib": true
-    },
-    "search": "ни для без строчки"
+  activity: {
+    language: "javascript",
+    views: {
+      activity: {
+        "map": "function (doc) {\n  if((doc._id.substr(0, 12) === 'doc.activity' || doc._id.substr(0, 9) === 'doc.issue') && (doc.activity || doc.flow)){\n    var d = new Date(doc.date);\n    var v = {};\n    v[doc.activity || doc.ref] = doc.value || 0;\n    emit([d.getFullYear(), d.getMonth() + 1, d.getDate()] , v); \n  }\n}",
+        "reduce": "function (key, values, rereduce) {\nreturn values.reduce(function(sum, row){\n  for(var activity in row) {\n    if(sum[activity]){\n      sum[activity] += row[activity];\n    }\n    else {\n      sum[activity] = row[activity];\n    }\n  }\n  return sum;\n},{});\n}"
+      }
+    }
   }
 };

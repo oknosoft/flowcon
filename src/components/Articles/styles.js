@@ -11,6 +11,9 @@ const styles = theme => ({
   top: {
     marginTop: theme.spacing.unit * 2,
   },
+  ptop: {
+    paddingTop: theme.spacing.unit / 2,
+  },
   bottom: {
     width: '100%',
   },
@@ -18,9 +21,7 @@ const styles = theme => ({
     minWidth: '70%',
   },
   icon: {
-    paddingTop: 0,
-    paddingRight: 0,
-    paddingLeft: theme.spacing.unit,
+    padding: theme.spacing.unit / 2,
   },
   subrow: {
     marginTop: theme.spacing.unit,

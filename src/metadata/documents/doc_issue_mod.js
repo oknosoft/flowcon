@@ -9,7 +9,10 @@
 import FrmObjIssue from '../../components/Issues/FrmObj';
 import FrmIssueList from '../../components/Issues/FrmList';
 
-export default function ({doc, DocIssue}) {
+// индексеры статей и задач
+import issue_indexer from './doc_issue_indexer';
+
+export default function ({doc, DocIssue, utils, adapters: {pouch}}) {
 
   // подключаем особые формы объекта и списка
   doc.issue.constructor.prototype.FrmObj = FrmObjIssue;
@@ -56,7 +59,7 @@ export default function ({doc, DocIssue}) {
     value_change: {
       value(field, type, value) {
         if(/mark|executor|quickly|important|canceled|completed|specify|executor_accepted|initiator_accepted/.test(field) && this[field] !== value) {
-          const stub = {date: $p.utils.blank.date, event: field};
+          const stub = {date: utils.blank.date, event: field};
           const row = this.history.find(stub) || this.history.add(stub);
           row.value = value;
         }
@@ -66,7 +69,7 @@ export default function ({doc, DocIssue}) {
     // перед записью, проставляем даты пустых событий
     before_save: {
       value() {
-        this.history.find_rows({date: $p.utils.blank.date}, (row) => {
+        this.history.find_rows({date: utils.blank.date}, (row) => {
           row.date = new Date();
           if(/quickly|important|canceled|completed|specify|executor_accepted|initiator_accepted/.test(row.event.valueOf())) {
             this.state_date = row.date;
@@ -75,6 +78,15 @@ export default function ({doc, DocIssue}) {
       }
     }
 
+  });
+
+  pouch.on('on_log_in', () => {
+    return issue_indexer();
+  });
+
+  pouch.on('user_log_out', () => {
+    const {_indexer} = doc.issue;
+    _indexer && _indexer.reset();
   });
 
 }

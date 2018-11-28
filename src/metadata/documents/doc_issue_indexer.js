@@ -70,7 +70,7 @@ function truth(fld, cond) {
 
 export default function indexer() {
 
-  const {adapters: {pouch}, doc: {issue}, classes} = $p;
+  const {adapters: {pouch}, doc: {issue}, classes, utils} = $p;
   const {remote} = pouch;
   const mngrs = [issue];
 
@@ -131,7 +131,6 @@ export default function indexer() {
         }
 
         const {_search_fields} = this;
-        const {utils} = $p;
 
         let part,
           // выборка диапазона кеша

@@ -15,13 +15,14 @@ import FormGroup from '@material-ui/core/FormGroup';
 import IconButton from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import AddIcon from '@material-ui/icons/AddCircleOutline';
+import cn from 'classnames';
 
 class ActivityRow extends React.Component {
 
   render() {
     const {row, classes, register} = this.props;
     return <FormGroup row classes={{root: classes.nowrap}}>
-      <Typography color="primary" className={classes.flex}>{row.name}</Typography>
+      <Typography color="primary" className={cn(classes.flex, classes.ptop)}>{row.name}</Typography>
       <IconButton
         className={classes.icon}
         onClick={() => register(row, true)}
