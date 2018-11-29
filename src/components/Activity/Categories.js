@@ -38,6 +38,14 @@ class Categories extends React.Component {
     this.calculate();
   }
 
+  shouldComponentUpdate(nextProps) {
+    if(this.props.periodicity !== nextProps.periodicity) {
+      this.calculate(nextProps.periodicity);
+      return false;
+    }
+    return true;
+  }
+
   render() {
     const {props: {classes}, state: {busy}} = this;
     const {activity} = $p.cat;

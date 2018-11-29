@@ -51,8 +51,8 @@ class Activity extends React.Component {
     this.props.handleNavigate(page);
   }
 
-  handlePeriodicity = (event) => {
-    this.setState({periodicity: 'week'});
+  handlePeriodicity = (periodicity) => {
+    this.setState({periodicity});
   };
 
   render() {
@@ -93,7 +93,10 @@ class Activity extends React.Component {
             <IconHelp />
           </IconButton>
         </div>
-        <Categories classes={classes} periodicity={periodicity}/>
+        <Categories
+          classes={classes}
+          periodicity={periodicity}
+        />
       </div>
     </AppContent>;
   }

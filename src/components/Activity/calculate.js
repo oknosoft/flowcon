@@ -6,7 +6,7 @@
  * Created by Evgeniy Malyarov on 28.11.2018.
  */
 
-export default function calculate() {
+export default function calculate(periodicity) {
 
   const {totals, categories, select, props} = this;
 
@@ -14,7 +14,7 @@ export default function calculate() {
 
   let d = new Date();
   const opt = {};
-  switch (props.periodicity) {
+  switch (periodicity || props.periodicity) {
   case 'today':
     opt.key = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
     break;
