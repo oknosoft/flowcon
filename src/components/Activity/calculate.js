@@ -10,6 +10,8 @@ export default function calculate() {
 
   const {totals, categories, select, props} = this;
 
+  this.setState({busy: true});
+
   let d = new Date();
   const opt = {};
   switch (props.periodicity) {
@@ -49,7 +51,7 @@ export default function calculate() {
                 .then((doc) => {
                   sum.push(doc);
                   return sum;
-                })
+                });
             });
           }
           totals.set(activity, value[ref]);
@@ -64,6 +66,7 @@ export default function calculate() {
       }
     })
     .then(() => {
-      this.forceUpdate();
-    });
+      this.setState({busy: false});
+    })
+    .catch((err) => this.setState({busy: false}));
 }

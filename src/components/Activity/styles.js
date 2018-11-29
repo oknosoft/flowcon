@@ -11,13 +11,24 @@ const styles = theme => ({
   top: {
     marginTop: theme.spacing.unit * 2,
   },
+  ptop: {
+    paddingTop: theme.spacing.unit / 2,
+  },
   bottom: {
     width: '100%',
   },
-  subrow: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit / 2,
-    fontWeight: 400,
+  icon: {
+    padding: theme.spacing.unit / 2,
+  },
+  mr16: {
+    marginRight: theme.spacing.unit * 2,
+  },
+  mr48: {
+    marginRight: theme.spacing.unit * 6,
+  },
+  busy: {
+    pointerEvents: 'none',
+    opacity: 0.5,
   },
   link: {
     display: 'list-item',
@@ -26,6 +37,12 @@ const styles = theme => ({
   },
   details: {
     flexDirection: 'column',
+  },
+  placeholder: {
+    position: 'absolute',
+    height: 60,
+    top: '30vh',
+    left: '50vw'
   }
 });
 

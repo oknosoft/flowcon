@@ -8,6 +8,8 @@
 
 export default function register(activity, minus = false) {
 
+  this.setState({busy: true});
+
   const d = new Date();
   const _mgr = $p.doc.activity;
   return _mgr.adapter.local.doc.query('activity', {

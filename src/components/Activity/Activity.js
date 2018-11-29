@@ -14,12 +14,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import IconSettings from '@material-ui/icons/Settings';
 import IconHelp from '@material-ui/icons/HelpOutline';
-import IconDate from '@material-ui/icons/DateRange';
+
 import AppContent from 'metadata-react/App/AppContent';
 import DumbScreen from '../DumbScreen';
-
 import Categories from './Categories';
-import withStyles from '../Articles/styles';
+import Periodicity from './Periodicity';
+import withStyles from './styles';
 
 const ltitle = 'Активность';
 const description = 'Регистрация активностей';
@@ -77,13 +77,10 @@ class Activity extends React.Component {
           <Typography variant="h4" component="h1" color="primary" className={classes.bottom}>
             {ltitle}
           </Typography>
-          <IconButton
-            title="Интервал итогов"
+          <Periodicity
             periodicity={periodicity}
             handlePeriodicity={this.handlePeriodicity}
-          >
-            <IconDate />
-          </IconButton>
+          />
           <IconButton
             onClick={(e) => this.navigate(e, `/cat.activity/list`)}
             title="Настройка состава активностей"
@@ -109,6 +106,7 @@ Activity.propTypes = {
   title: PropTypes.string.isRequired,
   handleNavigate: PropTypes.func.isRequired,
   handleIfaceState: PropTypes.func.isRequired,
+  doc_ram_loaded: PropTypes.bool,
 };
 
 export default withStyles(Activity);
