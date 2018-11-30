@@ -27,7 +27,6 @@ class Categories extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {busy: false};
-    this.totals = new Map();
     this.categories = 'health,work,family,humanity,personal'.split(',').map((v) => $p.cat.tags_category.predefined(v));
     this.select = $p.wsql.alasql.compile('select ref from cat_activity where `use` == true and `flow` = ? order by sorting_field');
     this.calculate = calculate.bind(this);
@@ -47,7 +46,7 @@ class Categories extends React.Component {
   }
 
   render() {
-    const {props: {classes}, state: {busy}} = this;
+    const {props: {classes, totals}, state: {busy}} = this;
     const {activity} = $p.cat;
 
     return [<div key="progress" className={classes.placeholder}>
@@ -65,14 +64,14 @@ class Categories extends React.Component {
         return <ExpansionPanel key={`c-${cind}`} className={busy ? classes.busy : ''}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h6" component="h3" color="primary" className={classes.flex}>{row.name}</Typography>
-            <Typography color="primary" className={cn(classes.mr48, classes.ptop)}>{(this.totals.get(row) || 0).toFixed(1)}</Typography>
+            <Typography color="primary" className={cn(classes.mr48, classes.ptop)}>{(totals.get(row) || 0).toFixed(1)}</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails classes={{root: classes.details}}>
             {this.select([row.ref]).map(({ref}, aind) => <ActivityRow
               key={`a-${cind}-${aind}`}
               classes={classes}
               row={activity.get(ref)}
-              totals={this.totals}
+              totals={totals}
               register={(activity, minus) => {
                 this.register(activity, minus)
                   .then(this.calculate);
@@ -87,6 +86,9 @@ class Categories extends React.Component {
 
 Categories.propTypes = {
   classes: PropTypes.object.isRequired,
+  periodicity: PropTypes.string.isRequired,
+  totals: PropTypes.object.isRequired,
+  handleTotals: PropTypes.func.isRequired,
 };
 
 export default Categories;

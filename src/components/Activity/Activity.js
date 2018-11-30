@@ -19,6 +19,7 @@ import AppContent from 'metadata-react/App/AppContent';
 import DumbScreen from '../DumbScreen';
 import Categories from './Categories';
 import Periodicity from './Periodicity';
+import Radar from './Radar';
 import withStyles from './styles';
 
 const ltitle = 'Активность';
@@ -26,7 +27,10 @@ const description = 'Регистрация активностей';
 
 class Activity extends React.Component {
 
-  state = {periodicity: 'week'};
+  state = {
+    periodicity: 'week',
+    totals: new Map(),
+  };
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
@@ -55,8 +59,12 @@ class Activity extends React.Component {
     this.setState({periodicity});
   };
 
+  handleTotals = (totals) => {
+    this.setState({totals});
+  };
+
   render() {
-    const {props: {match, classes, doc_ram_loaded}, state: {periodicity}} = this;
+    const {props: {match, classes, doc_ram_loaded}, state: {periodicity, totals}} = this;
 
     if(!doc_ram_loaded) {
       return <DumbScreen
@@ -88,6 +96,7 @@ class Activity extends React.Component {
             <IconSettings />
           </IconButton>
           <IconButton
+            onClick={(e) => this.navigate(e, `/articles/activity`)}
             title="Справка"
           >
             <IconHelp />
@@ -96,8 +105,11 @@ class Activity extends React.Component {
         <Categories
           classes={classes}
           periodicity={periodicity}
+          totals={totals}
+          handleTotals={this.handleTotals}
         />
       </div>
+      <Radar totals={totals}/>
     </AppContent>;
   }
 }

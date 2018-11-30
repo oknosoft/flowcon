@@ -8,7 +8,7 @@
 
 export default function calculate(periodicity) {
 
-  const {totals, categories, select, props} = this;
+  const {categories, select, props} = this;
 
   this.setState({busy: true});
 
@@ -39,7 +39,7 @@ export default function calculate(periodicity) {
   const {doc, cat} = $p;
   return doc.activity.adapter.local.doc.query('activity', opt)
     .then(({rows}) => {
-      totals.clear();
+      const totals = new Map();
       if(rows.length) {
         const {value} = rows[0];
         let queue = Promise.resolve([]);
@@ -64,9 +64,11 @@ export default function calculate(periodicity) {
           }
         }
       }
+      return totals;
     })
-    .then(() => {
+    .then((totals) => {
       this.setState({busy: false});
+      props.handleTotals(totals);
     })
     .catch((err) => this.setState({busy: false}));
 }

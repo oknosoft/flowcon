@@ -35,7 +35,12 @@ export default function register(activity, minus = false) {
       }
       const delta = activity.by_default || 1;
       if(minus) {
-        doc.value -= delta;
+        if(doc.value) {
+          doc.value -= delta;
+        }
+        else {
+          return;
+        }
       }
       else {
         doc.value += delta;
