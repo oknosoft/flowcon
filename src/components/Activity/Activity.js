@@ -19,7 +19,7 @@ import AppContent from 'metadata-react/App/AppContent';
 import DumbScreen from '../DumbScreen';
 import Categories from './Categories';
 import Periodicity from './Periodicity';
-import Radar from './Radar';
+import Diagrams from './Diagrams';
 import withStyles from './styles';
 
 const ltitle = 'Активность';
@@ -31,6 +31,8 @@ class Activity extends React.Component {
     periodicity: 'week',
     totals: new Map(),
   };
+
+  categories = 'health,work,family,humanity,personal'.split(',').map((v) => $p.cat.tags_category.predefined(v));
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
@@ -104,12 +106,13 @@ class Activity extends React.Component {
         </div>
         <Categories
           classes={classes}
+          categories={this.categories}
           periodicity={periodicity}
           totals={totals}
           handleTotals={this.handleTotals}
         />
       </div>
-      <Radar totals={totals}/>
+      <Diagrams categories={this.categories} totals={totals} periodicity={periodicity}/>
     </AppContent>;
   }
 }

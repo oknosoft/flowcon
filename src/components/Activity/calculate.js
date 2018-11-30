@@ -8,7 +8,7 @@
 
 export default function calculate(periodicity) {
 
-  const {categories, select, props} = this;
+  const {props} = this;
 
   this.setState({busy: true});
 
@@ -55,7 +55,7 @@ export default function calculate(periodicity) {
             });
           }
           totals.set(activity, value[ref]);
-          for(const category of categories) {
+          for(const category of props.categories) {
             if(!totals.get(category)) {
               totals.set(category, 0);
             }
@@ -70,5 +70,5 @@ export default function calculate(periodicity) {
       this.setState({busy: false});
       props.handleTotals(totals);
     })
-    .catch((err) => this.setState({busy: false}));
+    .catch(() => this.setState({busy: false}));
 }

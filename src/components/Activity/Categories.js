@@ -27,7 +27,6 @@ class Categories extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {busy: false};
-    this.categories = 'health,work,family,humanity,personal'.split(',').map((v) => $p.cat.tags_category.predefined(v));
     this.select = $p.wsql.alasql.compile('select ref from cat_activity where `use` == true and `flow` = ? order by sorting_field');
     this.calculate = calculate.bind(this);
     this.register = register.bind(this);
@@ -46,7 +45,7 @@ class Categories extends React.Component {
   }
 
   render() {
-    const {props: {classes, totals}, state: {busy}} = this;
+    const {props: {classes, totals, categories}, state: {busy}} = this;
     const {activity} = $p.cat;
 
     return [<div key="progress" className={classes.placeholder}>
@@ -57,10 +56,10 @@ class Categories extends React.Component {
         }}
         unmountOnExit
       >
-        <CircularProgress />
+        <CircularProgress size={80}/>
       </Fade>
     </div>].concat(
-      this.categories.map((row, cind) => {
+      categories.map((row, cind) => {
         return <ExpansionPanel key={`c-${cind}`} className={busy ? classes.busy : ''}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h6" component="h3" color="primary" className={classes.flex}>{row.name}</Typography>
@@ -88,6 +87,7 @@ Categories.propTypes = {
   classes: PropTypes.object.isRequired,
   periodicity: PropTypes.string.isRequired,
   totals: PropTypes.object.isRequired,
+  categories: PropTypes.object.isRequired,
   handleTotals: PropTypes.func.isRequired,
 };
 

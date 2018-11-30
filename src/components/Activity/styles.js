@@ -40,9 +40,10 @@ const styles = theme => ({
   },
   placeholder: {
     position: 'absolute',
-    height: 60,
+    height: 80,
+    width: 80,
     top: '30vh',
-    left: '50vw'
+    left: '50%'
   }
 });
 

@@ -137,7 +137,7 @@ export function unregister() {
       localStorage.setItem('fl_sw_unregister', 1);
       clearTimeout(timer);
       resolve();
-    }
+    };
 
     const timer = setTimeout(final, 30000);
 

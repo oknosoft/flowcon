@@ -7,7 +7,7 @@
  */
 
 const {cat: {users}, doc: {issue}, utils} = $p;
-const clrs = ['#aa0000', '#bb33ff', '#cc66cc', '#624fac', '#669933', '#cc9933', '#3300ff', '#660000'];
+export const clrs = ['#aa0000', '#cc66cc', '#624fac', '#666666', '#cc9933', '#3300ff', '#663300', '#bb33ff'];
 class Chart {
   constructor({title, description, rows, rformat}) {
     this.title = title;

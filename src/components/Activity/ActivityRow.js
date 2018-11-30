@@ -17,27 +17,26 @@ import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import AddIcon from '@material-ui/icons/AddCircleOutline';
 import cn from 'classnames';
 
-class ActivityRow extends React.Component {
-
-  render() {
-    const {row, classes, register, totals} = this.props;
-    return <FormGroup row classes={{root: classes.nowrap}}>
-      <Typography color="primary" className={cn(classes.flex, classes.ptop)}>{row.name}</Typography>
-      <Typography color="primary" className={cn(classes.mr16, classes.ptop)}>{(totals.get(row) || 0).toFixed(1)}</Typography>
-      <IconButton
-        className={classes.icon}
-        onClick={() => register(row, true)}
-      ><RemoveIcon /></IconButton>
-      <IconButton
-        className={classes.icon}
-        onClick={() => register(row)}
-      ><AddIcon /></IconButton>
-    </FormGroup>;
-  }
+function ActivityRow ({row, classes, register, totals}) {
+  return <FormGroup row classes={{root: classes.nowrap}}>
+    <Typography color="primary" className={cn(classes.flex, classes.ptop)}>{row.name}</Typography>
+    <Typography color="primary" className={cn(classes.mr16, classes.ptop)}>{(totals.get(row) || 0).toFixed(1)}</Typography>
+    <IconButton
+      className={classes.icon}
+      onClick={() => register(row, true)}
+    ><RemoveIcon /></IconButton>
+    <IconButton
+      className={classes.icon}
+      onClick={() => register(row)}
+    ><AddIcon /></IconButton>
+  </FormGroup>;
 }
 
 ActivityRow.propTypes = {
   row: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  totals: PropTypes.object.isRequired,
+  register: PropTypes.func.isRequired,
 };
 
 export default ActivityRow;

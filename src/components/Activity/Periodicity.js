@@ -11,13 +11,10 @@ import PropTypes from 'prop-types';
 
 import IconButton from '@material-ui/core/IconButton';
 import IconDate from '@material-ui/icons/DateRange';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-const options = {
+export const options = {
   today: 'Сегодня',
   yesterday: 'Вчера',
   week: 'Неделя',
@@ -63,7 +60,7 @@ class Periodicity extends React.Component {
           <MenuItem
             key={option}
             selected={option === periodicity}
-            onClick={event => this.handleClick(option)}
+            onClick={() => this.handleClick(option)}
           >
             {options[option]}
           </MenuItem>

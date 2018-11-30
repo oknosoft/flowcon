@@ -28,7 +28,6 @@ class ExecutionDiagrams extends React.Component {
     this.state = {
       diagrams: [],
       grid: '3',
-      reseted: false,
     };
   }
 
