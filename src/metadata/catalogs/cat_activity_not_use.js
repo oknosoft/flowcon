@@ -1,10 +1,11 @@
 /**
- *
+ * Не используется - сохранён для примера
  *
  * @module cat_activity
  *
  * Created by Evgeniy Malyarov on 27.11.2018.
  */
+
 
 exports.CatActivityManager = class CatActivityManager extends Object {
   constructor(owner, class_name) {
@@ -53,10 +54,6 @@ exports.CatActivityManager = class CatActivityManager extends Object {
 
 exports.CatActivity = class CatActivity extends Object {
   after_create() {
-    this.date = new Date();
-    this.use = true;
-    this.by_default = 1;
-    this.period = 'week';
-    return this;
+
   }
 }
