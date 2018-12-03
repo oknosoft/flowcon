@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import FormGroup from '@material-ui/core/FormGroup';
-
+import FormLabel from '@material-ui/core/FormLabel';
 
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
@@ -20,6 +20,9 @@ import DataField from 'metadata-react/DataField';
 
 import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
+
+import options  from './activity_options';
+import FieldSelectStatic  from 'metadata-react/DataField/FieldSelectStatic';
 
 const htitle = 'Настройка активности';
 
@@ -47,7 +50,7 @@ class FrmObjActivity extends MDNRComponent {
     _mgr.get(match.params.ref, 'promise').then((_obj) => {
       this.setState({_obj}, () => this.shouldComponentUpdate(this.props));
     });
-    this.onDataChange = function(obj, fields) {
+    this.onDataChange = function(obj) {
       if(obj === t.state._obj && t._mounted && t.shouldComponentUpdate(t.props)) {
         t.forceUpdate();
       }
@@ -137,6 +140,7 @@ class FrmObjActivity extends MDNRComponent {
         <FormGroup row key="fields" className={classes.spaceLeft}>
 
           <FormGroup className={classes.fullFlex}>
+            <FormLabel variant={'outlined'} className={classes.paddingTop}>Реквизиты</FormLabel>
             <DataField _obj={_obj} _fld="name"/>
             <DataField _obj={_obj} _fld="flow" fullWidth/>
             <DataField _obj={_obj} _fld="use"/>
@@ -147,11 +151,12 @@ class FrmObjActivity extends MDNRComponent {
           </FormGroup>
 
           <FormGroup className={classes.rightWidth}>
-            <DataField _obj={_obj} _fld="health"/>
-            <DataField _obj={_obj} _fld="work"/>
-            <DataField _obj={_obj} _fld="family"/>
-            <DataField _obj={_obj} _fld="humanity"/>
-            <DataField _obj={_obj} _fld="personal"/>
+            <FormLabel variant={'outlined'} className={classes.paddingTop}>Вклад в потоки</FormLabel>
+            <FieldSelectStatic _obj={_obj} _fld="health" options={options}/>
+            <FieldSelectStatic _obj={_obj} _fld="work" options={options}/>
+            <FieldSelectStatic _obj={_obj} _fld="family" options={options}/>
+            <FieldSelectStatic _obj={_obj} _fld="humanity" options={options}/>
+            <FieldSelectStatic _obj={_obj} _fld="personal" options={options}/>
           </FormGroup>
 
         </FormGroup>,
