@@ -19,7 +19,7 @@ class Responsable extends React.Component {
     this._meta = Object.assign({}, $p.doc.issue.metadata('initiator'), {synonym: 'Ответственный'});
     this._obj = {
       _manager: cat.users,
-      _value: utils.blank.guid,
+      _value: props.reaponsable ? props.reaponsable.valueOf() : utils.blank.guid,
       get value() {
         return this._manager.get(this._value);
       },

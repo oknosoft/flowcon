@@ -144,9 +144,11 @@ class FrmObjActivity extends MDNRComponent {
             <DataField _obj={_obj} _fld="name"/>
             <DataField _obj={_obj} _fld="flow" fullWidth/>
             <DataField _obj={_obj} _fld="use"/>
+            {/*
             <DataField _obj={_obj} _fld="sorting_field" fullWidth/>
             <DataField _obj={_obj} _fld="plan" fullWidth/>
             <DataField _obj={_obj} _fld="period" fullWidth/>
+            */}
             <DataField _obj={_obj} _fld="by_default" fullWidth/>
           </FormGroup>
 

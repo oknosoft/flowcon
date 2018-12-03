@@ -11,11 +11,13 @@ import PropTypes from 'prop-types';
 
 import DataList from 'metadata-react/DataList';
 import WindowSizer from 'metadata-react/WindowSize';
+
 import {withObj} from 'metadata-redux';
 import qs from 'qs';
 
 import SelectMgr from './SelectMgr';
 import Responsable from './Responsable';
+import Toolbar2 from './Toolbar';
 import ExecutionMenuItem from '../Execution/MenuItem';
 
 
@@ -102,14 +104,16 @@ class FrmIssueList extends React.Component {
 
   render() {
 
-    const {props: {windowHeight, windowWidth, location, handleNavigate}, state: {anchorEl}} = this;
-
+    const {props: {windowHeight, windowWidth, location, handleNavigate}, state: {anchorEl, reaponsable}} = this;
+    const up = windowWidth > 800;
     const sizes = {
       windowHeight,
       windowWidth,
       height: windowHeight > 480 ? windowHeight - 52 : 428,
-      width: windowWidth > 800 ? windowWidth - (windowHeight < 480 ? 20 : 0) : 800
+      width: up ? windowWidth - (windowHeight < 480 ? 20 : 0) : 800
     };
+
+
 
     const prm = qs.parse(location.search.replace('?',''));
 
@@ -124,13 +128,17 @@ class FrmIssueList extends React.Component {
         //selectionMode
         //denyAddDel
         show_variants
-        show_search
-        btns={<Responsable onChange={this.handleReaponsable}/>}
+        show_search={up}
+        btns={up && <Responsable onChange={this.handleReaponsable}/>}
         menu_items={[
           <ExecutionMenuItem key="execution" handleNavigate={handleNavigate}/>
         ]}
         registerFilterChange={(filterChange) => this.filterChange = filterChange}
         {...sizes}
+        Toolbar2={!up && ((tbProps) => <Toolbar2 {...tbProps}
+                                                 reaponsable={reaponsable}
+                                                 handleReaponsable={this.handleReaponsable}
+        />)}
       />,
       anchorEl && <SelectMgr key="select" anchorEl={anchorEl} onClose={this.handleMenuClose} onSelect={this.handleMenuSelect} />
       ];
