@@ -6,7 +6,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 function SelectMgr({anchorEl, onClose, onSelect}) {
   return <Menu open anchorEl={anchorEl} onClose={onClose}>{
-    $p.doc.issue._indexer._mgrs.map((mgr, index) => <MenuItem key={`m-${index}`} onClick={() => onSelect(mgr)}>{mgr.cachable}</MenuItem>)
+    $p.doc.issue._indexer._mgrs.map((mgr, index) => <MenuItem
+      key={`m-${index}`}
+      onClick={() => onSelect(mgr)}>
+      {mgr.cachable.replace(/^doc$/, 'Личное')}
+      </MenuItem>)
   }</Menu>;
 }
 
