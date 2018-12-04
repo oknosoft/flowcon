@@ -15,17 +15,18 @@ class Responsable extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-    const {cat, utils} = $p;
+    const t = this;
     this._meta = Object.assign({}, $p.doc.issue.metadata('initiator'), {synonym: 'Ответственный'});
     this._obj = {
-      _manager: cat.users,
-      _value: props.reaponsable ? props.reaponsable.valueOf() : utils.blank.guid,
+      _manager: $p.cat.users,
+      _value: props.reaponsable ? props.reaponsable.valueOf() : $p.utils.blank.guid,
       get value() {
         return this._manager.get(this._value);
       },
       set value(v) {
+        v = this._manager.get(v);
         this._value = v.valueOf();
-        props.onChange(this.value);
+        t.props.reaponsable != v && props.onChange(v);
       }
     };
   }
@@ -43,6 +44,7 @@ class Responsable extends React.Component {
 
 Responsable.propTypes = {
   onChange: PropTypes.func.isRequired,
+  reaponsable: PropTypes.object,
 };
 
 export default Responsable;

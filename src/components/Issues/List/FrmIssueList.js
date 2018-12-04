@@ -19,6 +19,7 @@ import SelectMgr from './SelectMgr';
 import Responsable from './Responsable';
 import Toolbar2 from './Toolbar';
 import ExecutionMenuItem from '../Execution/MenuItem';
+import InfinitList from './InfinitList';
 
 
 class FrmIssueList extends React.Component {
@@ -66,7 +67,7 @@ class FrmIssueList extends React.Component {
 
     // дополняем селектор отбором по ответственному
     const {reaponsable} = this.state;
-    reaponsable && $and.push({reaponsable});
+    reaponsable && !reaponsable.empty() && $and.push({reaponsable: reaponsable.valueOf()});
 
     // дополняем селектор отбором по булевым полям
     scheme.append_selection(selector.selector);
@@ -96,7 +97,7 @@ class FrmIssueList extends React.Component {
   };
 
   handleReaponsable = (reaponsable) => {
-    this.setState({reaponsable: reaponsable.empty() ? null : reaponsable.ref}, () => {
+    this.setState({reaponsable}, () => {
       this.handleChange();
     });
   };
@@ -129,16 +130,19 @@ class FrmIssueList extends React.Component {
         //denyAddDel
         show_variants
         show_search={up}
-        btns={up && <Responsable onChange={this.handleReaponsable}/>}
+        btns={up && <Responsable reaponsable={reaponsable} onChange={this.handleReaponsable}/>}
         menu_items={[
           <ExecutionMenuItem key="execution" handleNavigate={handleNavigate}/>
         ]}
         registerFilterChange={(filterChange) => this.filterChange = filterChange}
         {...sizes}
-        Toolbar2={!up && ((tbProps) => <Toolbar2 {...tbProps}
-                                                 reaponsable={reaponsable}
-                                                 handleReaponsable={this.handleReaponsable}
-        />)}
+        Toolbar2={!up && ((tbProps) => {
+          return <Toolbar2 {...tbProps}
+                           reaponsable={reaponsable}
+                           handleReaponsable={this.handleReaponsable}
+          />;
+        })}
+        //GridRenderer={InfinitList}
       />,
       anchorEl && <SelectMgr key="select" anchorEl={anchorEl} onClose={this.handleMenuClose} onSelect={this.handleMenuSelect} />
       ];

@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * Панель инструментов
  *
@@ -7,6 +5,9 @@ import React from 'react';
  *
  * Created by Evgeniy Malyarov on 27.11.2018.
  */
+
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from 'metadata-react/Header/toolbar';
@@ -31,17 +32,25 @@ class Toolbar2 extends React.Component {
   };
 
   render() {
-    const {classes, reaponsable, handleReaponsable, scheme, children} = this.props;
+    const {classes, reaponsable, handleReaponsable, scheme} = this.props;
     return <Toolbar disableGutters className={classes.toolbar}>
       <Responsable reaponsable={reaponsable} onChange={handleReaponsable}/>
       <SearchBox
         value={scheme._search || ''}
         onChange={this.handleSearchChange}
       />
-    </Toolbar>
+    </Toolbar>;
   }
 
 }
+
+Toolbar2.propTypes = {
+  classes: PropTypes.object.isRequired,
+  scheme: PropTypes.object.isRequired,
+  reaponsable: PropTypes.object,
+  handleReaponsable: PropTypes.func.isRequired,
+  handleFilterChange: PropTypes.func.isRequired,
+};
 
 
 export default withStyles(Toolbar2);

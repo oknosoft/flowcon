@@ -87,7 +87,7 @@ Categories.propTypes = {
   classes: PropTypes.object.isRequired,
   periodicity: PropTypes.string.isRequired,
   totals: PropTypes.object.isRequired,
-  categories: PropTypes.object.isRequired,
+  categories: PropTypes.array.isRequired,
   handleTotals: PropTypes.func.isRequired,
 };
 
