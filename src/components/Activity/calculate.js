@@ -46,13 +46,14 @@ export default function calculate(periodicity) {
         for(let ref in value) {
           const activity = cat.activity.get(ref, true);
           if(!activity) {
-            queue = queue.then((sum) => {
-              doc.activity.get(ref, 'promise')
-                .then((doc) => {
-                  sum.push(doc);
-                  return sum;
-                });
-            });
+            continue;
+            // queue = queue.then((sum) => {
+            //   doc.activity.get(ref, 'promise')
+            //     .then((doc) => {
+            //       sum.push(doc);
+            //       return sum;
+            //     });
+            // });
           }
           totals.set(activity, value[ref]);
           for(const category of props.categories) {

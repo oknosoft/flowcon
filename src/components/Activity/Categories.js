@@ -73,7 +73,7 @@ class Categories extends React.Component {
               totals={totals}
               register={(activity, minus) => {
                 this.register(activity, minus)
-                  .then(this.calculate);
+                  .then(() => this.calculate());
               }}
             />)}
           </ExpansionPanelDetails>

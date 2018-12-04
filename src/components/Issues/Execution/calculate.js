@@ -7,7 +7,7 @@
  */
 
 const {cat: {users}, doc: {issue}, utils} = $p;
-export const clrs = ['#aa0000', '#cc66cc', '#624fac', '#666666', '#cc9933', '#3300ff', '#663300', '#bb33ff'];
+export const clrs = ['#aa0000', '#cc66cc', '#666666', '#cc9933', '#3300ff', '#663300', '#624fac', '#bb33ff'];
 class Chart {
   constructor({title, description, rows, rformat}) {
     this.title = title;
@@ -22,6 +22,11 @@ class Chart {
   }
 
   calculate(rows, rformat) {
+
+    if(rows.length === 1 && !rows[0].date) {
+      return this;
+    }
+
     rows.push.apply(rows, alasql('select date, ? as executor, sum(mark) as mark from ? group by date',
       [users.predefined.together, rows]));
     rows = alasql('select * from ? order by date, executor', [rows]);
