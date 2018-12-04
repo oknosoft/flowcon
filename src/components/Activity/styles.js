@@ -30,11 +30,6 @@ const styles = theme => ({
     pointerEvents: 'none',
     opacity: 0.5,
   },
-  link: {
-    display: 'list-item',
-    marginLeft: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit / 2,
-  },
   details: {
     flexDirection: 'column',
   },

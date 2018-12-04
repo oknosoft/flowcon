@@ -45,7 +45,7 @@ class Categories extends React.Component {
   }
 
   render() {
-    const {props: {classes, totals, categories}, state: {busy}} = this;
+    const {props: {classes, totals, categories, navigate}, state: {busy}} = this;
     const {activity} = $p.cat;
 
     return [<div key="progress" className={classes.placeholder}>
@@ -71,6 +71,7 @@ class Categories extends React.Component {
               classes={classes}
               row={activity.get(ref)}
               totals={totals}
+              navigate={navigate}
               register={(activity, minus) => {
                 this.register(activity, minus)
                   .then(() => this.calculate());
@@ -89,6 +90,7 @@ Categories.propTypes = {
   totals: PropTypes.object.isRequired,
   categories: PropTypes.array.isRequired,
   handleTotals: PropTypes.func.isRequired,
+  navigate: PropTypes.func.isRequired,
 };
 
 export default Categories;

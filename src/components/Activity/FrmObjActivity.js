@@ -12,17 +12,17 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
+import qs from 'qs';
 
 import MDNRComponent from 'metadata-react/common/MDNRComponent';
 import LoadingMessage from 'metadata-react/DumbLoader/LoadingMessage';
 import DataObjToolbar from 'metadata-react/FrmObj/DataObjToolbar';
 import DataField from 'metadata-react/DataField';
-
+import FieldSelectStatic  from 'metadata-react/DataField/FieldSelectStatic';
 import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
 
 import options  from './activity_options';
-import FieldSelectStatic  from 'metadata-react/DataField/FieldSelectStatic';
 
 const htitle = 'Настройка активности';
 
@@ -84,9 +84,9 @@ class FrmObjActivity extends MDNRComponent {
   }
 
   handleClose() {
-    const {handlers, _mgr} = this.props;
-    const {_obj} = this.state;
-    handlers.handleNavigate(`/${_mgr.class_name}/list${_obj ? '/?ref=' + _obj.ref : ''}`);
+    const {props: {handlers, _mgr, location}, state: {_obj}} = this;
+    const prm = qs.parse(location.search.replace('?',''));
+    handlers.handleNavigate(prm.urlback || `/${_mgr.class_name}/list${_obj ? '/?ref=' + _obj.ref : ''}`);
   }
 
   handleSaveClose() {
@@ -139,8 +139,8 @@ class FrmObjActivity extends MDNRComponent {
 
         <FormGroup row key="fields" className={classes.spaceLeft}>
 
-          <FormGroup className={classes.fullFlex}>
-            <FormLabel variant={'outlined'} className={classes.paddingTop}>Реквизиты</FormLabel>
+          <FormGroup>
+            <FormLabel className={classes.paddingTop}>Реквизиты</FormLabel>
             <DataField _obj={_obj} _fld="name"/>
             <DataField _obj={_obj} _fld="flow" fullWidth/>
             <DataField _obj={_obj} _fld="use"/>
@@ -148,12 +148,12 @@ class FrmObjActivity extends MDNRComponent {
             <DataField _obj={_obj} _fld="sorting_field" fullWidth/>
             <DataField _obj={_obj} _fld="plan" fullWidth/>
             <DataField _obj={_obj} _fld="period" fullWidth/>
-            */}
             <DataField _obj={_obj} _fld="by_default" fullWidth/>
+            */}
           </FormGroup>
 
           <FormGroup className={classes.rightWidth}>
-            <FormLabel variant={'outlined'} className={classes.paddingTop}>Вклад в потоки</FormLabel>
+            <FormLabel className={classes.paddingTop}>Вклад в потоки</FormLabel>
             <FieldSelectStatic _obj={_obj} _fld="health" options={options}/>
             <FieldSelectStatic _obj={_obj} _fld="work" options={options}/>
             <FieldSelectStatic _obj={_obj} _fld="family" options={options}/>

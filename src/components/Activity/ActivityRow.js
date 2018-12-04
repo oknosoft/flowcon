@@ -17,9 +17,16 @@ import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import AddIcon from '@material-ui/icons/AddCircleOutline';
 import cn from 'classnames';
 
-function ActivityRow ({row, classes, register, totals}) {
+function ActivityRow ({row, classes, register, totals, navigate}) {
   return <FormGroup row classes={{root: classes.nowrap}}>
-    <Typography color="primary" className={cn(classes.flex, classes.ptop)}>{row.name}</Typography>
+    <Typography
+      component="a"
+      variant="subtitle1"
+      color="primary"
+      href={`/cat.activity/${row.ref}?urlback=/activity`}
+      onClick={(e) => navigate(e, `/cat.activity/${row.ref}?urlback=/activity`)}
+      className={cn(classes.flex, classes.ptop)}
+    >{row.name}</Typography>
     <Typography color="primary" className={cn(classes.mr16, classes.ptop)}>{(totals.get(row) || 0).toFixed(1)}</Typography>
     <IconButton
       className={classes.icon}
@@ -37,6 +44,7 @@ ActivityRow.propTypes = {
   classes: PropTypes.object.isRequired,
   totals: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
+  navigate: PropTypes.func.isRequired,
 };
 
 export default ActivityRow;

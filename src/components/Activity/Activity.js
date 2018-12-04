@@ -51,7 +51,7 @@ class Activity extends React.Component {
     return needUpdate;
   }
 
-  navigate(event, page) {
+  navigate = (event, page) => {
     event.preventDefault();
     event.stopPropagation();
     this.props.handleNavigate(page);
@@ -110,6 +110,7 @@ class Activity extends React.Component {
           periodicity={periodicity}
           totals={totals}
           handleTotals={this.handleTotals}
+          navigate={this.navigate}
         />
       </div>
       <Diagrams categories={this.categories} totals={totals} periodicity={periodicity}/>
