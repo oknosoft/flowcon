@@ -21,6 +21,7 @@ import ActivityRow from './ActivityRow';
 import calculate from './calculate';
 import register from './register';
 import cn from 'classnames';
+import qs from 'qs';
 
 class Categories extends React.Component {
 
@@ -47,6 +48,7 @@ class Categories extends React.Component {
   render() {
     const {props: {classes, totals, categories, navigate}, state: {busy}} = this;
     const {activity} = $p.cat;
+    const prm = qs.parse(location.search.replace('?',''));
 
     return [<div key="progress" className={classes.placeholder}>
       <Fade
@@ -60,7 +62,11 @@ class Categories extends React.Component {
       </Fade>
     </div>].concat(
       categories.map((row, cind) => {
-        return <ExpansionPanel key={`c-${cind}`} className={busy ? classes.busy : ''}>
+        return <ExpansionPanel
+          key={`c-${cind}`}
+          className={busy ? classes.busy : ''}
+          defaultExpanded={row.predefined_name === prm.open}
+        >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h6" component="h3" color="primary" className={classes.flex}>{row.name}</Typography>
             <Typography color="primary" className={cn(classes.mr48, classes.ptop)}>{(totals.get(row) || 0).toFixed(1)}</Typography>

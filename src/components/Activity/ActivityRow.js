@@ -18,13 +18,16 @@ import AddIcon from '@material-ui/icons/AddCircleOutline';
 import cn from 'classnames';
 
 function ActivityRow ({row, classes, register, totals, navigate}) {
+
+  const href = `/cat.activity/${row.ref}?urlback=/activity?open=${row.flow.predefined_name}`;
+
   return <FormGroup row classes={{root: classes.nowrap}}>
     <Typography
       component="a"
       variant="subtitle1"
       color="primary"
-      href={`/cat.activity/${row.ref}?urlback=/activity`}
-      onClick={(e) => navigate(e, `/cat.activity/${row.ref}?urlback=/activity`)}
+      href={href}
+      onClick={(e) => navigate(e, href)}
       className={cn(classes.flex, classes.ptop)}
     >{row.name}</Typography>
     <Typography color="primary" className={cn(classes.mr16, classes.ptop)}>{(totals.get(row) || 0).toFixed(1)}</Typography>
