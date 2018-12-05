@@ -30,6 +30,9 @@ const styles = theme => ({
     whiteSpace: 'nowrap',
     maxWidth: 'calc(100% - 160px)',
   },
+  canceled: {
+    textDecoration: 'line-through',
+  }
 });
 
 class InfinitList extends React.Component {
@@ -44,7 +47,7 @@ class InfinitList extends React.Component {
       return row ?
         <div key={key} style={style} className={classes.root}>
           <Status row={row}/>
-          <Typography className={classes.flex}>{row.caption}</Typography>
+          <Typography className={cn(classes.flex, row.canceled && classes.canceled)}>{row.caption}</Typography>
           {row._area.replace(/^doc$/, 'Личное')}
         </div>
         :

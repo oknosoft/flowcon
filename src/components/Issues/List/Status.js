@@ -21,13 +21,17 @@ import cn from 'classnames';
 const styles = theme => ({
   root: {
     display: 'flex',
+    marginRight: theme.spacing.unit / 2,
   },
   square: {
     width: theme.spacing.unit * 3,
     height: theme.spacing.unit * 3,
     textAlign: 'center',
-    border: '1px whitesmoke solid',
+    border: '1px lightgrey solid',
     color: theme.palette.text.secondary,
+  },
+  primary: {
+    color: theme.palette.text.primary,
   },
   selected: {
     color: theme.palette.text.primary,
@@ -39,6 +43,10 @@ const styles = theme => ({
 function Status({row, classes}) {
   return <div className={classes.root}>
     <div
+      className={cn(classes.square, row.mark && classes.primary)}
+      title={row.mark ? row.mark : 'Баллы не указаны'}
+    >{row.mark || '?'}</div>
+    <div
       className={cn(classes.square, row.quickly && classes.selected)}
       title={row.quickly ? 'Срочно' : 'Не срочно'}
     >с</div>
@@ -46,22 +54,22 @@ function Status({row, classes}) {
       className={cn(classes.square, row.important && classes.selected)}
       title={row.important ? 'Важно' : 'Не важно'}
     >в</div>
-    <div
-      className={cn(classes.square, row.executor_accepted && classes.selected)}
-      title={row.executor_accepted ? 'Принято в работу исполнителем' : 'Не принято в работу исполнителем'}
-    >п</div>
-    <div
-      className={cn(classes.square, row.specify && classes.selected)}
-      title={row.specify ? 'Отправлено на доработку' : 'Доработка постановки задачи не требуется'}
-    >д</div>
-    <div
-      className={cn(classes.square, row.canceled && classes.selected)}
-      title={row.canceled ? 'Задача отменена' : 'Не отменено'}
-    >х</div>
+    {
+      row.specify ?
+        <div
+          className={cn(classes.square, classes.selected)}
+          title={'Отправлено на доработку'}
+        >д</div>
+        :
+        <div
+          className={cn(classes.square, row.executor_accepted && classes.selected)}
+          title={row.executor_accepted ? 'Принято в работу исполнителем' : 'Не принято в работу исполнителем'}
+        >{row.executor_accepted ? 'п' : 'н'}</div>
+    }
     <div
       className={cn(classes.square, row.completed && classes.selected)}
       title={row.completed ? 'Выполнено' : 'Пока не выполнено'}
-    >+</div>
+    >{row.completed ? '+' : '-'}</div>
     <div
       className={cn(classes.square, row.initiator_accepted && classes.selected)}
       title={row.initiator_accepted ? 'Принято инициатором' : 'Не принято инициатором'}
