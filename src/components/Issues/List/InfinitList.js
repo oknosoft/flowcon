@@ -38,7 +38,7 @@ const styles = theme => ({
 class InfinitList extends React.Component {
 
   render() {
-    const {_list, classes, ...others} = this.props;
+    const {_list, classes, noContentRenderer, ...others} = this.props;
 
     function rowRenderer({index, key, style}) {
 
@@ -54,7 +54,10 @@ class InfinitList extends React.Component {
         null;
     }
 
-    return <List {...others} rowRenderer={rowRenderer} />;
+    return _list.length <= 1 ?
+      <div style={{width: others.width}}>{noContentRenderer()}</div>
+      :
+      <List {...others} rowRenderer={rowRenderer} />;
   }
 }
 export default withStyles(styles)(InfinitList);
