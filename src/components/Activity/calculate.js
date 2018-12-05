@@ -6,6 +6,8 @@
  * Created by Evgeniy Malyarov on 28.11.2018.
  */
 
+import {categories} from './activity_options';
+
 export default function calculate(periodicity) {
 
   const {props} = this;
@@ -56,7 +58,7 @@ export default function calculate(periodicity) {
             // });
           }
           totals.set(activity, value[ref]);
-          for(const category of props.categories) {
+          for(const category of categories) {
             if(!totals.get(category)) {
               totals.set(category, 0);
             }

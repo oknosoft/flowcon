@@ -22,6 +22,9 @@ const theme = createMuiTheme({
 
   typography: {
     useNextVariants: true,
+    h6: {
+      fontWeight: 400,
+    }
   },
 
   // overrides: {

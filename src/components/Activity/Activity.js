@@ -82,7 +82,7 @@ class Activity extends React.Component {
       </Helmet>
       <div className={classes.top}>
         <div className={classes.container}>
-          <Typography variant="h4" component="h1" color="primary" className={classes.bottom}>
+          <Typography variant="h5" component="h1" color="primary" className={classes.bottom}>
             {ltitle}
           </Typography>
           <Periodicity

@@ -184,7 +184,7 @@ class Contents extends Component {
       </Helmet>
       <div className={classes.top}>
         <div className={classes.container}>
-          <Typography variant="h4" component="h1" color="primary" className={classes.bottom}>
+          <Typography variant="h5" component="h1" color="primary" className={classes.bottom}>
             {ltitle}
             <SubLink url="/contents/" onClick={(e) => this.navigate(e, `/contents/`)}/>
           </Typography>

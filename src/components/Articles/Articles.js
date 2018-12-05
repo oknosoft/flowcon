@@ -89,7 +89,7 @@ class Articles extends Component {
       </Helmet>
       <div className={classes.top}>
         <div className={classes.container}>
-          <Typography variant="h4" component="h1" color="primary" className={classes.bottom}>{this.title}</Typography>
+          <Typography variant="h5" component="h1" color="primary" className={classes.bottom}>{this.title}</Typography>
           {match.path.indexOf('articles') !== -1 && <IconButton
             onClick={() => handleNavigate('/contents/')}
             title="Перейти к оглавлению"

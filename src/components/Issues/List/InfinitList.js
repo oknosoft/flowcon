@@ -30,3 +30,9 @@ export default function InfinitList(props) {
   return <List {...others} rowRenderer={rowRenderer} />;
 }
 
+// rowRenderer.propTypes = {
+//   index: PropTypes.number.isRequired,
+//   key: PropTypes.string.isRequired,
+//   style: PropTypes.object.isRequired,
+// };
+
