@@ -111,7 +111,7 @@ class FrmIssueList extends React.Component {
       height: windowHeight > 480 ? windowHeight - 52 : 428,
       width: windowWidth > 800 ? windowWidth - (windowHeight < 480 ? 20 : 0) : 800
     };
-
+    const rowHeight = windowWidth > 420 ? 52 : 73;
 
     const prm = qs.parse(location.search.replace('?',''));
 
@@ -123,8 +123,8 @@ class FrmIssueList extends React.Component {
         _ref={prm.ref}
         handlers={this.handlers}
         find_rows={this.find_rows}
-        //selectionMode
-        //denyAddDel
+        rowHeight={rowHeight}
+        toolbar2row
         show_variants
         show_search
         btns={<Responsable reaponsable={reaponsable} onChange={this.handleReaponsable}/>}
@@ -133,8 +133,7 @@ class FrmIssueList extends React.Component {
         ]}
         registerFilterChange={(filterChange) => this.filterChange = filterChange}
         {...sizes}
-        toolbar2row
-        //GridRenderer={InfinitList}
+        GridRenderer={InfinitList}
       />,
       anchorEl && <SelectMgr key="select" anchorEl={anchorEl} onClose={this.handleMenuClose} onSelect={this.handleMenuSelect} />
       ];

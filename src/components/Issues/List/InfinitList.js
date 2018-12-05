@@ -10,25 +10,51 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import List from 'react-virtualized/dist/es/List';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import cn from 'classnames';
 
-export default function InfinitList(props) {
+import Status from './Status';
 
-  const {_list, ...others} = props;
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    paddingRight: theme.spacing.unit / 2,
+    borderBottom: '1px whitesmoke solid',
+    '&:hover': {
+      backgroundColor: 'whitesmoke'
+    },
+  },
+  flex: {
+    flex: 1,
+    whiteSpace: 'nowrap',
+    maxWidth: 'calc(100% - 160px)',
+  },
+});
 
-  function rowRenderer({index, key, style}) {
+class InfinitList extends React.Component {
 
-    const row = _list[index + 1];
+  render() {
+    const {_list, classes, ...others} = this.props;
 
-    return row ?
-      <div key={key} style={style}>
-        {row ? row.date : '...'}
-      </div>
-      :
-      null;
+    function rowRenderer({index, key, style}) {
+
+      const row = _list[index + 1];
+
+      return row ?
+        <div key={key} style={style} className={classes.root}>
+          <Status row={row}/>
+          <Typography className={classes.flex}>{row.caption}</Typography>
+          {row._area.replace(/^doc$/, 'Личное')}
+        </div>
+        :
+        null;
+    }
+
+    return <List {...others} rowRenderer={rowRenderer} />;
   }
-
-  return <List {...others} rowRenderer={rowRenderer} />;
 }
+export default withStyles(styles)(InfinitList);
 
 // rowRenderer.propTypes = {
 //   index: PropTypes.number.isRequired,
