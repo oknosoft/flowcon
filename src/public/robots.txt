@@ -1,5 +1,8 @@
 User-agent: *
 Disallow: /cat.
 Disallow: /doc.
+Disallow: /activity
+Disallow: /login
+Disallow: /settings
 Disallow: /single-post
 sitemap: https://business-programming.ru/sitemap.xml
