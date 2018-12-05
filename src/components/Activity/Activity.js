@@ -28,11 +28,9 @@ const description = 'Регистрация активностей';
 class Activity extends React.Component {
 
   state = {
-    periodicity: 'week',
+    periodicity: 'today',
     totals: new Map(),
   };
-
-  categories = 'health,work,family,humanity,personal'.split(',').map((v) => $p.cat.tags_category.predefined(v));
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
@@ -90,6 +88,7 @@ class Activity extends React.Component {
           <Periodicity
             periodicity={periodicity}
             handlePeriodicity={this.handlePeriodicity}
+            classes={classes}
           />
           <IconButton
             onClick={(e) => this.navigate(e, `/cat.activity/list`)}
@@ -106,14 +105,13 @@ class Activity extends React.Component {
         </div>
         <Categories
           classes={classes}
-          categories={this.categories}
           periodicity={periodicity}
           totals={totals}
           handleTotals={this.handleTotals}
           navigate={this.navigate}
         />
       </div>
-      <Diagrams categories={this.categories} totals={totals} periodicity={periodicity}/>
+      <Diagrams totals={totals} periodicity={periodicity}/>
     </AppContent>;
   }
 }

@@ -23,6 +23,7 @@ import withStyles from 'metadata-react/styles/paper600';
 import {withIface} from 'metadata-redux';
 
 import options  from './activity_options';
+import {categories} from './activity_options';
 
 const htitle = 'Настройка активности';
 
@@ -142,7 +143,7 @@ class FrmObjActivity extends MDNRComponent {
           <FormGroup>
             <FormLabel className={classes.paddingTop}>Реквизиты</FormLabel>
             <DataField _obj={_obj} _fld="name"/>
-            <DataField _obj={_obj} _fld="flow" fullWidth/>
+            <FieldSelectStatic _obj={_obj} _fld="flow" options={categories}/>
             <DataField _obj={_obj} _fld="use"/>
             {/*
             <DataField _obj={_obj} _fld="sorting_field" fullWidth/>

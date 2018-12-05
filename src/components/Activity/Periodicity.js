@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import IconDate from '@material-ui/icons/DateRange';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -41,15 +41,19 @@ class Periodicity extends React.Component {
   };
 
   render() {
-    const {props: {periodicity}, state: {anchorEl}} = this;
+    const {props: {periodicity, classes}, state: {anchorEl}} = this;
     return [
-      <IconButton
+      <Button
         key="button"
+        variant="text"
+        size="small"
+        className={classes.button}
         title={`Интервал итогов (${options[periodicity]})`}
         onClick={this.handleOpen}
       >
-        <IconDate />
-      </IconButton>,
+        <IconDate className={classes.leftIcon} />
+        {options[periodicity]}
+      </Button>,
       <Menu
         key="menu"
         anchorEl={anchorEl}
@@ -73,6 +77,7 @@ class Periodicity extends React.Component {
 Periodicity.propTypes = {
   periodicity: PropTypes.string.isRequired,
   handlePeriodicity: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default Periodicity;

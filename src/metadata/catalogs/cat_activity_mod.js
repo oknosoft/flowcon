@@ -6,7 +6,7 @@
  * Created by Evgeniy Malyarov on 27.11.2018.
  */
 
-import FrmObj from '../../components/Activity/FrmObjActivity';
+import FrmObj from '../../components/Activity/FrmObjActivityLazy';
 
 export default function ({cat, CatActivity}) {
 

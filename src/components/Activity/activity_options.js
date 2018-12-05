@@ -17,3 +17,5 @@ export default [
   {value: -5, text: 'Средний негативный'},
   {value: -10, text: 'Большой негативный'},
 ].map((v) => new ActivityOption(v));
+
+export const categories = 'health,work,family,humanity,personal'.split(',').map((v) => $p.cat.tags_category.predefined(v));

@@ -20,6 +20,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ActivityRow from './ActivityRow';
 import calculate from './calculate';
 import register from './register';
+import {categories} from './activity_options';
 import cn from 'classnames';
 import qs from 'qs';
 
@@ -46,7 +47,7 @@ class Categories extends React.Component {
   }
 
   render() {
-    const {props: {classes, totals, categories, navigate}, state: {busy}} = this;
+    const {props: {classes, totals, navigate}, state: {busy}} = this;
     const {activity} = $p.cat;
     const prm = qs.parse(location.search.replace('?',''));
 
@@ -94,7 +95,6 @@ Categories.propTypes = {
   classes: PropTypes.object.isRequired,
   periodicity: PropTypes.string.isRequired,
   totals: PropTypes.object.isRequired,
-  categories: PropTypes.array.isRequired,
   handleTotals: PropTypes.func.isRequired,
   navigate: PropTypes.func.isRequired,
 };

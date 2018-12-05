@@ -14,9 +14,10 @@ import DiagramsArray from 'metadata-react/Diagrams/DiagramsArray';
 import withStyles from 'metadata-react/Diagrams/styles';
 
 import {options} from './Periodicity';
+import {categories} from './activity_options';
 import {clrs} from '../Issues/Execution/calculate';
 
-function radar({categories, totals}) {
+function radar({totals}) {
   return {
     title: "Радар активностей",
     description: "Радар баланса активностей",
@@ -43,7 +44,7 @@ function radar({categories, totals}) {
   };
 }
 
-function bar({categories, totals, periodicity}) {
+function bar({totals, periodicity}) {
   const row = {name: options[periodicity]};
   categories.forEach((category) => {
     row[category.predefined_name] = totals.get(category) || 0;
@@ -76,7 +77,6 @@ function Diagrams(props) {
 Diagrams.propTypes = {
   totals: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  categories: PropTypes.array.isRequired,
   periodicity: PropTypes.string.isRequired,
 };
 
