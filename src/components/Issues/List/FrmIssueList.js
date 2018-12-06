@@ -116,9 +116,9 @@ class FrmIssueList extends React.Component {
       windowHeight,
       windowWidth,
       height: windowHeight > 480 ? windowHeight - 52 : 428,
-      width: windowWidth > 800 ? windowWidth - (windowHeight < 480 ? 20 : 0) : 800
+      width: windowWidth > 800 ? windowWidth - (windowHeight < 480 ? 20 : 0) : 800,
     };
-    const rowHeight = windowWidth > 420 ? 49 : 69;
+    const rowHeight = windowWidth > 480 ? 53 : 79;
 
     const prm = qs.parse(location.search.replace('?',''));
 
