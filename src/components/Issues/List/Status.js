@@ -29,6 +29,11 @@ const styles = theme => ({
     textAlign: 'center',
     border: '1px lightgrey solid',
     color: theme.palette.text.secondary,
+    userSelect: 'none',
+    '&:hover': {
+      backgroundColor: 'lightgrey'
+    },
+    cursor: 'pointer',
   },
   primary: {
     color: theme.palette.text.primary,
@@ -40,7 +45,7 @@ const styles = theme => ({
   },
 });
 
-function Status({row, classes}) {
+function Status({row, classes, handleFilter}) {
   return <div className={classes.root}>
     <div
       className={cn(classes.square, row.mark && classes.primary)}
@@ -49,32 +54,44 @@ function Status({row, classes}) {
     <div
       className={cn(classes.square, row.quickly && classes.selected)}
       title={row.quickly ? 'Срочно' : 'Не срочно'}
+      onClick={() => handleFilter('quickly')}
     >с</div>
     <div
       className={cn(classes.square, row.important && classes.selected)}
       title={row.important ? 'Важно' : 'Не важно'}
+      onClick={() => handleFilter('important')}
     >в</div>
     {
       row.specify ?
         <div
           className={cn(classes.square, classes.selected)}
           title={'Отправлено на доработку'}
+          onClick={() => handleFilter('specify')}
         >д</div>
         :
         <div
           className={cn(classes.square, row.executor_accepted && classes.selected)}
           title={row.executor_accepted ? 'Принято в работу исполнителем' : 'Не принято в работу исполнителем'}
+          onClick={() => handleFilter('executor_accepted')}
         >{row.executor_accepted ? 'п' : 'н'}</div>
     }
     <div
       className={cn(classes.square, row.completed && classes.selected)}
       title={row.completed ? 'Выполнено' : 'Пока не выполнено'}
+      onClick={() => handleFilter('completed')}
     >{row.completed ? '+' : '-'}</div>
     <div
       className={cn(classes.square, row.initiator_accepted && classes.selected)}
       title={row.initiator_accepted ? 'Принято инициатором' : 'Не принято инициатором'}
+      onClick={() => handleFilter('initiator_accepted')}
     >{row.initiator_accepted ? '+' : '-'}</div>
   </div>;
 }
+
+Status.propTypes = {
+  row: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  handleFilter: PropTypes.func.isRequired,
+};
 
 export default withStyles(styles)(Status);

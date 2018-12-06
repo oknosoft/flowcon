@@ -101,6 +101,13 @@ class FrmIssueList extends React.Component {
     });
   };
 
+  handleSubFilter = (name) => {
+    name = null;
+  };
+
+  getChildContext() {
+    return {handleSubFilter: this.handleSubFilter};
+  }
 
   render() {
 
@@ -111,7 +118,7 @@ class FrmIssueList extends React.Component {
       height: windowHeight > 480 ? windowHeight - 52 : 428,
       width: windowWidth > 800 ? windowWidth - (windowHeight < 480 ? 20 : 0) : 800
     };
-    const rowHeight = windowWidth > 420 ? 52 : 73;
+    const rowHeight = windowWidth > 420 ? 49 : 69;
 
     const prm = qs.parse(location.search.replace('?',''));
 
@@ -121,6 +128,7 @@ class FrmIssueList extends React.Component {
         _mgr={$p.doc.issue}
         _acl={'e'}
         _ref={prm.ref}
+        {...sizes}
         handlers={this.handlers}
         find_rows={this.find_rows}
         rowHeight={rowHeight}
@@ -128,11 +136,8 @@ class FrmIssueList extends React.Component {
         show_variants
         show_search
         btns={<Responsable reaponsable={reaponsable} onChange={this.handleReaponsable}/>}
-        menu_items={[
-          <ExecutionMenuItem key="execution" handleNavigate={handleNavigate}/>
-        ]}
+        menu_items={[<ExecutionMenuItem key="execution" handleNavigate={handleNavigate}/>]}
         registerFilterChange={(filterChange) => this.filterChange = filterChange}
-        {...sizes}
         GridRenderer={InfinitList}
       />,
       anchorEl && <SelectMgr key="select" anchorEl={anchorEl} onClose={this.handleMenuClose} onSelect={this.handleMenuSelect} />
@@ -142,6 +147,10 @@ class FrmIssueList extends React.Component {
 
 FrmIssueList.propTypes = {
   handlers: PropTypes.object.isRequired,
+};
+
+FrmIssueList.childContextTypes = {
+  handleSubFilter: PropTypes.func,
 };
 
 

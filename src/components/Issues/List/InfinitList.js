@@ -15,20 +15,25 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import cn from 'classnames';
 
 import Status from './Status';
+import Responsables from './Responsables';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
     paddingRight: theme.spacing.unit / 2,
     borderBottom: '1px whitesmoke solid',
     '&:hover': {
       backgroundColor: 'whitesmoke'
     },
   },
+  row: {
+    display: 'flex',
+  },
   flex: {
     flex: 1,
     whiteSpace: 'nowrap',
-    maxWidth: 'calc(100% - 160px)',
+    maxWidth: 'calc(100% - 180px)',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   canceled: {
     textDecoration: 'line-through',
@@ -37,8 +42,13 @@ const styles = theme => ({
 
 class InfinitList extends React.Component {
 
+  handleFilter = (name) => {
+    this.context.handleSubFilter(name);
+  };
+
   render() {
-    const {_list, classes, noContentRenderer, ...others} = this.props;
+    const {handleFilter, props: {_list, classes, noContentRenderer, ...others}} = this;
+    const three = others.rowHeight > 60;
 
     function rowRenderer({index, key, style}) {
 
@@ -46,9 +56,23 @@ class InfinitList extends React.Component {
 
       return row ?
         <div key={key} style={style} className={classes.root}>
-          <Status row={row}/>
-          <Typography className={cn(classes.flex, row.canceled && classes.canceled)}>{row.caption}</Typography>
-          {row._area.replace(/^doc$/, 'Личное')}
+          <div className={classes.row}>
+            <Status row={row} handleFilter={handleFilter}/>
+            {three ?
+              <div className={classes.flex}/>
+              :
+              <Typography className={cn(classes.flex, row.canceled && classes.canceled)}>{row.caption}</Typography>}
+            <Typography>{row._area.replace(/^doc$/, 'Личное')}</Typography>
+          </div>
+          <div className={classes.row}>
+            <Responsables row={row}/>
+            {three ?
+              <Typography className={cn(classes.flex, row.canceled && classes.canceled)}>{row.caption}</Typography>
+              :
+              <Typography variant="caption" className={classes.flex}>{row.definition}</Typography>
+            }
+          </div>
+          {three && <Typography variant="caption" className={classes.flex}>{row.definition}</Typography>}
         </div>
         :
         null;
@@ -60,6 +84,11 @@ class InfinitList extends React.Component {
       <List {...others} rowRenderer={rowRenderer} />;
   }
 }
+
+InfinitList.contextTypes = {
+  handleSubFilter: PropTypes.func,
+};
+
 export default withStyles(styles)(InfinitList);
 
 // rowRenderer.propTypes = {
