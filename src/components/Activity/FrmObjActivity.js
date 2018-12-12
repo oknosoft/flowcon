@@ -25,6 +25,11 @@ import {withIface} from 'metadata-redux';
 import options  from './activity_options';
 import {categories} from './activity_options';
 
+const {utils: {blank}, cat: {tags_category}} = $p;
+const empty_cat = tags_category.get();
+empty_cat.name = 'Не указан';
+const cat_list = categories.concat(empty_cat);
+
 const htitle = 'Настройка активности';
 
 class FrmObjActivity extends MDNRComponent {
@@ -77,7 +82,7 @@ class FrmObjActivity extends MDNRComponent {
           this.props.handleIfaceState({
             component: '',
             name: 'alert',
-            value: {open: true, title: _obj.presentation, text: err.reason || err.message}
+            value: {open: true, title: _obj.presentation || _obj._metadata().obj_presentation, text: err.reason || err.message}
           });
         })
       :
@@ -143,10 +148,10 @@ class FrmObjActivity extends MDNRComponent {
           <FormGroup>
             <FormLabel className={classes.paddingTop}>Реквизиты</FormLabel>
             <DataField _obj={_obj} _fld="name"/>
-            <FieldSelectStatic _obj={_obj} _fld="flow" options={categories}/>
+            <FieldSelectStatic _obj={_obj} _fld="flow" options={cat_list}/>
             <DataField _obj={_obj} _fld="use"/>
+            <DataField _obj={_obj} _fld="sorting_field"/>
             {/*
-            <DataField _obj={_obj} _fld="sorting_field" fullWidth/>
             <DataField _obj={_obj} _fld="plan" fullWidth/>
             <DataField _obj={_obj} _fld="period" fullWidth/>
             <DataField _obj={_obj} _fld="by_default" fullWidth/>
