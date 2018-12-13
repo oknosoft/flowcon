@@ -29,6 +29,7 @@ class Activity extends React.Component {
 
   state = {
     periodicity: 'today',
+    date: new Date(),
     totals: new Map(),
   };
 
@@ -55,8 +56,8 @@ class Activity extends React.Component {
     this.props.handleNavigate(page);
   }
 
-  handlePeriodicity = (periodicity) => {
-    this.setState({periodicity});
+  handlePeriodicity = (periodicity, date) => {
+    this.setState({periodicity, date});
   };
 
   handleTotals = (totals) => {
@@ -64,7 +65,7 @@ class Activity extends React.Component {
   };
 
   render() {
-    const {props: {match, classes, doc_ram_loaded}, state: {periodicity, totals}} = this;
+    const {props: {match, classes, doc_ram_loaded}, state: {periodicity, date, totals}} = this;
 
     if(!doc_ram_loaded) {
       return <DumbScreen
@@ -87,6 +88,7 @@ class Activity extends React.Component {
           </Typography>
           <Periodicity
             periodicity={periodicity}
+            date={date}
             handlePeriodicity={this.handlePeriodicity}
             classes={classes}
           />
@@ -106,12 +108,13 @@ class Activity extends React.Component {
         <Categories
           classes={classes}
           periodicity={periodicity}
+          date={date}
           totals={totals}
           handleTotals={this.handleTotals}
           navigate={this.navigate}
         />
       </div>
-      <Diagrams totals={totals} periodicity={periodicity}/>
+      <Diagrams totals={totals} periodicity={periodicity} date={date}/>
     </AppContent>;
   }
 }

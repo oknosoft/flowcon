@@ -8,7 +8,7 @@
 
 import {categories} from './activity_options';
 
-export default function calculate(periodicity) {
+export default function calculate(periodicity, date) {
 
   const {props} = this;
 
@@ -22,6 +22,10 @@ export default function calculate(periodicity) {
     break;
   case 'yesterday':
     d = new Date(d - 24 * 3600 * 1000);
+    opt.key = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+    break;
+  case 'date':
+    d = date || props.date;
     opt.key = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
     break;
   case 'week':

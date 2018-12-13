@@ -10,10 +10,13 @@ export default function register(activity, minus = false) {
 
   this.setState({busy: true});
 
-  const d = new Date();
   const _mgr = $p.doc.activity;
+  let {date} = this.props;
+  if(!date) {
+    date = new Date();
+  }
   return _mgr.adapter.local.doc.query('activity', {
-    key: [d.getFullYear(), d.getMonth() + 1, d.getDate()],
+    key: [date.getFullYear(), date.getMonth() + 1, date.getDate()],
     reduce: false,
   })
     .then(({rows}) => {
@@ -31,7 +34,7 @@ export default function register(activity, minus = false) {
         return;
       }
       if(!doc) {
-        doc = _mgr.create({date: new Date, activity}, false, true);
+        doc = _mgr.create({date, activity}, false, true);
       }
       const delta = activity.by_default || 1;
       if(minus) {

@@ -44,8 +44,8 @@ function radar({totals}) {
   };
 }
 
-function bar({totals, periodicity}) {
-  const row = {name: options[periodicity]};
+function bar({totals, periodicity, date}) {
+  const row = {name: periodicity === 'date' ? moment(date).format('DD MMMM YYYY') : options[periodicity]};
   categories.forEach((category) => {
     row[category.predefined_name] = totals.get(category) || 0;
   });
@@ -77,6 +77,7 @@ function Diagrams(props) {
 Diagrams.propTypes = {
   totals: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
+  date: PropTypes.object.isRequired,
   periodicity: PropTypes.string.isRequired,
 };
 

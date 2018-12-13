@@ -39,15 +39,15 @@ class Categories extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if(this.props.periodicity !== nextProps.periodicity) {
-      this.calculate(nextProps.periodicity);
+    if(this.props.periodicity !== nextProps.periodicity || this.props.date !== nextProps.date) {
+      this.calculate(nextProps.periodicity, nextProps.date);
       return false;
     }
     return true;
   }
 
   render() {
-    const {props: {classes, totals, navigate}, state: {busy}} = this;
+    const {props: {classes, totals, periodicity, navigate}, state: {busy}} = this;
     const {activity} = $p.cat;
     const prm = qs.parse(location.search.replace('?',''));
 
@@ -79,6 +79,7 @@ class Categories extends React.Component {
               row={activity.get(ref)}
               totals={totals}
               navigate={navigate}
+              periodicity={periodicity}
               register={(activity, minus) => {
                 this.register(activity, minus)
                   .then(() => this.calculate());
@@ -95,6 +96,7 @@ Categories.propTypes = {
   classes: PropTypes.object.isRequired,
   periodicity: PropTypes.string.isRequired,
   totals: PropTypes.object.isRequired,
+  date: PropTypes.object.isRequired,
   handleTotals: PropTypes.func.isRequired,
   navigate: PropTypes.func.isRequired,
 };
