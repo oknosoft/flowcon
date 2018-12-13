@@ -9,7 +9,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Helmet from 'react-helmet';
 import AppFooter from './Footer';
 import Flask from '../../styles/icons/Flask';
-//import MedicalBag from '../../styles/icons/MedicalBag';
+import Accessibility from '@material-ui/icons/AccessibilityNew';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 //import Timer from '@material-ui/icons/Timer';
@@ -106,6 +106,21 @@ class PageHome extends React.Component {
                     <Typography variant="h5" component="h2">Flowcon</Typography>
                     <Typography color="textSecondary">
                       Программно-методический комплекс для управления потоками задач
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid item>
+                <Grid container className={classes.menu} spacing={16} wrap="nowrap" onClick={() => handleNavigate('/activity')}>
+                  <Hidden smDown><Grid item xs={1}/></Hidden>
+                  <Grid item>
+                    <Accessibility alt="Flowcon.Life" className={classes.logo} color="disabled"/>
+                  </Grid>
+                  <Grid item className={classes.content}>
+                    <Typography variant="h5" component="h2">Flowcon.Life</Typography>
+                    <Typography color="textSecondary">
+                      Сервис для управления своей жизнью
                     </Typography>
                   </Grid>
                 </Grid>

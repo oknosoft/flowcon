@@ -23,8 +23,8 @@ export default function (theme) {
       marginTop: theme.spacing.unit * 3,
     },
     logo: {
-      width: '20vw',
-      height: '20vw',
+      width: '16vw',
+      height: '16vw',
       maxWidth: 100,
       maxHeight: 100,
     },
