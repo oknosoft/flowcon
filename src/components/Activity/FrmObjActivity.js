@@ -10,6 +10,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import {Prompt} from 'react-router-dom';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import qs from 'qs';
@@ -65,8 +66,12 @@ class FrmObjActivity extends MDNRComponent {
   }
 
   componentWillUnmount() {
+    const {_obj} = this.state;
     this._mounted = false;
     this.props._mgr.off('update', this.onDataChange);
+    if(_obj && _obj.is_new() && !_obj.empty()) {
+      _obj.unload();
+    }
   }
 
   handleSave() {
@@ -124,6 +129,15 @@ class FrmObjActivity extends MDNRComponent {
     return ltitle;
   }
 
+  /**
+   * проверка, можно ли покидать страницу
+   * @param loc
+   * @return {*}
+   */
+  prompt = (loc) => {
+    return this.state._obj._modified ? `Объект изменен.\n\nЗакрыть без сохранения?` : true;
+  }
+
   render() {
     const {props: {classes}, state: {_obj}, context, _handlers} = this;
     const toolbar_props = Object.assign({
@@ -135,43 +149,45 @@ class FrmObjActivity extends MDNRComponent {
     }, _handlers);
 
     return _obj ? [
-        <Helmet key="helmet" title={htitle}>
-          <meta name="description" content={htitle} />
-          <meta property="og:title" content={htitle} />
-          <meta property="og:description" content={htitle} />
-        </Helmet>,
+      !context.dnr && <Helmet key="helmet" title={htitle}>
+        <meta name="description" content={htitle} />
+        <meta property="og:title" content={htitle} />
+        <meta property="og:description" content={htitle} />
+      </Helmet>,
 
-        <DataObjToolbar key="toolbar" {...toolbar_props} />,
+      !context.dnr && <Prompt key="prompt" when message={this.prompt} />,
 
-        <FormGroup row key="fields" className={classes.spaceLeft}>
+      <DataObjToolbar key="toolbar" {...toolbar_props} />,
 
-          <FormGroup>
-            <FormLabel className={classes.paddingTop}>Реквизиты</FormLabel>
-            <DataField _obj={_obj} _fld="name"/>
-            <FieldSelectStatic _obj={_obj} _fld="flow" options={cat_list}/>
-            <DataField _obj={_obj} _fld="use"/>
-            <DataField _obj={_obj} _fld="sorting_field"/>
-            {/*
-            <DataField _obj={_obj} _fld="plan" fullWidth/>
-            <DataField _obj={_obj} _fld="period" fullWidth/>
-            <DataField _obj={_obj} _fld="by_default" fullWidth/>
-            */}
-          </FormGroup>
+      <FormGroup row key="fields" className={classes.spaceLeft}>
 
-          <FormGroup className={classes.rightWidth}>
-            <FormLabel className={classes.paddingTop}>Вклад в потоки</FormLabel>
-            <FieldSelectStatic _obj={_obj} _fld="health" options={options}/>
-            <FieldSelectStatic _obj={_obj} _fld="work" options={options}/>
-            <FieldSelectStatic _obj={_obj} _fld="family" options={options}/>
-            <FieldSelectStatic _obj={_obj} _fld="humanity" options={options}/>
-            <FieldSelectStatic _obj={_obj} _fld="personal" options={options}/>
-          </FormGroup>
+        <FormGroup>
+          <FormLabel className={classes.paddingTop}>Реквизиты</FormLabel>
+          <DataField _obj={_obj} _fld="name"/>
+          <FieldSelectStatic _obj={_obj} _fld="flow" options={cat_list}/>
+          <DataField _obj={_obj} _fld="use"/>
+          <DataField _obj={_obj} _fld="sorting_field"/>
+          {/*
+          <DataField _obj={_obj} _fld="plan" fullWidth/>
+          <DataField _obj={_obj} _fld="period" fullWidth/>
+          <DataField _obj={_obj} _fld="by_default" fullWidth/>
+          */}
+        </FormGroup>
 
-        </FormGroup>,
+        <FormGroup className={classes.rightWidth}>
+          <FormLabel className={classes.paddingTop}>Вклад в потоки</FormLabel>
+          <FieldSelectStatic _obj={_obj} _fld="health" options={options}/>
+          <FieldSelectStatic _obj={_obj} _fld="work" options={options}/>
+          <FieldSelectStatic _obj={_obj} _fld="family" options={options}/>
+          <FieldSelectStatic _obj={_obj} _fld="humanity" options={options}/>
+          <FieldSelectStatic _obj={_obj} _fld="personal" options={options}/>
+        </FormGroup>
 
-      ]
-      :
-      <LoadingMessage />;
+      </FormGroup>,
+
+    ]
+    :
+    <LoadingMessage />;
   }
 }
 
