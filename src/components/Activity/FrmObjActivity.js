@@ -26,7 +26,7 @@ import {withIface} from 'metadata-redux';
 import options  from './activity_options';
 import {categories} from './activity_options';
 
-const {utils: {blank}, cat: {tags_category}} = $p;
+const {cat: {tags_category}} = $p;
 const empty_cat = tags_category.get();
 empty_cat.name = 'Не указан';
 const cat_list = categories.concat(empty_cat);
@@ -134,7 +134,7 @@ class FrmObjActivity extends MDNRComponent {
    * @param loc
    * @return {*}
    */
-  prompt = (loc) => {
+  prompt = (/*loc*/) => {
     return this.state._obj._modified ? `Объект изменен.\n\nЗакрыть без сохранения?` : true;
   }
 

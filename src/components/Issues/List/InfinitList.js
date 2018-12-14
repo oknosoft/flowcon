@@ -16,7 +16,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import cn from 'classnames';
 
 import Status from './Status';
-import Responsables from './Responsables';
 
 const styles = theme => ({
   root: {
@@ -107,7 +106,7 @@ function Row2({row, classes, three, handleFilter, initiator, executor}) {
   </div>;
 }
 
-function Row3({row, classes, three, handleFilter, initiator, executor}) {
+function Row3({row, classes, three, handleFilter, executor}) {
   return three && <div className={classes.row}>
     <Typography variant="caption" className={classes.flex}>{row.definition}</Typography>
     <Chip
@@ -118,7 +117,7 @@ function Row3({row, classes, three, handleFilter, initiator, executor}) {
       classes={{root: classes.chipRoot}}
       onClick={() => handleFilter(`executor:${row.executor}`)}
     />
-  </div>
+  </div>;
 }
 
 class InfinitList extends React.Component {

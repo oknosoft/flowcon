@@ -81,7 +81,7 @@ class ShareArea extends BtnsDialog {
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleClose} color="primary">
-            Отмена
+            Закрыть
           </Button>
         </DialogActions>
       </Dialog>

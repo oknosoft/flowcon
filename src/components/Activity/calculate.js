@@ -48,7 +48,7 @@ export default function calculate(periodicity, date) {
       const totals = new Map();
       if(rows.length) {
         const {value} = rows[0];
-        let queue = Promise.resolve([]);
+        //let queue = Promise.resolve([]);
         for(let ref in value) {
           const activity = cat.activity.get(ref, true);
           if(!activity) {
