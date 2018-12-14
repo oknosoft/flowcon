@@ -54,36 +54,45 @@ function Status({row, classes, handleFilter}) {
     <div
       className={cn(classes.square, row.quickly && classes.selected)}
       title={row.quickly ? 'Срочно' : 'Не срочно'}
-      onClick={() => handleFilter('quickly')}
+      onClick={() => handleFilter('quickly', row.quickly)}
     >с</div>
     <div
       className={cn(classes.square, row.important && classes.selected)}
       title={row.important ? 'Важно' : 'Не важно'}
-      onClick={() => handleFilter('important')}
+      onClick={() => handleFilter('important', row.important)}
     >в</div>
     {
-      row.specify ?
+      row.canceled ?
+        (<div
+          className={cn(classes.square, classes.selected)}
+          title={'Отменено'}
+          onClick={() => handleFilter('canceled', row.canceled)}
+        >х</div>)
+        :
+        (
+          row.specify ?
         <div
           className={cn(classes.square, classes.selected)}
           title={'Отправлено на доработку'}
-          onClick={() => handleFilter('specify')}
+          onClick={() => handleFilter('specify', row.specify)}
         >д</div>
         :
         <div
           className={cn(classes.square, row.executor_accepted && classes.selected)}
           title={row.executor_accepted ? 'Принято в работу исполнителем' : 'Не принято в работу исполнителем'}
-          onClick={() => handleFilter('executor_accepted')}
+          onClick={() => handleFilter('executor_accepted', row.executor_accepted)}
         >{row.executor_accepted ? 'п' : 'н'}</div>
+        )
     }
     <div
       className={cn(classes.square, row.completed && classes.selected)}
       title={row.completed ? 'Выполнено' : 'Пока не выполнено'}
-      onClick={() => handleFilter('completed')}
+      onClick={() => handleFilter('completed', row.completed)}
     >{row.completed ? '+' : '-'}</div>
     <div
       className={cn(classes.square, row.initiator_accepted && classes.selected)}
       title={row.initiator_accepted ? 'Принято инициатором' : 'Не принято инициатором'}
-      onClick={() => handleFilter('initiator_accepted')}
+      onClick={() => handleFilter('initiator_accepted', row.initiator_accepted)}
     >{row.initiator_accepted ? '+' : '-'}</div>
   </div>;
 }

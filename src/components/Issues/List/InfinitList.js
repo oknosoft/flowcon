@@ -68,7 +68,7 @@ function Row1({row, classes, three, handleFilter, initiator, executor}) {
       label={row._area.replace(/^doc$/, 'Личное')}
       className={classes.chip}
       classes={{root: classes.chipRoot}}
-      onClick={() => handleFilter(`area:${row._area}`)}
+      onClick={() => handleFilter('area', row._area)}
     />}
   </div>;
 }
@@ -86,7 +86,7 @@ function Row2({row, classes, three, handleFilter, initiator, executor}) {
       title={initiator.empty() ? 'Инициатор не указан' : `Инициатор: ${initiator.name}`}
       className={classes.chip}
       classes={{root: classes.chipRoot}}
-      onClick={() => handleFilter(`initiator:${row.initiator}`)}
+      onClick={() => handleFilter('initiator', row.initiator)}
     />
     {!three && <Chip
       tabIndex={-1}
@@ -94,14 +94,14 @@ function Row2({row, classes, three, handleFilter, initiator, executor}) {
       title={executor.empty() ? 'Исполнитель не назначен' : `Исполнитель: ${executor.name}`}
       className={classes.chip}
       classes={{root: classes.chipRoot}}
-      onClick={() => handleFilter(`executor:${row.executor}`)}
+      onClick={() => handleFilter('executor', row.executor)}
     />}
     {!three && <Chip
       tabIndex={-1}
       label={row._area.replace(/^doc$/, 'Личное')}
       className={classes.chip}
       classes={{root: classes.chipRoot}}
-      onClick={() => handleFilter(`area:${row._area}`)}
+      onClick={() => handleFilter('area', row._area)}
     />}
   </div>;
 }
@@ -115,15 +115,15 @@ function Row3({row, classes, three, handleFilter, executor}) {
       title={executor.empty() ? 'Исполнитель не назначен' : `Исполнитель: ${executor.name}`}
       className={classes.chip}
       classes={{root: classes.chipRoot}}
-      onClick={() => handleFilter(`executor:${row.executor}`)}
+      onClick={() => handleFilter('executor', row.executor)}
     />
   </div>;
 }
 
 class InfinitList extends React.Component {
 
-  handleFilter = (name) => {
-    this.context.handleSubFilter(name);
+  handleFilter = (name, val) => {
+    this.context.handleSubFilter(name, val);
   };
 
   render() {

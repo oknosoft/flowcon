@@ -34,7 +34,7 @@ class Activity extends React.Component {
     if(typeof grouping === 'string') {
       grouping = Boolean(grouping);
     }
-    else{
+    else if(typeof grouping !== 'boolean'){
       grouping = true;
     }
     this.state = {
