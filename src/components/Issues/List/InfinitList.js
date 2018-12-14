@@ -21,7 +21,7 @@ const styles = theme => ({
   root: {
     paddingLeft: theme.spacing.unit / 2,
     paddingRight: theme.spacing.unit / 2,
-    borderBottom: '1px whitesmoke solid',
+    borderBottom: '1px lightgray dashed',
     '&:hover': {
       backgroundColor: '#f2f0f0'
     },
