@@ -12,13 +12,14 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import IconSettings from '@material-ui/icons/Settings';
 import IconHelp from '@material-ui/icons/HelpOutline';
 
 import AppContent from 'metadata-react/App/AppContent';
 import DumbScreen from '../DumbScreen';
 import Categories from './Categories';
+import RawActivities from './RawActivities';
 import Periodicity from './Periodicity';
+import Settings from './Settings';
 import Diagrams from './Diagrams';
 import withStyles from './styles';
 
@@ -27,11 +28,22 @@ const description = 'Регистрация активностей';
 
 class Activity extends React.Component {
 
-  state = {
-    periodicity: 'today',
-    date: new Date(),
-    totals: new Map(),
-  };
+  constructor(props, context) {
+    super(props, context);
+    let grouping = $p.wsql.get_user_param('activities_grouping');
+    if(typeof grouping === 'string') {
+      grouping = Boolean(grouping);
+    }
+    else{
+      grouping = true;
+    }
+    this.state = {
+      periodicity: 'today',
+      grouping,
+      date: new Date(),
+      totals: new Map(),
+    };
+  }
 
   componentDidMount() {
     this.shouldComponentUpdate(this.props);
@@ -60,12 +72,18 @@ class Activity extends React.Component {
     this.setState({periodicity, date});
   };
 
+  handleGrouping = () => {
+    const grouping = !this.state.grouping;
+    this.setState({grouping});
+    $p.wsql.set_user_param('activities_grouping', grouping);
+  };
+
   handleTotals = (totals) => {
     this.setState({totals});
   };
 
   render() {
-    const {props: {match, classes, doc_ram_loaded}, state: {periodicity, date, totals}} = this;
+    const {props: {match, classes, doc_ram_loaded}, state: {periodicity, date, totals, grouping}} = this;
 
     if(!doc_ram_loaded) {
       return <DumbScreen
@@ -73,6 +91,8 @@ class Activity extends React.Component {
         page={{text: 'Получение данных...'}}
       />;
     }
+
+    const Activities = grouping ? Categories : RawActivities;
 
     return <AppContent >
       <Helmet title={ltitle}>
@@ -92,12 +112,11 @@ class Activity extends React.Component {
             handlePeriodicity={this.handlePeriodicity}
             classes={classes}
           />
-          <IconButton
-            onClick={(e) => this.navigate(e, `/cat.activity/list`)}
-            title="Настройка состава активностей"
-          >
-            <IconSettings />
-          </IconButton>
+          <Settings
+            navigate={this.navigate}
+            handleGrouping={this.handleGrouping}
+            grouping={grouping}
+          />
           <IconButton
             onClick={(e) => this.navigate(e, `/articles/activity`)}
             title="Справка"
@@ -105,7 +124,7 @@ class Activity extends React.Component {
             <IconHelp />
           </IconButton>
         </div>
-        <Categories
+        <Activities
           classes={classes}
           periodicity={periodicity}
           date={date}

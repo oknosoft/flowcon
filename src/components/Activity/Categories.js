@@ -29,7 +29,7 @@ class Categories extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {busy: false};
-    this.select = $p.wsql.alasql.compile('select ref from cat_activity where `use` == true and `flow` = ? order by sorting_field');
+    this.select = $p.wsql.alasql.compile('select ref from cat_activity where `use` == true and `flow` = ? order by sorting_field, name');
     this.calculate = calculate.bind(this);
     this.register = register.bind(this);
   }
