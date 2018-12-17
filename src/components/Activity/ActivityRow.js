@@ -32,7 +32,7 @@ function ActivityRow ({row, classes, register, totals, navigate, periodicity}) {
       onClick={(e) => navigate(e, href)}
       className={cn(classes.flex, classes.ptop)}
     >{row.name}</Typography>
-    <Typography color="primary" className={cn(classes.mr16, classes.ptop)}>{(totals.get(row) || 0).toFixed(1)}</Typography>
+    <Typography color="primary" className={cn(classes.mr16, classes.ptop)}>{(totals.get(row) || 0).toFixed(0)}</Typography>
     <div title={(busy && busyText) || ''}>
       <IconButton
         className={cn(classes.icon, busy && classes.busy)}

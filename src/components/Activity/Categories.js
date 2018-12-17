@@ -70,7 +70,7 @@ class Categories extends React.Component {
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h6" component="h3" color="primary" className={classes.flex}>{row.name}</Typography>
-            <Typography color="primary" className={cn(classes.mr48, classes.ptop)}>{(totals.get(row) || 0).toFixed(1)}</Typography>
+            <Typography color="primary" className={cn(classes.mr48, classes.ptop)}>{(totals.get(row) || 0).toFixed(0)}</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails classes={{root: classes.details}}>
             {this.select([row.ref]).map(({ref}, aind) => <ActivityRow
