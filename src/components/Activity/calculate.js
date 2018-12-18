@@ -29,14 +29,14 @@ export default function calculate(periodicity, date) {
     opt.key = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
     break;
   case 'week':
-    opt.endKey = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+    opt.endkey = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
     d = new Date(d - 7 * 24 * 3600 * 1000);
-    opt.startKey = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+    opt.startkey = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
     break;
   case 'month':
-    opt.endKey = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+    opt.endkey = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
     d = new Date(d - 30 * 24 * 3600 * 1000);
-    opt.startKey = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+    opt.startkey = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
     break;
   default:
 

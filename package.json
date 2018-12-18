@@ -1,6 +1,6 @@
 {
   "name": "flowcon",
-  "version": "2.0.17-beta.13",
+  "version": "2.0.18-beta.2",
   "description": "business programming",
   "repository": {
     "type": "git",
@@ -26,15 +26,15 @@
   "homepage": "https://business-programming.ru/",
   "dependencies": {
     "@opuscapita/react-markdown": "^2.3.9",
-    "metadata-abstract-ui": "2.0.17-beta.13",
-    "metadata-core": "2.0.17-beta.13",
-    "metadata-external": "2.0.17-beta.13",
-    "metadata-pouchdb": "2.0.17-beta.13",
-    "metadata-react": "2.0.17-beta.13",
-    "metadata-redux": "2.0.17-beta.13",
-    "metadata-superlogin": "2.0.17-beta.13",
+    "metadata-abstract-ui": "2.0.18-beta.2",
+    "metadata-core": "2.0.18-beta.2",
+    "metadata-external": "2.0.18-beta.2",
+    "metadata-pouchdb": "2.0.18-beta.2",
+    "metadata-react": "2.0.18-beta.2",
+    "metadata-redux": "2.0.18-beta.2",
+    "metadata-superlogin": "2.0.18-beta.2",
     "react-share": "^2.4.0",
-    "react-swipeable": "^4.3.0"
+    "react-swipeable": "^4.3.1"
   },
   "devDependencies": {
     "@babel/core": "7.1.0",
