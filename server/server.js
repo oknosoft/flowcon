@@ -152,6 +152,16 @@ app.post('/user/rm-user', superlogin.requireAuth, (req, res, next) => {
     });
 });
 
+// получение списка пользователей общих баз текущего пользователя
+app.post('/user/shared-users', superlogin.requireAuth, (req, res, next) => {
+  profile.sharedUsers(req.user._id)
+    .then((result) => {
+      res.status(200).json(result);
+    }, (err) => {
+      return next(err);
+    });
+});
+
 // предоставление доступа к общей базе
 app.post('/user/share-db', superlogin.requireAuth, (req, res, next) => {
   if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('db')) {

@@ -151,6 +151,35 @@ module.exports = function(superlogin) {
       });
   };
 
+  // получает список пользователей общих баз текущего пользователя
+  this.sharedUsers = function(user_id) {
+    return userDB.get(user_id)
+      .then((userDoc) => {
+        const {personalDBs} = userDoc;
+        const keys = [];
+        for(const name in personalDBs) {
+          if(personalDBs[name].type === 'shared') {
+            keys.push(name);
+          }
+        }
+        return userDB.query('doc/users', {keys});
+      })
+      .then(({rows}) => {
+        return userDB.allDocs({keys: rows.map((v) => v.id), include_docs: true});
+      })
+      .then(({rows}) => {
+        return rows.filter((v) => v.doc)
+          .map(({doc, id}) => {
+            return {
+              id,
+              ref: doc.profile.ref,
+              name: doc.profile.name,
+              email: doc.email,
+            };
+          });
+      });
+  };
+
   // создаёт общую базу и добавляет её в профиль подписчика
   this.createSharedDB = function(user_id, dbName) {
     return userDB.get(user_id)
