@@ -168,7 +168,7 @@ module.exports = function(superlogin) {
         return userDB.allDocs({keys: rows.map((v) => v.id), include_docs: true});
       })
       .then(({rows}) => {
-        return rows.filter((v) => v.doc)
+        return rows.filter((v) => v.doc && v.doc.profile)
           .map(({doc, id}) => {
             return {
               id,
