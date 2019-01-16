@@ -15,7 +15,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ActivityRow from './ActivityRow';
 import calculate from './calculate';
 import register from './register';
-import cn from 'classnames';
 
 class RawActivities extends React.Component {
 

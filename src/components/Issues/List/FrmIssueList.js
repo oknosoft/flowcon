@@ -32,10 +32,17 @@ class FrmIssueList extends React.Component {
   }
 
   componentDidMount() {
-    $p.doc.issue._indexer._mgrs.forEach((_mgr) => _mgr.on('change', this.handleChange));
+    if($p.doc.issue._indexer && $p.doc.issue._indexer._mgrs) {
+      $p.doc.issue._indexer._mgrs.forEach((_mgr) => _mgr.on('change', this.handleChange));
+    }
+    else {
+      setTimeout(() => this.componentDidMount(), 1000);
+    }
   }
 
   componentWillUnmount() {
+    $p.doc.issue._indexer &&
+    $p.doc.issue._indexer._mgrs &&
     $p.doc.issue._indexer._mgrs.forEach((_mgr) => _mgr.off('change', this.handleChange));
   }
 
@@ -75,7 +82,7 @@ class FrmIssueList extends React.Component {
 
     return Promise.resolve()
       .then(() => {
-        const data = $p.doc.issue._indexer.find(selector);
+        const data = $p.doc.issue._indexer ? $p.doc.issue._indexer.find(selector) : $p.classes.RamIndexer.waitError();
         data.docs = data.docs.map((src) => {
           const doc = Object.assign({}, src);
           doc.ref = doc._id.split('|')[1];

@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CommentEditor from './CommentEditor';
 
@@ -33,15 +33,14 @@ function Comments (props) {
   return (
     <div style={{minWidth: 280, marginBottom: 16}}>
       {notes}
-      <Button
-        variant="fab"
-        mini
+      <Fab
+        size="small"
         title="Добавить комментарий"
         onClick={add_note}
         style={{marginTop: 8}}
       >
         <AddIcon />
-      </Button>
+      </Fab>
     </div>
   );
 }

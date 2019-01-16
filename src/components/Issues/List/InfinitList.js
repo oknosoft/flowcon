@@ -176,6 +176,19 @@ InfinitList.contextTypes = {
   handleSubFilter: PropTypes.func,
 };
 
+const rowPropTypes = {
+  row: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  three: PropTypes.bool.isRequired,
+  handleFilter: PropTypes.func.isRequired,
+  initiator: PropTypes.object.isRequired,
+  executor: PropTypes.object.isRequired,
+};
+
+Row1.propTypes = rowPropTypes;
+Row2.propTypes = rowPropTypes;
+Row3.propTypes = rowPropTypes;
+
 export default withStyles(styles)(InfinitList);
 
 // rowRenderer.propTypes = {

@@ -13,19 +13,36 @@ const search_fields = ['definition','caption'];
 function subscribe(mngrs) {
 
   const {articles} = $p.cat;
+  let res = Promise.resolve();
 
   for(const mngr of mngrs) {
     mngr._indexer_listener && mngr._indexer_listener.cancel();
-    mngr._indexer_listener = mngr.pouch_db.changes({
-      since: 'now',
-      live: true,
-      include_docs: true,
-      selector: {class_name: {$in: [mngr.class_name, articles.class_name]}}
-    }).on('change', (change) => {
-      const cmgr = change.id.startsWith(mngr.class_name) ? mngr : articles;
-      cmgr.emit('change', change.deleted ? {_id: change.id, _deleted: true} : change.doc);
-    });
+    res = res.then(() => new Promise((resolve, reject) => {
+      let finished;
+      mngr._indexer_listener = mngr.pouch_db.changes({
+        since: 'now',
+        live: true,
+        include_docs: true,
+        selector: {class_name: {$in: [mngr.class_name, articles.class_name]}}
+      }).on('change', (change) => {
+        const cmgr = change.id.startsWith(mngr.class_name) ? mngr : articles;
+        cmgr.emit('change', change.deleted ? {_id: change.id, _deleted: true} : change.doc);
+      }).on('error', (err) => {
+        if(!finished) {
+          finished = true;
+          reject(err);
+        }
+      });
+      setTimeout(() => {
+        if(!finished) {
+          finished = true;
+          resolve();
+        }
+      }, 180);
+    }));
   }
+
+  return res;
 }
 
 function unsubscribe(mngrs) {
@@ -239,12 +256,9 @@ export default function indexer() {
       mngr._indexer = issue._indexer;
     }
   }
-  subscribe(mngrs);
 
-  return issue._indexer
-    .init()
-    .then(() => {
-      issue.emit('change');
-    })
+  return subscribe(mngrs)
+    .then(() => issue._indexer.init())
+    .then(() => issue.emit('change'))
     .catch($p.record_log);
 }
