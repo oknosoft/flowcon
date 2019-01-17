@@ -157,6 +157,7 @@ class FrmObjIssue extends MDNRComponent {
           <DataField _obj={_obj} _fld="caption"/>
           <FormGroup row>
             <DataField _obj={_obj} _fld="initiator"/>
+            <DataField _obj={_obj} _fld="responsible"/>
             <DataField _obj={_obj} _fld="executor"/>
             <DataField _obj={_obj} _fld="date" read_only/>
           </FormGroup>
@@ -174,6 +175,7 @@ class FrmObjIssue extends MDNRComponent {
         <FormGroup className={classes.rightWidth}>
           <DataField _obj={_obj} _fld="quickly" ctrl_type="threestate" labels={['Не срочно', 'Срочность не задана', 'Срочно']}/>
           <DataField _obj={_obj} _fld="important" ctrl_type="threestate" labels={['Не важно', 'Важность не задана', 'Важно']}/>
+          <DataField _obj={_obj} _fld="execution_period" read_only/>
           <DataField _obj={_obj} _fld="mark"/>
           {!_obj.specify && <DataField _obj={_obj} _fld="executor_accepted"/>}
           {!_obj.executor_accepted && <DataField _obj={_obj} _fld="specify"/>}
