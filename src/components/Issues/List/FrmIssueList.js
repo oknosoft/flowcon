@@ -28,6 +28,7 @@ class FrmIssueList extends React.Component {
     this.handlers = Object.assign({}, props.handlers);
     this.handlers.handleEdit = this.handleEdit.bind(this);
     this.handlers.handleAdd = this.handleAdd.bind(this);
+    this.handlers.handleMarkDeleted = this.handleMarkDeleted.bind(this);
     this.state = {anchorEl: null, reaponsable: null};
   }
 
@@ -61,6 +62,16 @@ class FrmIssueList extends React.Component {
 
   handleAdd(_mgr, event) {
     this.setState({anchorEl: event.currentTarget});
+  }
+
+  handleMarkDeleted({row: {_area}, ref, _mgr}) {
+    let __mgr;
+    _mgr._indexer._mgrs.some((mgr) => {
+      if(mgr.cachable === _area){
+        return __mgr = mgr;
+      }
+    });
+    this.props.handleMarkDeleted({ref, _mgr: __mgr});
   }
 
   find_rows = (selector, scheme) => {
