@@ -6,8 +6,8 @@
  * Created by Evgeniy Malyarov on 11.10.2018.
  */
 
-const fields = ('_id,date,number_doc,definition,caption,mark,quickly,important,initiator,executor,state_date,canceled,completed,specify,' +
-  'executor_accepted,initiator_accepted,quickly_setted').split(',');
+const fields = ('_id,date,number_doc,definition,caption,mark,quickly,important,execution_period,initiator,responsible,executor,state_date,canceled,completed,specify,' +
+  'executor_accepted,initiator_accepted,quickly_setted,processing').split(',');
 const search_fields = ['definition','caption'];
 
 function subscribe(mngrs) {
@@ -89,6 +89,7 @@ export default function indexer() {
 
   const {adapters: {pouch}, doc: {issue}, classes, utils} = $p;
   const {remote} = pouch;
+  const {blank} = utils;
   const mngrs = [issue];
 
   for(const db in remote) {
@@ -247,6 +248,35 @@ export default function indexer() {
         unsubscribe(this._mgrs);
         super.reset(mgrs);
       }
+
+      // вычисляемые поля
+      put(indoc, force) {
+        // если нас назначили, а мы еще не приняли в работу
+        if(indoc.executor === this.current_user && !indoc.executor_accepted) {
+          indoc.processing = true;
+        }
+        // отменённые не требуют обработки
+        else if(indoc.canceled) {
+          indoc.processing = false;
+        }
+        // если мы ответственный и не назначили исполнителя
+        else if(indoc.responsible === this.current_user && (!indoc.executor || indoc.executor === blank.guid)) {
+          indoc.processing = true;
+        }
+        // проверить исполнение
+        else if(indoc.initiator === this.current_user && indoc.completed && !indoc.initiator_accepted) {
+          indoc.processing = true;
+        }
+        // доработать, если мы инициатор и отправлено на доработку
+        else if(indoc.initiator === this.current_user && indoc.specify) {
+          indoc.processing = true;
+        }
+        else {
+          indoc.processing = false;
+        }
+
+        super.put(indoc, force);
+      }
     }
 
     issue._indexer = new RamIndexer({fields, search_fields, mgr: mngrs});
@@ -258,7 +288,10 @@ export default function indexer() {
   }
 
   return subscribe(mngrs)
-    .then(() => issue._indexer.init())
+    .then(() => {
+      issue._indexer.current_user = $p.current_user.ref;
+      return issue._indexer.init();
+    })
     .then(() => issue.emit('change'))
     .catch($p.record_log);
 }

@@ -6,7 +6,7 @@
  * Created by Evgeniy Malyarov on 17.01.2019.
  */
 
-//Назначить исполнителя
+//Назначить исполнителя +
 {
   "_id": "cat.scheme_settings|101d32ee-6b5d-4e7b-cb74-392b4deeb63b",
   "_rev": "1-0063fcffefb7cee3eba706059d992d03",
