@@ -251,13 +251,13 @@ export default function indexer() {
 
       // вычисляемые поля
       put(indoc, force) {
-        // если нас назначили, а мы еще не приняли в работу
-        if(indoc.executor === this.current_user && !indoc.executor_accepted) {
-          indoc.processing = true;
-        }
         // отменённые не требуют обработки
-        else if(indoc.canceled) {
+        if(indoc.canceled) {
           indoc.processing = false;
+        }
+        // если нас назначили, а мы еще не приняли в работу
+        else if(indoc.executor === this.current_user && !indoc.executor_accepted) {
+          indoc.processing = true;
         }
         // если мы ответственный и не назначили исполнителя
         else if(indoc.responsible === this.current_user && (!indoc.executor || indoc.executor === blank.guid)) {
