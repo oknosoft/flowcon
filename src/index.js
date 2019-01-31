@@ -73,10 +73,11 @@ render(<RootProvider/>, document.getElementById('root'));
 
 serviceWorker.register({
   onUpdate() {
-    store.dispatch(ifaceActions.IFACE_STATE({
-      component: '',
-      name: 'snack',
-      value: {open: true, reset: true, message: 'Доступен новый контент, обновите страницу'},
-    }));
+    $p && $p.record_log('Доступен новый контент, обновите страницу');
+    // store.dispatch(ifaceActions.IFACE_STATE({
+    //   component: '',
+    //   name: 'snack',
+    //   value: {open: true, reset: true, message: 'Доступен новый контент, обновите страницу'},
+    // }));
   }
 });
