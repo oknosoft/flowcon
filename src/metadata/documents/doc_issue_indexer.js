@@ -15,39 +15,79 @@ function subscribe(mngrs) {
   const {articles} = $p.cat;
   let res = Promise.resolve();
 
-  for(const mngr of mngrs) {
-    mngr._indexer_listener && mngr._indexer_listener.cancel();
-    res = res.then(() => new Promise((resolve, reject) => {
-      let finished;
-      mngr._indexer_listener = mngr.pouch_db.changes({
-        since: 'now',
-        live: true,
-        include_docs: true,
-        selector: {class_name: {$in: [mngr.class_name, articles.class_name]}}
-      }).on('change', (change) => {
-        const cmgr = change.id.startsWith(mngr.class_name) ? mngr : articles;
-        cmgr.emit('change', change.deleted ? {_id: change.id, _deleted: true} : change.doc);
-      }).on('error', (err) => {
-        if(!finished) {
-          finished = true;
-          reject(err);
-        }
+  if(mngrs.length < 5) {
+    for(const mngr of mngrs) {
+      if(mngr._indexer_listener && mngr._indexer_listener.cancel) {
+        mngr._indexer_listener.cancel();
+        mngr._indexer_listener = '';
+      }
+      res = res.then(() => new Promise((resolve, reject) => {
+        let finished;
+        mngr._indexer_listener = mngr.pouch_db.changes({
+          since: 'now',
+          live: true,
+          include_docs: true,
+          selector: {class_name: {$in: [mngr.class_name, articles.class_name]}}
+        }).on('change', (change) => {
+          const cmgr = change.id.startsWith(mngr.class_name) ? mngr : articles;
+          cmgr.emit('change', change.deleted ? {_id: change.id, _deleted: true} : change.doc);
+        }).on('error', (err) => {
+          if(!finished) {
+            finished = true;
+            reject(err);
+          }
+        });
+        setTimeout(() => {
+          if(!finished) {
+            finished = true;
+            resolve();
+          }
+        }, 180);
+      }));
+    }
+  }
+  else {
+    for(const mngr of mngrs) {
+      if(mngr._indexer_listener && mngr._indexer_listener.cancel) {
+        mngr._indexer_listener.cancel();
+        mngr._indexer_listener = '';
+      }
+      res = res.then(() => {
+        mngr.pouch_db.changes({
+          limit: 100,
+          since: mngr._indexer_listener || 'now',
+          include_docs: true,
+          selector: {class_name: {$in: [mngr.class_name, articles.class_name]}}
+        })
+          .then((result) => {
+            for(const change of result.results) {
+              const cmgr = change.id.startsWith(mngr.class_name) ? mngr : articles;
+              cmgr.emit('change', change.deleted ? {_id: change.id, _deleted: true} : change.doc);
+            }
+            mngr._indexer_listener = result.last_seq;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
-      setTimeout(() => {
-        if(!finished) {
-          finished = true;
-          resolve();
-        }
-      }, 180);
-    }));
+    }
+    res = res.then(() => {
+      subscribe.timer = setTimeout(subscribe.bind(null, mngrs), 20000);
+    });
   }
 
   return res;
 }
 
 function unsubscribe(mngrs) {
+  if(subscribe.timer) {
+    clearTimeout(subscribe.timer);
+  }
   for(const mngr of mngrs) {
-    mngr._indexer_listener && mngr._indexer_listener.cancel();
+    if(mngr._indexer_listener && mngr._indexer_listener.cancel) {
+      mngr._indexer_listener.cancel();
+    }
+    mngr._indexer_listener = '';
   }
 }
 
@@ -292,6 +332,8 @@ export default function indexer() {
       issue._indexer.current_user = $p.current_user.ref;
       return issue._indexer.init();
     })
-    .then(() => issue.emit('change'))
+    .then(() => {
+      return issue.emit('change');
+    })
     .catch($p.record_log);
 }

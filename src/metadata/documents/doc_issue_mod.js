@@ -75,6 +75,26 @@ export default function ({doc, DocIssue, utils, adapters: {pouch}}) {
             this.state_date = row.date;
           }
         });
+        return this;
+      }
+    },
+
+    // после записи обновляем ram_indexer
+    after_save: {
+      value() {
+        const doc = {_id: `${this._manager.class_name}|${this.ref}`};
+        for(const fld of this._manager._indexer._fields) {
+          if(fld !== '_id') {
+            let v = this._obj[fld];
+            if(v instanceof Date) {
+              v = v.toJSON();
+            }
+            doc[fld] = v;
+          }
+        }
+        this._manager.emit('change', doc);
+
+        return this;
       }
     }
 
