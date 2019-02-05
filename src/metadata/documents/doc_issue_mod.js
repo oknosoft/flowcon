@@ -58,10 +58,10 @@ export default function ({doc, DocIssue, utils, adapters: {pouch}}) {
     // при изменении реквизита, регистрируем факт события
     value_change: {
       value(field, type, value) {
-        if(/mark|executor|quickly|important|canceled|completed|specify|executor_accepted|initiator_accepted/.test(field) && this[field] !== value) {
+        if(/mark|executor|responsible|quickly|important|canceled|completed|specify|executor_accepted|initiator_accepted/.test(field) && this[field] !== value) {
           const stub = {date: utils.blank.date, event: field};
           const row = this.history.find(stub) || this.history.add(stub);
-          row.value = value;
+          row.value = utils.is_data_obj(value) ? value.id : value;
         }
       }
     },

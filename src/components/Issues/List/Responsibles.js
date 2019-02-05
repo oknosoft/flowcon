@@ -1,7 +1,7 @@
 /**
  *
  *
- * @module Responsables
+ * @module Responsibles
  *
  * Created by Evgeniy Malyarov on 06.12.2018.
  */
@@ -31,7 +31,7 @@ const styles = theme => ({
   },
 });
 
-function Responsables({row, classes}) {
+function Responsibles({row, classes}) {
   const {users} = $p.cat;
   const initiator = users.get(row.initiator);
   const executor = users.get(row.executor);
@@ -53,4 +53,4 @@ function Responsables({row, classes}) {
   </div>;
 }
 
-export default withStyles(styles)(Responsables);
+export default withStyles(styles)(Responsibles);

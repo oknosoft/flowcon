@@ -16,7 +16,7 @@ import {withObj} from 'metadata-redux';
 import qs from 'qs';
 
 import SelectMgr from './SelectMgr';
-import Responsable from './Responsable';
+import Responsible from './Responsible';
 import ExecutionMenuItem from '../Execution/MenuItem';
 import InfinitList from './InfinitList';
 
@@ -29,7 +29,7 @@ class FrmIssueList extends React.Component {
     this.handlers.handleEdit = this.handleEdit.bind(this);
     this.handlers.handleAdd = this.handleAdd.bind(this);
     this.handlers.handleMarkDeleted = this.handleMarkDeleted.bind(this);
-    this.state = {anchorEl: null, reaponsable: null};
+    this.state = {anchorEl: null, responsible: null};
   }
 
   componentDidMount() {
@@ -83,8 +83,8 @@ class FrmIssueList extends React.Component {
     }
 
     // дополняем селектор отбором по ответственному
-    const {reaponsable} = this.state;
-    reaponsable && !reaponsable.empty() && $and.push({reaponsable: reaponsable.valueOf()});
+    const {responsible} = this.state;
+    responsible && !responsible.empty() && $and.push({responsible: responsible.valueOf()});
 
     // дополняем селектор отбором по булевым полям
     scheme.append_selection(selector.selector);
@@ -113,8 +113,8 @@ class FrmIssueList extends React.Component {
     this.props.handleAdd(_mgr);
   };
 
-  handleReaponsable = (reaponsable) => {
-    this.setState({reaponsable}, () => {
+  handleResponsible = (responsible) => {
+    this.setState({responsible}, () => {
       this.handleChange();
     });
   };
@@ -129,7 +129,7 @@ class FrmIssueList extends React.Component {
 
   render() {
 
-    const {props: {windowHeight, windowWidth, location, handleNavigate}, state: {anchorEl, reaponsable}} = this;
+    const {props: {windowHeight, windowWidth, location, handleNavigate}, state: {anchorEl, responsible}} = this;
     const sizes = {
       windowHeight,
       windowWidth,
@@ -153,7 +153,7 @@ class FrmIssueList extends React.Component {
         toolbar2row
         show_variants
         show_search
-        btns={<Responsable reaponsable={reaponsable} onChange={this.handleReaponsable}/>}
+        btns={<Responsible responsible={responsible} onChange={this.handleResponsible}/>}
         menu_items={[<ExecutionMenuItem key="execution" handleNavigate={handleNavigate}/>]}
         registerFilterChange={(filterChange) => this.filterChange = filterChange}
         GridRenderer={InfinitList}
