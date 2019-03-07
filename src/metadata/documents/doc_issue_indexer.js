@@ -91,40 +91,6 @@ function unsubscribe(mngrs) {
   }
 }
 
-function truth(fld, cond) {
-  const {blank} = $p.utils;
-  if(cond === true || (cond && cond.hasOwnProperty('$ne') && !cond.$ne)) {
-    return function (doc) {
-      return doc[fld];
-    };
-  }
-  else if(cond === false || (cond && cond.hasOwnProperty('$ne') && cond.$ne && typeof cond.$ne === 'boolean')) {
-    return function (doc) {
-      return !doc[fld];
-    };
-  }
-  else if(cond && cond.hasOwnProperty('filled')) {
-    return function (doc) {
-      return doc[fld] && doc[fld] !== blank.guid;
-    };
-  }
-  else if(cond && cond.hasOwnProperty('nfilled')) {
-    return function (doc) {
-      return !doc[fld] || doc[fld] === blank.guid;
-    };
-  }
-  else if(cond && cond.hasOwnProperty('$ne')) {
-    return function (doc) {
-      return doc[fld] !== cond.$ne;
-    };
-  }
-  else {
-    return function (doc) {
-      return doc[fld] === cond;
-    };
-  }
-}
-
 export default function indexer() {
 
   const {adapters: {pouch}, doc: {issue}, classes, utils} = $p;
@@ -177,7 +143,7 @@ export default function indexer() {
             responsible = row[fld];
           }
           else if(fields.includes(fld)) {
-            conditions.push(truth(fld, row[fld]));
+            conditions.push(RamIndexer.truth(fld, row[fld]));
           }
         }
 
