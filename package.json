@@ -71,7 +71,7 @@
     "mini-css-extract-plugin": "0.4.3",
     "node-fetch": "^2.3.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
-    "passport-facebook": "^2.1",
+    "passport-facebook": "^3.0.0",
     "passport-github": "^1.1",
     "passport-google-oauth": "^1.0",
     "passport-vkontakte": "^0.3",
