@@ -1,6 +1,6 @@
 {
   "name": "flowcon",
-  "version": "2.0.18-beta.4",
+  "version": "2.0.18-beta.5",
   "description": "business programming",
   "repository": {
     "type": "git",
@@ -26,13 +26,13 @@
   "homepage": "https://business-programming.ru/",
   "dependencies": {
     "@opuscapita/react-markdown": "^2.3.9",
-    "metadata-abstract-ui": "2.0.18-beta.4",
-    "metadata-core": "2.0.18-beta.4",
-    "metadata-external": "2.0.18-beta.4",
-    "metadata-pouchdb": "2.0.18-beta.4",
-    "metadata-react": "2.0.18-beta.4",
-    "metadata-redux": "2.0.18-beta.4",
-    "metadata-superlogin": "2.0.18-beta.4",
+    "metadata-abstract-ui": "2.0.18-beta.5",
+    "metadata-core": "2.0.18-beta.5",
+    "metadata-pouchdb": "2.0.18-beta.5",
+    "metadata-react": "2.0.18-beta.5",
+    "metadata-redux": "2.0.18-beta.5",
+    "metadata-superlogin": "2.0.18-beta.5",
+    "react-data-grid-addons": "^6.1.0-0",
     "react-share": "^2.4.0"
   },
   "devDependencies": {
@@ -52,7 +52,7 @@
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
-    "eslint": "^5.15.1",
+    "eslint": "^5.15.3",
     "eslint-config-react-app": "^3.0.8",
     "eslint-loader": "2.1.1",
     "eslint-plugin-flowtype": "2.50.1",
@@ -82,10 +82,10 @@
     "postcss-preset-env": "6.0.6",
     "postcss-safe-parser": "4.0.1",
     "raw-loader": "^0.5.1",
-    "react": "^16.8.4",
+    "react": "^16.8.5",
     "react-app-polyfill": "^0.1.3",
     "react-dev-utils": "^6.1.1",
-    "react-dom": "^16.8.4",
+    "react-dom": "^16.8.5",
     "resolve": "1.8.1",
     "rimraf": "^2.6.3",
     "sass-loader": "7.1.0",
@@ -108,7 +108,8 @@
     "test": "node scripts/test.js --env=jsdom",
     "meta:ram": "node scripts/meta.ram.js",
     "meta:prebuild": "node scripts/meta.prebuild.js",
-    "meta:link": "node scripts/meta.link.js"
+    "meta:link": "node scripts/meta.link.js",
+    "rm-old-router": "rm ./node_modules/react-router-redux/node_modules/react-router -Recurse"
   },
   "eslintConfig": {
     "extends": "react-app"
