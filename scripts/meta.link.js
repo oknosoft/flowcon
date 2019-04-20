@@ -25,9 +25,12 @@ function fromDir(startPath, filter, callback) {
     }
     const stat = fs.lstatSync(filename);
     if(stat.isDirectory()) {
+      callback(filename, true);
       fromDir(filename, filter, callback); //recurse
     }
-    else if(filter.test(filename)) callback(filename);
+    else if(filter.test(filename)) {
+      callback(filename);
+    }
   };
 };
 
@@ -36,10 +39,15 @@ for (const lib of libs) {
   const lpath = path.resolve(localNodeModules, lib);
   const rpath = path.resolve(remoteNodeModules, lib);
   let i = 0;
-  fromDir(rpath, /\.(css|js|mjs|md|map)$/, (rname) => {
+  fromDir(rpath, /\.(css|js|mjs|md|map)$/, (rname, isDir) => {
     const name = rname.replace(rpath, '');
     const lame = path.join(lpath, name);
-    if(!fs.existsSync(lame) || (md5File.sync(rname) != md5File.sync(lame))){
+    if(isDir) {
+      if(!fs.existsSync(lame)) {
+        fs.mkdirSync(lame);
+      }
+    }
+    else if(!fs.existsSync(lame) || (md5File.sync(rname) != md5File.sync(lame))){
       i++;
       fs.createReadStream(rname).pipe(fs.createWriteStream(lame));
     }
