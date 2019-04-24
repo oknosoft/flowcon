@@ -23,20 +23,6 @@ import(/* webpackChunkName: "metadata-react" */ 'metadata-react/FrmReport').then
 
 class DataRoute extends Component {
 
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-    handlers: PropTypes.object.isRequired,
-    windowHeight: PropTypes.number.isRequired,
-    windowWidth: PropTypes.number.isRequired,
-    disablePermanent: PropTypes.bool,
-    couch_direct: PropTypes.bool,
-    offline: PropTypes.bool,
-  };
-
-  static childContextTypes = {
-    components: PropTypes.object,
-  };
-
   render() {
     const {match, handlers, windowHeight, windowWidth, disablePermanent, couch_direct, offline, user} = this.props;
     const {area, name} = match.params;
@@ -107,6 +93,21 @@ class DataRoute extends Component {
     return {components: lazy};
   }
 }
+
+DataRoute.propTypes = {
+  match: PropTypes.object.isRequired,
+  handlers: PropTypes.object.isRequired,
+  windowHeight: PropTypes.number.isRequired,
+  windowWidth: PropTypes.number.isRequired,
+  disablePermanent: PropTypes.bool,
+  couch_direct: PropTypes.bool,
+  offline: PropTypes.bool,
+  user: PropTypes.object,
+};
+
+DataRoute.childContextTypes = {
+  components: PropTypes.object,
+};
 
 export default withObj(DataRoute);
 

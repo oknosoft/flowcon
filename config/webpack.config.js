@@ -205,6 +205,7 @@ module.exports = function(webpackEnv) {
               // Pending futher investigation:
               // https://github.com/terser-js/terser/issues/120
               inline: 2,
+              //keep_fnames: true,
             },
             mangle: {
               safari10: true,
@@ -214,7 +215,7 @@ module.exports = function(webpackEnv) {
               comments: false,
               // Turned on because emoji and regex is not minified properly using default
               // https://github.com/facebook/create-react-app/issues/2488
-              ascii_only: true,
+              ascii_only: false,
             },
           },
           // Use multi-process parallel running to improve the build speed

@@ -28,7 +28,7 @@ import RootView from 'metadata-react/App/RootView';
 
 // sw для оффлайна и прочих дел
 import * as serviceWorker from './serviceWorker';
-import {ifaceActions} from 'metadata-redux';
+//import {ifaceActions} from 'metadata-redux';
 
 // создаём redux-store
 const store = configureStore();
