@@ -64,13 +64,13 @@ exports.CatFormulas = class CatFormulas extends Object {
 
     // создаём функцию из текста формулы
     if(!_data._formula && this.formula){
-      try{
-        if(this.async){
-          const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
-          _data._formula = (new AsyncFunction("obj,$p,attr", this.formula)).bind(this);
+      try {
+        if(this.async) {
+          const AsyncFunction = Object.getPrototypeOf(eval('(async function(){})')).constructor;
+          _data._formula = (new AsyncFunction('obj,$p,attr', this.formula)).bind(this);
         }
-        else{
-          _data._formula = (new Function("obj,$p,attr", this.formula)).bind(this);
+        else {
+          _data._formula = (new Function('obj,$p,attr', this.formula)).bind(this);
         }
       }
       catch(err){
@@ -81,12 +81,12 @@ exports.CatFormulas = class CatFormulas extends Object {
 
     const {_formula} = _data;
 
-    if(this.parent == _manager.predefined("printing_plates")){
+    if(this.parent == _manager.predefined('printing_plates')) {
 
-      if(!_formula){
+      if(!_formula) {
         $p.msg.show_msg({
           title: $p.msg.bld_title,
-          type: "alert-error",
+          type: 'alert-error',
           text: `Ошибка в формуле<br /><b>${this.name}</b>`
         });
         return Promise.resolve();
