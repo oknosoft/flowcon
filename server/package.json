@@ -28,7 +28,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.3",
-    "marked": "^0.5.0",
+    "marked": "^0.6.2",
     "node-fetch": "^2.3.0",
     "passport-facebook": "^3.0",
     "passport-github": "^1.1",

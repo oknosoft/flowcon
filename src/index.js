@@ -1,7 +1,8 @@
 // шрифты и стили
 import './styles/global.css';
 
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 
@@ -33,7 +34,7 @@ import * as serviceWorker from './serviceWorker';
 // создаём redux-store
 const store = configureStore();
 
-class RootProvider extends Component {
+class RootProvider extends React.Component {
 
   componentDidMount() {
 
@@ -45,6 +46,10 @@ class RootProvider extends Component {
     // скрипт инициализации структуры метаданных и модификаторы
     import('./metadata')
       .then((module) => module.init(store));
+  }
+
+  getChildContext() {
+    return {store};
   }
 
   render() {
@@ -62,6 +67,10 @@ class RootProvider extends Component {
       </Provider>
     ];
   }
+}
+
+RootProvider.childContextTypes = {
+  store: PropTypes.object,
 }
 
 render(<RootProvider/>, document.getElementById('root'));
