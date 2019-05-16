@@ -9,7 +9,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import IconContents from '@material-ui/icons/FormatListNumbered';
 
@@ -17,7 +16,6 @@ import AppContent from 'metadata-react/App/AppContent';
 import MarkdownDocs from 'metadata-react/Markdown/MarkdownDocs';
 import NotFound from '../Pages/NotFound';  // 404
 import Social from './Social';
-import Subscribe from './Subscribe';
 import Attachments from './Attachments';
 
 class Article extends Component {
@@ -82,15 +80,6 @@ class Article extends Component {
         footer={ props.match.path.match(/\/(articles|files)\//) && [
           <Attachments key="attachments" _obj={doc} handleIfaceState={props.handleIfaceState} />,
           <Social key="social" title={doc.name}/>,
-          props.match.path.match(/\/(articles)\//) &&
-          <Grid key="subscribe" container >
-            <Grid item sm={12} md={6}>
-              <Subscribe title="Художественная литература про ИТ" area="comp.paper.itfiction" />
-            </Grid>
-            <Grid item sm={12} md={6}>
-              <Subscribe title="Бизнес-программирование" area="business.tech.bizprogramming" />
-            </Grid>
-          </Grid>
         ]}
       />
     );

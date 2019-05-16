@@ -71,7 +71,7 @@ class RootProvider extends React.Component {
 
 RootProvider.childContextTypes = {
   store: PropTypes.object,
-}
+};
 
 render(<RootProvider/>, document.getElementById('root'));
 
